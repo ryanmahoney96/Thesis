@@ -1,0 +1,88 @@
+
+<book>
+	<title></title>
+	<book_number></book_number>
+	<chapters></chapters>
+	<pages></pages>
+
+	<characters>
+
+		<character>
+			<name></name>
+			<father></father>
+			<mother></mother>
+			<gender></gender>
+			<race></race>
+			<titles>
+				<title></title>
+			</titles>
+			<alliances>
+				<alliance></alliance>
+			</alliances>
+			<enemies>
+				<enemy></enemy>
+			</enemies>
+			<houses>
+				<house></house>
+			</houses>
+		</character>
+
+	</characters>
+
+	<houses>
+
+		<house>None</house>
+		<house></house>
+	
+	</houses>
+
+	<places>
+
+		<place name="">
+			<type></type>
+			<continent></continent>
+			<region></region>
+			<!--Map to houses-->
+			<ruling_body></ruling_body>
+		</place>
+
+		<types>
+			<type></type>
+		</types>
+
+		<continents>
+			<continent></continent>
+		</continents>
+
+	</places>
+
+	<events>
+		
+		<event>
+			<name></name>
+			<summary></summary>
+			<date></date>
+			<chapter></chapter>
+			<participants>
+				<participant></participant>
+			</participants>
+
+		</event>
+
+	</events>
+
+	<objects>
+
+		<object>
+			<name></name>
+			<description></description>
+			<type></type>
+			<owners>
+				<owner></owner>
+			</owners>
+		</object>
+
+	</objects>
+
+
+</book>
