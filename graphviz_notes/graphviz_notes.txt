@@ -1,0 +1,12 @@
+
+//creates a simple png image of a hello bubble pointing to a world bubble
+echo "digraph G {Hello->World}" | dot -Tpng >hello.png
+
+// a large "family tree" style digraph
+http://www.graphviz.org/Gallery/directed/lion_share.gv.txt
+
+// a similar graph to the above, broken into clusters
+http://www.graphviz.org/Gallery/directed/Genetic_Programming.gv.txt
+
+// cluster example
+http://www.graphviz.org/content/cluster

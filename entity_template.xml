@@ -26,15 +26,18 @@
 			<titles>
 				<title></title>
 			</titles>
+			<significant_others>
+				<significant_other></significant_other>
+			</significant_others>
 			<alliances>
 				<alliance></alliance>
 			</alliances>
 			<enemies>
 				<enemy></enemy>
 			</enemies>
-			<houses>
-				<house></house>
-			</houses>
+			<family_names>
+				<family_name></family_name>
+			</family_names>
 		</character>
 
 	</characters>
