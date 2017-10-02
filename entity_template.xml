@@ -1,18 +1,28 @@
 
 <book>
 	<title></title>
+	<author></author>
+	<summary></summary>
 	<book_number></book_number>
-	<chapters></chapters>
+	<chapters>
+		<chapter>
+			<title></title>
+			<summary></summary>
+		</chapter>
+	</chapters>
 	<pages></pages>
 
 	<characters>
 
 		<character>
 			<name></name>
+			<physical_description></physical_description>
+			<!--parents tag?-->
 			<father></father>
 			<mother></mother>
 			<gender></gender>
 			<race></race>
+			<religion></religion>
 			<titles>
 				<title></title>
 			</titles>
@@ -29,16 +39,17 @@
 
 	</characters>
 
-	<houses>
+	<family_names>
 
-		<house>None</house>
-		<house></house>
+		<family_name>None</family_name>
+		<family_name></family_name>
 	
-	</houses>
+	</family_names>
 
 	<places>
 
 		<place name="">
+			<physical_description></physical_description>
 			<type></type>
 			<continent></continent>
 			<region></region>
@@ -75,7 +86,7 @@
 
 		<object>
 			<name></name>
-			<description></description>
+			<physical_description></physical_description>
 			<type></type>
 			<owners>
 				<owner></owner>
