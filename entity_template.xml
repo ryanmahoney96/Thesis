@@ -1,16 +1,27 @@
 
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--XQuery, XPath, and C# will come into play after this/these files-->
+
+<!--Store book as folder, each category of entity goes in as xml file-->
 <book>
-	<title></title>
-	<author></author>
-	<summary></summary>
-	<book_number></book_number>
-	<chapters>
-		<chapter>
-			<title></title>
-			<summary></summary>
-		</chapter>
-	</chapters>
-	<pages></pages>
+
+	<book_info>
+		<title></title>
+		<authors>
+			<author></author>
+		</authors>
+		<year></year>
+		<summary></summary>
+		<book_number></book_number>
+		<chapters>
+			<chapter>
+				<title></title>
+				<summary></summary>
+			</chapter>
+		</chapters>
+		<pages></pages>
+	</book_info>
 
 	<characters>
 
@@ -56,7 +67,7 @@
 			<type></type>
 			<continent></continent>
 			<region></region>
-			<!--Map to houses-->
+			<!--Map to family name-->
 			<ruling_body></ruling_body>
 		</place>
 
