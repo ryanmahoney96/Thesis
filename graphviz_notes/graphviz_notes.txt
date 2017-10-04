@@ -10,3 +10,6 @@ http://www.graphviz.org/Gallery/directed/Genetic_Programming.gv.txt
 
 // cluster example
 http://www.graphviz.org/content/cluster
+
+//basic notes on usage
+http://www.graphviz.org/content/dot-language
