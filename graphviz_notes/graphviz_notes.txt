@@ -13,3 +13,10 @@ http://www.graphviz.org/content/cluster
 
 //basic notes on usage
 http://www.graphviz.org/content/dot-language
+
+//windows command for compilation
+dot -Tpng filename.dot -o outfile.png
+
+//for immediate tree: find all characters with same father and/or mother
+//for extended tree: find all characters related to subject
+

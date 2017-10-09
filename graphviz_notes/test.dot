@@ -10,7 +10,7 @@ digraph G {
 	}
 
 	subgraph cluster_1 {
-		/*look at style and direction for line types*/
+		/*look at style and directison for line types*/
 		edge[style=filled,dir=none,weight=100];
 		node [style=filled];
 		b0 -> b1 -> b2 -> b3;

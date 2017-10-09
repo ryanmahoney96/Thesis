@@ -3,81 +3,61 @@
 
 <!--XQuery, XPath, and C# will come into play after this/these files-->
 
-<!--Store book as folder, each category of entity goes in as xml file-->
-<book>
+<!--Store media as folder, each category of entity goes in as xml file-->
+<media>
 
-	<book_info>
+	<media_info>
+		<type></type>
 		<title></title>
 		<authors>
 			<author></author>
 		</authors>
-		<year></year>
+		<image_link></image_link>
+		<publish_year></publish_year>
 		<summary></summary>
-		<book_number></book_number>
+		<media_number></media_number>
 		<chapters>
 			<chapter>
 				<title></title>
 				<summary></summary>
+				<image_link></image_link>
 			</chapter>
 		</chapters>
 		<pages></pages>
-	</book_info>
+	</media_info>
 
 	<characters>
 
 		<character>
 			<name></name>
 			<physical_description></physical_description>
-			<!--parents tag?-->
+			<image_link></image_link>
+
 			<father></father>
 			<mother></mother>
 			<gender></gender>
 			<race></race>
 			<religion></religion>
-			<titles>
-				<title></title>
-			</titles>
+			
 			<significant_others>
-				<significant_other></significant_other>
+				<significant_other>
+					<name></name>
+					<current></current>
+				</significant_other>
 			</significant_others>
-			<alliances>
-				<alliance></alliance>
-			</alliances>
-			<enemies>
-				<enemy></enemy>
-			</enemies>
-			<family_names>
-				<family_name></family_name>
-			</family_names>
+			
 		</character>
 
 	</characters>
-
-	<family_names>
-
-		<family_name>None</family_name>
-		<family_name></family_name>
-	
-	</family_names>
 
 	<places>
 
 		<place name="">
 			<physical_description></physical_description>
+			<image_link></image_link>
 			<type></type>
-			<continent></continent>
-			<region></region>
-			<!--Map to family name-->
-			<ruling_body></ruling_body>
+			<ruler></ruler>
 		</place>
-
-		<types>
-			<type></type>
-		</types>
-
-		<continents>
-			<continent></continent>
-		</continents>
 
 	</places>
 
@@ -86,6 +66,8 @@
 		<event>
 			<name></name>
 			<summary></summary>
+			<image_link></image_link>
+			<location></location>
 			<date></date>
 			<chapter></chapter>
 			<participants>
@@ -96,18 +78,11 @@
 
 	</events>
 
-	<objects>
+	<notes>
+		
+		<note></note>
 
-		<object>
-			<name></name>
-			<physical_description></physical_description>
-			<type></type>
-			<owners>
-				<owner></owner>
-			</owners>
-		</object>
-
-	</objects>
+	</notes>
 
 
-</book>
+</media>
