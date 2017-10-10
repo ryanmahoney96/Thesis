@@ -5,11 +5,12 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:citadel_wpf"
         mc:Ignorable="d"
-        Background="#fbfbfb"
+        Background="#ffffef"
         Title="Citadel"
         ResizeMode="NoResize"
         Height="120" 
         Width="350"
+        Icon="./castle_vbr_icon.ico"
         WindowStartupLocation="CenterScreen"
         Closing="Window_Closing">
 
@@ -28,10 +29,10 @@
             <ColumnDefinition Width="10"/>
         </Grid.ColumnDefinitions>
 
-        <TextBlock Text="Choose a Note Folder"  Grid.Row="0" Grid.Column="1" Margin="2, 2" TextAlignment="Center"/>
-        <Button Content="Browse" Grid.Row="1" Grid.Column="2" Margin="2, 2" Click="Button_Click_1"/>
-        <TextBox IsReadOnly="True" Grid.Row="1" Grid.Column="1" Margin="2, 2" TextAlignment="Center"/>
-        <Button Content="Submit" Grid.Row="2" Grid.Column="2" Margin="2, 2" Click="Button_Click"/>
+        <TextBlock Name="choosePrompt" Text="Choose a Note Folder"  Grid.Row="0" Grid.Column="1" Margin="2, 2" TextAlignment="Center"/>
+        <Button Content="Browse" Grid.Row="1" Grid.Column="2" Margin="2, 2" Click="Browse_Folder"/>
+        <TextBox Name="folderName" SelectionBrush="#ff9999"  IsReadOnly="True" Grid.Row="1" Grid.Column="1" Margin="2, 2" TextAlignment="Center"/>
+        <Button Content="Submit" Grid.Row="2" Grid.Column="2" Margin="2, 2" Click="Submit_Folder"/>
 
     </Grid>
 </Window>

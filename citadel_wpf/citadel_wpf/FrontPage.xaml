@@ -1,0 +1,30 @@
+﻿<Window x:Class="citadel_wpf.FrontPage"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:citadel_wpf"
+        mc:Ignorable="d"
+        Title="Citadel" Height="300" Width="300">
+    <Grid>
+
+        <DockPanel>
+            <Menu DockPanel.Dock="Top">
+                <MenuItem Header="_Notes" Click="Show_Notes">
+                    <!--<MenuItem Header="_New"/>-->
+                    <!--<MenuItem Header="_Edit"/>-->
+                </MenuItem>
+                <MenuItem Header="_Characters" Click="Show_Characters">
+                    <!--<MenuItem Header="_New"/>-->
+                    <!--<MenuItem Header="_Edit"/>-->
+                </MenuItem>
+                <MenuItem Header="_Events" Click="Show_Events">
+                    <!--<MenuItem Header="_New"/>-->
+                    <!--<MenuItem Header="_Edit"/>-->
+                </MenuItem>
+            </Menu>
+            <StackPanel></StackPanel>
+        </DockPanel>
+
+    </Grid>
+</Window>
