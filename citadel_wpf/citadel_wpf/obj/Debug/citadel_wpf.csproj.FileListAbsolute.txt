@@ -1,0 +1,15 @@
+C:\Users\Ryangigs\Documents\Thesis\citadel_wpf\citadel_wpf\bin\Debug\citadel_wpf.exe.config
+C:\Users\Ryangigs\Documents\Thesis\citadel_wpf\citadel_wpf\bin\Debug\citadel_wpf.exe
+C:\Users\Ryangigs\Documents\Thesis\citadel_wpf\citadel_wpf\bin\Debug\citadel_wpf.pdb
+C:\Users\Ryangigs\Documents\Thesis\citadel_wpf\citadel_wpf\obj\Debug\citadel_wpf.csprojResolveAssemblyReference.cache
+C:\Users\Ryangigs\Documents\Thesis\citadel_wpf\citadel_wpf\obj\Debug\MainWindow.g.cs
+C:\Users\Ryangigs\Documents\Thesis\citadel_wpf\citadel_wpf\obj\Debug\App.g.cs
+C:\Users\Ryangigs\Documents\Thesis\citadel_wpf\citadel_wpf\obj\Debug\citadel_wpf_MarkupCompile.cache
+C:\Users\Ryangigs\Documents\Thesis\citadel_wpf\citadel_wpf\obj\Debug\citadel_wpf_MarkupCompile.lref
+C:\Users\Ryangigs\Documents\Thesis\citadel_wpf\citadel_wpf\obj\Debug\MainWindow.baml
+C:\Users\Ryangigs\Documents\Thesis\citadel_wpf\citadel_wpf\obj\Debug\citadel_wpf.g.resources
+C:\Users\Ryangigs\Documents\Thesis\citadel_wpf\citadel_wpf\obj\Debug\citadel_wpf.Properties.Resources.resources
+C:\Users\Ryangigs\Documents\Thesis\citadel_wpf\citadel_wpf\obj\Debug\citadel_wpf.csproj.GenerateResource.Cache
+C:\Users\Ryangigs\Documents\Thesis\citadel_wpf\citadel_wpf\obj\Debug\citadel_wpf.csproj.CoreCompileInputs.cache
+C:\Users\Ryangigs\Documents\Thesis\citadel_wpf\citadel_wpf\obj\Debug\citadel_wpf.exe
+C:\Users\Ryangigs\Documents\Thesis\citadel_wpf\citadel_wpf\obj\Debug\citadel_wpf.pdb

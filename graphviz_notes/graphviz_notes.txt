@@ -20,3 +20,4 @@ dot -Tpng filename.dot -o outfile.png
 //for immediate tree: find all characters with same father and/or mother
 //for extended tree: find all characters related to subject
 
+//map out general <relationships> "Catelyn Mother Robb" (names are keys) 

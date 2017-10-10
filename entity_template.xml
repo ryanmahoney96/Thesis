@@ -33,22 +33,25 @@
 			<physical_description></physical_description>
 			<image_link></image_link>
 
-			<father></father>
+			<!--
 			<mother></mother>
+			<father></father>
+			-->
 			<gender></gender>
 			<race></race>
 			<religion></religion>
 			
-			<significant_others>
-				<significant_other>
-					<name></name>
-					<current></current>
-				</significant_other>
-			</significant_others>
-			
 		</character>
 
 	</characters>
+
+	<relationships>
+		<relationship>
+			<character></character>
+			<character></character>
+			<title></title>
+		</relationship>
+	</relationships>
 
 	<places>
 
@@ -69,7 +72,8 @@
 			<image_link></image_link>
 			<location></location>
 			<date></date>
-			<chapter></chapter>
+			<!-- page, episode, etc. -->
+			<unit_date></unit_date>
 			<participants>
 				<participant></participant>
 			</participants>
@@ -77,6 +81,16 @@
 		</event>
 
 	</events>
+
+	<event_relationships>
+
+		<event_relationship>
+			<!-- before after -->
+			<event></event>
+			<event></event>
+		</event_relationship>
+
+	</event_relationships>
 
 	<notes>
 		
