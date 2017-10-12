@@ -5,26 +5,59 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:citadel_wpf"
         mc:Ignorable="d"
-        Title="Citadel" Height="300" Width="300">
+        Background="#ffffef"
+        Title="Citadel"
+        Icon="./castle_vbr_icon.ico"
+        ResizeMode="NoResize"
+        Height="300" 
+        Width="500">
     <Grid>
 
-        <DockPanel>
+        <!--<DockPanel>
             <Menu DockPanel.Dock="Top">
                 <MenuItem Header="_Notes" Click="Show_Notes">
-                    <!--<MenuItem Header="_New"/>-->
-                    <!--<MenuItem Header="_Edit"/>-->
+                    <MenuItem Header="New _Note"/>
+                    <MenuItem Header="New _Relationship"/>
+                    --><!--<MenuItem Header="_Edit"/>--><!--
                 </MenuItem>
                 <MenuItem Header="_Characters" Click="Show_Characters">
-                    <!--<MenuItem Header="_New"/>-->
-                    <!--<MenuItem Header="_Edit"/>-->
+                    <MenuItem Header="_New Character"/>
+                    <MenuItem Header="New Character _Relationship"/>
+                    --><!--<MenuItem Header="_Edit"/>--><!--
                 </MenuItem>
                 <MenuItem Header="_Events" Click="Show_Events">
-                    <!--<MenuItem Header="_New"/>-->
-                    <!--<MenuItem Header="_Edit"/>-->
+                    <MenuItem Header="New _Event"/>
+                    <MenuItem Header="New Event _Relationship"/>
+                    --><!--<MenuItem Header="_Edit"/>--><!--
+                </MenuItem>
+                <MenuItem Header="_Places" Click="MenuItem_Click">
+                    <MenuItem Header="New _Place"/>
+                    <MenuItem Header="New Event _Relationship"/>
+                    --><!--<MenuItem Header="_Edit"/>--><!--
                 </MenuItem>
             </Menu>
-            <StackPanel></StackPanel>
-        </DockPanel>
+        </DockPanel>-->
+
+        <TabControl>
+            <TabItem Name="testHeader" Header="General Notes">
+                <Label>
+                    <Button Content="Add a Note" Click="Button_Click"/>
+                </Label>
+            </TabItem>
+
+            <TabItem Header="Characters">
+                <Label Content="Take Character Notes" />
+            </TabItem>
+
+            <TabItem Header="Events">
+                <Label Content="Take Event Notes" />
+            </TabItem>
+
+            <TabItem Header="Locations">
+                <Label Content="Take Location Notes" />
+            </TabItem>
+
+        </TabControl>
 
     </Grid>
 </Window>

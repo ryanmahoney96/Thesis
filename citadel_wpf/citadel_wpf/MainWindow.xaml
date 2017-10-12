@@ -5,18 +5,18 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:citadel_wpf"
         mc:Ignorable="d"
-        Background="#ffffef"
+        Background="#ffefff"
         Title="Citadel"
         ResizeMode="NoResize"
-        Height="120" 
-        Width="350"
+        Height="180" 
+        Width="420"
         Icon="./castle_vbr_icon.ico"
-        WindowStartupLocation="CenterScreen"
-        Closing="Window_Closing">
+        WindowStartupLocation="CenterScreen">
 
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="20"/>
+            <RowDefinition Height="5"/>
+            <RowDefinition Height="70"/>
             <RowDefinition Height="26"/>
             <RowDefinition Height="26"/>
             <RowDefinition Height="5"/>
@@ -24,15 +24,15 @@
 
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="30"/>
-            <ColumnDefinition Width="240"/>
+            <ColumnDefinition Width="300"/>
             <ColumnDefinition Width="60"/>
             <ColumnDefinition Width="10"/>
         </Grid.ColumnDefinitions>
 
-        <TextBlock Name="choosePrompt" Text="Choose a Note Folder"  Grid.Row="0" Grid.Column="1" Margin="2, 2" TextAlignment="Center"/>
-        <Button Content="Browse" Grid.Row="1" Grid.Column="2" Margin="2, 2" Click="Browse_Folder"/>
-        <TextBox Name="folderName" SelectionBrush="#ff9999"  IsReadOnly="True" Grid.Row="1" Grid.Column="1" Margin="2, 2" TextAlignment="Center"/>
-        <Button Content="Submit" Grid.Row="2" Grid.Column="2" Margin="2, 2" Click="Submit_Folder"/>
+        <TextBlock Name="choosePrompt" TextWrapping="Wrap" Text="Welcome to Citadel, a tool for constructing diagrams and taking notes about books, history, and other narratives. Choose a Note Folder to begin, or create a new folder."  Grid.Row="1" Grid.Column="1" Margin="2, 2" TextAlignment="Center"/>
+        <Button Content="Browse" Grid.Row="2" Grid.Column="2" Margin="2, 2" Click="Browse_Folder"/>
+        <TextBox Name="folderName" SelectionBrush="#ff9999"  IsReadOnly="True" Grid.Row="2" Grid.Column="1" Margin="2, 2" TextAlignment="Center"/>
+        <Button Content="Submit" Grid.Row="3" Grid.Column="2" Margin="2, 2" Click="Submit_Folder"/>
 
     </Grid>
 </Window>

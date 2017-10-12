@@ -29,11 +29,6 @@ namespace citadel_wpf
             InitializeComponent();
         }
 
-        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
-        {
-
-        }
-
         private void Browse_Folder(object sender, RoutedEventArgs e)
         {
 
@@ -69,7 +64,7 @@ namespace citadel_wpf
             {
                 if (folderName.Text.Equals(""))
                 {
-                    System.Windows.Forms.MessageBox.Show("Please Select a Configuration Folder.");
+                    System.Windows.Forms.MessageBox.Show("Please Select or Create a Note Folder.");
                 }
             }
 

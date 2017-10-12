@@ -27,19 +27,11 @@ namespace citadel_wpf
             folderPath = fp;
         }
 
-        private void Show_Notes(object sender, RoutedEventArgs e)
+        private void Button_Click(object sender, RoutedEventArgs e)
         {
-
-        }
-
-        private void Show_Characters(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        private void Show_Events(object sender, RoutedEventArgs e)
-        {
-
+            testHeader.Content = XMLParserClass.attemptParse();
+            testHeader.Content = XMLParserClass.attemptSpecificParse();
+            testHeader.Content = XMLParserClass.XPathParse(folderPath);
         }
     }
 }
