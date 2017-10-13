@@ -8,16 +8,15 @@
         Background="#ffffef"
         Title="Citadel"
         Icon="./castle_vbr_icon.ico"
-        ResizeMode="NoResize"
+        ResizeMode="CanMinimize"
         Height="500" 
         Width="750">
     <Grid>
 
-        <TabControl>    
-            <TabItem Header="General Notes">
+        <TabControl Background="#ffffef">
+            <TabItem Header="Media Notes">
                 <Label>
                     <Grid>
-
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="10"/>
                             <ColumnDefinition Width="710"/>
@@ -29,14 +28,41 @@
                             <RowDefinition Height="480"/>
                         </Grid.RowDefinitions>
 
-                        <Menu Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="99">
+                        <Menu Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="1">
+                            <MenuItem Header="_File">
+                                <MenuItem Header="_New Note"/>
+                                <!--<MenuItem Header="_Edit"/>-->
+                            </MenuItem>
+                        </Menu>
+
+                        <ScrollViewer Background="White" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" Grid.Row="1" Grid.Column="1">
+
+                        </ScrollViewer>
+                    </Grid>
+                </Label>
+            </TabItem>
+            <TabItem Header="General Notes">
+                <Label>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="10"/>
+                            <ColumnDefinition Width="710"/>
+                            <ColumnDefinition Width="10"/>
+                        </Grid.ColumnDefinitions>
+
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="20"/>
+                            <RowDefinition Height="480"/>
+                        </Grid.RowDefinitions>
+
+                        <Menu Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="1">
                             <MenuItem Header="_File">
                                 <MenuItem Header="_New Note" Click="New_Note_Click"/>
                                 <!--<MenuItem Header="_Edit"/>-->
                             </MenuItem>
                         </Menu>
 
-                        <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" Grid.Row="1" Grid.Column="1">
+                        <ScrollViewer Background="White" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" Grid.Row="1" Grid.Column="1">
                             
                         </ScrollViewer>
                     </Grid>
@@ -58,7 +84,7 @@
                             <RowDefinition Height="480"/>
                         </Grid.RowDefinitions>
 
-                        <Menu Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="99">
+                        <Menu Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="1">
                             <MenuItem Header="_File">
                                 <MenuItem Header="_New Character" Click="New_Character_Click"/>
                                 <MenuItem Header="New Character _Relationship"/>
@@ -66,6 +92,9 @@
                             </MenuItem>
                         </Menu>
 
+                        <ScrollViewer Background="White" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" Grid.Row="1" Grid.Column="1">
+
+                        </ScrollViewer>
                     </Grid>
                 </Label>
             </TabItem>
@@ -85,7 +114,7 @@
                             <RowDefinition Height="480"/>
                         </Grid.RowDefinitions>
 
-                        <Menu Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="99">
+                        <Menu Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="1">
                             <MenuItem Header="_File">
                                 <MenuItem Header="_New Event" Click="New_Event_Click"/>
                                 <MenuItem Header="New Location and Event _Relationship"/>
@@ -94,6 +123,9 @@
                             </MenuItem>
                         </Menu>
 
+                        <ScrollViewer Background="White" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" Grid.Row="1" Grid.Column="1">
+
+                        </ScrollViewer>
                     </Grid>
                 </Label>
             </TabItem>
@@ -113,7 +145,7 @@
                             <RowDefinition Height="480"/>
                         </Grid.RowDefinitions>
 
-                        <Menu Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="99">
+                        <Menu Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="1">
                             <MenuItem Header="_File">
                                 <MenuItem Header="_New Location" Click="New_Location_Click"/>
                                 <MenuItem Header="New Location and Event _Relationship"/>
@@ -121,6 +153,30 @@
                             </MenuItem>
                         </Menu>
 
+                        <ScrollViewer Background="White" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" Grid.Row="1" Grid.Column="1">
+
+                        </ScrollViewer>
+                    </Grid>
+                </Label>
+            </TabItem>
+
+            <TabItem Header="Locations">
+                <Label>
+                    <Grid>
+
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="10"/>
+                            <ColumnDefinition Width="710"/>
+                            <ColumnDefinition Width="10"/>
+                        </Grid.ColumnDefinitions>
+
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="20"/>
+                            <RowDefinition Height="480"/>
+                        </Grid.RowDefinitions>
+
+                        
+                        
                     </Grid>
                 </Label>
             </TabItem>

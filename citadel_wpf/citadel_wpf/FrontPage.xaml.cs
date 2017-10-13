@@ -25,6 +25,7 @@ namespace citadel_wpf
         {
             InitializeComponent();
             folderPath = fp;
+            Title += " - " + folderPath;
         }
 
         private void New_Note_Click(object sender, RoutedEventArgs e)
@@ -35,6 +36,9 @@ namespace citadel_wpf
         private void New_Character_Click(object sender, RoutedEventArgs e)
         {
             //testHeader.Header = XMLParserClass.XPathParse(folderPath);
+            NewCharacterWindow ncw = new NewCharacterWindow();
+            ncw.Show();
+            ncw.Topmost = true;
         }
 
         private void New_Event_Click(object sender, RoutedEventArgs e)
