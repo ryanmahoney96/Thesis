@@ -117,7 +117,7 @@ namespace citadel_wpf
 
             while (NodeIter.MoveNext())
             {
-                temp += "Lamborgini: " + NodeIter.Current.Value;
+                temp += "Lamborgini: " + NodeIter.Current.Value + "\n";
             };
 
             return temp;

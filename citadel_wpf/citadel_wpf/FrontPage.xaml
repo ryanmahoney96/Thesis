@@ -9,52 +9,120 @@
         Title="Citadel"
         Icon="./castle_vbr_icon.ico"
         ResizeMode="NoResize"
-        Height="300" 
-        Width="500">
+        Height="500" 
+        Width="750">
     <Grid>
 
-        <!--<DockPanel>
-            <Menu DockPanel.Dock="Top">
-                <MenuItem Header="_Notes" Click="Show_Notes">
-                    <MenuItem Header="New _Note"/>
-                    <MenuItem Header="New _Relationship"/>
-                    --><!--<MenuItem Header="_Edit"/>--><!--
-                </MenuItem>
-                <MenuItem Header="_Characters" Click="Show_Characters">
-                    <MenuItem Header="_New Character"/>
-                    <MenuItem Header="New Character _Relationship"/>
-                    --><!--<MenuItem Header="_Edit"/>--><!--
-                </MenuItem>
-                <MenuItem Header="_Events" Click="Show_Events">
-                    <MenuItem Header="New _Event"/>
-                    <MenuItem Header="New Event _Relationship"/>
-                    --><!--<MenuItem Header="_Edit"/>--><!--
-                </MenuItem>
-                <MenuItem Header="_Places" Click="MenuItem_Click">
-                    <MenuItem Header="New _Place"/>
-                    <MenuItem Header="New Event _Relationship"/>
-                    --><!--<MenuItem Header="_Edit"/>--><!--
-                </MenuItem>
-            </Menu>
-        </DockPanel>-->
-
-        <TabControl>
-            <TabItem Name="testHeader" Header="General Notes">
+        <TabControl>    
+            <TabItem Header="General Notes">
                 <Label>
-                    <Button Content="Add a Note" Click="Button_Click"/>
+                    <Grid>
+
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="10"/>
+                            <ColumnDefinition Width="710"/>
+                            <ColumnDefinition Width="10"/>
+                        </Grid.ColumnDefinitions>
+
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="20"/>
+                            <RowDefinition Height="480"/>
+                        </Grid.RowDefinitions>
+
+                        <Menu Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="99">
+                            <MenuItem Header="_File">
+                                <MenuItem Header="_New Note" Click="New_Note_Click"/>
+                                <!--<MenuItem Header="_Edit"/>-->
+                            </MenuItem>
+                        </Menu>
+
+                        <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" Grid.Row="1" Grid.Column="1">
+                            
+                        </ScrollViewer>
+                    </Grid>
                 </Label>
             </TabItem>
 
             <TabItem Header="Characters">
-                <Label Content="Take Character Notes" />
+                <Label>
+                    <Grid>
+                        
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="10"/>
+                            <ColumnDefinition Width="710"/>
+                            <ColumnDefinition Width="10"/>
+                        </Grid.ColumnDefinitions>
+
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="20"/>
+                            <RowDefinition Height="480"/>
+                        </Grid.RowDefinitions>
+
+                        <Menu Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="99">
+                            <MenuItem Header="_File">
+                                <MenuItem Header="_New Character" Click="New_Character_Click"/>
+                                <MenuItem Header="New Character _Relationship"/>
+                                <!--<MenuItem Header="_Edit"/>-->
+                            </MenuItem>
+                        </Menu>
+
+                    </Grid>
+                </Label>
             </TabItem>
 
             <TabItem Header="Events">
-                <Label Content="Take Event Notes" />
+                <Label>
+                    <Grid>
+
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="10"/>
+                            <ColumnDefinition Width="710"/>
+                            <ColumnDefinition Width="10"/>
+                        </Grid.ColumnDefinitions>
+
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="20"/>
+                            <RowDefinition Height="480"/>
+                        </Grid.RowDefinitions>
+
+                        <Menu Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="99">
+                            <MenuItem Header="_File">
+                                <MenuItem Header="_New Event" Click="New_Event_Click"/>
+                                <MenuItem Header="New Location and Event _Relationship"/>
+                                <MenuItem Header="New Event _Relationship"/>
+                                <!--<MenuItem Header="_Edit"/>-->
+                            </MenuItem>
+                        </Menu>
+
+                    </Grid>
+                </Label>
             </TabItem>
 
             <TabItem Header="Locations">
-                <Label Content="Take Location Notes" />
+                <Label>
+                    <Grid>
+
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="10"/>
+                            <ColumnDefinition Width="710"/>
+                            <ColumnDefinition Width="10"/>
+                        </Grid.ColumnDefinitions>
+
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="20"/>
+                            <RowDefinition Height="480"/>
+                        </Grid.RowDefinitions>
+
+                        <Menu Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="99">
+                            <MenuItem Header="_File">
+                                <MenuItem Header="_New Location" Click="New_Location_Click"/>
+                                <MenuItem Header="New Location and Event _Relationship"/>
+                                <!--<MenuItem Header="_Edit"/>-->
+                            </MenuItem>
+                        </Menu>
+
+                    </Grid>
+                </Label>
             </TabItem>
 
         </TabControl>
