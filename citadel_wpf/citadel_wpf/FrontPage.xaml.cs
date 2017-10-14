@@ -48,7 +48,9 @@ namespace citadel_wpf
 
         private void New_Location_Click(object sender, RoutedEventArgs e)
         {
-
+            NewLocationWindow nlw = new NewLocationWindow(folderPath);
+            nlw.Show();
+            nlw.Topmost = true;
         }
 
         //private void Button_Click(object sender, RoutedEventArgs e)

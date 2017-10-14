@@ -44,10 +44,10 @@ namespace citadel_wpf
                 {
                     string name = name_text.Text;
                     string gender = gender_combo_box.Text;
-                    string physical_description = physical_description_text.Text;
+                    string physdesc_notes = physdesc_notes_text.Text;
                     string filePath = folderPath + "\\character_notes.xml";
 
-                    if (File.Exists(folderPath + "\\character_notes.xml"))
+                    if (File.Exists(filePath))
                     {
                         character_notes_handle = NewWindowFunctions.RemoveLastLine(filePath);
                     }
@@ -61,9 +61,9 @@ namespace citadel_wpf
                     //TODO: check to see if file already exists
 
                     character_notes_handle.Write("<character>\n\t\t");
-                    character_notes_handle.Write("<name>" + name_text.Text + "</name>\n\t\t");
-                    character_notes_handle.Write("<gender>" + gender_combo_box.Text + "</gender>\n\t\t");
-                    character_notes_handle.Write("<physical_description>" + physical_description_text.Text + "</physical_description>\n\t");
+                    character_notes_handle.Write("<name>" + name + "</name>\n\t\t");
+                    character_notes_handle.Write("<gender>" + gender + "</gender>\n\t\t");
+                    character_notes_handle.Write("<physdesc_and_notes>" + physdesc_notes + "</physdesc_and_notes>\n\t");
                     character_notes_handle.Write("</character>\n\n");
 
                     character_notes_handle.Write("</characters>");

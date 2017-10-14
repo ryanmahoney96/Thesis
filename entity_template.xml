@@ -50,7 +50,7 @@
 			<physical_description></physical_description>
 			<image_link></image_link>
 			<type></type>
-			<government></government>
+			<subtype></subtype>
 		</location>
 
 	</locations>
