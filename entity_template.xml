@@ -1,4 +1,3 @@
-
 <?xml version="1.0" encoding="UTF-8"?>
 
 <!--XQuery, XPath, and C# will come into play after this/these files-->
@@ -15,15 +14,13 @@
 		<image_link></image_link>
 		<publish_year></publish_year>
 		<summary></summary>
-		<media_number></media_number>
-		<chapters>
-			<chapter>
+		<series></series>
+		<chapter_units>
+			<chapter_unit>
 				<title></title>
 				<summary></summary>
-				<image_link></image_link>
-			</chapter>
-		</chapters>
-		<pages></pages>
+			</chapter_unit>
+		</chapter_units>
 	</media_info>
 
 	<characters>
@@ -32,37 +29,31 @@
 			<name></name>
 			<physical_description></physical_description>
 			<image_link></image_link>
-
-			<!--
-			<mother></mother>
-			<father></father>
-			-->
 			<gender></gender>
-			<race></race>
-			<religion></religion>
-			
+			<race></race>			
 		</character>
 
 	</characters>
 
-	<relationships>
-		<relationship>
+	<character_relationships>
+		<character_relationship>
 			<character></character>
 			<character></character>
 			<title></title>
-		</relationship>
-	</relationships>
+		</character_relationship>
+	</character_relationships>
 
-	<places>
+	<locations>
 
-		<place name="">
+		<location>
+			<name></name>
 			<physical_description></physical_description>
 			<image_link></image_link>
 			<type></type>
-			<ruler></ruler>
-		</place>
+			<government></government>
+		</location>
 
-	</places>
+	</locations>
 
 	<events>
 		
@@ -90,13 +81,11 @@
 			<event></event>
 		</event_relationship>
 
-	</event_relationships>
-
-	<notes>
+	<general_notes>
 		
-		<note></note>
+		<general_note></general_note>
 
-	</notes>
+	</general_notes>
 
 
 </media>

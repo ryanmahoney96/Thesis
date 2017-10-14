@@ -58,6 +58,10 @@
     <Compile Include="FrontPage.xaml.cs">
       <DependentUpon>FrontPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="NewLocationWindow.xaml.cs">
+      <DependentUpon>NewLocationWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="NewWindowFunctions.cs" />
     <Compile Include="NewCharacterWindow.xaml.cs">
       <DependentUpon>NewCharacterWindow.xaml</DependentUpon>
     </Compile>
@@ -77,6 +81,10 @@
     <Page Include="FrontPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="NewLocationWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="NewCharacterWindow.xaml">
       <SubType>Designer</SubType>

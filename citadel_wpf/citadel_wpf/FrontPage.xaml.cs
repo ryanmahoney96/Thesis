@@ -36,7 +36,7 @@ namespace citadel_wpf
         private void New_Character_Click(object sender, RoutedEventArgs e)
         {
             //testHeader.Header = XMLParserClass.XPathParse(folderPath);
-            NewCharacterWindow ncw = new NewCharacterWindow();
+            NewCharacterWindow ncw = new NewCharacterWindow(folderPath);
             ncw.Show();
             ncw.Topmost = true;
         }
