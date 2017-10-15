@@ -64,8 +64,41 @@ namespace citadel_wpf
         {
             //testHeader.Content = XMLParserClass.attemptParse();
             //testHeader.Content = XMLParserClass.attemptSpecificParse();
-            testButton.Content = XMLParserClass.XPathParse(folderPath + "\\character_notes.xml", "/characters/character/*");
-            testButton.Content = XMLParserClass.LINQParseTest(folderPath + "\\character_notes.xml");
+            //testButton.Content = XMLParserClass.XPathParse(folderPath + "\\character_notes.xml", "/characters/character/*");
+            //testButton.Content += XMLParserClass.LINQParseTest(folderPath + "\\character_notes.xml");
+            testButton.Content = "";
+            Fill_Note_Pages();
+        }
+
+        private void Fill_Note_Pages()
+        {
+            Fill_Note_Area(XMLParserClass.GetAllCharacterNotes(folderPath + "\\character_notes.xml"));
+            Fill_Note_Area(XMLParserClass.GetAllGeneralNotes(folderPath + "\\general_notes.xml"));
+        }
+
+        //TODO move this functionality over so that compi;lation into a "note" is done in "GetAll____Nodes"
+        private void Fill_Note_Area(List<List<string>> entityNodes)
+        {
+            foreach (List<string> l in entityNodes)
+            {
+                //TODO: Generic Item
+                Border b = new Border();
+                b.BorderThickness = new Thickness(1, 1, 1, 1);
+                b.BorderBrush = new SolidColorBrush(Colors.Red);
+                TextBlock t = new TextBlock();
+                t.FontSize = 15;
+                b.Width = 150;
+                b.Height = 150;
+                b.Child = t;
+                b.Padding = new Thickness(1, 1, 1, 1);
+                b.Margin = new Thickness(5, 5, 5, 5);
+
+                foreach (string s in l)
+                {
+                    t.Text += s + " ";
+                }
+                general_notes_area.Children.Add(b);
+            }
         }
 
     }

@@ -9,7 +9,7 @@
         ResizeMode="CanMinimize"
         Background="#ffffef"
         Icon="./castle_vbr_icon.ico"
-        Title="Add a New Location" Height="240" Width="480">
+        Title="Add a New Note" Height="240" Width="480">
     <Grid>
 
         <Grid.RowDefinitions>

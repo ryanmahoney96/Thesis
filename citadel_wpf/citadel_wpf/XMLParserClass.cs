@@ -147,22 +147,7 @@ namespace citadel_wpf
                 {
                     temp += "Example: " + NodeIter.Current.Value + "\n";
                 };
-
-                ////////////////////////////////////////////
-                var xml = XDocument.Load(fullFilePath);
-
-                // Query the data and write out a subset of contacts
-                var query = from c in xml.Root.Descendants("character")
-                            where ((string)c.Element("name")).Equals("Ygritte")
-                            select c.Element("name").Value + " " +
-                                   c.Element("gender").Value;
-
-
-                foreach (string name in query)
-                {
-                    temp += "Character's Full Name and gender: " + name + "\n";
-                }
-                /////////////////////////////////////////////
+                
             }
 
             return temp;
@@ -184,6 +169,13 @@ namespace citadel_wpf
                             select c.Element("name").Value + " " +
                                    c.Element("gender").Value;
 
+                //select new
+                //{
+                //    Id = (string)x.Attribute("id"),
+                //    Lang = (string)x.Attribute("lang"),
+                //    Name = x.Descendants("configitem").Select(y => y.Attribute("name").Value).FirstOrDefault(y => y == "working_status")
+                //};
+
                 foreach (string name in query)
                 {
                     temp += "Character's Full Name and gender: " + name + "\n";
@@ -191,6 +183,62 @@ namespace citadel_wpf
             }
 
             return temp;
+        }
+
+        public static List<List<string>> GetAllCharacterNotes(string fullFilePath)
+        {
+            List<List<string>> returnList = new List<List<string>>();
+
+            //TODO xml exception
+
+            if (File.Exists(fullFilePath))
+            {
+                var xml = XDocument.Load(fullFilePath);
+
+                // Query the data and write out a subset of contacts
+                var query = from c in xml.Root.Descendants("character")
+                                //where ((string)c.Element("name")).Equals("Ygritte")
+                            select new
+                            {
+                                Name = c.Element("name").Value,
+                                Gender = c.Element("gender").Value,
+                                PhysNotes = c.Element("physdesc_and_notes").Value
+                            };
+
+                foreach (var characterEntry in query)
+                {
+                    List<string> temp = new List<string>();
+                    temp.Add(characterEntry.Name);
+                    temp.Add(characterEntry.Gender);
+                    temp.Add(characterEntry.PhysNotes);
+                    returnList.Add(temp);
+                }
+            }
+            return returnList;
+        }
+
+        public static List<List<string>> GetAllGeneralNotes(string fullFilePath)
+        {
+            List<List<string>> returnList = new List<List<string>>();
+
+            //TODO xml exception
+
+            if (File.Exists(fullFilePath))
+            {
+                var xml = XDocument.Load(fullFilePath);
+
+                // Query the data and write out a subset of contacts
+                var query = from c in xml.Root.Descendants("note")
+                            select c.Value;
+
+                foreach (var noteEntry in query)
+                {
+                    List<string> temp = new List<string>();
+                    temp.Add(noteEntry);
+                    returnList.Add(temp);
+                }
+            }
+            return returnList;
         }
 
     }

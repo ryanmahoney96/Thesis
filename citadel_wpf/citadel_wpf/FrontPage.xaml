@@ -65,7 +65,7 @@
                         </Menu>
 
                         <ScrollViewer Background="White" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" Grid.Row="1" Grid.Column="1">
-                            
+                            <WrapPanel Name="general_notes_area"></WrapPanel>
                         </ScrollViewer>
                     </Grid>
                 </Label>
