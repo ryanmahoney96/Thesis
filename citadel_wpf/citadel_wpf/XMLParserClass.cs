@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
+using System.Xml.Linq;
 using System.Xml.XPath;
 
 namespace citadel_wpf
@@ -98,7 +99,7 @@ namespace citadel_wpf
             return output.ToString();
         }
 
-        public static string XPathParse(string folderName)
+        public static string XPathParseExample(string folderName)
         {
             XPathNavigator nav;
             XPathDocument docNav;
@@ -119,6 +120,75 @@ namespace citadel_wpf
             {
                 temp += "Lamborgini: " + NodeIter.Current.Value + "\n";
             };
+
+            return temp;
+        }
+
+        public static string XPathParse(string fullFilePath, string XMLExpression)
+        {
+            XPathNavigator nav;
+            XPathDocument docNav;
+            XPathNodeIterator NodeIter;
+            string temp = "";
+            //TODO xml exception
+
+            //docNav = new XPathDocument(folderName + @"/TestInput.xml");
+            if (File.Exists(fullFilePath))
+            {
+                docNav = new XPathDocument(fullFilePath);
+
+                nav = docNav.CreateNavigator();
+
+                //strExpression = "/cars/supercars[@company = 'Lamborgini']/carname";
+
+                NodeIter = nav.Select(XMLExpression);
+
+                while (NodeIter.MoveNext())
+                {
+                    temp += "Example: " + NodeIter.Current.Value + "\n";
+                };
+
+                ////////////////////////////////////////////
+                var xml = XDocument.Load(fullFilePath);
+
+                // Query the data and write out a subset of contacts
+                var query = from c in xml.Root.Descendants("character")
+                            where ((string)c.Element("name")).Equals("Ygritte")
+                            select c.Element("name").Value + " " +
+                                   c.Element("gender").Value;
+
+
+                foreach (string name in query)
+                {
+                    temp += "Character's Full Name and gender: " + name + "\n";
+                }
+                /////////////////////////////////////////////
+            }
+
+            return temp;
+        }
+
+        public static string LINQParseTest(string fullFilePath)
+        {
+            string temp = "";
+            //TODO xml exception
+
+            //docNav = new XPathDocument(folderName + @"/TestInput.xml");
+            if (File.Exists(fullFilePath))
+            {
+                var xml = XDocument.Load(fullFilePath);
+
+                // Query the data and write out a subset of contacts
+                var query = from c in xml.Root.Descendants("character")
+                            //where ((string)c.Element("name")).Equals("Ygritte")
+                            select c.Element("name").Value + " " +
+                                   c.Element("gender").Value;
+
+                foreach (string name in query)
+                {
+                    temp += "Character's Full Name and gender: " + name + "\n";
+                }
+            }
 
             return temp;
         }

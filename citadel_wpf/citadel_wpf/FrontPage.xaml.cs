@@ -30,7 +30,9 @@ namespace citadel_wpf
 
         private void New_Note_Click(object sender, RoutedEventArgs e)
         {
-
+            NewGeneralNote ngn = new NewGeneralNote(folderPath);
+            ngn.Show();
+            ngn.Topmost = true;
         }
 
         private void New_Character_Click(object sender, RoutedEventArgs e)
@@ -53,12 +55,18 @@ namespace citadel_wpf
             nlw.Topmost = true;
         }
 
-        //private void Button_Click(object sender, RoutedEventArgs e)
-        //{
-        //    testHeader.Content = XMLParserClass.attemptParse();
-        //    testHeader.Content = XMLParserClass.attemptSpecificParse();
-        //    testHeader.Content = XMLParserClass.XPathParse(folderPath);
-        //}
+        private void Media_Note_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            //testHeader.Content = XMLParserClass.attemptParse();
+            //testHeader.Content = XMLParserClass.attemptSpecificParse();
+            testButton.Content = XMLParserClass.XPathParse(folderPath + "\\character_notes.xml", "/characters/character/*");
+            testButton.Content = XMLParserClass.LINQParseTest(folderPath + "\\character_notes.xml");
+        }
 
     }
 }

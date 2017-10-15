@@ -7,7 +7,9 @@
         mc:Ignorable="d"
         WindowStartupLocation="CenterScreen"
         ResizeMode="CanMinimize"
-        Title="Add a New Location" Height="340" Width="420">
+        Background="#ffffef"
+        Icon="./castle_vbr_icon.ico"
+        Title="Add a New Location" Height="340" Width="480">
     <Grid>
 
         <Grid.RowDefinitions>
@@ -22,7 +24,7 @@
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="5"/>
             <ColumnDefinition Width="175"/>
-            <ColumnDefinition Width="225"/>
+            <ColumnDefinition Width="285"/>
             <ColumnDefinition Width="5"/>
         </Grid.ColumnDefinitions>
 
@@ -43,7 +45,7 @@
         </ComboBox>
 
         <TextBlock Text="Enter a Physical Description and Notes on the Location:" Grid.Row="4" Grid.Column="1" TextWrapping="Wrap"></TextBlock>
-        <ScrollViewer Grid.Row="4" Grid.Column="2" Width="220" Height="150">
+        <ScrollViewer Grid.Row="4" Grid.Column="2" Width="280" Height="150">
             <TextBox Name="physdesc_notes_text" TextWrapping="Wrap"></TextBox>
         </ScrollViewer>
 

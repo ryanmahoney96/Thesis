@@ -5,8 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:citadel_wpf"
         mc:Ignorable="d"
-        Background="#ffffef"
         Title="Citadel"
+        Background="#ffffef"
         Icon="./castle_vbr_icon.ico"
         ResizeMode="CanMinimize"
         Height="500" 
@@ -30,17 +30,19 @@
 
                         <Menu Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="1">
                             <MenuItem Header="_File">
-                                <MenuItem Header="_New Note"/>
+                                //TODO: Change/Dispose
+                                <MenuItem Header="_New Note" Click="Media_Note_Click"/>
                                 <!--<MenuItem Header="_Edit"/>-->
                             </MenuItem>
                         </Menu>
 
                         <ScrollViewer Background="White" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" Grid.Row="1" Grid.Column="1">
-
+                               //TODO: PUT EDITABLES HERE
                         </ScrollViewer>
                     </Grid>
                 </Label>
             </TabItem>
+            
             <TabItem Header="General Notes">
                 <Label>
                     <Grid>
@@ -160,7 +162,7 @@
                 </Label>
             </TabItem>
 
-            <TabItem Header="Locations">
+            <TabItem Header="Options">
                 <Label>
                     <Grid>
 
@@ -175,7 +177,7 @@
                             <RowDefinition Height="480"/>
                         </Grid.RowDefinitions>
 
-                        
+                        <Button Name="testButton" Content="Click" Click="Button_Click" Grid.Row="1" Grid.Column="1"></Button>
                         
                     </Grid>
                 </Label>

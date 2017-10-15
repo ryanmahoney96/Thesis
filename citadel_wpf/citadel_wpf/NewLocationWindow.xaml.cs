@@ -58,9 +58,6 @@ namespace citadel_wpf
                         location_notes_handle.Write("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n\n<locations>\n\t");
                     }
 
-
-                    //TODO: check to see if file already exists
-
                     location_notes_handle.Write("<location>\n\t\t");
                     location_notes_handle.Write("<name>" + name + "</name>\n\t\t");
                     location_notes_handle.Write("<type>" + type + "</type>\n\t\t");

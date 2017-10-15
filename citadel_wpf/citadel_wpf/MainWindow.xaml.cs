@@ -22,7 +22,6 @@ namespace citadel_wpf
     /// </summary>
     public partial class MainWindow : Window
     {
-        Window frontPage = null;
 
         public MainWindow()
         {
@@ -75,13 +74,28 @@ namespace citadel_wpf
 
             if (!folderName.Text.Equals(""))
             {
-                frontPage = new FrontPage(folderName.Text);
+                Media_Note_Validation();
+            }
+        }
+
+        private void Media_Note_Validation()
+        {
+            string mediaNotes = folderName.Text + "\\media_notes.xml";
+
+            if (!File.Exists(mediaNotes))
+            {
+                NewMediaWindow nmw = new NewMediaWindow(folderName.Text);
+                nmw.Topmost = true;
+                nmw.Show();
+            }
+            else
+            {
+                FrontPage frontPage = new FrontPage(folderName.Text);
                 frontPage.Topmost = true;
                 frontPage.Show();
-
-                this.Close();
-
             }
+
+            this.Close();
         }
 
     }

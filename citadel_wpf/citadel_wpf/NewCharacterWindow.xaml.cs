@@ -57,9 +57,6 @@ namespace citadel_wpf
                         character_notes_handle.Write("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n\n<characters>\n\t");
                     }
 
-
-                    //TODO: check to see if file already exists
-
                     character_notes_handle.Write("<character>\n\t\t");
                     character_notes_handle.Write("<name>" + name + "</name>\n\t\t");
                     character_notes_handle.Write("<gender>" + gender + "</gender>\n\t\t");
