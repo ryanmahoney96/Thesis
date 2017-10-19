@@ -50,7 +50,7 @@ namespace citadel_wpf
 
                     if (File.Exists(filePath))
                     {
-                        location_notes_handle = NewWindowFunctions.RemoveLastLine(filePath);
+                        location_notes_handle = XMLParserClass.RemoveLastLine(filePath);
                     }
                     else
                     {

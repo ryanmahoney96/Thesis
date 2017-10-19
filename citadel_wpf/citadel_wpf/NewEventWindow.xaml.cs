@@ -68,7 +68,7 @@ namespace citadel_wpf
 
                     if (File.Exists(filePath))
                     {
-                        event_notes_handle = NewWindowFunctions.RemoveLastLine(filePath);
+                        event_notes_handle = XMLParserClass.RemoveLastLine(filePath);
                     }
                     else
                     {

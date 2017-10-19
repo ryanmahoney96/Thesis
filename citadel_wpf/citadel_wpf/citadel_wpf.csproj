@@ -70,7 +70,6 @@
     <Compile Include="NewMediaWindow.xaml.cs">
       <DependentUpon>NewMediaWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="NewWindowFunctions.cs" />
     <Compile Include="NewCharacterWindow.xaml.cs">
       <DependentUpon>NewCharacterWindow.xaml</DependentUpon>
     </Compile>

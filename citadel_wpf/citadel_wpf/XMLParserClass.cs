@@ -185,6 +185,30 @@ namespace citadel_wpf
             return temp;
         }
 
+        public static StreamWriter RemoveLastLine(string filePath)
+        {
+            //Deletes the last line in the xml file, the closing content tag
+            string line = null;
+            List<string> deferredLines = new List<string>();
+            using (TextReader inputReader = new StreamReader(filePath))
+            {
+                while ((line = inputReader.ReadLine()) != null)
+                {
+                    deferredLines.Add(line);
+                }
+                deferredLines.RemoveAt(deferredLines.Count - 1);
+            }
+
+            StreamWriter stream = new StreamWriter(filePath, false);
+
+            for (int i = 0; i < deferredLines.Count; i++)
+            {
+                stream.Write(deferredLines[i]);
+            }
+
+            return stream;
+        }
+
         public static List<List<string>> GetAllCharacterNotes(string fullFilePath)
         {
             List<List<string>> returnList = new List<List<string>>();

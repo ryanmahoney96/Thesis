@@ -49,7 +49,7 @@ namespace citadel_wpf
 
                     if (File.Exists(filePath))
                     {
-                        character_notes_handle = NewWindowFunctions.RemoveLastLine(filePath);
+                        character_notes_handle = XMLParserClass.RemoveLastLine(filePath);
                     }
                     else
                     {

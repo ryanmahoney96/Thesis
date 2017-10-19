@@ -61,7 +61,6 @@
 		
 		<event>
 			<name></name>
-			<date></date>
 			<location></location>
 			<!-- page, episode, etc. -->
 			<unit_date></unit_date>
