@@ -39,7 +39,9 @@
 		<character_relationship>
 			<character></character>
 			<character></character>
+			<!-- mother, father, sibling -->
 			<title></title>
+			<directionality></directionality>
 		</character_relationship>
 	</character_relationships>
 
@@ -59,12 +61,12 @@
 		
 		<event>
 			<name></name>
-			<summary></summary>
-			<image_link></image_link>
-			<location></location>
 			<date></date>
+			<location></location>
 			<!-- page, episode, etc. -->
 			<unit_date></unit_date>
+			<summary></summary>
+			<image_link></image_link>
 			<participants>
 				<participant></participant>
 			</participants>

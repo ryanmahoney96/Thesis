@@ -58,6 +58,9 @@
     <Compile Include="FrontPage.xaml.cs">
       <DependentUpon>FrontPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="NewEventWindow.xaml.cs">
+      <DependentUpon>NewEventWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="NewGeneralNote.xaml.cs">
       <DependentUpon>NewGeneralNote.xaml</DependentUpon>
     </Compile>
@@ -89,6 +92,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="NewCharacterWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="NewEventWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

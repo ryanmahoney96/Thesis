@@ -241,5 +241,96 @@ namespace citadel_wpf
             return returnList;
         }
 
+        public static List<string> GetAllLocationNames(string fullFilePath)
+        {
+            List<string> returnList = new List<string>();
+
+            //TODO xml exception
+            if (File.Exists(fullFilePath))
+            {
+                var xml = XDocument.Load(fullFilePath);
+
+                // Query the data and write out a subset of contacts
+                var query = from c in xml.Root.Descendants("location")
+                            select new
+                            {
+                                Name = c.Element("name").Value
+                            };
+
+                foreach (var locationEntry in query)
+                {
+                    returnList.Add(locationEntry.Name);
+                }
+            }
+            return returnList;
+        }
+
+        public static List<List<string>> GetAllLocationNotes(string fullFilePath)
+        {
+            List<List<string>> returnList = new List<List<string>>();
+
+            //TODO xml exception
+            if (File.Exists(fullFilePath))
+            {
+                var xml = XDocument.Load(fullFilePath);
+
+                // Query the data and write out a subset of contacts
+                var query = from c in xml.Root.Descendants("location")
+                                //where ((string)c.Element("name")).Equals("Ygritte")
+                            select new
+                            {
+                                Name = c.Element("name").Value,
+                                Type = c.Element("type").Value,
+                                Subtype = c.Element("subtype").Value,
+                                PhysNotes = c.Element("physdesc_and_notes").Value
+                            };
+
+                foreach (var locationEntry in query)
+                {
+                    List<string> temp = new List<string>();
+                    temp.Add(locationEntry.Name);
+                    temp.Add(locationEntry.Type);
+                    temp.Add(locationEntry.Subtype);
+                    temp.Add(locationEntry.PhysNotes);
+                    returnList.Add(temp);
+                }
+            }
+            return returnList;
+        }
+
+        public static List<List<string>> GetAllEventNotes(string fullFilePath)
+        {
+            List<List<string>> returnList = new List<List<string>>();
+
+            //TODO xml exception
+            if (File.Exists(fullFilePath))
+            {
+                var xml = XDocument.Load(fullFilePath);
+
+                // Query the data and write out a subset of contacts
+                var query = from c in xml.Root.Descendants("event")
+                                //where ((string)c.Element("name")).Equals("Ygritte")
+                            select new
+                            {
+                                Name = c.Element("name").Value,
+                                Location = c.Element("location").Value,
+                                Unit_Date = c.Element("unit_date").Value,
+                                Date = c.Element("date").Value,
+                                Notes = c.Element("notes").Value
+                            };
+
+                foreach (var locationEntry in query)
+                {
+                    List<string> temp = new List<string>();
+                    temp.Add(locationEntry.Name);
+                    temp.Add(locationEntry.Location);
+                    temp.Add(locationEntry.Unit_Date);
+                    temp.Add(locationEntry.Date);
+                    temp.Add(locationEntry.Notes);
+                    returnList.Add(temp);
+                }
+            }
+            return returnList;
+        }
     }
 }

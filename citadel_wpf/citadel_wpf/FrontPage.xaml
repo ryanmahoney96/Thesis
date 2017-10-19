@@ -6,14 +6,16 @@
         xmlns:local="clr-namespace:citadel_wpf"
         mc:Ignorable="d"
         Title="Citadel"
-        Background="#ffffef"
+        Background="#fcfcff"
+        BorderBrush="DarkBlue"
+        BorderThickness="0, 1, 0, 0"
         Icon="./castle_vbr_icon.ico"
         ResizeMode="CanMinimize"
         Height="500" 
         Width="750">
     <Grid>
 
-        <TabControl Background="#ffffef">
+        <TabControl Background="#fcfcff" BorderBrush="DarkBlue" BorderThickness="0, 1, 0, 0">
             <TabItem Header="Media Notes">
                 <Label>
                     <Grid>
@@ -95,7 +97,7 @@
                         </Menu>
 
                         <ScrollViewer Background="White" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" Grid.Row="1" Grid.Column="1">
-
+                            <WrapPanel Name="character_notes_area"></WrapPanel>
                         </ScrollViewer>
                     </Grid>
                 </Label>
@@ -119,14 +121,13 @@
                         <Menu Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="1">
                             <MenuItem Header="_File">
                                 <MenuItem Header="_New Event" Click="New_Event_Click"/>
-                                <MenuItem Header="New Location and Event _Relationship"/>
                                 <MenuItem Header="New Event _Relationship"/>
                                 <!--<MenuItem Header="_Edit"/>-->
                             </MenuItem>
                         </Menu>
 
                         <ScrollViewer Background="White" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" Grid.Row="1" Grid.Column="1">
-
+                            <WrapPanel Name="event_notes_area"></WrapPanel>
                         </ScrollViewer>
                     </Grid>
                 </Label>
@@ -156,7 +157,7 @@
                         </Menu>
 
                         <ScrollViewer Background="White" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" Grid.Row="1" Grid.Column="1">
-
+                            <WrapPanel Name="location_notes_area"></WrapPanel>
                         </ScrollViewer>
                     </Grid>
                 </Label>
@@ -176,8 +177,6 @@
                             <RowDefinition Height="20"/>
                             <RowDefinition Height="480"/>
                         </Grid.RowDefinitions>
-
-                        <Button Name="testButton" Content="Click" Click="Button_Click" Grid.Row="1" Grid.Column="1"></Button>
                         
                     </Grid>
                 </Label>

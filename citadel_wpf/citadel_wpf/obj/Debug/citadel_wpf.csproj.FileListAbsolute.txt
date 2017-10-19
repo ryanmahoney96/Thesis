@@ -23,3 +23,5 @@ C:\Users\Ryangigs\Documents\Thesis\citadel_wpf\citadel_wpf\obj\Debug\NewGeneralN
 C:\Users\Ryangigs\Documents\Thesis\citadel_wpf\citadel_wpf\obj\Debug\NewMediaWindow.g.cs
 C:\Users\Ryangigs\Documents\Thesis\citadel_wpf\citadel_wpf\obj\Debug\NewGeneralNote.baml
 C:\Users\Ryangigs\Documents\Thesis\citadel_wpf\citadel_wpf\obj\Debug\NewMediaWindow.baml
+C:\Users\Ryangigs\Documents\Thesis\citadel_wpf\citadel_wpf\obj\Debug\NewEventWindow.g.cs
+C:\Users\Ryangigs\Documents\Thesis\citadel_wpf\citadel_wpf\obj\Debug\NewEventWindow.baml

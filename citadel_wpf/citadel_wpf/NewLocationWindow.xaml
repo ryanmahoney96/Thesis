@@ -7,9 +7,11 @@
         mc:Ignorable="d"
         WindowStartupLocation="CenterScreen"
         ResizeMode="CanMinimize"
-        Background="#ffffef"
+        Background="#fcfcff"
+        BorderBrush="DarkBlue"
+        BorderThickness="0, 1, 0, 0"
         Icon="./castle_vbr_icon.ico"
-        Title="Add a New Location" Height="340" Width="480">
+        Title="Add a New Location" Height="340" Width="540">
     <Grid>
 
         <Grid.RowDefinitions>
@@ -23,7 +25,7 @@
 
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="5"/>
-            <ColumnDefinition Width="175"/>
+            <ColumnDefinition Width="235"/>
             <ColumnDefinition Width="285"/>
             <ColumnDefinition Width="5"/>
         </Grid.ColumnDefinitions>
