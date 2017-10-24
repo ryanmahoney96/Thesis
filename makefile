@@ -14,3 +14,5 @@ producer:	producer.c
 
 clean:	
 	-rm -f consumer producer
+
+	# g++ -std=c++11 -w main.cpp -o driver

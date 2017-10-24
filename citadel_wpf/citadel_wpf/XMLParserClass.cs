@@ -306,8 +306,11 @@ namespace citadel_wpf
                                 Name = c.Element("name").Value,
                                 Type = c.Element("type").Value,
                                 Subtype = c.Element("subtype").Value,
-                                PhysNotes = c.Element("physdesc_and_notes").Value
+                                PhysNotes = c.Element("physdesc_and_notes").Value,
                             };
+
+                var query2 = from c in xml.Root.Descendants("location")
+                             select c;
 
                 foreach (var locationEntry in query)
                 {
@@ -316,6 +319,17 @@ namespace citadel_wpf
                     temp.Add(locationEntry.Type);
                     temp.Add(locationEntry.Subtype);
                     temp.Add(locationEntry.PhysNotes);
+                    returnList.Add(temp);
+                }
+                //TODO: use this to make simpler
+                foreach (var l in query2)
+                {
+                    List<string> temp = new List<string>();
+                    foreach (var t in l.Elements())
+                    {
+                        temp.Add(t.Value);
+                        temp.Add("^" + t.Name);
+                    }
                     returnList.Add(temp);
                 }
             }
@@ -351,6 +365,32 @@ namespace citadel_wpf
                     temp.Add(locationEntry.Unit_Date);
                     temp.Add(locationEntry.Date);
                     temp.Add(locationEntry.Notes);
+                    returnList.Add(temp);
+                }
+            }
+            return returnList;
+        }
+
+        public static List<List<string>> GetAllNotes(string fullFilePath, string rootName)
+        {
+            List<List<string>> returnList = new List<List<string>>();
+
+            //TODO xml exception
+            if (File.Exists(fullFilePath))
+            {
+                var xml = XDocument.Load(fullFilePath);
+
+
+                var query = from c in xml.Root.Descendants(rootName) select c;
+                
+                foreach (var q in query)
+                {
+                    List<string> temp = new List<string>();
+                    foreach (var t in q.Elements())
+                    {
+                        temp.Add(t.Name + "^" + t.Value);
+                        //temp.Add(t.Value);
+                    }
                     returnList.Add(temp);
                 }
             }

@@ -54,7 +54,7 @@ namespace citadel_wpf
                         general_notes_handle.Write("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n\n<general_notes>\n\t");
                     }
 
-                    general_notes_handle.Write("<note>" + note + "</note>\n");
+                    general_notes_handle.Write("<note>\n\t<content>" + note + "\n\t</content></note>\n");
 
                     general_notes_handle.Write("</general_notes>");
 
