@@ -23,7 +23,7 @@ namespace citadel_wpf
     public partial class NewEventWindow : NewEntityWindow
     {
 
-        public NewEventWindow(string fp, FrontPage fpr) : base(fp, fpr)
+        public NewEventWindow(string fp, FrontPage fpr, params NewEntityWindow[] rw) : base(fp, fpr, rw)
         {
             InitializeComponent();
             Initialize_locations();
@@ -32,7 +32,7 @@ namespace citadel_wpf
         private void Initialize_locations()
         {
             //TODO: add a new location and update
-            List<string> locationNames = XMLParserClass.GetAllLocationNames(base.folderPath + "\\location_notes.xml");
+            List<string> locationNames = XMLParserClass.GetAllNames(base.folderPath + "\\location_notes.xml", "location");
 
             foreach (string location in locationNames)
             {
@@ -80,7 +80,7 @@ namespace citadel_wpf
 
                     event_notes_handle.Close();
 
-                    frontPageReference.Update_Events();
+                    UpdateReliantWindows();
 
                     base.Close();
                 }
@@ -105,6 +105,16 @@ namespace citadel_wpf
             else
             {
                 required_text.Foreground = Brushes.Red;
+            }
+        }
+
+        public override void UpdateReliantWindows()
+        {
+            frontPageReference.Update_Events();
+
+            foreach (NewEntityWindow w in reliantWindows)
+            {
+                w.UpdateReliantWindows();
             }
         }
 

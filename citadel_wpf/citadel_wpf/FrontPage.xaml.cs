@@ -74,6 +74,11 @@ namespace citadel_wpf
             initWindow(new NewCharacterRelationship(folderPath, this));
         }
 
+        private void Event_Relationship_Click(object sender, RoutedEventArgs e)
+        {
+            initWindow(new NewEventRelationship(folderPath, this));
+        }
+
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             //testHeader.Content = XMLParserClass.attemptParse();
@@ -112,6 +117,7 @@ namespace citadel_wpf
         public void Fill_Note_Area(List<List<string>> entityNodes, WrapPanel area)
         {
             area.Children.Clear();
+            area.MinHeight = 200;
 
             foreach (List<string> l in entityNodes)
             {
@@ -126,26 +132,7 @@ namespace citadel_wpf
                     }
                 }
                 area.Children.Add(n);
-            }
-        }
-
-        public void Fill_Note_Area(List<List<string>> entityNodes, ScrollViewer area)
-        {
-            area.Content = "";
-
-            foreach (List<string> l in entityNodes)
-            {
-                NoteNode n = new NoteNode();
-
-                foreach (string s in l)
-                {
-                    if (!String.IsNullOrWhiteSpace(s))
-                    {
-                        n.Text += s + "\n";
-                    }
-                }
-                //TODO: +=
-                area.Content = n;
+                area.MinHeight += 75;
             }
         }
 

@@ -85,5 +85,7 @@ namespace citadel_wpf
                 required_text.Foreground = Brushes.Red;
             }
         }
+
+        public override void UpdateReliantWindows() { }
     }
 }

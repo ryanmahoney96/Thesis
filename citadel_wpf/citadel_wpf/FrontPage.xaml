@@ -13,6 +13,8 @@
         ResizeMode="CanMinimize"
         Height="510" 
         Width="740">
+    <!--WindowState="Maximized"-->
+        
     <Grid>
 
         <TabControl Background="#fcfcff" BorderBrush="DarkBlue" BorderThickness="0, 1, 0, 0">
@@ -94,8 +96,8 @@
                             </MenuItem>
                         </Menu>
 
-                        <ScrollViewer Name="general_note_scrollview" Background="White" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" Grid.Row="1" Grid.Column="1">
-                            <WrapPanel Name="general_notes_area"></WrapPanel>
+                        <ScrollViewer Background="White" VerticalScrollBarVisibility="Visible" HorizontalScrollBarVisibility="Auto" Grid.Row="1" Grid.Column="1">
+                            <WrapPanel Name="general_notes_area" Width="710" MinHeight="0"></WrapPanel>
                         </ScrollViewer>
                     </Grid>
                 </Label>
@@ -125,8 +127,8 @@
                             </MenuItem>
                         </Menu>
 
-                        <ScrollViewer Background="White" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" Grid.Row="1" Grid.Column="1">
-                            <WrapPanel Name="character_notes_area"></WrapPanel>
+                        <ScrollViewer Background="White" VerticalScrollBarVisibility="Visible" HorizontalScrollBarVisibility="Auto" Grid.Row="1" Grid.Column="1">
+                            <WrapPanel Name="character_notes_area" Width="710" MinHeight="0"></WrapPanel>
                         </ScrollViewer>
                     </Grid>
                 </Label>
@@ -150,13 +152,13 @@
                         <Menu Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="1">
                             <MenuItem Header="_File">
                                 <MenuItem Header="_New Event" Click="New_Event_Click"/>
-                                <MenuItem Header="New Event _Relationship"/>
+                                <MenuItem Header="New Event _Relationship" Click="Event_Relationship_Click"/>
                                 <MenuItem Header="New _Timeline"/>
                             </MenuItem>
                         </Menu>
 
-                        <ScrollViewer Background="White" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" Grid.Row="1" Grid.Column="1">
-                            <WrapPanel Name="event_notes_area"></WrapPanel>
+                        <ScrollViewer Background="White" VerticalScrollBarVisibility="Visible" HorizontalScrollBarVisibility="Auto" Grid.Row="1" Grid.Column="1">
+                            <WrapPanel Name="event_notes_area" Width="710" MinHeight="0"></WrapPanel>
                         </ScrollViewer>
                     </Grid>
                 </Label>
@@ -184,8 +186,8 @@
                             </MenuItem>
                         </Menu>
 
-                        <ScrollViewer Background="White" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" Grid.Row="1" Grid.Column="1">
-                            <WrapPanel Name="location_notes_area"></WrapPanel>
+                        <ScrollViewer Background="White" VerticalScrollBarVisibility="Visible" HorizontalScrollBarVisibility="Auto" Grid.Row="1" Grid.Column="1">
+                            <WrapPanel Name="location_notes_area" Width="710" MinHeight="0"></WrapPanel>
                         </ScrollViewer>
                     </Grid>
                 </Label>

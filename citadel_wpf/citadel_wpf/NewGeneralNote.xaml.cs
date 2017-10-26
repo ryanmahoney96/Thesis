@@ -20,7 +20,7 @@ namespace citadel_wpf
     /// </summary>
     public partial class NewGeneralNote : NewEntityWindow
     {
-        public NewGeneralNote(string fp, FrontPage fpr) : base(fp, fpr)
+        public NewGeneralNote(string fp, FrontPage fpr, params NewEntityWindow[] rw) : base(fp, fpr, rw)
         {
             InitializeComponent();
         }
@@ -52,7 +52,7 @@ namespace citadel_wpf
 
                     general_notes_handle.Close();
 
-                    frontPageReference.Update_Notes();
+                    UpdateReliantWindows();
 
                     Close();
                 }
@@ -77,6 +77,16 @@ namespace citadel_wpf
             else
             {
                 required_text.Foreground = Brushes.Red;
+            }
+        }
+
+        public override void UpdateReliantWindows()
+        {
+            frontPageReference.Update_Notes();
+
+            foreach (NewEntityWindow w in reliantWindows)
+            {
+                w.UpdateReliantWindows();
             }
         }
     }

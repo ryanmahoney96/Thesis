@@ -25,7 +25,7 @@ namespace citadel_wpf
             Text = "";
             t.TextWrapping = TextWrapping.Wrap;
             t.FontSize = 15;
-            b.Width = 300;
+            b.Width = 320;
             b.Height = 150;
             //button.Content = "Edit";
             s.Content = t;

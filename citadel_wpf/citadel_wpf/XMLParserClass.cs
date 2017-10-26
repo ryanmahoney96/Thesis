@@ -260,30 +260,6 @@ namespace citadel_wpf
             return returnList;
         }
 
-        public static List<string> GetAllLocationNames(string fullFilePath)
-        {
-            List<string> returnList = new List<string>();
-
-            //TODO xml exception
-            if (File.Exists(fullFilePath))
-            {
-                var xml = XDocument.Load(fullFilePath);
-
-                // Query the data and write out a subset of contacts
-                var query = from c in xml.Root.Descendants("location")
-                            select new
-                            {
-                                Name = c.Element("name").Value
-                            };
-
-                foreach (var locationEntry in query)
-                {
-                    returnList.Add(locationEntry.Name);
-                }
-            }
-            return returnList;
-        }
-
         public static List<List<string>> GetAllLocationNotes(string fullFilePath)
         {
             List<List<string>> returnList = new List<List<string>>();
@@ -349,6 +325,7 @@ namespace citadel_wpf
             return returnList;
         }
 
+
         public static List<List<string>> GetAllNotes(string fullFilePath, string rootName)
         {
             List<List<string>> returnList = new List<List<string>>();
@@ -369,6 +346,30 @@ namespace citadel_wpf
                         //temp.Add(t.Value);
                     }
                     returnList.Add(temp);
+                }
+            }
+            return returnList;
+        }
+
+        public static List<string> GetAllNames(string fullFilePath, string rootName)
+        {
+            List<string> returnList = new List<string>();
+
+            //TODO xml exception
+            if (File.Exists(fullFilePath))
+            {
+                var xml = XDocument.Load(fullFilePath);
+
+                // Query the data and write out a subset of contacts
+                var query = from c in xml.Root.Descendants(rootName)
+                            select new
+                            {
+                                Name = c.Element("name").Value
+                            };
+
+                foreach (var entry in query)
+                {
+                    returnList.Add(entry.Name);
                 }
             }
             return returnList;

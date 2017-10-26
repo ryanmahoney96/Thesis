@@ -21,11 +21,13 @@ namespace citadel_wpf
     {
         protected string folderPath;
         protected FrontPage frontPageReference;
+        protected NewEntityWindow[] reliantWindows;
 
-        public NewEntityWindow(string fp, FrontPage fpr)
+        public NewEntityWindow(string fp, FrontPage fpr, params NewEntityWindow[] rw)
         {
             folderPath = fp;
             frontPageReference = fpr;
+            reliantWindows = rw;
         }
         public NewEntityWindow()
         {
@@ -37,8 +39,10 @@ namespace citadel_wpf
             Close();
         }
 
-        //TODO: create save that takes in function pointer to take away all the redundant code in the inheritor classes
+        //TODO: create save that takes in function, bool list, handle name to take away all the redundant code in the inheritor classes
         protected abstract void Save(object sender, RoutedEventArgs e);
+
+        public abstract void UpdateReliantWindows();
 
     }
 }

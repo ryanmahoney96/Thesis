@@ -62,6 +62,9 @@
       <DependentUpon>NewCharacterRelationship.xaml</DependentUpon>
     </Compile>
     <Compile Include="NewEntityWindow.cs" />
+    <Compile Include="NewEventRelationship.xaml.cs">
+      <DependentUpon>NewEventRelationship.xaml</DependentUpon>
+    </Compile>
     <Compile Include="NewEventWindow.xaml.cs">
       <DependentUpon>NewEventWindow.xaml</DependentUpon>
     </Compile>
@@ -100,6 +103,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="NewCharacterWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="NewEventRelationship.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

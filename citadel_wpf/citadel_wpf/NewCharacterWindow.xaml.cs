@@ -20,7 +20,7 @@ namespace citadel_wpf
     /// </summary>
     public partial class NewCharacterWindow : NewEntityWindow
     {
-        public NewCharacterWindow(string fp, FrontPage fpr) : base(fp, fpr)
+        public NewCharacterWindow(string fp, FrontPage fpr, params NewEntityWindow[] rw) : base(fp, fpr, rw)
         {
             InitializeComponent();
         }
@@ -59,7 +59,7 @@ namespace citadel_wpf
 
                     character_notes_handle.Close();
 
-                    frontPageReference.Update_Characters();
+                    UpdateReliantWindows();
 
                     base.Close();
                 }
@@ -84,6 +84,16 @@ namespace citadel_wpf
             else
             {
                 required_text.Foreground = Brushes.Red;
+            }
+        }
+
+        public override void UpdateReliantWindows()
+        {
+            frontPageReference.Update_Characters();
+
+            foreach (NewEntityWindow w in reliantWindows)
+            {
+                w.UpdateReliantWindows();
             }
         }
     }

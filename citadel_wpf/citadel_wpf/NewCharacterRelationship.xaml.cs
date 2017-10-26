@@ -22,9 +22,10 @@ namespace citadel_wpf
     public partial class NewCharacterRelationship : NewEntityWindow
     {
 
-        public NewCharacterRelationship(string fp, FrontPage fpr) : base(fp, fpr)
+        public NewCharacterRelationship(string fp, FrontPage fpr, params NewEntityWindow[] rw) : base(fp, fpr, rw)
         {
             InitializeComponent();
+            Fill_Character_Boxes();
         }
 
         override protected void Save(object sender, RoutedEventArgs e)
@@ -53,8 +54,8 @@ namespace citadel_wpf
 
                     character_relationships_handle.Write("<character_relationship>\n\t\t");
                     character_relationships_handle.Write("<char_one>" + character_one + "</char_one>\n\t\t");
-                    character_relationships_handle.Write("<char_two>" + character_two + "</char_two>\n\t\t");
                     character_relationships_handle.Write("<relationship>" + relationship + "</relationship>\n\t");
+                    character_relationships_handle.Write("<char_two>" + character_two + "</char_two>\n\t\t");
                     character_relationships_handle.Write("</character_relationship>\n\n");
 
                     character_relationships_handle.Write("</character_relationships>");
@@ -87,12 +88,37 @@ namespace citadel_wpf
             }
         }
 
+        private void Fill_Character_Boxes()
+        {
+            character_one_combo.Items.Clear();
+            character_two_combo.Items.Clear();
+
+            List<string> characterNames = XMLParserClass.GetAllNames(base.folderPath + "\\character_notes.xml", "character");
+
+            ComboBoxItem cBoxItem;
+
+            foreach (string character in characterNames)
+            {
+                cBoxItem = new ComboBoxItem();
+                cBoxItem.Content = character;
+                character_one_combo.Items.Add(cBoxItem);
+
+                cBoxItem = new ComboBoxItem();
+                cBoxItem.Content = character;
+                character_two_combo.Items.Add(cBoxItem);
+            }
+        }
+
         private void Add_Character(object sender, RoutedEventArgs e)
         {
-            NewCharacterWindow ncw = new NewCharacterWindow(folderPath, frontPageReference);
+            NewCharacterWindow ncw = new NewCharacterWindow(folderPath, frontPageReference, this);
             ncw.Show();
             ncw.Topmost = true;
-            //TODO: update lists after addition
+        }
+
+        public override void UpdateReliantWindows()
+        {
+            Fill_Character_Boxes();
         }
     }
 }

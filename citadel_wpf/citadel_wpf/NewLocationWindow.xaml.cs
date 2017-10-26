@@ -20,7 +20,7 @@ namespace citadel_wpf
     /// </summary>
     public partial class NewLocationWindow : NewEntityWindow
     {
-        public NewLocationWindow(string fp, FrontPage fpr) : base(fp, fpr)
+        public NewLocationWindow(string fp, FrontPage fpr, params NewEntityWindow[] rw) : base(fp, fpr, rw)
         {
             InitializeComponent();
         }
@@ -61,7 +61,7 @@ namespace citadel_wpf
 
                     location_notes_handle.Close();
 
-                    frontPageReference.Update_Locations();
+                    UpdateReliantWindows();
 
                     Close();
                 }
@@ -145,6 +145,16 @@ namespace citadel_wpf
         private void type_combobox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             updateSubtypes();
+        }
+
+        public override void UpdateReliantWindows()
+        {
+            frontPageReference.Update_Locations();
+
+            foreach (NewEntityWindow w in reliantWindows)
+            {
+                w.UpdateReliantWindows();
+            }
         }
     }
 }
