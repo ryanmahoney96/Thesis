@@ -20,21 +20,19 @@ namespace citadel_wpf
     /// <summary>
     /// Interaction logic for NewCharacterWindow.xaml
     /// </summary>
-    public partial class NewEventWindow : Window
+    public partial class NewEventWindow : NewEntityWindow
     {
-        string folderPath;
 
-        public NewEventWindow(string fp)
+        public NewEventWindow(string fp, FrontPage fpr) : base(fp, fpr)
         {
             InitializeComponent();
-            folderPath = fp;
             Initialize_locations();
         }
 
         private void Initialize_locations()
         {
-            //TODO: add a new location
-            List<string> locationNames = XMLParserClass.GetAllLocationNames(folderPath + "\\location_notes.xml");
+            //TODO: add a new location and update
+            List<string> locationNames = XMLParserClass.GetAllLocationNames(base.folderPath + "\\location_notes.xml");
 
             foreach (string location in locationNames)
             {
@@ -44,13 +42,7 @@ namespace citadel_wpf
             }
         }
 
-        private void Cancel_and_Close(object sender, RoutedEventArgs e)
-        {
-            Close();
-        }
-
-        //TODO: save function that takes window and function pointer
-        private void Save_Event(object sender, RoutedEventArgs e)
+        override protected void Save(object sender, RoutedEventArgs e)
         {
             //TODO: make sure character does not already exist
             StreamWriter event_notes_handle = null;
@@ -64,7 +56,7 @@ namespace citadel_wpf
                     string unit_date = event_unit_date_number.Text;
                     string date = event_date_number.Text;
                     string notes = notes_text.Text;
-                    string filePath = folderPath + "\\event_notes.xml";
+                    string filePath = base.folderPath + "\\event_notes.xml";
 
                     if (File.Exists(filePath))
                     {
@@ -87,7 +79,10 @@ namespace citadel_wpf
                     event_notes_handle.Write("</events>");
 
                     event_notes_handle.Close();
-                    Close();
+
+                    frontPageReference.Update_Events();
+
+                    base.Close();
                 }
                 catch (IOException)
                 {
@@ -104,7 +99,7 @@ namespace citadel_wpf
                         event_notes_handle.Close();
                     }
 
-                    Close();
+                    base.Close();
                 }
             }
             else

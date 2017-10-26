@@ -61,6 +61,7 @@
     <Compile Include="NewCharacterRelationship.xaml.cs">
       <DependentUpon>NewCharacterRelationship.xaml</DependentUpon>
     </Compile>
+    <Compile Include="NewEntityWindow.cs" />
     <Compile Include="NewEventWindow.xaml.cs">
       <DependentUpon>NewEventWindow.xaml</DependentUpon>
     </Compile>

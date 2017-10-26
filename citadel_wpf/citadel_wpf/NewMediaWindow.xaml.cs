@@ -18,22 +18,15 @@ namespace citadel_wpf
     /// <summary>
     /// Interaction logic for NewMediaWindow.xaml
     /// </summary>
-    public partial class NewMediaWindow : Window
+    public partial class NewMediaWindow : NewEntityWindow
     {
-        string folderPath;
 
-        public NewMediaWindow(string fp)
+        public NewMediaWindow(string fp, FrontPage fpr): base(fp, fpr)
         {
             InitializeComponent();
-            folderPath = fp;
         }
 
-        private void Cancel_and_Close(object sender, RoutedEventArgs e)
-        {
-            Close();
-        }
-
-        private void Save_Media_Notes(object sender, RoutedEventArgs e)
+        override protected void Save(object sender, RoutedEventArgs e)
         {
             StreamWriter media_notes_handle = null;
 

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -130,7 +131,6 @@ namespace citadel_wpf
             XPathDocument docNav;
             XPathNodeIterator NodeIter;
             string temp = "";
-            //TODO xml exception
 
             //docNav = new XPathDocument(folderName + @"/TestInput.xml");
             if (File.Exists(fullFilePath))
@@ -156,7 +156,6 @@ namespace citadel_wpf
         public static string LINQParseTest(string fullFilePath)
         {
             string temp = "";
-            //TODO xml exception
 
             //docNav = new XPathDocument(folderName + @"/TestInput.xml");
             if (File.Exists(fullFilePath))
@@ -213,8 +212,6 @@ namespace citadel_wpf
         {
             List<List<string>> returnList = new List<List<string>>();
 
-            //TODO xml exception
-
             if (File.Exists(fullFilePath))
             {
                 var xml = XDocument.Load(fullFilePath);
@@ -244,8 +241,6 @@ namespace citadel_wpf
         public static List<List<string>> GetAllGeneralNotes(string fullFilePath)
         {
             List<List<string>> returnList = new List<List<string>>();
-
-            //TODO xml exception
 
             if (File.Exists(fullFilePath))
             {
@@ -293,14 +288,12 @@ namespace citadel_wpf
         {
             List<List<string>> returnList = new List<List<string>>();
 
-            //TODO xml exception
             if (File.Exists(fullFilePath))
             {
                 var xml = XDocument.Load(fullFilePath);
 
                 // Query the data and write out a subset of contacts
                 var query = from c in xml.Root.Descendants("location")
-                                //where ((string)c.Element("name")).Equals("Ygritte")
                             select new
                             {
                                 Name = c.Element("name").Value,
@@ -308,9 +301,6 @@ namespace citadel_wpf
                                 Subtype = c.Element("subtype").Value,
                                 PhysNotes = c.Element("physdesc_and_notes").Value,
                             };
-
-                var query2 = from c in xml.Root.Descendants("location")
-                             select c;
 
                 foreach (var locationEntry in query)
                 {
@@ -321,17 +311,6 @@ namespace citadel_wpf
                     temp.Add(locationEntry.PhysNotes);
                     returnList.Add(temp);
                 }
-                //TODO: use this to make simpler
-                foreach (var l in query2)
-                {
-                    List<string> temp = new List<string>();
-                    foreach (var t in l.Elements())
-                    {
-                        temp.Add(t.Value);
-                        temp.Add("^" + t.Name);
-                    }
-                    returnList.Add(temp);
-                }
             }
             return returnList;
         }
@@ -340,7 +319,6 @@ namespace citadel_wpf
         {
             List<List<string>> returnList = new List<List<string>>();
 
-            //TODO xml exception
             if (File.Exists(fullFilePath))
             {
                 var xml = XDocument.Load(fullFilePath);
@@ -380,7 +358,6 @@ namespace citadel_wpf
             {
                 var xml = XDocument.Load(fullFilePath);
 
-
                 var query = from c in xml.Root.Descendants(rootName) select c;
                 
                 foreach (var q in query)
@@ -395,6 +372,40 @@ namespace citadel_wpf
                 }
             }
             return returnList;
+        }
+
+        public static Hashtable GetMediaInformation (string fullFilePath)
+        {
+            Hashtable returnTable = new Hashtable();
+
+            if (File.Exists(fullFilePath))
+            {
+
+                var xml = XDocument.Load(fullFilePath);
+
+                   // Query the data and write out a subset of contacts
+                   var query = from c in xml.Descendants("media_info")
+                            select new
+                            {
+                                Name = c.Element("name").Value,
+                                Year = c.Element("year").Value,
+                                Type = c.Element("type").Value,
+                                Genre = c.Element("genre").Value,
+                                Summary = c.Element("summary").Value
+                            };
+
+                foreach (var t in query)
+                {
+                    returnTable.Add("Name", t.Name);
+                    returnTable.Add("Year", t.Year);
+                    returnTable.Add("Type", t.Type);
+                    returnTable.Add("Genre", t.Genre);
+                    returnTable.Add("Summary", t.Summary);
+                }
+
+            }
+
+            return returnTable;
         }
     }
 }

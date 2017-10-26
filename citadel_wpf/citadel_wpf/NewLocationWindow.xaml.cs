@@ -18,22 +18,14 @@ namespace citadel_wpf
     /// <summary>
     /// Interaction logic for NewLocationWindow.xaml
     /// </summary>
-    public partial class NewLocationWindow : Window
+    public partial class NewLocationWindow : NewEntityWindow
     {
-        string folderPath;
-
-        public NewLocationWindow(string fp)
+        public NewLocationWindow(string fp, FrontPage fpr) : base(fp, fpr)
         {
             InitializeComponent();
-            folderPath = fp;
         }
 
-        private void Cancel_and_Close(object sender, RoutedEventArgs e)
-        {
-            Close();
-        }
-
-        private void Save_Location(object sender, RoutedEventArgs e)
+        override protected void Save(object sender, RoutedEventArgs e)
         {
             //TODO: make sure location does not already exist
             StreamWriter location_notes_handle = null;
@@ -45,7 +37,7 @@ namespace citadel_wpf
                     string name = name_text.Text;
                     string type = type_combobox.Text;
                     string subtype = subtype_combobox.Text;
-                    string physdesc_notes = physdesc_notes_text.Text;
+                    string description = description_text.Text;
                     string filePath = folderPath + "\\location_notes.xml";
 
                     if (File.Exists(filePath))
@@ -62,12 +54,15 @@ namespace citadel_wpf
                     location_notes_handle.Write("<name>" + name + "</name>\n\t\t");
                     location_notes_handle.Write("<type>" + type + "</type>\n\t\t");
                     location_notes_handle.Write("<subtype>" + subtype + "</subtype>\n\t\t");
-                    location_notes_handle.Write("<physdesc_and_notes>" + physdesc_notes + "</physdesc_and_notes>\n\t");
+                    location_notes_handle.Write("<description>" + description + "</description>\n\t");
                     location_notes_handle.Write("</location>\n\n");
 
                     location_notes_handle.Write("</locations>");
 
                     location_notes_handle.Close();
+
+                    frontPageReference.Update_Locations();
+
                     Close();
                 }
                 catch (IOException)
@@ -106,6 +101,7 @@ namespace citadel_wpf
 
             if (selectionString.Equals("Settlements"))
             {
+                subtypes.Add("Neighborhood/Hamlet");
                 subtypes.Add("Village/Town");
                 subtypes.Add("City/County");
                 subtypes.Add("Country/Region");
@@ -116,16 +112,22 @@ namespace citadel_wpf
                 subtypes.Add("Lake");
                 subtypes.Add("River");
                 subtypes.Add("Ocean");
+                subtypes.Add("Field/Grassland");
                 subtypes.Add("Forest/Jungle");
                 subtypes.Add("Desert");
                 subtypes.Add("Continent");
+                subtypes.Add("Planet/Interplanetary Body");
             }
             else if (selectionString.Equals("Buildings/Monuments"))
             {
+                subtypes.Add("House/Home");
+                subtypes.Add("Inn/Hotel");
+                subtypes.Add("Store Front/Shop");
+                subtypes.Add("Tower/Skyscraper");
                 subtypes.Add("Statue/Obelisk");     
-                subtypes.Add("Temple/Monastary");
+                subtypes.Add("Temple/Monastary/Religious Building");
                 subtypes.Add("Fort/Castle");
-                subtypes.Add("Dungeon/Grave");
+                subtypes.Add("Dungeon/Grave/Crypt");
             }
             else if (selectionString.Equals("Unknown"))
             {

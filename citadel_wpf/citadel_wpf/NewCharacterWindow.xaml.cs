@@ -18,22 +18,14 @@ namespace citadel_wpf
     /// <summary>
     /// Interaction logic for NewCharacterWindow.xaml
     /// </summary>
-    public partial class NewCharacterWindow : Window
+    public partial class NewCharacterWindow : NewEntityWindow
     {
-        string folderPath;
-
-        public NewCharacterWindow(string fp)
+        public NewCharacterWindow(string fp, FrontPage fpr) : base(fp, fpr)
         {
             InitializeComponent();
-            folderPath = fp;
         }
 
-        private void Cancel_and_Close(object sender, RoutedEventArgs e)
-        {
-            Close();
-        }
-
-        private void Save_Character(object sender, RoutedEventArgs e)
+        override protected void Save(object sender, RoutedEventArgs e)
         {
             //TODO: make sure character does not already exist
             StreamWriter character_notes_handle = null;
@@ -44,8 +36,8 @@ namespace citadel_wpf
                 {
                     string name = name_text.Text;
                     string gender = gender_combo_box.Text;
-                    string physdesc_notes = physdesc_notes_text.Text;
-                    string filePath = folderPath + "\\character_notes.xml";
+                    string description = description_text.Text;
+                    string filePath = base.folderPath + "\\character_notes.xml";
 
                     if (File.Exists(filePath))
                     {
@@ -60,13 +52,16 @@ namespace citadel_wpf
                     character_notes_handle.Write("<character>\n\t\t");
                     character_notes_handle.Write("<name>" + name + "</name>\n\t\t");
                     character_notes_handle.Write("<gender>" + gender + "</gender>\n\t\t");
-                    character_notes_handle.Write("<physdesc_and_notes>" + physdesc_notes + "</physdesc_and_notes>\n\t");
+                    character_notes_handle.Write("<description>" + description + "</description>\n\t");
                     character_notes_handle.Write("</character>\n\n");
 
                     character_notes_handle.Write("</characters>");
 
                     character_notes_handle.Close();
-                    Close();
+
+                    frontPageReference.Update_Characters();
+
+                    base.Close();
                 }
                 catch (IOException)
                 {
@@ -83,7 +78,7 @@ namespace citadel_wpf
                         character_notes_handle.Close();
                     }
 
-                    Close();
+                    base.Close();
                 }
             }
             else

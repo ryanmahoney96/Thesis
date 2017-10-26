@@ -18,22 +18,16 @@ namespace citadel_wpf
     /// <summary>
     /// Interaction logic for NewCharacterRelationship.xaml
     /// </summary>
-    public partial class NewCharacterRelationship : Window
+    /// TODO: return to developing this
+    public partial class NewCharacterRelationship : NewEntityWindow
     {
-        string folderPath;
 
-        public NewCharacterRelationship(string fp)
+        public NewCharacterRelationship(string fp, FrontPage fpr) : base(fp, fpr)
         {
             InitializeComponent();
-            folderPath = fp;
         }
 
-        private void Cancel_and_Close(object sender, RoutedEventArgs e)
-        {
-            Close();
-        }
-
-        private void Save_Character(object sender, RoutedEventArgs e)
+        override protected void Save(object sender, RoutedEventArgs e)
         {
             //TODO: make sure relationship does not already exist
             StreamWriter character_relationships_handle = null;
@@ -88,8 +82,17 @@ namespace citadel_wpf
             }
             else
             {
+                //TODO: required text
                 //required_text.Foreground = Brushes.Red;
             }
+        }
+
+        private void Add_Character(object sender, RoutedEventArgs e)
+        {
+            NewCharacterWindow ncw = new NewCharacterWindow(folderPath, frontPageReference);
+            ncw.Show();
+            ncw.Topmost = true;
+            //TODO: update lists after addition
         }
     }
 }

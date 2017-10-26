@@ -20,6 +20,7 @@ namespace citadel_wpf
             //Button button = new Button();
             b.BorderThickness = new Thickness(1, 1, 1, 1);
             b.BorderBrush = new SolidColorBrush(Colors.DarkBlue);
+            ScrollViewer s = new ScrollViewer();
             t = new TextBlock();
             Text = "";
             t.TextWrapping = TextWrapping.Wrap;
@@ -27,7 +28,8 @@ namespace citadel_wpf
             b.Width = 300;
             b.Height = 150;
             //button.Content = "Edit";
-            b.Child = t;
+            s.Content = t;
+            b.Child = s;
             b.Padding = new Thickness(1, 1, 1, 1);
             b.Margin = new Thickness(5, 5, 5, 5);
             this.Child = b;

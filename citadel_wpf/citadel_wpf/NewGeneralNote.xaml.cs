@@ -18,22 +18,14 @@ namespace citadel_wpf
     /// <summary>
     /// Interaction logic for NewGeneralNote.xaml
     /// </summary>
-    public partial class NewGeneralNote : Window
+    public partial class NewGeneralNote : NewEntityWindow
     {
-        string folderPath;
-
-        public NewGeneralNote(string fp)
+        public NewGeneralNote(string fp, FrontPage fpr) : base(fp, fpr)
         {
             InitializeComponent();
-            folderPath = fp;
         }
 
-        private void Cancel_and_Close(object sender, RoutedEventArgs e)
-        {
-            Close();
-        }
-
-        private void Save_Note(object sender, RoutedEventArgs e)
+        override protected void Save(object sender, RoutedEventArgs e)
         {
             StreamWriter general_notes_handle = null;
 
@@ -59,6 +51,9 @@ namespace citadel_wpf
                     general_notes_handle.Write("</general_notes>");
 
                     general_notes_handle.Close();
+
+                    frontPageReference.Update_Notes();
+
                     Close();
                 }
                 catch (IOException)

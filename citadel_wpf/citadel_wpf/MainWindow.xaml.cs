@@ -84,7 +84,7 @@ namespace citadel_wpf
 
             if (!File.Exists(mediaNotes))
             {
-                NewMediaWindow nmw = new NewMediaWindow(folderName.Text);
+                NewMediaWindow nmw = new NewMediaWindow(folderName.Text, null);
                 nmw.Topmost = true;
                 nmw.Show();
             }

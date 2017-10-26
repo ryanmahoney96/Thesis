@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -21,7 +22,9 @@ namespace citadel_wpf
     {
         private String folderPath;
 
-        //TODO: Object Orient
+        //TODO: add location to event window
+        //TODO: Note Areas do not wrap: change to grid with adapting height? Change wrappanel reference to scrollviewer reference?
+
         public FrontPage(String fp)
         {
             InitializeComponent();
@@ -32,32 +35,43 @@ namespace citadel_wpf
 
         private void New_Note_Click(object sender, RoutedEventArgs e)
         {
-            initWindow(new NewGeneralNote(folderPath));
+            initWindow(new NewGeneralNote(folderPath, this));
+        }
+        public void Update_Notes()
+        {
+            Fill_Note_Area(XMLParserClass.GetAllNotes(folderPath + "\\general_notes.xml", "note"), general_notes_area);
         }
 
         private void New_Character_Click(object sender, RoutedEventArgs e)
         {
-            initWindow(new NewCharacterWindow(folderPath));
+            initWindow(new NewCharacterWindow(folderPath, this));
+        }
+        public void Update_Characters()
+        {
+            Fill_Note_Area(XMLParserClass.GetAllNotes(folderPath + "\\character_notes.xml", "character"), character_notes_area);
         }
 
         private void New_Event_Click(object sender, RoutedEventArgs e)
         {
-            initWindow(new NewEventWindow(folderPath));
+            initWindow(new NewEventWindow(folderPath, this));
+        }
+        public void Update_Events()
+        {
+            Fill_Note_Area(XMLParserClass.GetAllNotes(folderPath + "\\event_notes.xml", "event"), event_notes_area);
         }
 
         private void New_Location_Click(object sender, RoutedEventArgs e)
         {
-            initWindow(new NewLocationWindow(folderPath));
+            initWindow(new NewLocationWindow(folderPath, this));
         }
-
-        private void Media_Note_Click(object sender, RoutedEventArgs e)
+        public void Update_Locations()
         {
-
+            Fill_Note_Area(XMLParserClass.GetAllNotes(folderPath + "\\location_notes.xml", "location"), location_notes_area);
         }
 
         private void Character_Relationship_Click(object sender, RoutedEventArgs e)
         {
-            initWindow(new NewCharacterRelationship(folderPath));
+            initWindow(new NewCharacterRelationship(folderPath, this));
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -76,28 +90,62 @@ namespace citadel_wpf
             //Fill_Note_Area(XMLParserClass.GetAllLocationNotes(folderPath + "\\location_notes.xml"), location_notes_area);
             //Fill_Note_Area(XMLParserClass.GetAllEventNotes(folderPath + "\\event_notes.xml"), event_notes_area);
 
-            Fill_Note_Area(XMLParserClass.GetAllNotes(folderPath + "\\character_notes.xml", "character"), character_notes_area);
+            Fill_Media_Area(XMLParserClass.GetMediaInformation(folderPath + "\\media_notes.xml"));
             Fill_Note_Area(XMLParserClass.GetAllNotes(folderPath + "\\general_notes.xml", "note"), general_notes_area);
-            Fill_Note_Area(XMLParserClass.GetAllNotes(folderPath + "\\location_notes.xml", "location"), location_notes_area);
+            Fill_Note_Area(XMLParserClass.GetAllNotes(folderPath + "\\character_notes.xml", "character"), character_notes_area);
             Fill_Note_Area(XMLParserClass.GetAllNotes(folderPath + "\\event_notes.xml", "event"), event_notes_area);
+            Fill_Note_Area(XMLParserClass.GetAllNotes(folderPath + "\\location_notes.xml", "location"), location_notes_area);
         }
 
-        //TODO move this functionality over so that compilation into a "note" is done in "GetAll____Notes"
-        private void Fill_Note_Area(List<List<string>> entityNodes, WrapPanel area)
+        private void Fill_Media_Area(Hashtable information)
         {
+            if (!information.Equals(null))
+            {
+                titleText.Text = information["Name"].ToString();
+                yearText.Text = information["Year"].ToString();
+                type_combobox.Text = information["Type"].ToString();
+                genre_combobox.Text = information["Genre"].ToString();
+                summaryText.Text = information["Summary"].ToString();
+            }
+        }
+
+        public void Fill_Note_Area(List<List<string>> entityNodes, WrapPanel area)
+        {
+            area.Children.Clear();
+
             foreach (List<string> l in entityNodes)
             {
                 NoteNode n = new NoteNode();
 
                 foreach (string s in l)
                 {
-                    //TODO: add type to string and delimit by ^ to add headings
+                    //TODO: use delimiter concept to add headings and labels
                     if (!String.IsNullOrWhiteSpace(s))
                     {
                         n.Text += s + "\n";
                     }
                 }
                 area.Children.Add(n);
+            }
+        }
+
+        public void Fill_Note_Area(List<List<string>> entityNodes, ScrollViewer area)
+        {
+            area.Content = "";
+
+            foreach (List<string> l in entityNodes)
+            {
+                NoteNode n = new NoteNode();
+
+                foreach (string s in l)
+                {
+                    if (!String.IsNullOrWhiteSpace(s))
+                    {
+                        n.Text += s + "\n";
+                    }
+                }
+                //TODO: +=
+                area.Content = n;
             }
         }
 

@@ -33,8 +33,8 @@
 
         <TextBlock Name="choosePrompt" TextWrapping="Wrap" Text="Welcome to Citadel, a tool for constructing diagrams and taking notes about books, history, and other narrative media. &#x0a;Choose a Note Folder to begin, or create a new folder."  Grid.Row="1" Grid.Column="1" Margin="2, 2" TextAlignment="Center"/>
         <Button Content="Browse" Grid.Row="2" Grid.Column="2" Margin="2, 2" Click="Browse_Folder"/>
-        <TextBox Name="folderName" SelectionBrush="#9999ff" IsReadOnly="True" Grid.Row="2" Grid.Column="1" Margin="2, 2" TextAlignment="Center"/>
         <Button Content="Submit" Grid.Row="3" Grid.Column="2" Margin="2, 2" Click="Submit_Folder"/>
+        <TextBox Name="folderName" SelectionBrush="#9999ff" IsReadOnly="True" Grid.Row="2" Grid.Column="1" Margin="2, 2" TextAlignment="Center"/>
 
     </Grid>
 </Window>
