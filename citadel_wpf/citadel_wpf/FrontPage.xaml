@@ -69,7 +69,7 @@
                             <TextBox Name="summaryText" TextWrapping="Wrap"></TextBox>
                         </ScrollViewer>
 
-                        <Button Content="Save Changes" Grid.Row="6" Grid.Column="3" Width="110" Height="30" HorizontalAlignment="Center" VerticalAlignment="Center"></Button>
+                        <Button Content="Save Changes" Click="Save_Media_Information"  Grid.Row="6" Grid.Column="3" Width="110" Height="30" HorizontalAlignment="Center" VerticalAlignment="Center"></Button>
 
                     </Grid>
                 </Label>
@@ -192,26 +192,7 @@
                     </Grid>
                 </Label>
             </TabItem>
-
-            <TabItem Header="Options">
-                <Label>
-                    <Grid>
-
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="10"/>
-                            <ColumnDefinition Width="710"/>
-                            <ColumnDefinition Width="10"/>
-                        </Grid.ColumnDefinitions>
-
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="20"/>
-                            <RowDefinition Height="480"/>
-                        </Grid.RowDefinitions>
-                        
-                    </Grid>
-                </Label>
-            </TabItem>
-
+            
         </TabControl>
 
     </Grid>

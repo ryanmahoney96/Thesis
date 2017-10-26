@@ -22,7 +22,7 @@ namespace citadel_wpf
     public partial class NewCharacterRelationship : NewEntityWindow
     {
 
-        public NewCharacterRelationship(string fp, FrontPage fpr, params NewEntityWindow[] rw) : base(fp, fpr, rw)
+        public NewCharacterRelationship(string fp, FrontPage fpr) : base(fp, fpr)
         {
             InitializeComponent();
             Fill_Character_Boxes();

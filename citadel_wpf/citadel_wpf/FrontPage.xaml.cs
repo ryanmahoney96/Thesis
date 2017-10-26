@@ -142,5 +142,11 @@ namespace citadel_wpf
             w.Topmost = true;
         }
 
+        //TODO: you could turn this into a NewEntityWindow
+        private void Save_Media_Information(object sender, RoutedEventArgs e)
+        {
+            GraphConstruction g = new GraphConstruction(folderPath);
+            g.TestGraphviz();
+        }
     }
 }

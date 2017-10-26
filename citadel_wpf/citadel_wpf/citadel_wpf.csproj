@@ -58,6 +58,7 @@
     <Compile Include="FrontPage.xaml.cs">
       <DependentUpon>FrontPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="GraphConstruction.cs" />
     <Compile Include="NewCharacterRelationship.xaml.cs">
       <DependentUpon>NewCharacterRelationship.xaml</DependentUpon>
     </Compile>
