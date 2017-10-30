@@ -337,7 +337,7 @@ namespace citadel_wpf
 
                 var query = from c in xml.Root.Descendants(rootName) select c;
                 
-                foreach (var q in query)
+                foreach (var q in xml.Root.Descendants(rootName).ToList())
                 {
                     List<string> temp = new List<string>();
                     foreach (var t in q.Elements())

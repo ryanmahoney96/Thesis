@@ -153,7 +153,8 @@
                             <MenuItem Header="_File">
                                 <MenuItem Header="_New Event" Click="New_Event_Click"/>
                                 <MenuItem Header="New Event _Relationship" Click="Event_Relationship_Click"/>
-                                <MenuItem Header="New _Timeline"/>
+                                <MenuItem Header="New Event _Timeline"/>
+                                <MenuItem Header="New Location and Event Graph"/>
                             </MenuItem>
                         </Menu>
 
@@ -182,6 +183,7 @@
                         <Menu Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="1">
                             <MenuItem Header="_File">
                                 <MenuItem Header="_New Location" Click="New_Location_Click"/>
+                                <MenuItem Header="New Location and Event Graph"/>
                                 <!--<MenuItem Header="_Edit"/>-->
                             </MenuItem>
                         </Menu>

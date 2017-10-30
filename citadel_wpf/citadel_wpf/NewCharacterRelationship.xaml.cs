@@ -18,9 +18,10 @@ namespace citadel_wpf
     /// <summary>
     /// Interaction logic for NewCharacterRelationship.xaml
     /// </summary>
-    /// TODO: return to developing this
     public partial class NewCharacterRelationship : NewEntityWindow
     {
+
+        //TODO: Add "Other" field for other types of relationships
 
         public NewCharacterRelationship(string fp, FrontPage fpr) : base(fp, fpr)
         {
@@ -83,8 +84,7 @@ namespace citadel_wpf
             }
             else
             {
-                //TODO: required text
-                //required_text.Foreground = Brushes.Red;
+                required_text.Foreground = Brushes.Red;
             }
         }
 

@@ -21,9 +21,10 @@ namespace citadel_wpf
 
         public void TestGraphviz()
         {
-
+            //Procedure: construct the proper dot information, output to a file, open cmd to parse that file
             string echo = "digraph G { Hello->World}";
-            string path = folderPath + "\\temp.dot";
+            echo = "graph s { label=\"Test\"; A -- B; B -- C; subgraph cluster01 { label =\"\" D -- E } }";
+            string path = folderPath + "\\citadel.dot";
             StreamWriter streamWriter = File.CreateText(path);
             streamWriter.Write(echo);
             streamWriter.Close();

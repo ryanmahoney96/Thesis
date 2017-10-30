@@ -20,10 +20,11 @@ namespace citadel_wpf
     /// </summary>
     public partial class FrontPage : Window
     {
-        private String folderPath;
+        //TODO: Alphabetize entities in their files (fairly difficult)? or in the lists (much easier)?
+        //TODO: Add relationships to both event/character/location/etc entities of a pair (rather than separate files) to reduce search/organization time?
+        //TODO Later: stylize with https://github.com/MahApps/MahApps.Metro
 
-        //TODO: add location to event window
-        //TODO: Note Areas do not wrap: change to grid with adapting height? Change wrappanel reference to scrollviewer reference?
+        private String folderPath;
 
         public FrontPage(String fp)
         {
@@ -142,7 +143,6 @@ namespace citadel_wpf
             w.Topmost = true;
         }
 
-        //TODO: you could turn this into a NewEntityWindow
         private void Save_Media_Information(object sender, RoutedEventArgs e)
         {
             GraphConstruction g = new GraphConstruction(folderPath);

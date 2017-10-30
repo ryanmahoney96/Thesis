@@ -26,12 +26,14 @@ namespace citadel_wpf
         public NewEventWindow(string fp, FrontPage fpr, params NewEntityWindow[] rw) : base(fp, fpr, rw)
         {
             InitializeComponent();
-            Initialize_locations();
+            Initialize_Locations();
         }
 
-        private void Initialize_locations()
+        private void Initialize_Locations()
         {
-            //TODO: add a new location and update
+
+            location_combo_box.Items.Clear();
+
             List<string> locationNames = XMLParserClass.GetAllNames(base.folderPath + "\\location_notes.xml", "location");
 
             foreach (string location in locationNames)
@@ -44,7 +46,7 @@ namespace citadel_wpf
 
         override protected void Save(object sender, RoutedEventArgs e)
         {
-            //TODO: make sure character does not already exist
+            //TODO: make sure event does not already exist
             StreamWriter event_notes_handle = null;
 
             if (!name_text.Text.Equals("") && !notes_text.Text.Equals(""))
@@ -111,6 +113,7 @@ namespace citadel_wpf
         public override void UpdateReliantWindows()
         {
             frontPageReference.Update_Events();
+            Initialize_Locations();
 
             foreach (NewEntityWindow w in reliantWindows)
             {
@@ -118,6 +121,12 @@ namespace citadel_wpf
             }
         }
 
+        private void Add_New_Location(object sender, RoutedEventArgs e)
+        {
+            NewLocationWindow nlw = new NewLocationWindow(folderPath, frontPageReference, this);
+            nlw.Show();
+            nlw.Topmost = true;
+        }
     }
 }
 

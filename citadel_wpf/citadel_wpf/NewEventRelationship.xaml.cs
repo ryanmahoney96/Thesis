@@ -18,7 +18,6 @@ namespace citadel_wpf
     /// <summary>
     /// Interaction logic for NewEventRelationship.xaml
     /// </summary>
-    /// TODO: return to developing this
     public partial class NewEventRelationship : NewEntityWindow
     {
 
@@ -83,8 +82,7 @@ namespace citadel_wpf
             }
             else
             {
-                //TODO: required text
-                //required_text.Foreground = Brushes.Red;
+                required_text.Foreground = Brushes.Red;
             }
         }
 
