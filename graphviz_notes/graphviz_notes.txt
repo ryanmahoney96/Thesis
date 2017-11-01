@@ -16,6 +16,7 @@ http://www.graphviz.org/content/dot-language
 
 //windows command for compilation
 dot -Tpng C:\Users\Ryangigs\Desktop\temp.dot -o C:\Users\Ryangigs\Desktop\outfile.png
+dot -Tpng C:\Users\Ryangigs\Desktop\dotsample_shapes_and_lines.txt -o C:\Users\Ryangigs\Desktop\outfile.png
 
 //for immediate tree: find all characters with same father and/or mother
 //for extended tree: find all characters related to subject

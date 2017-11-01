@@ -184,6 +184,7 @@ namespace citadel_wpf
             return temp;
         }
 
+        //TODO Exchange for oop design
         public static StreamWriter RemoveLastLine(string filePath)
         {
             //Deletes the last line in the xml file, the closing content tag
@@ -223,15 +224,17 @@ namespace citadel_wpf
                             {
                                 Name = c.Element("name").Value,
                                 Gender = c.Element("gender").Value,
-                                PhysNotes = c.Element("physdesc_and_notes").Value
+                                Description = c.Element("description").Value
                             };
 
                 foreach (var characterEntry in query)
                 {
                     List<string> temp = new List<string>();
-                    temp.Add(characterEntry.Name);
-                    temp.Add(characterEntry.Gender);
-                    temp.Add(characterEntry.PhysNotes);
+
+                    temp.Add("Name\\" + characterEntry.Name);
+                    temp.Add("Gender\\" + characterEntry.Gender);
+                    temp.Add("Description\\" + characterEntry.Description);
+                    Character.AddRecord(new Character(characterEntry.Name, characterEntry.Gender, characterEntry.Description));
                     returnList.Add(temp);
                 }
             }
@@ -247,13 +250,14 @@ namespace citadel_wpf
                 var xml = XDocument.Load(fullFilePath);
 
                 // Query the data and write out a subset of contacts
-                var query = from c in xml.Root.Descendants("note")
+                var query = from c in xml.Root.Descendants("general_note")
                             select c.Value;
 
                 foreach (var noteEntry in query)
                 {
                     List<string> temp = new List<string>();
-                    temp.Add(noteEntry);
+                    temp.Add("Note\\" + noteEntry);
+                    GeneralNote.AddRecord(new GeneralNote(noteEntry));
                     returnList.Add(temp);
                 }
             }
@@ -275,16 +279,17 @@ namespace citadel_wpf
                                 Name = c.Element("name").Value,
                                 Type = c.Element("type").Value,
                                 Subtype = c.Element("subtype").Value,
-                                PhysNotes = c.Element("physdesc_and_notes").Value,
+                                Description = c.Element("description").Value,
                             };
 
                 foreach (var locationEntry in query)
                 {
                     List<string> temp = new List<string>();
-                    temp.Add(locationEntry.Name);
-                    temp.Add(locationEntry.Type);
-                    temp.Add(locationEntry.Subtype);
-                    temp.Add(locationEntry.PhysNotes);
+                    temp.Add("Name\\" + locationEntry.Name);
+                    temp.Add("Type\\" + locationEntry.Type);
+                    temp.Add("Subtype\\" + locationEntry.Subtype);
+                    temp.Add("Description\\" + locationEntry.Description);
+                    Location.AddRecord(new Location(locationEntry.Name, locationEntry.Type, locationEntry.Subtype, locationEntry.Description));
                     returnList.Add(temp);
                 }
             }
@@ -301,30 +306,29 @@ namespace citadel_wpf
 
                 // Query the data and write out a subset of contacts
                 var query = from c in xml.Root.Descendants("event")
-                                //where ((string)c.Element("name")).Equals("Ygritte")
                             select new
                             {
                                 Name = c.Element("name").Value,
                                 Location = c.Element("location").Value,
                                 Unit_Date = c.Element("unit_date").Value,
                                 Date = c.Element("date").Value,
-                                Notes = c.Element("notes").Value
+                                Notes = c.Element("description").Value
                             };
 
-                foreach (var locationEntry in query)
+                foreach (var eventEntry in query)
                 {
                     List<string> temp = new List<string>();
-                    temp.Add(locationEntry.Name);
-                    temp.Add(locationEntry.Location);
-                    temp.Add(locationEntry.Unit_Date);
-                    temp.Add(locationEntry.Date);
-                    temp.Add(locationEntry.Notes);
+                    temp.Add("Name\\" + eventEntry.Name);
+                    temp.Add("Location\\" + eventEntry.Location);
+                    temp.Add("Unit Date\\" + eventEntry.Unit_Date);
+                    temp.Add("Date\\" + eventEntry.Date);
+                    temp.Add("Description\\" + eventEntry.Notes);
+                    EventNote.AddRecord(new EventNote(eventEntry.Name, eventEntry.Location, eventEntry.Unit_Date, eventEntry.Date, eventEntry.Notes));
                     returnList.Add(temp);
                 }
             }
             return returnList;
         }
-
 
         public static List<List<string>> GetAllNotes(string fullFilePath, string rootName)
         {
@@ -335,14 +339,16 @@ namespace citadel_wpf
             {
                 var xml = XDocument.Load(fullFilePath);
 
+                //select all entities in the file, along with their elements and attributes
                 var query = from c in xml.Root.Descendants(rootName) select c;
                 
+                //for each of these, add the attributes to a temporary list
                 foreach (var q in xml.Root.Descendants(rootName).ToList())
                 {
                     List<string> temp = new List<string>();
                     foreach (var t in q.Elements())
                     {
-                        temp.Add(t.Name + "^" + t.Value);
+                        temp.Add(t.Name + "\\" + t.Value);
                         //temp.Add(t.Value);
                     }
                     returnList.Add(temp);

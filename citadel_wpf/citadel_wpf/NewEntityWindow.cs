@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -22,12 +23,14 @@ namespace citadel_wpf
         protected string folderPath;
         protected FrontPage frontPageReference;
         protected NewEntityWindow[] reliantWindows;
+        protected List<String> controlTexts;
 
         public NewEntityWindow(string fp, FrontPage fpr, params NewEntityWindow[] rw)
         {
             folderPath = fp;
             frontPageReference = fpr;
             reliantWindows = rw;
+            controlTexts = new List<String>();
         }
         public NewEntityWindow()
         {
@@ -41,6 +44,78 @@ namespace citadel_wpf
 
         //TODO: create save that takes in function, bool list, handle name to take away all the redundant code in the inheritor classes
         protected abstract void Save(object sender, RoutedEventArgs e);
+
+        protected void SaveEntity(object sender, RoutedEventArgs e, List<String> controlTexts, TextBlock required_text, string docName, List<Entity> entities)
+        {
+
+            StreamWriter handle = null;
+            bool valid = true;
+
+            foreach (String s in controlTexts)
+            {
+                if (s.Equals(""))
+                {
+                    valid = false;
+                    break;
+                }
+            }
+
+            if (valid)
+            {
+                try
+                {
+
+                    string filePath = folderPath + "\\" + docName + ".xml";
+
+                    //if (File.Exists(filePath))
+                    //{
+                    //    handle = XMLParserClass.RemoveLastLine(filePath);
+                    //}
+                    //else
+                    //{
+                    //    handle = new StreamWriter(filePath, true);
+                    //}
+
+                    handle = new StreamWriter(filePath, false);
+                    handle.Write("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n\n<" + docName + ">\n\t");
+
+
+                    foreach (Entity entity in entities)
+                    {
+                        handle.Write(entity.ToXMLString());
+                    }
+
+                    handle.Write("</" + docName + ">");
+
+                    handle.Close();
+
+                    //UpdateReliantWindows();
+
+                    Close();
+                }
+                catch (IOException)
+                {
+                    System.Windows.Forms.MessageBox.Show("An IO Error Occurred. Please Try Again.");
+                }
+                catch (Exception)
+                {
+                    System.Windows.Forms.MessageBox.Show("An Unexpected Error Occurred.");
+                }
+                finally
+                {
+                    if (!handle.Equals(null))
+                    {
+                        handle.Close();
+                    }
+
+                    base.Close();
+                }
+            }
+            else
+            {
+                required_text.Foreground = Brushes.Red;
+            }
+        }
 
         public abstract void UpdateReliantWindows();
 

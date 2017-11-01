@@ -28,65 +28,71 @@ namespace citadel_wpf
         override protected void Save(object sender, RoutedEventArgs e)
         {
             //TODO: make sure location does not already exist
-            StreamWriter location_notes_handle = null;
+            Location.AddRecord(new Location(name_text.Text, type_combobox.Text, subtype_combobox.Text, description_text.Text));
+            controlTexts.Add(name_text.Text);
+            controlTexts.Add(type_combobox.Text);
+            SaveEntity(sender, e, controlTexts, required_text, "location_notes", Location.GetRecords());
+            UpdateReliantWindows();
 
-            if (!name_text.Text.Equals("") && !type_combobox.Text.Equals(""))
-            {
-                try
-                {
-                    string name = name_text.Text;
-                    string type = type_combobox.Text;
-                    string subtype = subtype_combobox.Text;
-                    string description = description_text.Text;
-                    string filePath = folderPath + "\\location_notes.xml";
+            //StreamWriter location_notes_handle = null;
 
-                    if (File.Exists(filePath))
-                    {
-                        location_notes_handle = XMLParserClass.RemoveLastLine(filePath);
-                    }
-                    else
-                    {
-                        location_notes_handle = new StreamWriter(filePath, true);
-                        location_notes_handle.Write("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n\n<locations>\n\t");
-                    }
+            //if (!name_text.Text.Equals("") && !type_combobox.Text.Equals(""))
+            //{
+            //    try
+            //    {
+            //        string name = name_text.Text;
+            //        string type = type_combobox.Text;
+            //        string subtype = subtype_combobox.Text;
+            //        string description = description_text.Text;
+            //        string filePath = folderPath + "\\location_notes.xml";
 
-                    location_notes_handle.Write("<location>\n\t\t");
-                    location_notes_handle.Write("<name>" + name + "</name>\n\t\t");
-                    location_notes_handle.Write("<type>" + type + "</type>\n\t\t");
-                    location_notes_handle.Write("<subtype>" + subtype + "</subtype>\n\t\t");
-                    location_notes_handle.Write("<description>" + description + "</description>\n\t");
-                    location_notes_handle.Write("</location>\n\n");
+            //        if (File.Exists(filePath))
+            //        {
+            //            location_notes_handle = XMLParserClass.RemoveLastLine(filePath);
+            //        }
+            //        else
+            //        {
+            //            location_notes_handle = new StreamWriter(filePath, true);
+            //            location_notes_handle.Write("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n\n<locations>\n\t");
+            //        }
 
-                    location_notes_handle.Write("</locations>");
+            //        location_notes_handle.Write("<location>\n\t\t");
+            //        location_notes_handle.Write("<name>" + name + "</name>\n\t\t");
+            //        location_notes_handle.Write("<type>" + type + "</type>\n\t\t");
+            //        location_notes_handle.Write("<subtype>" + subtype + "</subtype>\n\t\t");
+            //        location_notes_handle.Write("<description>" + description + "</description>\n\t");
+            //        location_notes_handle.Write("</location>\n\n");
 
-                    location_notes_handle.Close();
+            //        location_notes_handle.Write("</locations>");
 
-                    UpdateReliantWindows();
+            //        location_notes_handle.Close();
 
-                    Close();
-                }
-                catch (IOException)
-                {
-                    System.Windows.Forms.MessageBox.Show("An IO Error Occurred. Please Try Again.");
-                }
-                catch (Exception)
-                {
-                    System.Windows.Forms.MessageBox.Show("An Unexpected Error Occurred.");
-                }
-                finally
-                {
-                    if (!location_notes_handle.Equals(null))
-                    {
-                        location_notes_handle.Close();
-                    }
+            //        UpdateReliantWindows();
 
-                    Close();
-                }
-            }
-            else
-            {
-                required_text.Foreground = Brushes.Red;
-            }
+            //        Close();
+            //    }
+            //    catch (IOException)
+            //    {
+            //        System.Windows.Forms.MessageBox.Show("An IO Error Occurred. Please Try Again.");
+            //    }
+            //    catch (Exception)
+            //    {
+            //        System.Windows.Forms.MessageBox.Show("An Unexpected Error Occurred.");
+            //    }
+            //    finally
+            //    {
+            //        if (!location_notes_handle.Equals(null))
+            //        {
+            //            location_notes_handle.Close();
+            //        }
+
+            //        Close();
+            //    }
+            //}
+            //else
+            //{
+            //    required_text.Foreground = Brushes.Red;
+            //}
         }
 
         private void updateSubtypes()

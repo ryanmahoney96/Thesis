@@ -20,6 +20,8 @@ namespace citadel_wpf
     /// </summary>
     public partial class NewCharacterWindow : NewEntityWindow
     {
+        //TODO: Static List of Character Objects that contain information
+
         public NewCharacterWindow(string fp, FrontPage fpr, params NewEntityWindow[] rw) : base(fp, fpr, rw)
         {
             InitializeComponent();
@@ -27,64 +29,69 @@ namespace citadel_wpf
 
         override protected void Save(object sender, RoutedEventArgs e)
         {
-            //TODO: make sure character does not already exist
-            StreamWriter character_notes_handle = null;
+            Character.AddRecord(new Character(name_text.Text, gender_combo_box.Text, description_text.Text));
+            controlTexts.Add(name_text.Text);
+            controlTexts.Add(gender_combo_box.Text);
+            SaveEntity(sender, e, controlTexts, required_text, "character_notes", Character.GetRecords());
+            UpdateReliantWindows();
 
-            if (!name_text.Text.Equals("") && !gender_combo_box.Text.Equals(""))
-            {
-                try
-                {
-                    string name = name_text.Text;
-                    string gender = gender_combo_box.Text;
-                    string description = description_text.Text;
-                    string filePath = base.folderPath + "\\character_notes.xml";
+            //StreamWriter character_notes_handle = null;
 
-                    if (File.Exists(filePath))
-                    {
-                        character_notes_handle = XMLParserClass.RemoveLastLine(filePath);
-                    }
-                    else
-                    {
-                        character_notes_handle = new StreamWriter(filePath, true);
-                        character_notes_handle.Write("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n\n<characters>\n\t");
-                    }
+            //if (!name_text.Text.Equals("") && !gender_combo_box.Text.Equals(""))
+            //{
+            //    try
+            //    {
+            //        string name = name_text.Text;
+            //        string gender = gender_combo_box.Text;
+            //        string description = description_text.Text;
+            //        string filePath = folderPath + "\\character_notes.xml";
 
-                    character_notes_handle.Write("<character>\n\t\t");
-                    character_notes_handle.Write("<name>" + name + "</name>\n\t\t");
-                    character_notes_handle.Write("<gender>" + gender + "</gender>\n\t\t");
-                    character_notes_handle.Write("<description>" + description + "</description>\n\t");
-                    character_notes_handle.Write("</character>\n\n");
+            //        if (File.Exists(filePath))
+            //        {
+            //            character_notes_handle = XMLParserClass.RemoveLastLine(filePath);
+            //        }
+            //        else
+            //        {
+            //            character_notes_handle = new StreamWriter(filePath, true);
+            //            character_notes_handle.Write("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n\n<characters>\n\t");
+            //        }
 
-                    character_notes_handle.Write("</characters>");
+            //        character_notes_handle.Write("<character>\n\t\t");
+            //        character_notes_handle.Write("<name>" + name + "</name>\n\t\t");
+            //        character_notes_handle.Write("<gender>" + gender + "</gender>\n\t\t");
+            //        character_notes_handle.Write("<description>" + description + "</description>\n\t");
+            //        character_notes_handle.Write("</character>\n\n");
 
-                    character_notes_handle.Close();
+            //        character_notes_handle.Write("</characters>");
 
-                    UpdateReliantWindows();
+            //        character_notes_handle.Close();
 
-                    base.Close();
-                }
-                catch (IOException)
-                {
-                    System.Windows.Forms.MessageBox.Show("An IO Error Occurred. Please Try Again.");
-                }
-                catch (Exception)
-                {
-                    System.Windows.Forms.MessageBox.Show("An Unexpected Error Occurred.");
-                }
-                finally
-                {
-                    if (!character_notes_handle.Equals(null))
-                    {
-                        character_notes_handle.Close();
-                    }
+            //        UpdateReliantWindows();
 
-                    base.Close();
-                }
-            }
-            else
-            {
-                required_text.Foreground = Brushes.Red;
-            }
+            //        base.Close();
+            //    }
+            //    catch (IOException)
+            //    {
+            //        System.Windows.Forms.MessageBox.Show("An IO Error Occurred. Please Try Again.");
+            //    }
+            //    catch (Exception)
+            //    {
+            //        System.Windows.Forms.MessageBox.Show("An Unexpected Error Occurred.");
+            //    }
+            //    finally
+            //    {
+            //        if (!character_notes_handle.Equals(null))
+            //        {
+            //            character_notes_handle.Close();
+            //        }
+
+            //        base.Close();
+            //    }
+            //}
+            //else
+            //{
+            //    required_text.Foreground = Brushes.Red;
+            //}
         }
 
         public override void UpdateReliantWindows()
@@ -97,4 +104,5 @@ namespace citadel_wpf
             }
         }
     }
+
 }

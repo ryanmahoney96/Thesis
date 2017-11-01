@@ -55,10 +55,16 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Character.cs" />
+    <Compile Include="Entity.cs" />
+    <Compile Include="Event.cs" />
     <Compile Include="FrontPage.xaml.cs">
       <DependentUpon>FrontPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="GeneralNote.cs" />
     <Compile Include="GraphConstruction.cs" />
+    <Compile Include="Location.cs" />
+    <Compile Include="Media.cs" />
     <Compile Include="NewCharacterRelationship.xaml.cs">
       <DependentUpon>NewCharacterRelationship.xaml</DependentUpon>
     </Compile>

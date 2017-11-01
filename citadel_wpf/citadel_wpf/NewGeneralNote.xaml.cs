@@ -27,7 +27,13 @@ namespace citadel_wpf
 
         override protected void Save(object sender, RoutedEventArgs e)
         {
-            StreamWriter general_notes_handle = null;
+            //TODO: Check text fill PRE-ADD
+            GeneralNote.AddRecord(new GeneralNote(note_text.Text));
+            controlTexts.Add(note_text.Text);
+            SaveEntity(sender, e, controlTexts, required_text, "general_notes", GeneralNote.GetRecords());
+            UpdateReliantWindows();
+
+            /*StreamWriter general_notes_handle = null;
 
             if (!note_text.Text.Equals(""))
             {
@@ -77,7 +83,7 @@ namespace citadel_wpf
             else
             {
                 required_text.Foreground = Brushes.Red;
-            }
+            }*/
         }
 
         public override void UpdateReliantWindows()

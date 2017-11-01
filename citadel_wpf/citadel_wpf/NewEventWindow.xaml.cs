@@ -47,7 +47,13 @@ namespace citadel_wpf
         override protected void Save(object sender, RoutedEventArgs e)
         {
             //TODO: make sure event does not already exist
-            StreamWriter event_notes_handle = null;
+            EventNote.AddRecord(new EventNote(name_text.Text, location_combo_box.Text, event_unit_date_number.Text, event_date_number.Text, notes_text.Text));
+            controlTexts.Add(name_text.Text);
+            controlTexts.Add(notes_text.Text);
+            SaveEntity(sender, e, controlTexts, required_text, "event_notes", EventNote.GetRecords());
+            UpdateReliantWindows();
+
+            /*StreamWriter event_notes_handle = null;
 
             if (!name_text.Text.Equals("") && !notes_text.Text.Equals(""))
             {
@@ -57,7 +63,7 @@ namespace citadel_wpf
                     string location = location_combo_box.Text;
                     string unit_date = event_unit_date_number.Text;
                     string date = event_date_number.Text;
-                    string notes = notes_text.Text;
+                    string description = notes_text.Text;
                     string filePath = base.folderPath + "\\event_notes.xml";
 
                     if (File.Exists(filePath))
@@ -75,7 +81,7 @@ namespace citadel_wpf
                     event_notes_handle.Write("<location>" + location + "</location>\n\t\t");
                     event_notes_handle.Write("<unit_date>" + unit_date + "</unit_date>\n\t\t");
                     event_notes_handle.Write("<date>" + date + "</date>\n\t\t");
-                    event_notes_handle.Write("<notes>" + notes + "</notes>\n\t");
+                    event_notes_handle.Write("<description>" + description + "</description>\n\t");
                     event_notes_handle.Write("</event>\n\n");
 
                     event_notes_handle.Write("</events>");
@@ -108,6 +114,7 @@ namespace citadel_wpf
             {
                 required_text.Foreground = Brushes.Red;
             }
+            */
         }
 
         public override void UpdateReliantWindows()

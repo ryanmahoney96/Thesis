@@ -21,6 +21,7 @@ namespace citadel_wpf
     public partial class FrontPage : Window
     {
         //TODO: Alphabetize entities in their files (fairly difficult)? or in the lists (much easier)?
+        //TODO: Make \ unusable 
         //TODO: Add relationships to both event/character/location/etc entities of a pair (rather than separate files) to reduce search/organization time?
         //TODO Later: stylize with https://github.com/MahApps/MahApps.Metro
 
@@ -40,7 +41,7 @@ namespace citadel_wpf
         }
         public void Update_Notes()
         {
-            Fill_Note_Area(XMLParserClass.GetAllNotes(folderPath + "\\general_notes.xml", "note"), general_notes_area);
+            Fill_Note_Area(XMLParserClass.GetAllGeneralNotes(folderPath + "\\general_notes.xml"), general_notes_area);
         }
 
         private void New_Character_Click(object sender, RoutedEventArgs e)
@@ -49,7 +50,7 @@ namespace citadel_wpf
         }
         public void Update_Characters()
         {
-            Fill_Note_Area(XMLParserClass.GetAllNotes(folderPath + "\\character_notes.xml", "character"), character_notes_area);
+            Fill_Note_Area(XMLParserClass.GetAllCharacterNotes(folderPath + "\\character_notes.xml"), character_notes_area);
         }
 
         private void New_Event_Click(object sender, RoutedEventArgs e)
@@ -58,7 +59,7 @@ namespace citadel_wpf
         }
         public void Update_Events()
         {
-            Fill_Note_Area(XMLParserClass.GetAllNotes(folderPath + "\\event_notes.xml", "event"), event_notes_area);
+            Fill_Note_Area(XMLParserClass.GetAllEventNotes(folderPath + "\\event_notes.xml"), event_notes_area);
         }
 
         private void New_Location_Click(object sender, RoutedEventArgs e)
@@ -97,9 +98,9 @@ namespace citadel_wpf
             //Fill_Note_Area(XMLParserClass.GetAllEventNotes(folderPath + "\\event_notes.xml"), event_notes_area);
 
             Fill_Media_Area(XMLParserClass.GetMediaInformation(folderPath + "\\media_notes.xml"));
-            Fill_Note_Area(XMLParserClass.GetAllNotes(folderPath + "\\general_notes.xml", "note"), general_notes_area);
-            Fill_Note_Area(XMLParserClass.GetAllNotes(folderPath + "\\character_notes.xml", "character"), character_notes_area);
-            Fill_Note_Area(XMLParserClass.GetAllNotes(folderPath + "\\event_notes.xml", "event"), event_notes_area);
+            Fill_Note_Area(XMLParserClass.GetAllGeneralNotes(folderPath + "\\general_notes.xml"), general_notes_area);
+            Fill_Note_Area(XMLParserClass.GetAllCharacterNotes(folderPath + "\\character_notes.xml"), character_notes_area);
+            Fill_Note_Area(XMLParserClass.GetAllEventNotes(folderPath + "\\event_notes.xml"), event_notes_area);
             Fill_Note_Area(XMLParserClass.GetAllNotes(folderPath + "\\location_notes.xml", "location"), location_notes_area);
         }
 
@@ -126,15 +127,27 @@ namespace citadel_wpf
 
                 foreach (string s in l)
                 {
-                    //TODO: use delimiter concept to add headings and labels
-                    if (!String.IsNullOrWhiteSpace(s))
+                    string[] parts = s.Split('\\');
+                    parts[0] = ToTitleCase(parts[0]);
+
+                    if (!String.IsNullOrWhiteSpace(parts[1]))
                     {
-                        n.Text += s + "\n";
+                        StringBuilder t = new StringBuilder();
+                        t.Append(parts[0]);
+                        t.Append(": ");
+                        t.Append(parts[1]);
+                        t.Append("\n");
+                        n.Text += t.ToString();
                     }
                 }
                 area.Children.Add(n);
                 area.MinHeight += 75;
             }
+        }
+
+        private string ToTitleCase(string str)
+        {
+            return System.Globalization.CultureInfo.CurrentCulture.TextInfo.ToTitleCase(str.ToLower());
         }
 
         private void initWindow (Window w)
@@ -145,6 +158,9 @@ namespace citadel_wpf
 
         private void Save_Media_Information(object sender, RoutedEventArgs e)
         {
+            //TODO: this
+            //Media m = new Media();
+
             GraphConstruction g = new GraphConstruction(folderPath);
             g.TestGraphviz();
         }
