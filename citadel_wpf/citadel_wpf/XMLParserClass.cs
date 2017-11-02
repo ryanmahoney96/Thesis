@@ -13,7 +13,7 @@ namespace citadel_wpf
 {
     class XMLParserClass
     {
-        
+        //Obsolete
         public static string attemptParse()
         {
             StringBuilder output = new StringBuilder();
@@ -61,29 +61,30 @@ namespace citadel_wpf
             return output.ToString();
         }
 
+        //Obsolete
         public static string attemptSpecificParse()
         {
             StringBuilder output = new StringBuilder();
 
             String xmlString =
-                @"<bookstore>
-        <book genre='autobiography' publicationdate='1981-03-22' ISBN='1-861003-11-0'>
-            <title>The Autobiography of Benjamin Franklin</title>
-            <author>
-                <first-name>Benjamin</first-name>
-                <last-name>Franklin</last-name>
-            </author>
-            <price>8.99</price>
-        </book>
-<book genre='autobiography' publicationdate='1981-03-22' ISBN='1-861003-11-0'>
-            <title>The Autobiography of Benjamin Franklin</title>
-            <author>
-                <first-name>Benjamin</first-name>
-                <last-name>Franklin</last-name>
-            </author>
-            <price>8.99</price>
-        </book>
-    </bookstore>";
+                            @"<bookstore>
+                    <book genre='autobiography' publicationdate='1981-03-22' ISBN='1-861003-11-0'>
+                        <title>The Autobiography of Benjamin Franklin</title>
+                        <author>
+                            <first-name>Benjamin</first-name>
+                            <last-name>Franklin</last-name>
+                        </author>
+                        <price>8.99</price>
+                    </book>
+            <book genre='autobiography' publicationdate='1981-03-22' ISBN='1-861003-11-0'>
+                        <title>The Autobiography of Benjamin Franklin</title>
+                        <author>
+                            <first-name>Benjamin</first-name>
+                            <last-name>Franklin</last-name>
+                        </author>
+                        <price>8.99</price>
+                    </book>
+                </bookstore>";
 
             // Create an XmlReader
             using (XmlReader reader = XmlReader.Create(new StringReader(xmlString)))
@@ -100,6 +101,7 @@ namespace citadel_wpf
             return output.ToString();
         }
 
+        //Obsolete
         public static string XPathParseExample(string folderName)
         {
             XPathNavigator nav;
@@ -125,6 +127,7 @@ namespace citadel_wpf
             return temp;
         }
 
+        //Obsolete
         public static string XPathParse(string fullFilePath, string XMLExpression)
         {
             XPathNavigator nav;
@@ -153,6 +156,7 @@ namespace citadel_wpf
             return temp;
         }
 
+        //Obsolete
         public static string LINQParseTest(string fullFilePath)
         {
             string temp = "";
@@ -184,7 +188,7 @@ namespace citadel_wpf
             return temp;
         }
 
-        //TODO Exchange for oop design
+        //Obsolete
         public static StreamWriter RemoveLastLine(string filePath)
         {
             //Deletes the last line in the xml file, the closing content tag

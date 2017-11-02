@@ -26,7 +26,7 @@ namespace citadel_wpf
             InitializeComponent();
         }
 
-        //TODO: use generic save?
+        //TODO: use generic save method? Requires a media entity
         override protected void Save(object sender, RoutedEventArgs e)
         {
             StreamWriter media_notes_handle = null;
@@ -36,7 +36,7 @@ namespace citadel_wpf
                 try
                 {
                     string name = name_text.Text;
-                    //TODO: verify they are an int
+                    //TODO: verify they are an int?
                     string year = year_text.Text;
                     string type = type_combobox.Text;
                     string genre = genre_combobox.Text;

@@ -24,8 +24,6 @@ namespace citadel_wpf
 
         public static bool AddRecord(GeneralNote g)
         {
-            //TODO verify character, event, c_relationship, e_relationship, location, note  is not already in record
-            //TODO Copy this to each entity
             bool alreadyPresent = NoteRecords.Where(s => s.GetName().Equals(g.GetName())).Count() > 0 ? true : false;
             if (!alreadyPresent)
             {

@@ -20,9 +20,11 @@ namespace citadel_wpf
     /// </summary>
     public partial class FrontPage : Window
     {
-        //TODO: Alphabetize entities in their files (fairly difficult)? or in the lists (much easier)?
-        //TODO: Make \ unusable 
-        //TODO: Add relationships to both event/character/location/etc entities of a pair (rather than separate files) to reduce search/organization time?
+        //TODO: Alphabetize entities in the lists
+        //TODO: Make '\' in all text unusable 
+        //TODO: Add relationships to both character entities of a pair (rather than separate files) to reduce search/organization time?
+        //TODO Family Trees
+        //TODO Add location v event graph
         //TODO Later: stylize with https://github.com/MahApps/MahApps.Metro
 
         private String folderPath;
@@ -158,7 +160,7 @@ namespace citadel_wpf
 
         private void Save_Media_Information(object sender, RoutedEventArgs e)
         {
-            //TODO: Verify all text boxes are filled
+            //TODO: Verify all important text boxes are filled
             Media m = new Media(titleText.Text, yearText.Text, type_combobox.Text, genre_combobox.Text, summaryText.Text);
             m.Save(folderPath);
 

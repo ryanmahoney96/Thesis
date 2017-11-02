@@ -20,7 +20,6 @@ namespace citadel_wpf
     /// </summary>
     public partial class NewCharacterWindow : NewEntityWindow
     {
-        //TODO: Static List of Character Objects that contain information
 
         public NewCharacterWindow(string fp, FrontPage fpr, params NewEntityWindow[] rw) : base(fp, fpr, rw)
         {

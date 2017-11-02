@@ -9,7 +9,6 @@ namespace citadel_wpf
     class EventNote : IEntity
     {
         static List<IEntity> EventRecords;
-        //TODO can these variables be changed into a hash table?
         string Name;
         string Location;
         string Unit_Date;
@@ -33,8 +32,7 @@ namespace citadel_wpf
 
         public static bool AddRecord(EventNote e)
         {
-            //TODO verify character, event, c_relationship, e_relationship, location, note  is not already in record
-            //TODO Copy this to each entity
+            //TODO make this generic for each entity? requires entity to be abstract class
             bool alreadyPresent = EventRecords.Where(s => s.GetName().Equals(e.GetName())).Count() > 0 ? true : false;
             if (!alreadyPresent)
             {

@@ -42,7 +42,6 @@ namespace citadel_wpf
             Close();
         }
 
-        //TODO: create save that takes in function, bool list, handle name to take away all the redundant code in the inheritor classes
         protected abstract void Save(object sender, RoutedEventArgs e);
 
         protected void SaveEntity(object sender, RoutedEventArgs e, List<String> controlTexts, TextBlock required_text, string docName, List<IEntity> entities)
@@ -51,7 +50,7 @@ namespace citadel_wpf
             StreamWriter handle = null;
             bool valid = true;
 
-            //TODO do this beforehand
+            //TODO do this before the call -> get rid of control texts
             foreach (String s in controlTexts)
             {
                 if (s.Equals(""))

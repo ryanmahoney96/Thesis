@@ -9,7 +9,6 @@ namespace citadel_wpf
     class Location : IEntity
     {
         static List<IEntity> LocationRecords;
-        //TODO can these variables be changed into a hash table?
         string Name;
         string Type;
         string Subtype;
@@ -31,8 +30,6 @@ namespace citadel_wpf
 
         public static bool AddRecord(Location l)
         {
-            //TODO verify character, event, c_relationship, e_relationship, location, note  is not already in record
-            //TODO Copy this to each entity
             bool alreadyPresent = LocationRecords.Where(s => s.GetName().Equals(l.GetName())).Count() > 0 ? true : false;
             if (!alreadyPresent)
             {
