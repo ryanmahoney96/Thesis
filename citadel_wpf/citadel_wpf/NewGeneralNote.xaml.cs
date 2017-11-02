@@ -28,63 +28,68 @@ namespace citadel_wpf
         override protected void Save(object sender, RoutedEventArgs e)
         {
             //TODO: Check text fill PRE-ADD
-            GeneralNote.AddRecord(new GeneralNote(note_text.Text));
-            controlTexts.Add(note_text.Text);
-            SaveEntity(sender, e, controlTexts, required_text, "general_notes", GeneralNote.GetRecords());
-            UpdateReliantWindows();
-
-            /*StreamWriter general_notes_handle = null;
-
-            if (!note_text.Text.Equals(""))
-            {
-                try
-                {
-                    string note = note_text.Text;
-                    string filePath = folderPath + "\\general_notes.xml";
-
-                    if (File.Exists(filePath))
-                    {
-                        general_notes_handle = XMLParserClass.RemoveLastLine(filePath);
-                    }
-                    else
-                    {
-                        general_notes_handle = new StreamWriter(filePath, true);
-                        general_notes_handle.Write("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n\n<general_notes>\n\t");
-                    }
-
-                    general_notes_handle.Write("<note>\n\t<content>" + note + "\n\t</content></note>\n");
-
-                    general_notes_handle.Write("</general_notes>");
-
-                    general_notes_handle.Close();
-
-                    UpdateReliantWindows();
-
-                    Close();
-                }
-                catch (IOException)
-                {
-                    System.Windows.Forms.MessageBox.Show("An IO Error Occurred. Please Try Again.");
-                }
-                catch (Exception)
-                {
-                    System.Windows.Forms.MessageBox.Show("An Unexpected Error Occurred.");
-                }
-                finally
-                {
-                    if (!general_notes_handle.Equals(null))
-                    {
-                        general_notes_handle.Close();
-                    }
-
-                    Close();
-                }
+            if (GeneralNote.AddRecord(new GeneralNote(note_text.Text))){
+                controlTexts.Add(note_text.Text);
+                SaveEntity(sender, e, controlTexts, required_text, "general_notes", GeneralNote.GetRecords());
+                UpdateReliantWindows();
             }
             else
             {
-                required_text.Foreground = Brushes.Red;
-            }*/
+                System.Windows.Forms.MessageBox.Show("This note already exists, please try again.");
+            }
+
+    /*StreamWriter general_notes_handle = null;
+
+    if (!note_text.Text.Equals(""))
+    {
+        try
+        {
+            string note = note_text.Text;
+            string filePath = folderPath + "\\general_notes.xml";
+
+            if (File.Exists(filePath))
+            {
+                general_notes_handle = XMLParserClass.RemoveLastLine(filePath);
+            }
+            else
+            {
+                general_notes_handle = new StreamWriter(filePath, true);
+                general_notes_handle.Write("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n\n<general_notes>\n\t");
+            }
+
+            general_notes_handle.Write("<note>\n\t<content>" + note + "\n\t</content></note>\n");
+
+            general_notes_handle.Write("</general_notes>");
+
+            general_notes_handle.Close();
+
+            UpdateReliantWindows();
+
+            Close();
         }
+        catch (IOException)
+        {
+            System.Windows.Forms.MessageBox.Show("An IO Error Occurred. Please Try Again.");
+        }
+        catch (Exception)
+        {
+            System.Windows.Forms.MessageBox.Show("An Unexpected Error Occurred.");
+        }
+        finally
+        {
+            if (!general_notes_handle.Equals(null))
+            {
+                general_notes_handle.Close();
+            }
+
+            Close();
+        }
+    }
+    else
+    {
+        required_text.Foreground = Brushes.Red;
+    }*/
+}
 
         public override void UpdateReliantWindows()
         {

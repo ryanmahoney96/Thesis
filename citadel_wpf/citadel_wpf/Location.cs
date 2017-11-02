@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace citadel_wpf
 {
-    class Location : Entity
+    class Location : IEntity
     {
-        static List<Entity> LocationRecords;
+        static List<IEntity> LocationRecords;
         //TODO can these variables be changed into a hash table?
         string Name;
         string Type;
@@ -25,18 +25,30 @@ namespace citadel_wpf
 
             if (LocationRecords == null)
             {
-                LocationRecords = new List<Entity>();
+                LocationRecords = new List<IEntity>();
             }
         }
 
-        public static void AddRecord(Location l)
+        public static bool AddRecord(Location l)
         {
-            //TODO verify note is not already in record
-            LocationRecords.Add(l);
+            //TODO verify character, event, c_relationship, e_relationship, location, note  is not already in record
+            //TODO Copy this to each entity
+            bool alreadyPresent = LocationRecords.Where(s => s.GetName().Equals(l.GetName())).Count() > 0 ? true : false;
+            if (!alreadyPresent)
+            {
+                LocationRecords.Add(l);
+            }
+
+            return !alreadyPresent;
         }
-        public static List<Entity> GetRecords()
+        public static List<IEntity> GetRecords()
         {
             return LocationRecords;
+        }
+
+        public string GetName()
+        {
+            return Name;
         }
 
         public string ToXMLString()
@@ -45,7 +57,7 @@ namespace citadel_wpf
 
             s.Append("<location>\n\t\t");
             s.Append("<name>" + Name + "</name>\n\t\t");
-            s.Append("<Type>" + Type + "</Type>\n\t\t");
+            s.Append("<type>" + Type + "</type>\n\t\t");
             s.Append("<subtype>" + Subtype + "</subtype>\n\t\t");
             s.Append("<description>" + Description + "</description>\n\t");
             s.Append("</location>\n\n");

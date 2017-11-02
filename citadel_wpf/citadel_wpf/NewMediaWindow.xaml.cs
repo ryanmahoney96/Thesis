@@ -26,6 +26,7 @@ namespace citadel_wpf
             InitializeComponent();
         }
 
+        //TODO: use generic save?
         override protected void Save(object sender, RoutedEventArgs e)
         {
             StreamWriter media_notes_handle = null;
@@ -44,15 +45,17 @@ namespace citadel_wpf
 
                     
                     media_notes_handle = new StreamWriter(filePath, true);
-                    media_notes_handle.Write("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n\n<media_info>\n\t");
+                    media_notes_handle.Write("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n\n<media_notes>\n\t");
 
+                    media_notes_handle.Write("<media_note>");
                     media_notes_handle.Write("<name>" + name + "</name>\n\t");
                     media_notes_handle.Write("<year>" + year + "</year>\n\t");
                     media_notes_handle.Write("<type>" + type + "</type>\n\t");
                     media_notes_handle.Write("<genre>" + genre + "</genre>\n\t");
                     media_notes_handle.Write("<summary>" + summary + "</summary>\n\t");
+                    media_notes_handle.Write("</media_note>");
 
-                    media_notes_handle.Write("</media_info>");
+                    media_notes_handle.Write("</media_notes>");
 
                     media_notes_handle.Close();
 

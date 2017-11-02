@@ -32,7 +32,7 @@ namespace citadel_wpf
             InitializeComponent();
             folderPath = fp;
             Title += " - " + folderPath;
-            Update_Note_Pages();
+            Update_Note_Pages(true);
         }
 
         private void New_Note_Click(object sender, RoutedEventArgs e)
@@ -68,7 +68,7 @@ namespace citadel_wpf
         }
         public void Update_Locations()
         {
-            Fill_Note_Area(XMLParserClass.GetAllNotes(folderPath + "\\location_notes.xml", "location"), location_notes_area);
+            Fill_Note_Area(XMLParserClass.GetAllLocationNotes(folderPath + "\\location_notes.xml"), location_notes_area);
         }
 
         private void Character_Relationship_Click(object sender, RoutedEventArgs e)
@@ -90,7 +90,7 @@ namespace citadel_wpf
             //Fill_Note_Pages();
         }
 
-        private void Update_Note_Pages()
+        private void Update_Note_Pages(bool initialize = false)
         {
             //Fill_Note_Area(XMLParserClass.GetAllCharacterNotes(folderPath + "\\character_notes.xml"), character_notes_area);
             //Fill_Note_Area(XMLParserClass.GetAllGeneralNotes(folderPath + "\\general_notes.xml"), general_notes_area);
@@ -98,10 +98,10 @@ namespace citadel_wpf
             //Fill_Note_Area(XMLParserClass.GetAllEventNotes(folderPath + "\\event_notes.xml"), event_notes_area);
 
             Fill_Media_Area(XMLParserClass.GetMediaInformation(folderPath + "\\media_notes.xml"));
-            Fill_Note_Area(XMLParserClass.GetAllGeneralNotes(folderPath + "\\general_notes.xml"), general_notes_area);
-            Fill_Note_Area(XMLParserClass.GetAllCharacterNotes(folderPath + "\\character_notes.xml"), character_notes_area);
-            Fill_Note_Area(XMLParserClass.GetAllEventNotes(folderPath + "\\event_notes.xml"), event_notes_area);
-            Fill_Note_Area(XMLParserClass.GetAllNotes(folderPath + "\\location_notes.xml", "location"), location_notes_area);
+            Fill_Note_Area(XMLParserClass.GetAllGeneralNotes(folderPath + "\\general_notes.xml", initialize), general_notes_area);
+            Fill_Note_Area(XMLParserClass.GetAllCharacterNotes(folderPath + "\\character_notes.xml", initialize), character_notes_area);
+            Fill_Note_Area(XMLParserClass.GetAllEventNotes(folderPath + "\\event_notes.xml", initialize), event_notes_area);
+            Fill_Note_Area(XMLParserClass.GetAllLocationNotes(folderPath + "\\location_notes.xml", initialize), location_notes_area);
         }
 
         private void Fill_Media_Area(Hashtable information)
@@ -158,8 +158,9 @@ namespace citadel_wpf
 
         private void Save_Media_Information(object sender, RoutedEventArgs e)
         {
-            //TODO: this
-            //Media m = new Media();
+            //TODO: Verify all text boxes are filled
+            Media m = new Media(titleText.Text, yearText.Text, type_combobox.Text, genre_combobox.Text, summaryText.Text);
+            m.Save(folderPath);
 
             GraphConstruction g = new GraphConstruction(folderPath);
             g.TestGraphviz();

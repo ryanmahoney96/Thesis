@@ -45,12 +45,13 @@ namespace citadel_wpf
         //TODO: create save that takes in function, bool list, handle name to take away all the redundant code in the inheritor classes
         protected abstract void Save(object sender, RoutedEventArgs e);
 
-        protected void SaveEntity(object sender, RoutedEventArgs e, List<String> controlTexts, TextBlock required_text, string docName, List<Entity> entities)
+        protected void SaveEntity(object sender, RoutedEventArgs e, List<String> controlTexts, TextBlock required_text, string docName, List<IEntity> entities)
         {
 
             StreamWriter handle = null;
             bool valid = true;
 
+            //TODO do this beforehand
             foreach (String s in controlTexts)
             {
                 if (s.Equals(""))
@@ -80,7 +81,7 @@ namespace citadel_wpf
                     handle.Write("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n\n<" + docName + ">\n\t");
 
 
-                    foreach (Entity entity in entities)
+                    foreach (IEntity entity in entities)
                     {
                         handle.Write(entity.ToXMLString());
                     }

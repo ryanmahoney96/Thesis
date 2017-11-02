@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace citadel_wpf
 {
-    class GeneralNote : Entity
+    class GeneralNote : IEntity
     {
-        static List<Entity> NoteRecords;
+        static List<IEntity> NoteRecords;
         string Description;
 
         public GeneralNote(string d)
@@ -18,18 +18,30 @@ namespace citadel_wpf
 
             if (NoteRecords == null)
             {
-                NoteRecords = new List<Entity>();
+                NoteRecords = new List<IEntity>();
             }
         }
 
-        public static void AddRecord(GeneralNote g)
+        public static bool AddRecord(GeneralNote g)
         {
-            //TODO verify note is not already in record
-            NoteRecords.Add(g);
+            //TODO verify character, event, c_relationship, e_relationship, location, note  is not already in record
+            //TODO Copy this to each entity
+            bool alreadyPresent = NoteRecords.Where(s => s.GetName().Equals(g.GetName())).Count() > 0 ? true : false;
+            if (!alreadyPresent)
+            {
+                NoteRecords.Add(g);
+            }
+
+            return !alreadyPresent;
         }
-        public static List<Entity> GetRecords()
+        public static List<IEntity> GetRecords()
         {
             return NoteRecords;
+        }
+
+        public string GetName()
+        {
+            return Description;
         }
 
         public string ToXMLString()

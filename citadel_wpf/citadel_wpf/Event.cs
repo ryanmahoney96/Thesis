@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace citadel_wpf
 {
-    class EventNote : Entity
+    class EventNote : IEntity
     {
-        static List<Entity> EventRecords;
+        static List<IEntity> EventRecords;
         //TODO can these variables be changed into a hash table?
         string Name;
         string Location;
@@ -27,18 +27,30 @@ namespace citadel_wpf
 
             if (EventRecords == null)
             {
-                EventRecords = new List<Entity>();
+                EventRecords = new List<IEntity>();
             }
         }
 
-        public static void AddRecord(EventNote e)
+        public static bool AddRecord(EventNote e)
         {
-            //TODO verify note is not already in record
-            EventRecords.Add(e);
+            //TODO verify character, event, c_relationship, e_relationship, location, note  is not already in record
+            //TODO Copy this to each entity
+            bool alreadyPresent = EventRecords.Where(s => s.GetName().Equals(e.GetName())).Count() > 0 ? true : false;
+            if (!alreadyPresent)
+            {
+                EventRecords.Add(e);
+            }
+
+            return !alreadyPresent;
         }
-        public static List<Entity> GetRecords()
+        public static List<IEntity> GetRecords()
         {
             return EventRecords;
+        }
+
+        public string GetName()
+        {
+            return Name;
         }
 
         public string ToXMLString()

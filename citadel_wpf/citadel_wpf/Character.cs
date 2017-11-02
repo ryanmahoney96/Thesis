@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace citadel_wpf
 {
-    class Character : Entity
+    class Character : IEntity
     {
-        static List<Entity> CharacterRecords;
+        static List<IEntity> CharacterRecords;
         string Name;
         string Gender;
         string Description;
@@ -21,18 +21,30 @@ namespace citadel_wpf
 
             if (CharacterRecords == null)
             {
-                CharacterRecords = new List<Entity>();
+                CharacterRecords = new List<IEntity>();
             }
         }
 
-        public static void AddRecord(Character c)
+        public static bool AddRecord(Character c)
         {
-            //TODO verify character is not already in record
-            CharacterRecords.Add(c);
+            //TODO verify character, event, c_relationship, e_relationship, location, note  is not already in record
+            //TODO Copy this to each entity
+            bool alreadyPresent = CharacterRecords.Where(s => s.GetName().Equals(c.GetName())).Count() > 0 ? true : false;
+            if (!alreadyPresent)
+            {
+                CharacterRecords.Add(c);
+            }
+
+            return !alreadyPresent;
         }
-        public static List<Entity> GetRecords()
+        public static List<IEntity> GetRecords()
         {
             return CharacterRecords;
+        }
+
+        public string GetName()
+        {
+            return Name;
         }
 
         public string ToXMLString()

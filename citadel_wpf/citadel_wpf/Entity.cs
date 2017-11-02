@@ -6,8 +6,9 @@ using System.Threading.Tasks;
 
 namespace citadel_wpf
 {
-    public interface Entity
+    public interface IEntity
     {
+        string GetName();
         string ToXMLString();
     }
 }

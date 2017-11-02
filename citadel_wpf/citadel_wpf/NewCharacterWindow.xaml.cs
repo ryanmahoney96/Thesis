@@ -29,11 +29,19 @@ namespace citadel_wpf
 
         override protected void Save(object sender, RoutedEventArgs e)
         {
-            Character.AddRecord(new Character(name_text.Text, gender_combo_box.Text, description_text.Text));
-            controlTexts.Add(name_text.Text);
-            controlTexts.Add(gender_combo_box.Text);
-            SaveEntity(sender, e, controlTexts, required_text, "character_notes", Character.GetRecords());
-            UpdateReliantWindows();
+            //TODO double check values before save
+            if (Character.AddRecord(new Character(name_text.Text, gender_combo_box.Text, description_text.Text)))
+            {
+                controlTexts.Add(name_text.Text);
+                controlTexts.Add(gender_combo_box.Text);
+                SaveEntity(sender, e, controlTexts, required_text, "character_notes", Character.GetRecords());
+                UpdateReliantWindows();
+            }
+            else
+            {
+                System.Windows.Forms.MessageBox.Show("This character already exists, please try again.");
+            }
+
 
             //StreamWriter character_notes_handle = null;
 

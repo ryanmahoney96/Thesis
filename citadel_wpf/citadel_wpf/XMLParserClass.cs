@@ -209,7 +209,7 @@ namespace citadel_wpf
             return stream;
         }
 
-        public static List<List<string>> GetAllCharacterNotes(string fullFilePath)
+        public static List<List<string>> GetAllCharacterNotes(string fullFilePath, bool initialize = false)
         {
             List<List<string>> returnList = new List<List<string>>();
 
@@ -229,19 +229,23 @@ namespace citadel_wpf
 
                 foreach (var characterEntry in query)
                 {
+                    if (initialize)
+                    {
+                        Character.AddRecord(new Character(characterEntry.Name, characterEntry.Gender, characterEntry.Description));
+                    }
+
                     List<string> temp = new List<string>();
 
                     temp.Add("Name\\" + characterEntry.Name);
                     temp.Add("Gender\\" + characterEntry.Gender);
                     temp.Add("Description\\" + characterEntry.Description);
-                    Character.AddRecord(new Character(characterEntry.Name, characterEntry.Gender, characterEntry.Description));
                     returnList.Add(temp);
                 }
             }
             return returnList;
         }
 
-        public static List<List<string>> GetAllGeneralNotes(string fullFilePath)
+        public static List<List<string>> GetAllGeneralNotes(string fullFilePath, bool initialize = false)
         {
             List<List<string>> returnList = new List<List<string>>();
 
@@ -255,16 +259,20 @@ namespace citadel_wpf
 
                 foreach (var noteEntry in query)
                 {
+                    if (initialize)
+                    {
+                        GeneralNote.AddRecord(new GeneralNote(noteEntry));
+                    }
+
                     List<string> temp = new List<string>();
                     temp.Add("Note\\" + noteEntry);
-                    GeneralNote.AddRecord(new GeneralNote(noteEntry));
                     returnList.Add(temp);
                 }
             }
             return returnList;
         }
 
-        public static List<List<string>> GetAllLocationNotes(string fullFilePath)
+        public static List<List<string>> GetAllLocationNotes(string fullFilePath, bool initialize = false)
         {
             List<List<string>> returnList = new List<List<string>>();
 
@@ -284,19 +292,23 @@ namespace citadel_wpf
 
                 foreach (var locationEntry in query)
                 {
+                    if (initialize)
+                    {
+                        Location.AddRecord(new Location(locationEntry.Name, locationEntry.Type, locationEntry.Subtype, locationEntry.Description));
+                    }
+
                     List<string> temp = new List<string>();
                     temp.Add("Name\\" + locationEntry.Name);
                     temp.Add("Type\\" + locationEntry.Type);
                     temp.Add("Subtype\\" + locationEntry.Subtype);
                     temp.Add("Description\\" + locationEntry.Description);
-                    Location.AddRecord(new Location(locationEntry.Name, locationEntry.Type, locationEntry.Subtype, locationEntry.Description));
                     returnList.Add(temp);
                 }
             }
             return returnList;
         }
 
-        public static List<List<string>> GetAllEventNotes(string fullFilePath)
+        public static List<List<string>> GetAllEventNotes(string fullFilePath, bool initialize = false)
         {
             List<List<string>> returnList = new List<List<string>>();
 
@@ -317,13 +329,17 @@ namespace citadel_wpf
 
                 foreach (var eventEntry in query)
                 {
+                    if (initialize)
+                    {
+                        EventNote.AddRecord(new EventNote(eventEntry.Name, eventEntry.Location, eventEntry.Unit_Date, eventEntry.Date, eventEntry.Notes));
+                    }
+
                     List<string> temp = new List<string>();
                     temp.Add("Name\\" + eventEntry.Name);
                     temp.Add("Location\\" + eventEntry.Location);
                     temp.Add("Unit Date\\" + eventEntry.Unit_Date);
                     temp.Add("Date\\" + eventEntry.Date);
                     temp.Add("Description\\" + eventEntry.Notes);
-                    EventNote.AddRecord(new EventNote(eventEntry.Name, eventEntry.Location, eventEntry.Unit_Date, eventEntry.Date, eventEntry.Notes));
                     returnList.Add(temp);
                 }
             }
@@ -390,8 +406,8 @@ namespace citadel_wpf
 
                 var xml = XDocument.Load(fullFilePath);
 
-                   // Query the data and write out a subset of contacts
-                   var query = from c in xml.Descendants("media_info")
+                // Query the data and write out a subset of contacts
+                var query = from c in xml.Root.Descendants("media_note")
                             select new
                             {
                                 Name = c.Element("name").Value,
