@@ -1,9 +1,22 @@
-"Ryan Mahoney's Thesis Repository" 
+#***Citadel: A Storyline Graphing Tool***#
+The aim of this project is to develop an intuitive interface for Graphviz, store user notes regarding narrative works, and enable repeated and comfortable use of the tool to an average user. Produced by Ryan Mahoney. 
 
-Prototype Lex/Bison Files - Unused
+#**Content**#
+- citadel_wpf folder
 
-Entity Template - used as a framework for entity information
+#**Tools**#
+- C# / WPF
+- DOT language
+- Graphviz
 
-test.dot - a DOT reference file
+#**Relevant Files**#
+- entity_template.xml
 
-citadel_wpf - holds the application and project progress
+#**Unused Directories**#
+- Prototype Lex/Bison Files
+- Java
+
+#**Unused Files**#
+- Books.xml
+- makefile
+- TestInput.xml

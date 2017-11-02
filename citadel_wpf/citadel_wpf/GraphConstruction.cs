@@ -36,6 +36,8 @@ namespace citadel_wpf
             //startInfo.Arguments = @"/C" + $"dot -Tpng {path} -o {folderPath}/outfile.png";
             //process.StartInfo = startInfo;
 
+            //TODO take output of cmd and save file + return in this program
+            //use output to open picture file?
             Process.Start("cmd.exe", @"/C" + $"dot -Tpng {path} -o {folderPath}/outfile.png");
         }
 
