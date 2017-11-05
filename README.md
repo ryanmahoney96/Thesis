@@ -1,4 +1,4 @@
-#Citadel: A Storyline Graphing Tool#
+# Citadel: A Storyline Graphing Tool
 The aim of this project is to develop an intuitive interface for Graphviz, store user notes regarding narrative works, and enable repeated and comfortable use of the tool to an average user. Produced by Ryan Mahoney. 
 
 ## Content
