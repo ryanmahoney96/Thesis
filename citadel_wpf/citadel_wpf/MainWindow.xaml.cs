@@ -86,12 +86,14 @@ namespace citadel_wpf
             {
                 NewMediaWindow nmw = new NewMediaWindow(folderName.Text, null);
                 nmw.Topmost = true;
+                nmw.Topmost = false;
                 nmw.Show();
             }
             else
             {
                 FrontPage frontPage = new FrontPage(folderName.Text);
                 frontPage.Topmost = true;
+                frontPage.Topmost = false;
                 frontPage.Show();
             }
 

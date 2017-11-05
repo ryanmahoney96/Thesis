@@ -9,11 +9,12 @@ namespace citadel_wpf
     class GeneralNote : IEntity
     {
         static List<IEntity> NoteRecords;
+        string Name;
         string Description;
 
-        public GeneralNote(string d)
+        public GeneralNote(string n, string d)
         {
-
+            Name = n;
             Description = d;
 
             if (NoteRecords == null)
@@ -39,7 +40,7 @@ namespace citadel_wpf
 
         public string GetName()
         {
-            return Description;
+            return Name;
         }
 
         public string ToXMLString()
@@ -47,6 +48,7 @@ namespace citadel_wpf
             StringBuilder s = new StringBuilder();
 
             s.Append("<general_note>\n\t\t");
+            s.Append("<name>" + Name + "</name>\n\t");
             s.Append("<description>" + Description + "</description>\n\t");
             s.Append("</general_note>\n\n");
 

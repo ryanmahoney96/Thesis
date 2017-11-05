@@ -110,7 +110,7 @@ namespace citadel_wpf
         {
             if (!information.Equals(null))
             {
-                titleText.Text = information["Name"].ToString();
+                titleText.Text = information["Title"].ToString();
                 yearText.Text = information["Year"].ToString();
                 type_combobox.Text = information["Type"].ToString();
                 genre_combobox.Text = information["Genre"].ToString();
@@ -154,8 +154,12 @@ namespace citadel_wpf
 
         private void initWindow (Window w)
         {
-            w.Show();
+            //w.Show();
             w.Topmost = true;
+            w.Owner = this;
+            w.ShowDialog();
+            //TODO make these windows strictly modal -> spread to all necessary windows
+            //w.Topmost = false;
         }
 
         private void Save_Media_Information(object sender, RoutedEventArgs e)

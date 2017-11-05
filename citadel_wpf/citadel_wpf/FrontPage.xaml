@@ -40,10 +40,10 @@
                         </Grid.RowDefinitions>
 
                         <TextBlock Text="Edit the Title:" Margin="2, 2, 2, 2" Grid.Row="1" Grid.Column="1" VerticalAlignment="Center"></TextBlock>
-                        <TextBox Name="titleText" Margin="2, 2, 2, 2" Grid.Row="1" Grid.Column="2" VerticalAlignment="Center"></TextBox>
+                        <TextBox Name="titleText" Margin="2, 1, 2, 1" Grid.Row="1" Grid.Column="2" VerticalAlignment="Center"></TextBox>
                         
                         <TextBlock Text="Edit the Year:" Grid.Row="2" Grid.Column="1" VerticalAlignment="Center"></TextBlock>
-                        <TextBox Name="yearText" Margin="2, 2, 2, 2" Grid.Row="2" Grid.Column="2" VerticalAlignment="Center"></TextBox>
+                        <TextBox Name="yearText" Margin="2, 1, 2, 1" Grid.Row="2" Grid.Column="2" VerticalAlignment="Center"></TextBox>
 
                         <TextBlock Text="Edit the Type:" Grid.Row="3" Grid.Column="1" VerticalAlignment="Center"></TextBlock>
                         <ComboBox Name="type_combobox" Width="200" FontSize="12" Margin="2, 0" Grid.Row="3" Grid.Column="2" VerticalAlignment="Center" VerticalContentAlignment="Center" HorizontalAlignment="Left" Height="22" >

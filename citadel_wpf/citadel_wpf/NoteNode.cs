@@ -20,6 +20,7 @@ namespace citadel_wpf
             //Button button = new Button();
             b.BorderThickness = new Thickness(1, 1, 1, 1);
             b.BorderBrush = new SolidColorBrush(Colors.DarkBlue);
+            b.CornerRadius = new CornerRadius(2, 2, 2, 2);
             ScrollViewer s = new ScrollViewer();
             t = new TextBlock();
             Text = "";

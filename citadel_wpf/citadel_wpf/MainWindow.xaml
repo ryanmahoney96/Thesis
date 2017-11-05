@@ -10,7 +10,7 @@
         BorderThickness="0, 1, 0, 0"
         Title="Citadel"
         ResizeMode="NoResize"
-        Height="160" 
+        Height="165" 
         Width="495"
         Icon="./castle_vbr_icon.ico"
         WindowStartupLocation="CenterScreen">

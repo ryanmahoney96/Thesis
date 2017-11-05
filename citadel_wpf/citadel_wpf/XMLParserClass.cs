@@ -259,17 +259,21 @@ namespace citadel_wpf
 
                 // Query the data and write out a subset of contacts
                 var query = from c in xml.Root.Descendants("general_note")
-                            select c.Value;
+                            select new {
+                                Name = c.Element("name").Value,
+                                Description = c.Element("description").Value
+                            };
 
                 foreach (var noteEntry in query)
                 {
                     if (initialize)
                     {
-                        GeneralNote.AddRecord(new GeneralNote(noteEntry));
+                        GeneralNote.AddRecord(new GeneralNote(noteEntry.Name, noteEntry.Description));
                     }
 
                     List<string> temp = new List<string>();
-                    temp.Add("Note\\" + noteEntry);
+                    temp.Add("Name\\" + noteEntry.Name);
+                    temp.Add("Note\\" + noteEntry.Description);
                     returnList.Add(temp);
                 }
             }
@@ -414,7 +418,7 @@ namespace citadel_wpf
                 var query = from c in xml.Root.Descendants("media_note")
                             select new
                             {
-                                Name = c.Element("name").Value,
+                                Title = c.Element("title").Value,
                                 Year = c.Element("year").Value,
                                 Type = c.Element("type").Value,
                                 Genre = c.Element("genre").Value,
@@ -423,7 +427,7 @@ namespace citadel_wpf
 
                 foreach (var t in query)
                 {
-                    returnTable.Add("Name", t.Name);
+                    returnTable.Add("Title", t.Title);
                     returnTable.Add("Year", t.Year);
                     returnTable.Add("Type", t.Type);
                     returnTable.Add("Genre", t.Genre);
