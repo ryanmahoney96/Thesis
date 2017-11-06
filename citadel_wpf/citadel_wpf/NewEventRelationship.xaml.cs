@@ -109,9 +109,8 @@ namespace citadel_wpf
 
         private void Add_Event(object sender, RoutedEventArgs e)
         {
-            NewEventWindow ncw = new NewEventWindow(folderPath, frontPageReference, this);
-            ncw.Show();
-            ncw.Topmost = true;            
+            //TODO modal
+            NewEntityWindow.InitializeModalWindow(this, new NewEventWindow(folderPath, frontPageReference, this));      
         }
 
         public override void UpdateReliantWindows()

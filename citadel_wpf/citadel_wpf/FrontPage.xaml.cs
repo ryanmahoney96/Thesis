@@ -20,12 +20,16 @@ namespace citadel_wpf
     /// </summary>
     public partial class FrontPage : Window
     {
-        //TODO: Alphabetize entities in the lists
         //TODO: Make '\' in all text unusable 
+        //TODO: Separate new folder and select folder dialogs
+        //TODO: When making a new folder, verify that a media entry does not exist
+        //TODO: Organize so event has list of pointers to things before and things after. Use this when adding new relationship to filter out contradictory data
+        //TODO: Take out sibling relationship? Each character entity will have a list of its literal children. Add dead/alive bool.
         //TODO: Add relationships to both character entities of a pair (rather than separate files) to reduce search/organization time?
-        //TODO Family Trees
-        //TODO Add location v event graph
-        //TODO Later: stylize with https://github.com/MahApps/MahApps.Metro
+        //TODO: Family Trees
+        //TODO: Add location v event graph
+        //TODO: Alphabetize entities in the lists
+        //TODO: Stylize with https://github.com/MahApps/MahApps.Metro
 
         private String folderPath;
 
@@ -39,7 +43,7 @@ namespace citadel_wpf
 
         private void New_Note_Click(object sender, RoutedEventArgs e)
         {
-            initWindow(new NewGeneralNote(folderPath, this));
+            NewEntityWindow.InitializeModalWindow(this, (new NewGeneralNote(folderPath, this)));
         }
         public void Update_Notes()
         {
@@ -48,7 +52,7 @@ namespace citadel_wpf
 
         private void New_Character_Click(object sender, RoutedEventArgs e)
         {
-            initWindow(new NewCharacterWindow(folderPath, this));
+            NewEntityWindow.InitializeModalWindow(this, (new NewCharacterWindow(folderPath, this)));
         }
         public void Update_Characters()
         {
@@ -57,7 +61,7 @@ namespace citadel_wpf
 
         private void New_Event_Click(object sender, RoutedEventArgs e)
         {
-            initWindow(new NewEventWindow(folderPath, this));
+            NewEntityWindow.InitializeModalWindow(this, (new NewEventWindow(folderPath, this)));
         }
         public void Update_Events()
         {
@@ -66,7 +70,7 @@ namespace citadel_wpf
 
         private void New_Location_Click(object sender, RoutedEventArgs e)
         {
-            initWindow(new NewLocationWindow(folderPath, this));
+            NewEntityWindow.InitializeModalWindow(this, (new NewLocationWindow(folderPath, this)));
         }
         public void Update_Locations()
         {
@@ -75,12 +79,12 @@ namespace citadel_wpf
 
         private void Character_Relationship_Click(object sender, RoutedEventArgs e)
         {
-            initWindow(new NewCharacterRelationship(folderPath, this));
+            NewEntityWindow.InitializeModalWindow(this, (new NewCharacterRelationship(folderPath, this)));
         }
 
         private void Event_Relationship_Click(object sender, RoutedEventArgs e)
         {
-            initWindow(new NewEventRelationship(folderPath, this));
+            NewEntityWindow.InitializeModalWindow(this, (new NewEventRelationship(folderPath, this)));
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -121,7 +125,7 @@ namespace citadel_wpf
         public void Fill_Note_Area(List<List<string>> entityNodes, WrapPanel area)
         {
             area.Children.Clear();
-            area.MinHeight = 200;
+            area.MinHeight = NoteNode.NoteNodeHeight - 60;
 
             foreach (List<string> l in entityNodes)
             {
@@ -143,7 +147,7 @@ namespace citadel_wpf
                     }
                 }
                 area.Children.Add(n);
-                area.MinHeight += 75;
+                area.MinHeight += NoteNode.NoteNodeHeight / 2;
             }
         }
 
@@ -152,24 +156,14 @@ namespace citadel_wpf
             return System.Globalization.CultureInfo.CurrentCulture.TextInfo.ToTitleCase(str.ToLower());
         }
 
-        private void initWindow (Window w)
-        {
-            //w.Show();
-            w.Topmost = true;
-            w.Owner = this;
-            w.ShowDialog();
-            //TODO make these windows strictly modal -> spread to all necessary windows
-            //w.Topmost = false;
-        }
-
         private void Save_Media_Information(object sender, RoutedEventArgs e)
         {
             //TODO: Verify all important text boxes are filled
             Media m = new Media(titleText.Text, yearText.Text, type_combobox.Text, genre_combobox.Text, summaryText.Text);
             m.Save(folderPath);
 
-            GraphConstruction g = new GraphConstruction(folderPath);
-            g.TestGraphviz();
+            //GraphConstruction g = new GraphConstruction(folderPath);
+            GraphConstruction.TestGraphviz(folderPath);
         }
     }
 }

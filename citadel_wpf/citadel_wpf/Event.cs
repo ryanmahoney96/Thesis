@@ -32,7 +32,7 @@ namespace citadel_wpf
 
         public static bool AddRecord(EventNote e)
         {
-            //TODO make this generic for each entity? requires entity to be abstract class
+            //TODO make this generic for each entity? requires entity to be abstract class. Must include "records" list and Entity as parameters
             bool alreadyPresent = EventRecords.Where(s => s.GetName().Equals(e.GetName())).Count() > 0 ? true : false;
             if (!alreadyPresent)
             {

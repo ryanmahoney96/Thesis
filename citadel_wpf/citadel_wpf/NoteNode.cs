@@ -12,10 +12,19 @@ namespace citadel_wpf
     class NoteNode : Decorator
     {
         private TextBlock t;
+        private IEntity entity;
+
+        public static int NoteNodeWidth = 320;
+        public static int NoteNodeHeight = 150;
+
+        //TODO: give each notenode a reference to the entity it represents -> must change Fill_Note_area to accept Entity list
+        //TODO: Add edit and delete buttons to notenode. Because of reference to entity and oop design you can manipulate the node and update
+        //TODO: after reference is implemented, use this design to update instead of the "redraw all" method used now
+        //TODO: make base constuctor. Make Button constructor and Text contructor that call it and each fill the node with that content
+        //TODO: Make first notenode the "button" notenode for adding things -> take out the menu style used now
 
         public NoteNode()
         {
-            //TODO: add edit button to bottom corner
             Border b = new Border();
             //Button button = new Button();
             b.BorderThickness = new Thickness(1, 1, 1, 1);
@@ -26,14 +35,20 @@ namespace citadel_wpf
             Text = "";
             t.TextWrapping = TextWrapping.Wrap;
             t.FontSize = 15;
-            b.Width = 320;
-            b.Height = 150;
+            b.Width = NoteNodeWidth;
+            b.Height = NoteNodeHeight;
             //button.Content = "Edit";
             s.Content = t;
             b.Child = s;
             b.Padding = new Thickness(1, 1, 1, 1);
             b.Margin = new Thickness(5, 5, 5, 5);
             this.Child = b;
+        }
+
+        public NoteNode(IEntity e) : this()
+        {
+            entity = e;
+            
         }
 
         public string Text { get => t.Text; set => t.Text = value; }

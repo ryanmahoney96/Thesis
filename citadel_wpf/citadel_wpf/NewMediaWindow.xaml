@@ -41,8 +41,10 @@
         <ComboBox Name="type_combobox" Width="200" Margin="5, 0" Grid.Row="3" Grid.Column="2" VerticalAlignment="Center" VerticalContentAlignment="Center" HorizontalAlignment="Left" Height="22" >
             <ComboBoxItem Content="Book / Short Story"/>
             <ComboBoxItem Content="Movie"/>
+            <ComboBoxItem Content="Tabletop / Video Game"/>
             <ComboBoxItem Content="Television Show"/>
             <ComboBoxItem Content="History / Reality"/>
+            <ComboBoxItem Content="Other"/>
         </ComboBox>
 
         <TextBlock Name="genre_text" Text="Enter the Genre:" Grid.Row="4" Grid.Column="1" VerticalAlignment="Center" Height="16" Margin="0,10,0,10"></TextBlock>
@@ -50,10 +52,10 @@
             <ComboBoxItem Content="Action / Adventure"/>
             <ComboBoxItem Content="Comedy"/>
             <ComboBoxItem Content="Drama"/>
-            <ComboBoxItem Content="Historic"/>
             <ComboBoxItem Content="Horror"/>
             <ComboBoxItem Content="Mystery"/>
-            <ComboBoxItem Content="Reality / Biographical"/>
+            <ComboBoxItem Content="History / Reality / Biographical"/>
+            <ComboBoxItem Content="Other"/>
 
         </ComboBox>
 

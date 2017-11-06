@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -30,13 +31,28 @@ namespace citadel_wpf
         override protected void Save(object sender, RoutedEventArgs e)
         {
             StreamWriter media_notes_handle = null;
+            Regex yearRegex = new Regex(@"^[0-9]*$");
 
-            if (!name_text.Text.Equals("") && !type_combobox.Text.Equals(""))
+            if (name_text.Text.Equals(""))
+            {
+                required_text.Text = "Fill in the Title";
+                required_text.Foreground = Brushes.Red;
+            }
+            else if (!yearRegex.IsMatch(year_text.Text))
+            {
+                required_text.Text = "Invalid Year";
+                required_text.Foreground = Brushes.Red;
+            }
+            else if (type_combobox.Text.Equals(""))
+            {
+                required_text.Text = "Select a Media Type";
+                required_text.Foreground = Brushes.Red;
+            }
+            else
             {
                 try
                 {
                     string name = name_text.Text;
-                    //TODO: verify they are an int?
                     string year = year_text.Text;
                     string type = type_combobox.Text;
                     string genre = genre_combobox.Text;
@@ -61,6 +77,7 @@ namespace citadel_wpf
 
                     FrontPage frontPage = new FrontPage(folderPath);
                     frontPage.Topmost = true;
+                    frontPage.Topmost = false;
                     frontPage.Show();
 
                     Close();
@@ -82,10 +99,6 @@ namespace citadel_wpf
 
                     Close();
                 }
-            }
-            else
-            {
-                required_text.Foreground = Brushes.Red;
             }
         }
 

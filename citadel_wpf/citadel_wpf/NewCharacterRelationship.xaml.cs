@@ -111,9 +111,8 @@ namespace citadel_wpf
 
         private void Add_Character(object sender, RoutedEventArgs e)
         {
-            NewCharacterWindow ncw = new NewCharacterWindow(folderPath, frontPageReference, this);
-            ncw.Show();
-            ncw.Topmost = true;
+            //TODO modal
+            NewEntityWindow.InitializeModalWindow(this, new NewCharacterWindow(folderPath, frontPageReference, this));
         }
 
         public override void UpdateReliantWindows()

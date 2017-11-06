@@ -27,7 +27,7 @@ namespace citadel_wpf
 
         public static bool AddRecord(Character c)
         {
-            //TODO verify c_relationship does not already exist as well
+            //TODO verify c_relationship does not already exist as well as just the character
             bool alreadyPresent = CharacterRecords.Where(s => s.GetName().Equals(c.GetName())).Count() > 0 ? true : false;
             if (!alreadyPresent)
             {

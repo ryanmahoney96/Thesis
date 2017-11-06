@@ -135,9 +135,8 @@ namespace citadel_wpf
 
         private void Add_New_Location(object sender, RoutedEventArgs e)
         {
-            NewLocationWindow nlw = new NewLocationWindow(folderPath, frontPageReference, this);
-            nlw.Show();
-            nlw.Topmost = true;
+            //TODO modal
+            NewEntityWindow.InitializeModalWindow(this, new NewLocationWindow(folderPath, frontPageReference, this));
         }
     }
 }

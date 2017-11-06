@@ -19,7 +19,7 @@ namespace citadel_wpf
 
         }
 
-        public void TestGraphviz()
+        public static void TestGraphviz(string folderPath)
         {
             //Procedure: construct the proper dot information, output to a file, open cmd to parse that file
             string echo = "digraph G { Hello->World}";

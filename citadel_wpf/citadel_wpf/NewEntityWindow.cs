@@ -37,6 +37,16 @@ namespace citadel_wpf
             folderPath = "";
         }
 
+        public static void InitializeModalWindow(Window owner, Window child)
+        {
+            //w.Show();
+            //w.Topmost = true;
+            child.Owner = owner;
+            child.ShowDialog();
+            //TODO make these windows strictly modal -> spread to all necessary windows
+            child.Topmost = false;
+        }
+
         protected void Cancel_and_Close(object sender, RoutedEventArgs e)
         {
             Close();
