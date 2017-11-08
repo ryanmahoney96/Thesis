@@ -44,7 +44,7 @@ namespace citadel_wpf
 
                     if (File.Exists(filePath))
                     {
-                        event_relationships_handle = XMLParserClass.RemoveLastLine(filePath);
+                        event_relationships_handle = XMLEntityParser.RemoveLastLine(filePath);
                     }
                     else
                     {
@@ -92,7 +92,7 @@ namespace citadel_wpf
             event_one_combo.Items.Clear();
             event_two_combo.Items.Clear();
 
-            List<string> eventNames = XMLParserClass.GetAllNames(base.folderPath + "\\event_notes.xml", "event");
+            List<string> eventNames = XMLEntityParser.GetAllNames(base.folderPath + "\\event_notes.xml", "event");
 
             ComboBoxItem cBoxItem;
 

@@ -11,7 +11,7 @@ using System.Xml.XPath;
 
 namespace citadel_wpf
 {
-    class XMLParserClass
+    class XMLEntityParser
     {
         //Obsolete
         public static string attemptParse()
@@ -188,7 +188,7 @@ namespace citadel_wpf
             return temp;
         }
 
-        //Obsolete
+        //TODO use this to revive XML only model
         public static StreamWriter RemoveLastLine(string filePath)
         {
             //Deletes the last line in the xml file, the closing content tag
@@ -222,7 +222,7 @@ namespace citadel_wpf
                 var xml = XDocument.Load(fullFilePath);
 
                 // Query the data and write out a subset of contacts
-                var query = from c in xml.Root.Descendants("character")
+                var character = from c in xml.Root.Descendants("character")
                                 //where ((string)c.Element("name")).Equals("Ygritte")
                             select new
                             {
@@ -231,7 +231,7 @@ namespace citadel_wpf
                                 Description = c.Element("description").Value
                             };
 
-                foreach (var characterEntry in query)
+                foreach (var characterEntry in character)
                 {
                     if (initialize)
                     {
@@ -245,6 +245,9 @@ namespace citadel_wpf
                     temp.Add("Description\\" + characterEntry.Description);
                     returnList.Add(temp);
                 }
+
+                //TODO: after all characters added, add all relationships
+                
             }
             return returnList;
         }

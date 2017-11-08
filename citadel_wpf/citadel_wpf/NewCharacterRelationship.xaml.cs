@@ -46,7 +46,7 @@ namespace citadel_wpf
 
                     if (File.Exists(filePath))
                     {
-                        character_relationships_handle = XMLParserClass.RemoveLastLine(filePath);
+                        character_relationships_handle = XMLEntityParser.RemoveLastLine(filePath);
                     }
                     else
                     {
@@ -98,7 +98,7 @@ namespace citadel_wpf
             character_one_combo.Items.Clear();
             character_two_combo.Items.Clear();
 
-            List<string> characterNames = XMLParserClass.GetAllNames(base.folderPath + "\\character_notes.xml", "character");
+            List<string> characterNames = XMLEntityParser.GetAllNames(base.folderPath + "\\character_notes.xml", "character");
 
             ComboBoxItem cBoxItem;
 

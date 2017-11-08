@@ -11,6 +11,8 @@ namespace citadel_wpf
 {
     class NoteNode : Decorator
     {
+        //TODO use this as identifier
+        private String name;
         private TextBlock t;
         private IEntity entity;
 

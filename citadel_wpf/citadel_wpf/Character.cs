@@ -38,14 +38,22 @@ namespace citadel_wpf
 
             return !alreadyPresent;
         }
+        public bool AddParent(Character parent)
+        {
+            bool alreadyPresent = Parents.Where(s => s.GetName().Equals(parent.GetName())).Count() > 0 ? true : false;
+            if (!alreadyPresent)
+            {
+                Parents.Add(parent);
+            }
+
+            return !alreadyPresent;
+        }
         public List<Character> GetChildren()
         {
-            //TODO: Add Parents?
             return Children;
         }
         public List<Character> GetParents()
         {
-            //TODO: Add Parents?
             return Parents;
         }
 

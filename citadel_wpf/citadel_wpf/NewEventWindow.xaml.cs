@@ -34,7 +34,7 @@ namespace citadel_wpf
 
             location_combo_box.Items.Clear();
 
-            List<string> locationNames = XMLParserClass.GetAllNames(base.folderPath + "\\location_notes.xml", "location");
+            List<string> locationNames = XMLEntityParser.GetAllNames(base.folderPath + "\\location_notes.xml", "location");
 
             foreach (string location in locationNames)
             {
