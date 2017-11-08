@@ -20,7 +20,7 @@ namespace citadel_wpf
     /// </summary>
     public partial class FrontPage : Window
     {
-        //TODO: Take out the OOP and make this all query based
+        //TODO: Take out the OOP and make all saving query based -> restructure XML if necessary
         //TODO: Make '\' in all text unusable 
         //TODO: Separate new folder and select folder dialogs
         //TODO: When making a new folder, verify that a media entry does not exist
