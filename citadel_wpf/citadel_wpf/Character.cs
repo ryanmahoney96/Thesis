@@ -12,26 +12,50 @@ namespace citadel_wpf
         string Name;
         string Gender;
         string Description;
+        List<Character> Children;
+        List<Character> Parents;
 
         public Character(string n, string g, string d)
         {
             Name = n;
             Gender = g;
             Description = d;
+            Children = new List<Character>();
+            Parents = new List<Character>();
 
             if (CharacterRecords == null)
             {
                 CharacterRecords = new List<IEntity>();
             }
         }
-
-        public static bool AddRecord(Character c)
+        public bool AddChild(Character child)
         {
-            //TODO verify c_relationship does not already exist as well as just the character
-            bool alreadyPresent = CharacterRecords.Where(s => s.GetName().Equals(c.GetName())).Count() > 0 ? true : false;
+            bool alreadyPresent = Children.Where(s => s.GetName().Equals(child.GetName())).Count() > 0 ? true : false;
             if (!alreadyPresent)
             {
-                CharacterRecords.Add(c);
+                Children.Add(child);
+            }
+
+            return !alreadyPresent;
+        }
+        public List<Character> GetChildren()
+        {
+            //TODO: Add Parents?
+            return Children;
+        }
+        public List<Character> GetParents()
+        {
+            //TODO: Add Parents?
+            return Parents;
+        }
+
+        public static bool AddRecord(Character character)
+        {
+            //TODO verify c_relationship does not already exist as well as just the character
+            bool alreadyPresent = CharacterRecords.Where(s => s.GetName().Equals(character.GetName())).Count() > 0 ? true : false;
+            if (!alreadyPresent)
+            {
+                CharacterRecords.Add(character);
             }
 
             return !alreadyPresent;

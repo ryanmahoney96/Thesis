@@ -30,6 +30,7 @@ namespace citadel_wpf
         override protected void Save(object sender, RoutedEventArgs e)
         {
             //TODO: make sure relationship does not already exist
+            //TODO make more permanent: may need to add this whole file to the character class
             StreamWriter event_relationships_handle = null;
 
             if (!event_one_combo.Text.Equals("") && !relationship_combo.Text.Equals("") && !event_two_combo.Text.Equals(""))
@@ -109,7 +110,6 @@ namespace citadel_wpf
 
         private void Add_Event(object sender, RoutedEventArgs e)
         {
-            //TODO modal
             NewEntityWindow.InitializeModalWindow(this, new NewEventWindow(folderPath, frontPageReference, this));      
         }
 

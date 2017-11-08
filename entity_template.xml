@@ -30,7 +30,11 @@
 			<physical_description></physical_description>
 			<image_link></image_link>
 			<gender></gender>
-			<race></race>			
+			<character_relationships>
+				<parent></parent>
+				<child></child>
+			</character_relationships>
+
 		</character>
 
 	</characters>

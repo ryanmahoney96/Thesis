@@ -14,6 +14,7 @@ namespace citadel_wpf
         string Unit_Date;
         string Date;
         string Description;
+        List <EventNote> EventsBefore;
         
         public EventNote(string n, string l, string u, string d, string desc)
         {
@@ -23,6 +24,7 @@ namespace citadel_wpf
             Unit_Date = u;
             Date = d;
             Description = desc;
+            EventsBefore = new List<EventNote>();
 
             if (EventRecords == null)
             {

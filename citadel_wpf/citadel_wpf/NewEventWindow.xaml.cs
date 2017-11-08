@@ -135,7 +135,6 @@ namespace citadel_wpf
 
         private void Add_New_Location(object sender, RoutedEventArgs e)
         {
-            //TODO modal
             NewEntityWindow.InitializeModalWindow(this, new NewLocationWindow(folderPath, frontPageReference, this));
         }
     }

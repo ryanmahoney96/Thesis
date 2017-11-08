@@ -22,6 +22,7 @@ namespace citadel_wpf
     {
 
         //TODO: Add "Other" field for other types of relationships
+        //TODO: Add the relationships on startup
 
         public NewCharacterRelationship(string fp, FrontPage fpr) : base(fp, fpr)
         {
@@ -62,6 +63,10 @@ namespace citadel_wpf
                     character_relationships_handle.Write("</character_relationships>");
 
                     character_relationships_handle.Close();
+
+                    //TODO make more permanent by making it similar to the add_record 
+                    Add_Relationship(character_one, relationship, character_two);
+
                     Close();
                 }
                 catch (IOException)
@@ -109,9 +114,38 @@ namespace citadel_wpf
             }
         }
 
+        private void Add_Relationship(string character_one, string relationship, string character_two)
+        {
+            var c1ref = from c in Character.GetRecords() where c.GetName().Equals(character_one) select c;
+            var c2ref = from c in Character.GetRecords() where c.GetName().Equals(character_two) select c;
+
+            //TODO if non-familial relationships are added, be conscious of this function
+            if (relationship.Contains("Parent"))
+            {
+                //character one is the parent
+                foreach(Character c in c1ref)
+                {
+                    foreach(Character t in c2ref)
+                    {
+                        c.AddChild(t);
+                    }
+                }
+            }
+            else if (relationship.Contains("Child"))
+            {
+                //character two is the parent
+                foreach (Character c in c1ref)
+                {
+                    foreach (Character t in c2ref)
+                    {
+                        t.AddChild(c);
+                    }
+                }
+            }
+        }
+
         private void Add_Character(object sender, RoutedEventArgs e)
         {
-            //TODO modal
             NewEntityWindow.InitializeModalWindow(this, new NewCharacterWindow(folderPath, frontPageReference, this));
         }
 

@@ -249,6 +249,42 @@ namespace citadel_wpf
             return returnList;
         }
 
+        public static List<List<string>> GetAllCharacterRelationships(string fullFilePath, Character focusCharacter, bool initialize = false)
+        {
+            List<List<string>> returnList = new List<List<string>>();
+
+            if (File.Exists(fullFilePath))
+            {
+                var xml = XDocument.Load(fullFilePath);
+
+                // Query the data and write out a subset of contacts
+                var query = from c in xml.Root.Descendants("character")
+                                //where ((string)c.Element("name")).Equals("Ygritte")
+                            select new
+                            {
+                                Name = c.Element("name").Value,
+                                Gender = c.Element("gender").Value,
+                                Description = c.Element("description").Value
+                            };
+
+                foreach (var characterEntry in query)
+                {
+                    if (initialize)
+                    {
+                        Character.AddRecord(new Character(characterEntry.Name, characterEntry.Gender, characterEntry.Description));
+                    }
+
+                    List<string> temp = new List<string>();
+
+                    temp.Add("Name\\" + characterEntry.Name);
+                    temp.Add("Gender\\" + characterEntry.Gender);
+                    temp.Add("Description\\" + characterEntry.Description);
+                    returnList.Add(temp);
+                }
+            }
+            return returnList;
+        }
+
         public static List<List<string>> GetAllGeneralNotes(string fullFilePath, bool initialize = false)
         {
             List<List<string>> returnList = new List<List<string>>();
