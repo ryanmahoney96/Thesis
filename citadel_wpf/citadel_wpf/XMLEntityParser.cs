@@ -22,15 +22,12 @@ namespace citadel_wpf
         private static XDocument note_handle = null;
 
         private static XMLEntityParser instance = null;
+        private static string FolderPath;
 
         private XMLEntityParser(string folderPath)
         {
-            SetHandle(folderPath, "character_notes", ref character_handle);
-            SetHandle(folderPath, "character_relationship_notes", ref character_relationship_handle);
-            SetHandle(folderPath, "location_notes", ref location_handle);
-            SetHandle(folderPath, "event_notes", ref event_handle);
-            SetHandle(folderPath, "event_relationship_notes", ref event_relationship_handle);
-            SetHandle(folderPath, "general_notes", ref note_handle);
+            FolderPath = folderPath;
+            UpdateHandles();
         }
 
         private void SetHandle(string folderName, string documentName, ref XDocument handle)
@@ -39,13 +36,23 @@ namespace citadel_wpf
             if (!File.Exists(filePath))
             {
                 StreamWriter s = File.CreateText(folderName + $"\\{documentName}.xml");
-                s.Write("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n\n");
-                s.WriteLine($"<{documentName}>\n\t");
-                s.WriteLine($"</{documentName}>\n\t");
+                s.WriteLine("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
+                s.WriteLine($"<{documentName}>");
+                s.WriteLine($"");
+                s.WriteLine($"</{documentName}>");
                 s.Close();
             }
 
             handle = XDocument.Load(filePath);
+        }
+        public void UpdateHandles()
+        {
+            SetHandle(FolderPath, "character_notes", ref character_handle);
+            SetHandle(FolderPath, "character_relationship_notes", ref character_relationship_handle);
+            SetHandle(FolderPath, "location_notes", ref location_handle);
+            SetHandle(FolderPath, "event_notes", ref event_handle);
+            SetHandle(FolderPath, "event_relationship_notes", ref event_relationship_handle);
+            SetHandle(FolderPath, "general_notes", ref note_handle);
         }
 
         public static XMLEntityParser GetInstance(string folderPath = "")
@@ -252,10 +259,11 @@ namespace citadel_wpf
         }
 
         //TODO use this to revive XML only model
-        public static StreamWriter RemoveLastLine(string filePath)
+        public static StreamWriter RemoveEndTag(string filePath)
         {
             //Deletes the last line in the xml file, the closing content tag
             string line = null;
+            string finalLine = null;
             List<string> deferredLines = new List<string>();
             using (TextReader inputReader = new StreamReader(filePath))
             {
@@ -263,7 +271,14 @@ namespace citadel_wpf
                 {
                     deferredLines.Add(line);
                 }
+                finalLine = deferredLines[deferredLines.Count - 1];
                 deferredLines.RemoveAt(deferredLines.Count - 1);
+
+                while(!finalLine[finalLine.Count() - 1].Equals('/'))
+                {
+                    finalLine = finalLine.Remove(finalLine.Count() - 1, 1);
+                }
+                finalLine = finalLine.Remove(finalLine.Count() - 2, 2);
             }
 
             StreamWriter stream = new StreamWriter(filePath, false);
@@ -272,11 +287,12 @@ namespace citadel_wpf
             {
                 stream.Write(deferredLines[i]);
             }
+            stream.Write(finalLine);
 
             return stream;
         }
 
-        public List<List<string>> GetAllCharacterNotes(bool initialize = false)
+        public List<List<string>> GetAllCharacterNotes()
         {
             List<List<string>> returnList = new List<List<string>>();
             
@@ -307,7 +323,7 @@ namespace citadel_wpf
         }
 
         //TODO this
-        public static List<List<string>> GetAllCharacterRelationships(string fullFilePath, bool initialize = false)
+        public static List<List<string>> GetAllCharacterRelationships(string fullFilePath)
         {
             List<List<string>> returnList = new List<List<string>>();
 
@@ -338,7 +354,7 @@ namespace citadel_wpf
             return returnList;
         }
 
-        public List<List<string>> GetAllGeneralNotes(bool initialize = false)
+        public List<List<string>> GetAllGeneralNotes()
         {
             List<List<string>> returnList = new List<List<string>>();
             
@@ -360,7 +376,7 @@ namespace citadel_wpf
             return returnList;
         }
 
-        public List<List<string>> GetAllLocationNotes(bool initialize = false)
+        public List<List<string>> GetAllLocationNotes()
         {
             List<List<string>> returnList = new List<List<string>>();
             
@@ -387,7 +403,7 @@ namespace citadel_wpf
             return returnList;
         }
 
-        public List<List<string>> GetAllEventNotes(bool initialize = false)
+        public List<List<string>> GetAllEventNotes()
         {
             List<List<string>> returnList = new List<List<string>>();
             
@@ -476,11 +492,10 @@ namespace citadel_wpf
 
                 var xml = XDocument.Load(fullFilePath);
 
-                // Query the data and write out a subset of contacts
                 var query = from c in xml.Root.Descendants("media_note")
                             select new
                             {
-                                Title = c.Element("title").Value,
+                                Title = c.Element("name").Value,
                                 Year = c.Element("year").Value,
                                 Type = c.Element("type").Value,
                                 Genre = c.Element("genre").Value,
@@ -489,7 +504,7 @@ namespace citadel_wpf
 
                 foreach (var t in query)
                 {
-                    returnTable.Add("Title", t.Title);
+                    returnTable.Add("Name", t.Title);
                     returnTable.Add("Year", t.Year);
                     returnTable.Add("Type", t.Type);
                     returnTable.Add("Genre", t.Genre);

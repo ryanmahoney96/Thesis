@@ -30,7 +30,7 @@ namespace citadel_wpf
         {
             //TODO double check values before save
             //if character does not exist
-            if (SaveEntity(sender, e, controlTexts, required_text, "character_notes", name_text.Text, Entity.CharacterToXML(name_text.Text, gender_combo_box.Text, description_text.Text)))
+            if (SaveEntity(sender, e, XMLEntityParser.GetInstance().GetCharacterHandle(), "character_notes", name_text.Text, Entity.CharacterToXML(name_text.Text, gender_combo_box.Text, description_text.Text)))
             {
                 UpdateReliantWindows();
             }

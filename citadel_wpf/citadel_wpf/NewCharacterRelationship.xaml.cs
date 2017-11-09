@@ -46,7 +46,7 @@ namespace citadel_wpf
 
                     if (File.Exists(filePath))
                     {
-                        character_relationships_handle = XMLEntityParser.RemoveLastLine(filePath);
+                        character_relationships_handle = XMLEntityParser.RemoveEndTag(filePath);
                     }
                     else
                     {

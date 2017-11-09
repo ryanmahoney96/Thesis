@@ -12,6 +12,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using System.Xml.Linq;
 
 namespace citadel_wpf
 {
@@ -54,75 +55,76 @@ namespace citadel_wpf
 
         protected abstract void Save(object sender, RoutedEventArgs e);
 
-        protected bool SaveEntity(object sender, RoutedEventArgs e, List<String> controlTexts, TextBlock required_text, string docName, string entityName, string entityAsXML)
+        protected bool SaveEntity(object sender, RoutedEventArgs e, XDocument handle, string docName, string entityName, string entityAsXML)
         {
+            StreamWriter fileHandle = null;
+            string docURI = folderPath + $"\\{docName}.xml";
 
-            StreamWriter handle = null;
-            bool valid = true;
-
-            //TODO do this before the call -> get rid of control texts
-            foreach (String s in controlTexts)
+            try
             {
-                if (s.Equals(""))
+                
+                bool present = (from c in handle.Root.Elements()
+                                where c.Element("name").Value.ToString().Equals(entityName)
+                                select c).Count() > 0 ? true : false;
+
+                if (present)
                 {
-                    valid = false;
-                    break;
+                    return false;
                 }
-            }
-
-            if (valid)
-            {
-                try
+                else
                 {
-
-                    string filePath = folderPath + "\\" + docName + ".xml";
-
-                    if (File.Exists(filePath))
+                    if (File.Exists(docURI))
                     {
-                        handle = XMLEntityParser.RemoveLastLine(filePath);
+                        fileHandle = XMLEntityParser.RemoveEndTag(docURI);
                     }
                     else
                     {
-                        handle = new StreamWriter(filePath, true);
-                        handle.Write("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n\n<" + docName + ">\n\t");
+                        fileHandle = new StreamWriter(docURI, true);
+                        fileHandle.Write("<?xml version=\"1.0\" encoding=\"UTF-8\"?><" + docName + ">");
                     }
-                    
-                    //TODO
-                    //Verify entity is not already present -> otherwise return false
-                    //Add entity and return true
 
-                    handle.Write("</" + docName + ">");
+                    fileHandle.Write(entityAsXML);
 
-                    handle.Close();
+
+                    fileHandle.Write("</" + docName + ">");
+
+                    fileHandle.Close();
 
                     //UpdateReliantWindows();
 
                     Close();
-                }
-                catch (IOException)
-                {
-                    System.Windows.Forms.MessageBox.Show("An IO Error Occurred. Please Try Again.");
-                }
-                catch (Exception)
-                {
-                    System.Windows.Forms.MessageBox.Show("An Unexpected Error Occurred.");
-                }
-                finally
-                {
-                    if (!handle.Equals(null))
-                    {
-                        handle.Close();
-                    }
+                    XMLEntityParser.GetInstance().UpdateHandles();
 
-                    base.Close();
+                    return true;
                 }
+
+
             }
-            else
+            catch (IOException)
             {
-                required_text.Foreground = Brushes.Red;
+                System.Windows.Forms.MessageBox.Show("An IO Error Occurred. Please Try Again.");
             }
+            //catch (Exception)
+            //{
+            //    System.Windows.Forms.MessageBox.Show("An Unexpected Error Occurred.");
+            //}
+            finally
+            {
+                if (fileHandle != null)
+                {
+                    fileHandle.Close();
+                }
 
-            return true;
+                base.Close();
+            }
+            
+
+            return false;
+
+            //else
+            //{
+            //    required_text.Foreground = Brushes.Red;
+            //}
         }
 
         public abstract void UpdateReliantWindows();

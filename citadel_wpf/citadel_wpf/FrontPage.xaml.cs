@@ -21,7 +21,7 @@ namespace citadel_wpf
     public partial class FrontPage : Window
     {
         //TODO: Take out the OOP and make all saving query based -> restructure XML if necessary
-        //TODO: Make '\' in all text unusable 
+        //TODO: Make "> \ <" in all text unusable 
         //TODO: Separate new folder and select folder dialogs
         //TODO: When making a new folder, verify that a media entry does not exist
         //TODO: Organize so event has list of pointers to things before and things after. Use this when adding new relationship to filter out contradictory data
@@ -39,7 +39,7 @@ namespace citadel_wpf
             InitializeComponent();
             folderPath = fp;
             Title += " - " + folderPath;
-            Update_Note_Pages(true);
+            Update_Note_Pages();
         }
 
         private void New_Note_Click(object sender, RoutedEventArgs e)
@@ -97,7 +97,7 @@ namespace citadel_wpf
             //Fill_Note_Pages();
         }
 
-        private void Update_Note_Pages(bool initialize = false)
+        private void Update_Note_Pages()
         {
             //Fill_Note_Area(XMLParserClass.GetAllCharacterNotes(folderPath + "\\character_notes.xml"), character_notes_area);
             //Fill_Note_Area(XMLParserClass.GetAllGeneralNotes(folderPath + "\\general_notes.xml"), general_notes_area);
@@ -115,7 +115,7 @@ namespace citadel_wpf
         {
             if (!information.Equals(null))
             {
-                titleText.Text = information["Title"].ToString();
+                titleText.Text = information["Name"].ToString();
                 yearText.Text = information["Year"].ToString();
                 type_combobox.Text = information["Type"].ToString();
                 genre_combobox.Text = information["Genre"].ToString();

@@ -25,11 +25,11 @@ namespace citadel_wpf
         {
             StringBuilder s = new StringBuilder();
 
-            s.Append("<character>\n\t\t");
-            s.Append("<name>" + name + "</name>\n\t\t");
-            s.Append("<gender>" + gender + "</gender>\n\t\t");
-            s.Append("<description>" + description + "</description>\n\t");
-            s.Append("</character>\n\n");
+            s.Append("<character>");
+            s.Append("<name>" + name + "</name>");
+            s.Append("<gender>" + gender + "</gender>");
+            s.Append("<description>" + description + "</description>");
+            s.Append("</character>");
 
             return s.ToString();
         }
@@ -38,10 +38,10 @@ namespace citadel_wpf
         {
             StringBuilder s = new StringBuilder();
 
-            s.Append("<general_note>\n\t\t");
-            s.Append("<name>" + name + "</name>\n\t");
-            s.Append("<description>" + description + "</description>\n\t");
-            s.Append("</general_note>\n\n");
+            s.Append("<general_note>");
+            s.Append("<name>" + name + "</name>");
+            s.Append("<description>" + description + "</description>");
+            s.Append("</general_note>");
 
             return s.ToString();
         }
@@ -50,13 +50,13 @@ namespace citadel_wpf
         {
             StringBuilder s = new StringBuilder();
 
-            s.Append("<event>\n\t\t");
-            s.Append("<name>" + name + "</name>\n\t\t");
-            s.Append("<location>" + location + "</location>\n\t\t");
-            s.Append("<unit_date>" + unit_date + "</unit_date>\n\t\t");
-            s.Append("<date>" + date + "</date>\n\t\t");
-            s.Append("<description>" + description + "</description>\n\t");
-            s.Append("</event>\n\n");
+            s.Append("<event>");
+            s.Append("<name>" + name + "</name>");
+            s.Append("<location>" + location + "</location>");
+            s.Append("<unit_date>" + unit_date + "</unit_date>");
+            s.Append("<date>" + date + "</date>");
+            s.Append("<description>" + description + "</description>");
+            s.Append("</event>");
 
             return s.ToString();
         }
@@ -65,12 +65,12 @@ namespace citadel_wpf
         {
             StringBuilder s = new StringBuilder();
 
-            s.Append("<location>\n\t\t");
-            s.Append("<name>" + name + "</name>\n\t\t");
-            s.Append("<type>" + type + "</type>\n\t\t");
-            s.Append("<subtype>" + subtype + "</subtype>\n\t\t");
-            s.Append("<description>" + description + "</description>\n\t");
-            s.Append("</location>\n\n");
+            s.Append("<location>");
+            s.Append("<name>" + name + "</name>");
+            s.Append("<type>" + type + "</type>");
+            s.Append("<subtype>" + subtype + "</subtype>");
+            s.Append("<description>" + description + "</description>");
+            s.Append("</location>");
 
             return s.ToString();
         }
