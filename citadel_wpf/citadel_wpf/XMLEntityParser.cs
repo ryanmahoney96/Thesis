@@ -14,12 +14,12 @@ namespace citadel_wpf
     class XMLEntityParser
     {
         //TODO add relationship handles
-        private static XDocument character_handle = null;
-        private static XDocument character_relationship_handle = null;
-        private static XDocument location_handle = null;
-        private static XDocument event_handle = null;
-        private static XDocument event_relationship_handle = null;
-        private static XDocument note_handle = null;
+        private static XDocument characterXDocument = null;
+        private static XDocument characterRelationshipXDocument = null;
+        private static XDocument locationXDocument = null;
+        private static XDocument eventXDocument = null;
+        private static XDocument eventRelationshipXDocument = null;
+        private static XDocument noteXDocument = null;
 
         private static XMLEntityParser instance = null;
         private static string FolderPath;
@@ -27,10 +27,10 @@ namespace citadel_wpf
         private XMLEntityParser(string folderPath)
         {
             FolderPath = folderPath;
-            UpdateHandles();
+            UpdateXDocuments();
         }
 
-        private void SetHandle(string folderName, string documentName, ref XDocument handle)
+        private void SetXDocumentContent(string folderName, string documentName, ref XDocument handle)
         {
             string filePath = folderName + $"\\{documentName}.xml";
             if (!File.Exists(filePath))
@@ -45,14 +45,14 @@ namespace citadel_wpf
 
             handle = XDocument.Load(filePath);
         }
-        public void UpdateHandles()
+        public void UpdateXDocuments()
         {
-            SetHandle(FolderPath, "character_notes", ref character_handle);
-            SetHandle(FolderPath, "character_relationship_notes", ref character_relationship_handle);
-            SetHandle(FolderPath, "location_notes", ref location_handle);
-            SetHandle(FolderPath, "event_notes", ref event_handle);
-            SetHandle(FolderPath, "event_relationship_notes", ref event_relationship_handle);
-            SetHandle(FolderPath, "general_notes", ref note_handle);
+            SetXDocumentContent(FolderPath, "character_notes", ref characterXDocument);
+            SetXDocumentContent(FolderPath, "character_relationship_notes", ref characterRelationshipXDocument);
+            SetXDocumentContent(FolderPath, "location_notes", ref locationXDocument);
+            SetXDocumentContent(FolderPath, "event_notes", ref eventXDocument);
+            SetXDocumentContent(FolderPath, "event_relationship_notes", ref eventRelationshipXDocument);
+            SetXDocumentContent(FolderPath, "general_notes", ref noteXDocument);
         }
 
         public static XMLEntityParser GetInstance(string folderPath = "")
@@ -65,200 +65,23 @@ namespace citadel_wpf
             return instance;
         }
 
-        public XDocument GetCharacterHandle()
+        public XDocument GetCharacterXDocument()
         {
-            return character_handle;
+            return characterXDocument;
         }
-        public XDocument GetLocationHandle()
+        public XDocument GetLocationXDocument()
         {
-            return location_handle;
+            return locationXDocument;
         }
-        public XDocument GetEventHandle()
+        public XDocument GetEventXDocument()
         {
-            return event_handle;
+            return eventXDocument;
         }
-        public XDocument GetNoteHandle()
+        public XDocument GetNoteXDocument()
         {
-            return note_handle;
-        }
-
-
-        //Obsolete
-        public static string attemptParse()
-        {
-            StringBuilder output = new StringBuilder();
-
-            String xmlString =
-                    @"<?xml version='1.0'?>
-        <!-- This is a sample XML document -->
-        <Items>
-          <Item>test with a child element <more/> stuff</Item>
-        </Items>";
-            // Create an XmlReader
-            using (XmlReader reader = XmlReader.Create(new StringReader(xmlString)))
-            {
-                XmlWriterSettings ws = new XmlWriterSettings();
-                ws.Indent = true;
-                using (XmlWriter writer = XmlWriter.Create(output, ws))
-                {
-
-                    // Parse the file and display each of the nodes.
-                    while (reader.Read())
-                    {
-                        switch (reader.NodeType)
-                        {
-                            case XmlNodeType.Element:
-                                writer.WriteStartElement(reader.Name);
-                                break;
-                            case XmlNodeType.Text:
-                                writer.WriteString(reader.Value);
-                                break;
-                            case XmlNodeType.XmlDeclaration:
-                            case XmlNodeType.ProcessingInstruction:
-                                writer.WriteProcessingInstruction(reader.Name, reader.Value);
-                                break;
-                            case XmlNodeType.Comment:
-                                writer.WriteComment(reader.Value);
-                                break;
-                            case XmlNodeType.EndElement:
-                                writer.WriteFullEndElement();
-                                break;
-                        }
-                    }
-
-                }
-            }
-            return output.ToString();
+            return noteXDocument;
         }
 
-        //Obsolete
-        public static string attemptSpecificParse()
-        {
-            StringBuilder output = new StringBuilder();
-
-            String xmlString =
-                            @"<bookstore>
-                    <book genre='autobiography' publicationdate='1981-03-22' ISBN='1-861003-11-0'>
-                        <title>The Autobiography of Benjamin Franklin</title>
-                        <author>
-                            <first-name>Benjamin</first-name>
-                            <last-name>Franklin</last-name>
-                        </author>
-                        <price>8.99</price>
-                    </book>
-            <book genre='autobiography' publicationdate='1981-03-22' ISBN='1-861003-11-0'>
-                        <title>The Autobiography of Benjamin Franklin</title>
-                        <author>
-                            <first-name>Benjamin</first-name>
-                            <last-name>Franklin</last-name>
-                        </author>
-                        <price>8.99</price>
-                    </book>
-                </bookstore>";
-
-            // Create an XmlReader
-            using (XmlReader reader = XmlReader.Create(new StringReader(xmlString)))
-            {
-                reader.ReadToFollowing("book");
-                reader.MoveToFirstAttribute();
-                string genre = reader.Value;
-                output.AppendLine("The genre value: " + genre);
-
-                reader.ReadToFollowing("title");
-                output.AppendLine("Content of the title element: " + reader.ReadElementContentAsString());
-            }
-
-            return output.ToString();
-        }
-
-        //Obsolete
-        public static string XPathParseExample(string folderName)
-        {
-            XPathNavigator nav;
-            XPathDocument docNav;
-            XPathNodeIterator NodeIter;
-            String strExpression;
-
-            docNav = new XPathDocument(folderName + @"/TestInput.xml");
-
-            nav = docNav.CreateNavigator();
-
-            strExpression = "/cars/supercars[@company = 'Lamborgini']/carname";
-
-            NodeIter = nav.Select(strExpression);
-
-            string temp = "";
-
-            while (NodeIter.MoveNext())
-            {
-                temp += "Lamborgini: " + NodeIter.Current.Value + "\n";
-            };
-
-            return temp;
-        }
-
-        //Obsolete
-        public static string XPathParse(string fullFilePath, string XMLExpression)
-        {
-            XPathNavigator nav;
-            XPathDocument docNav;
-            XPathNodeIterator NodeIter;
-            string temp = "";
-
-            //docNav = new XPathDocument(folderName + @"/TestInput.xml");
-            if (File.Exists(fullFilePath))
-            {
-                docNav = new XPathDocument(fullFilePath);
-
-                nav = docNav.CreateNavigator();
-
-                //strExpression = "/cars/supercars[@company = 'Lamborgini']/carname";
-
-                NodeIter = nav.Select(XMLExpression);
-
-                while (NodeIter.MoveNext())
-                {
-                    temp += "Example: " + NodeIter.Current.Value + "\n";
-                };
-                
-            }
-
-            return temp;
-        }
-
-        //Obsolete
-        public static string LINQParseTest(string fullFilePath)
-        {
-            string temp = "";
-
-            //docNav = new XPathDocument(folderName + @"/TestInput.xml");
-            if (File.Exists(fullFilePath))
-            {
-                var xml = XDocument.Load(fullFilePath);
-
-                // Query the data and write out a subset of contacts
-                var query = from c in xml.Root.Descendants("character")
-                            //where ((string)c.Element("name")).Equals("Ygritte")
-                            select c.Element("name").Value + " " +
-                                   c.Element("gender").Value;
-
-                //select new
-                //{
-                //    Id = (string)x.Attribute("id"),
-                //    Lang = (string)x.Attribute("lang"),
-                //    Name = x.Descendants("configitem").Select(y => y.Attribute("name").Value).FirstOrDefault(y => y == "working_status")
-                //};
-
-                foreach (string name in query)
-                {
-                    temp += "Character's Full Name and gender: " + name + "\n";
-                }
-            }
-
-            return temp;
-        }
-
-        //TODO use this to revive XML only model
         public static StreamWriter RemoveEndTag(string filePath)
         {
             //Deletes the last line in the xml file, the closing content tag
@@ -297,7 +120,7 @@ namespace citadel_wpf
             List<List<string>> returnList = new List<List<string>>();
             
             // Query the data and write out a subset of contacts
-            var character = from c in GetCharacterHandle().Root.Descendants("character")
+            var character = from c in GetCharacterXDocument().Root.Descendants("character")
                             //where ((string)c.Element("name")).Equals("Ygritte")
                         select new
                         {
@@ -358,7 +181,7 @@ namespace citadel_wpf
         {
             List<List<string>> returnList = new List<List<string>>();
             
-            var query = from c in GetNoteHandle().Root.Descendants("general_note")
+            var query = from c in GetNoteXDocument().Root.Descendants("general_note")
                         select new {
                             Name = c.Element("name").Value,
                             Description = c.Element("description").Value
@@ -380,7 +203,7 @@ namespace citadel_wpf
         {
             List<List<string>> returnList = new List<List<string>>();
             
-            var query = from c in GetLocationHandle().Root.Descendants("location")
+            var query = from c in GetLocationXDocument().Root.Descendants("location")
                         select new
                         {
                             Name = c.Element("name").Value,
@@ -407,7 +230,7 @@ namespace citadel_wpf
         {
             List<List<string>> returnList = new List<List<string>>();
             
-            var query = from c in GetEventHandle().Root.Descendants("event")
+            var query = from c in GetEventXDocument().Root.Descendants("event")
                         select new
                         {
                             Name = c.Element("name").Value,

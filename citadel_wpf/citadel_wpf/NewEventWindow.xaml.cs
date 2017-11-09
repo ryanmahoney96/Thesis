@@ -23,7 +23,7 @@ namespace citadel_wpf
     public partial class NewEventWindow : NewEntityWindow
     {
 
-        public NewEventWindow(string fp, FrontPage fpr, params NewEntityWindow[] rw) : base(fp, fpr, rw)
+        public NewEventWindow(params NewEntityWindow[] rw) : base(rw)
         {
             InitializeComponent();
             Initialize_Locations();
@@ -34,7 +34,7 @@ namespace citadel_wpf
 
             location_combo_box.Items.Clear();
 
-            List<string> locationNames = XMLEntityParser.GetAllNames(base.folderPath + "\\location_notes.xml", "location");
+            List<string> locationNames = XMLEntityParser.GetAllNames(FrontPage.FolderPath + "\\location_notes.xml", "location");
 
             foreach (string location in locationNames)
             {
@@ -47,7 +47,7 @@ namespace citadel_wpf
         override protected void Save(object sender, RoutedEventArgs e)
         {
             //TODO: check texts
-            if (SaveEntity(sender, e, XMLEntityParser.GetInstance().GetEventHandle(), "event_notes", name_text.Text, Entity.EventToXML(name_text.Text, location_combo_box.Text, event_unit_date_number.Text, event_date_number.Text, description_text.Text)))
+            if (SaveEntity(sender, e, XMLEntityParser.GetInstance().GetEventXDocument(), "event_notes", name_text.Text, Entity.EventToXML(name_text.Text, location_combo_box.Text, event_unit_date_number.Text, event_date_number.Text, description_text.Text)))
             {
                 UpdateReliantWindows();
             }
@@ -122,7 +122,7 @@ namespace citadel_wpf
 
         public override void UpdateReliantWindows()
         {
-            frontPageReference.Update_Events();
+            FrontPage.FrontPageReference.Update_Events();
             Initialize_Locations();
 
             foreach (NewEntityWindow w in reliantWindows)
@@ -133,7 +133,7 @@ namespace citadel_wpf
 
         private void Add_New_Location(object sender, RoutedEventArgs e)
         {
-            NewEntityWindow.InitializeModalWindow(this, new NewLocationWindow(folderPath, frontPageReference, this));
+            NewEntityWindow.InitializeModalWindow(this, new NewLocationWindow(this));
         }
     }
 }

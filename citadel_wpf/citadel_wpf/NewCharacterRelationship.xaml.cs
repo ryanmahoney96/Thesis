@@ -24,7 +24,7 @@ namespace citadel_wpf
         //TODO: Add "Other" field for other types of relationships
         //TODO: Add the relationships on startup
 
-        public NewCharacterRelationship(string fp, FrontPage fpr) : base(fp, fpr)
+        public NewCharacterRelationship() : base()
         {
             InitializeComponent();
             Fill_Character_Boxes();
@@ -42,7 +42,7 @@ namespace citadel_wpf
                     string character_one = character_one_combo.Text;
                     string character_two = character_two_combo.Text;
                     string relationship = relationship_combo.Text;
-                    string filePath = folderPath + "\\character_relationships.xml";
+                    string filePath = FrontPage.FolderPath + "\\character_relationships.xml";
 
                     if (File.Exists(filePath))
                     {
@@ -98,7 +98,8 @@ namespace citadel_wpf
             character_one_combo.Items.Clear();
             character_two_combo.Items.Clear();
 
-            List<string> characterNames = XMLEntityParser.GetAllNames(base.folderPath + "\\character_notes.xml", "character");
+            List<string> characterNames = XMLEntityParser.GetAllNames(FrontPage.FolderPath + "\\character_notes.xml", "character");
+            characterNames.Sort();
 
             ComboBoxItem cBoxItem;
 
@@ -146,7 +147,7 @@ namespace citadel_wpf
 
         private void Add_Character(object sender, RoutedEventArgs e)
         {
-            NewEntityWindow.InitializeModalWindow(this, new NewCharacterWindow(folderPath, frontPageReference, this));
+            NewEntityWindow.InitializeModalWindow(this, new NewCharacterWindow(this));
         }
 
         public override void UpdateReliantWindows()

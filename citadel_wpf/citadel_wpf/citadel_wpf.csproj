@@ -84,6 +84,7 @@
       <DependentUpon>NewCharacterWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="NoteNode.cs" />
+    <Compile Include="Obsolete.cs" />
     <Compile Include="XMLEntityParser.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>

@@ -21,7 +21,7 @@ namespace citadel_wpf
     public partial class NewEventRelationship : NewEntityWindow
     {
 
-        public NewEventRelationship(string fp, FrontPage fpr) : base(fp, fpr)
+        public NewEventRelationship() : base()
         {
             InitializeComponent();
             Fill_Event_Boxes();
@@ -40,7 +40,7 @@ namespace citadel_wpf
                     string event_one = event_one_combo.Text;
                     string event_two = event_two_combo.Text;
                     string relationship = relationship_combo.Text;
-                    string filePath = folderPath + "\\event_relationships.xml";
+                    string filePath = FrontPage.FolderPath + "\\event_relationships.xml";
 
                     if (File.Exists(filePath))
                     {
@@ -92,7 +92,7 @@ namespace citadel_wpf
             event_one_combo.Items.Clear();
             event_two_combo.Items.Clear();
 
-            List<string> eventNames = XMLEntityParser.GetAllNames(base.folderPath + "\\event_notes.xml", "event");
+            List<string> eventNames = XMLEntityParser.GetAllNames(FrontPage.FolderPath + "\\event_notes.xml", "event");
 
             ComboBoxItem cBoxItem;
 
@@ -110,7 +110,7 @@ namespace citadel_wpf
 
         private void Add_Event(object sender, RoutedEventArgs e)
         {
-            NewEntityWindow.InitializeModalWindow(this, new NewEventWindow(folderPath, frontPageReference, this));      
+            NewEntityWindow.InitializeModalWindow(this, new NewEventWindow(this));      
         }
 
         public override void UpdateReliantWindows()

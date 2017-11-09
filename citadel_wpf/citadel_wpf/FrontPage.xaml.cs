@@ -32,19 +32,21 @@ namespace citadel_wpf
         //TODO: Alphabetize entities in the lists
         //TODO: Stylize with https://github.com/MahApps/MahApps.Metro
 
-        private String folderPath;
+        public static String FolderPath;
+        public static FrontPage FrontPageReference;
 
         public FrontPage(String fp)
         {
             InitializeComponent();
-            folderPath = fp;
-            Title += " - " + folderPath;
+            FolderPath = fp;
+            Title += " - " + FolderPath;
             Update_Note_Pages();
+            FrontPageReference = this;
         }
 
         private void New_Note_Click(object sender, RoutedEventArgs e)
         {
-            NewEntityWindow.InitializeModalWindow(this, (new NewGeneralNote(folderPath, this)));
+            NewEntityWindow.InitializeModalWindow(this, (new NewGeneralNote()));
         }
         public void Update_Notes()
         {
@@ -53,7 +55,7 @@ namespace citadel_wpf
 
         private void New_Character_Click(object sender, RoutedEventArgs e)
         {
-            NewEntityWindow.InitializeModalWindow(this, (new NewCharacterWindow(folderPath, this)));
+            NewEntityWindow.InitializeModalWindow(this, (new NewCharacterWindow()));
         }
         public void Update_Characters()
         {
@@ -62,7 +64,7 @@ namespace citadel_wpf
 
         private void New_Event_Click(object sender, RoutedEventArgs e)
         {
-            NewEntityWindow.InitializeModalWindow(this, (new NewEventWindow(folderPath, this)));
+            NewEntityWindow.InitializeModalWindow(this, (new NewEventWindow()));
         }
         public void Update_Events()
         {
@@ -71,7 +73,7 @@ namespace citadel_wpf
 
         private void New_Location_Click(object sender, RoutedEventArgs e)
         {
-            NewEntityWindow.InitializeModalWindow(this, (new NewLocationWindow(folderPath, this)));
+            NewEntityWindow.InitializeModalWindow(this, (new NewLocationWindow()));
         }
         public void Update_Locations()
         {
@@ -80,12 +82,12 @@ namespace citadel_wpf
 
         private void Character_Relationship_Click(object sender, RoutedEventArgs e)
         {
-            NewEntityWindow.InitializeModalWindow(this, (new NewCharacterRelationship(folderPath, this)));
+            NewEntityWindow.InitializeModalWindow(this, (new NewCharacterRelationship()));
         }
 
         private void Event_Relationship_Click(object sender, RoutedEventArgs e)
         {
-            NewEntityWindow.InitializeModalWindow(this, (new NewEventRelationship(folderPath, this)));
+            NewEntityWindow.InitializeModalWindow(this, (new NewEventRelationship()));
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -104,7 +106,7 @@ namespace citadel_wpf
             //Fill_Note_Area(XMLParserClass.GetAllLocationNotes(folderPath + "\\location_notes.xml"), location_notes_area);
             //Fill_Note_Area(XMLParserClass.GetAllEventNotes(folderPath + "\\event_notes.xml"), event_notes_area);
 
-            Fill_Media_Area(XMLEntityParser.GetMediaInformation(folderPath + "\\media_notes.xml"));
+            Fill_Media_Area(XMLEntityParser.GetMediaInformation(FolderPath + "\\media_notes.xml"));
             Fill_Note_Area(XMLEntityParser.GetInstance().GetAllGeneralNotes(), general_notes_area);
             Fill_Note_Area(XMLEntityParser.GetInstance().GetAllCharacterNotes(), character_notes_area);
             Fill_Note_Area(XMLEntityParser.GetInstance().GetAllEventNotes(), event_notes_area);
@@ -126,7 +128,7 @@ namespace citadel_wpf
         public void Fill_Note_Area(List<List<string>> entityNodes, WrapPanel area)
         {
             area.Children.Clear();
-            area.MinHeight = NoteNode.NoteNodeHeight - 60;
+            area.MinHeight = NoteNode.NoteNodeHeight;
 
             foreach (List<string> l in entityNodes)
             {
@@ -161,10 +163,10 @@ namespace citadel_wpf
         {
             //TODO: Verify all important text boxes are filled
             Media m = new Media(titleText.Text, yearText.Text, type_combobox.Text, genre_combobox.Text, summaryText.Text);
-            m.Save(folderPath);
+            m.Save(FolderPath);
 
             //GraphConstruction g = new GraphConstruction(folderPath);
-            GraphConstruction.TestGraphviz(folderPath);
+            GraphConstruction.TestGraphviz(FolderPath);
         }
     }
 }

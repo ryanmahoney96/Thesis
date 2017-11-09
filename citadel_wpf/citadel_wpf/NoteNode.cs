@@ -6,17 +6,20 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
+using System.Xml.Linq;
 
 namespace citadel_wpf
 {
     class NoteNode : Decorator
     {
         //TODO use this as identifier -> type\name
-        private String referenceKey;
+        private String EntityType;
+        private String EntityName;
         private TextBlock t;
 
+
         public static int NoteNodeWidth = 320;
-        public static int NoteNodeHeight = 150;
+        public static int NoteNodeHeight = 260;
 
         //TODO: give each notenode a reference to the entity it represents -> must change Fill_Note_area to accept Entity list
         //TODO: Add edit and delete buttons to notenode. Because of reference to entity and oop design you can manipulate the node and update
@@ -27,28 +30,62 @@ namespace citadel_wpf
         public NoteNode()
         {
             Border b = new Border();
-            //Button button = new Button();
             b.BorderThickness = new Thickness(1, 1, 1, 1);
             b.BorderBrush = new SolidColorBrush(Colors.DarkBlue);
             b.CornerRadius = new CornerRadius(2, 2, 2, 2);
+            b.Padding = new Thickness(1, 1, 1, 1);
+            b.Margin = new Thickness(5, 5, 5, 5);
+            b.Width = NoteNodeWidth;
+            b.Height = NoteNodeHeight;
+
+            StackPanel stackPanel = new StackPanel();
+            b.Child = stackPanel;
+
+            Button button = new Button();
+            button.Content = "Edit";
+            button.Click += EditClick;
+
             ScrollViewer s = new ScrollViewer();
+            stackPanel.Children.Add(s);
+            stackPanel.Children.Add(button);
+
             t = new TextBlock();
             Text = "";
             t.TextWrapping = TextWrapping.Wrap;
-            t.FontSize = 15;
-            b.Width = NoteNodeWidth;
-            b.Height = NoteNodeHeight;
-            //button.Content = "Edit";
+            t.FontSize = 15;            
             s.Content = t;
-            b.Child = s;
-            b.Padding = new Thickness(1, 1, 1, 1);
-            b.Margin = new Thickness(5, 5, 5, 5);
+            
             this.Child = b;
         }
 
         public NoteNode (string type, string name): this()
         {
-            referenceKey = type + "\\" + name;
+            EntityType = type;
+            EntityName = name;
+        }
+
+        public void EditClick(object sender, RoutedEventArgs e)
+        {
+            Text = "Test";
+            //NewEntityWindow newWindow;
+
+            //if (EntityType.Equals("character"))
+            //{
+            //    //new window = character window -> open modally
+            //}
+            //else if (EntityType.Equals("event"))
+            //{
+
+            //}
+            //else if (EntityType.Equals("location"))
+            //{
+
+            //}
+            //else
+            //{
+
+            //}
+
         }
 
         public string Text { get => t.Text; set => t.Text = value; }

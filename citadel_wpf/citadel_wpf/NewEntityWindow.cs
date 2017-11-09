@@ -21,21 +21,16 @@ namespace citadel_wpf
     /// </summary>
     public abstract class NewEntityWindow : Window
     {
-        protected string folderPath;
-        protected FrontPage frontPageReference;
         protected NewEntityWindow[] reliantWindows;
         protected List<String> controlTexts;
 
-        public NewEntityWindow(string fp, FrontPage fpr, params NewEntityWindow[] rw)
+        public NewEntityWindow(params NewEntityWindow[] rw)
         {
-            folderPath = fp;
-            frontPageReference = fpr;
             reliantWindows = rw;
             controlTexts = new List<String>();
         }
         public NewEntityWindow()
         {
-            folderPath = "";
         }
 
         public static void InitializeModalWindow(Window owner, Window child)
@@ -58,7 +53,7 @@ namespace citadel_wpf
         protected bool SaveEntity(object sender, RoutedEventArgs e, XDocument handle, string docName, string entityName, string entityAsXML)
         {
             StreamWriter fileHandle = null;
-            string docURI = folderPath + $"\\{docName}.xml";
+            string docURI = FrontPage.FolderPath + $"\\{docName}.xml";
 
             try
             {
@@ -93,7 +88,7 @@ namespace citadel_wpf
                     //UpdateReliantWindows();
 
                     Close();
-                    XMLEntityParser.GetInstance().UpdateHandles();
+                    XMLEntityParser.GetInstance().UpdateXDocuments();
 
                     return true;
                 }
@@ -128,6 +123,7 @@ namespace citadel_wpf
         }
 
         public abstract void UpdateReliantWindows();
+        //public abstract void FillWithData(string name);
 
     }
 }

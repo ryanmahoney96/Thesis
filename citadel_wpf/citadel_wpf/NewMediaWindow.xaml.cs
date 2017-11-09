@@ -21,10 +21,12 @@ namespace citadel_wpf
     /// </summary>
     public partial class NewMediaWindow : NewEntityWindow
     {
+        string folderPath;
 
-        public NewMediaWindow(string fp, FrontPage fpr): base(fp, fpr)
+        public NewMediaWindow(string fp): base()
         {
             InitializeComponent();
+            folderPath = fp;
         }
 
         //TODO: use generic save method? Requires a media entity

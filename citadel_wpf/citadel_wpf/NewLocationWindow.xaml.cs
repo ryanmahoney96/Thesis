@@ -20,7 +20,7 @@ namespace citadel_wpf
     /// </summary>
     public partial class NewLocationWindow : NewEntityWindow
     {
-        public NewLocationWindow(string fp, FrontPage fpr, params NewEntityWindow[] rw) : base(fp, fpr, rw)
+        public NewLocationWindow(params NewEntityWindow[] rw) : base(rw)
         {
             InitializeComponent();
         }
@@ -28,7 +28,7 @@ namespace citadel_wpf
         override protected void Save(object sender, RoutedEventArgs e)
         {
             //TODO: check text pre-fill
-            if (SaveEntity(sender, e, XMLEntityParser.GetInstance().GetLocationHandle(), "location_notes", 
+            if (SaveEntity(sender, e, XMLEntityParser.GetInstance().GetLocationXDocument(), "location_notes", 
                 name_text.Text, Entity.LocationToXML(name_text.Text, type_combobox.Text, subtype_combobox.Text, description_text.Text)))
             {
                 UpdateReliantWindows();
@@ -163,7 +163,7 @@ namespace citadel_wpf
 
         public override void UpdateReliantWindows()
         {
-            frontPageReference.Update_Locations();
+            FrontPage.FrontPageReference.Update_Locations();
 
             foreach (NewEntityWindow w in reliantWindows)
             {

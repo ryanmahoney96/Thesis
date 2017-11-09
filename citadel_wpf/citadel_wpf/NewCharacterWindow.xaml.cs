@@ -21,16 +21,22 @@ namespace citadel_wpf
     public partial class NewCharacterWindow : NewEntityWindow
     {
 
-        public NewCharacterWindow(string fp, FrontPage fpr, params NewEntityWindow[] rw) : base(fp, fpr, rw)
+        public NewCharacterWindow(params NewEntityWindow[] rw) : base(rw)
         {
             InitializeComponent();
         }
+
+
+        //override public void FillWithData(string name)
+        //{
+            
+        //}
 
         override protected void Save(object sender, RoutedEventArgs e)
         {
             //TODO double check values before save
             //if character does not exist
-            if (SaveEntity(sender, e, XMLEntityParser.GetInstance().GetCharacterHandle(), "character_notes", name_text.Text, Entity.CharacterToXML(name_text.Text, gender_combo_box.Text, description_text.Text)))
+            if (SaveEntity(sender, e, XMLEntityParser.GetInstance().GetCharacterXDocument(), "character_notes", name_text.Text, Entity.CharacterToXML(name_text.Text, gender_combo_box.Text, description_text.Text)))
             {
                 UpdateReliantWindows();
             }
@@ -101,7 +107,7 @@ namespace citadel_wpf
 
         public override void UpdateReliantWindows()
         {
-            frontPageReference.Update_Characters();
+            FrontPage.FrontPageReference.Update_Characters();
 
             foreach (NewEntityWindow w in reliantWindows)
             {

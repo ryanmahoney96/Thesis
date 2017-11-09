@@ -20,7 +20,7 @@ namespace citadel_wpf
     /// </summary>
     public partial class NewGeneralNote : NewEntityWindow
     {
-        public NewGeneralNote(string fp, FrontPage fpr, params NewEntityWindow[] rw) : base(fp, fpr, rw)
+        public NewGeneralNote(params NewEntityWindow[] rw) : base(rw)
         {
             InitializeComponent();
         }
@@ -29,7 +29,7 @@ namespace citadel_wpf
         {
             //TODO: Check text fill PRE-ADD
             //
-            if (SaveEntity(sender, e, XMLEntityParser.GetInstance().GetNoteHandle(), "general_notes", 
+            if (SaveEntity(sender, e, XMLEntityParser.GetInstance().GetNoteXDocument(), "general_notes", 
                 note_name.Text, Entity.NoteToXML(note_name.Text, note_text.Text)))
             {
                 UpdateReliantWindows();
@@ -94,7 +94,7 @@ namespace citadel_wpf
 
         public override void UpdateReliantWindows()
         {
-            frontPageReference.Update_Notes();
+            FrontPage.FrontPageReference.Update_Notes();
 
             foreach (NewEntityWindow w in reliantWindows)
             {
