@@ -20,8 +20,8 @@ namespace citadel_wpf
     /// </summary>
     public partial class FrontPage : Window
     {
-        //TODO: Take out the OOP and make this all query based
-        //TODO: Make '\' in all text unusable 
+        //TODO: Take out the OOP and make all saving query based -> restructure XML if necessary
+        //TODO: Make "> \ <" in all text unusable 
         //TODO: Separate new folder and select folder dialogs
         //TODO: When making a new folder, verify that a media entry does not exist
         //TODO: Organize so event has list of pointers to things before and things after. Use this when adding new relationship to filter out contradictory data
@@ -39,7 +39,7 @@ namespace citadel_wpf
             InitializeComponent();
             folderPath = fp;
             Title += " - " + folderPath;
-            Update_Note_Pages(true);
+            Update_Note_Pages();
         }
 
         private void New_Note_Click(object sender, RoutedEventArgs e)
@@ -48,7 +48,7 @@ namespace citadel_wpf
         }
         public void Update_Notes()
         {
-            Fill_Note_Area(XMLEntityParser.GetAllGeneralNotes(folderPath + "\\general_notes.xml"), general_notes_area);
+            Fill_Note_Area(XMLEntityParser.GetInstance().GetAllGeneralNotes(), general_notes_area);
         }
 
         private void New_Character_Click(object sender, RoutedEventArgs e)
@@ -57,7 +57,7 @@ namespace citadel_wpf
         }
         public void Update_Characters()
         {
-            Fill_Note_Area(XMLEntityParser.GetAllCharacterNotes(folderPath + "\\character_notes.xml"), character_notes_area);
+            Fill_Note_Area(XMLEntityParser.GetInstance().GetAllCharacterNotes(), character_notes_area);
         }
 
         private void New_Event_Click(object sender, RoutedEventArgs e)
@@ -66,7 +66,7 @@ namespace citadel_wpf
         }
         public void Update_Events()
         {
-            Fill_Note_Area(XMLEntityParser.GetAllEventNotes(folderPath + "\\event_notes.xml"), event_notes_area);
+            Fill_Note_Area(XMLEntityParser.GetInstance().GetAllEventNotes(), event_notes_area);
         }
 
         private void New_Location_Click(object sender, RoutedEventArgs e)
@@ -75,7 +75,7 @@ namespace citadel_wpf
         }
         public void Update_Locations()
         {
-            Fill_Note_Area(XMLEntityParser.GetAllLocationNotes(folderPath + "\\location_notes.xml"), location_notes_area);
+            Fill_Note_Area(XMLEntityParser.GetInstance().GetAllLocationNotes(), location_notes_area);
         }
 
         private void Character_Relationship_Click(object sender, RoutedEventArgs e)
@@ -97,7 +97,7 @@ namespace citadel_wpf
             //Fill_Note_Pages();
         }
 
-        private void Update_Note_Pages(bool initialize = false)
+        private void Update_Note_Pages()
         {
             //Fill_Note_Area(XMLParserClass.GetAllCharacterNotes(folderPath + "\\character_notes.xml"), character_notes_area);
             //Fill_Note_Area(XMLParserClass.GetAllGeneralNotes(folderPath + "\\general_notes.xml"), general_notes_area);
@@ -105,17 +105,17 @@ namespace citadel_wpf
             //Fill_Note_Area(XMLParserClass.GetAllEventNotes(folderPath + "\\event_notes.xml"), event_notes_area);
 
             Fill_Media_Area(XMLEntityParser.GetMediaInformation(folderPath + "\\media_notes.xml"));
-            Fill_Note_Area(XMLEntityParser.GetAllGeneralNotes(folderPath + "\\general_notes.xml", initialize), general_notes_area);
-            Fill_Note_Area(XMLEntityParser.GetAllCharacterNotes(folderPath + "\\character_notes.xml", initialize), character_notes_area);
-            Fill_Note_Area(XMLEntityParser.GetAllEventNotes(folderPath + "\\event_notes.xml", initialize), event_notes_area);
-            Fill_Note_Area(XMLEntityParser.GetAllLocationNotes(folderPath + "\\location_notes.xml", initialize), location_notes_area);
+            Fill_Note_Area(XMLEntityParser.GetInstance().GetAllGeneralNotes(), general_notes_area);
+            Fill_Note_Area(XMLEntityParser.GetInstance().GetAllCharacterNotes(), character_notes_area);
+            Fill_Note_Area(XMLEntityParser.GetInstance().GetAllEventNotes(), event_notes_area);
+            Fill_Note_Area(XMLEntityParser.GetInstance().GetAllLocationNotes(), location_notes_area);
         }
 
         private void Fill_Media_Area(Hashtable information)
         {
             if (!information.Equals(null))
             {
-                titleText.Text = information["Title"].ToString();
+                titleText.Text = information["Name"].ToString();
                 yearText.Text = information["Year"].ToString();
                 type_combobox.Text = information["Type"].ToString();
                 genre_combobox.Text = information["Genre"].ToString();

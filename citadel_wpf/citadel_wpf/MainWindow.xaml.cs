@@ -71,7 +71,6 @@ namespace citadel_wpf
 
         private void Submit_Folder(object sender, RoutedEventArgs e)
         {
-
             if (!folderName.Text.Equals(""))
             {
                 Media_Note_Validation();
@@ -81,6 +80,8 @@ namespace citadel_wpf
         private void Media_Note_Validation()
         {
             string mediaNotes = folderName.Text + "\\media_notes.xml";
+
+            XMLEntityParser.GetInstance(folderName.Text);
 
             if (!File.Exists(mediaNotes))
             {

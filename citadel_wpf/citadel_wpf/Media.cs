@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace citadel_wpf
 {
-    class Media : IEntity
+    class Media
     {
         string Title;
         string Year;
@@ -51,11 +51,11 @@ namespace citadel_wpf
             StringBuilder s = new StringBuilder();
 
             s.Append("<media_note>");
-            s.Append("<title>" + Title + "</title>\n\t\t");
-            s.Append("<year>" + Year + "</year>\n\t\t");
-            s.Append("<type>" + Type + "</type>\n\t\t");
-            s.Append("<genre>" + Genre + "</genre>\n\t\t");
-            s.Append("<summary>" + Summary + "</summary>\n\t");
+            s.Append("<title>" + Title + "</title>");
+            s.Append("<year>" + Year + "</year>");
+            s.Append("<type>" + Type + "</type>");
+            s.Append("<genre>" + Genre + "</genre>");
+            s.Append("<summary>" + Summary + "</summary>");
             s.Append("</media_note>");
 
 

@@ -28,11 +28,9 @@ namespace citadel_wpf
         override protected void Save(object sender, RoutedEventArgs e)
         {
             //TODO: check text pre-fill
-            if (Location.AddRecord(new Location(name_text.Text, type_combobox.Text, subtype_combobox.Text, description_text.Text)))
+            if (SaveEntity(sender, e, XMLEntityParser.GetInstance().GetLocationHandle(), "location_notes", 
+                name_text.Text, Entity.LocationToXML(name_text.Text, type_combobox.Text, subtype_combobox.Text, description_text.Text)))
             {
-                controlTexts.Add(name_text.Text);
-                controlTexts.Add(type_combobox.Text);
-                SaveEntity(sender, e, controlTexts, required_text, "location_notes", Location.GetRecords());
                 UpdateReliantWindows();
             }
             else

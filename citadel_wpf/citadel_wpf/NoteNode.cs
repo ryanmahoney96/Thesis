@@ -11,10 +11,9 @@ namespace citadel_wpf
 {
     class NoteNode : Decorator
     {
-        //TODO use this as identifier
-        private String name;
+        //TODO use this as identifier -> type\name
+        private String referenceKey;
         private TextBlock t;
-        private IEntity entity;
 
         public static int NoteNodeWidth = 320;
         public static int NoteNodeHeight = 150;
@@ -47,10 +46,9 @@ namespace citadel_wpf
             this.Child = b;
         }
 
-        public NoteNode(IEntity e) : this()
+        public NoteNode (string type, string name): this()
         {
-            entity = e;
-            
+            referenceKey = type + "\\" + name;
         }
 
         public string Text { get => t.Text; set => t.Text = value; }

@@ -13,6 +13,76 @@ namespace citadel_wpf
 {
     class XMLEntityParser
     {
+        //TODO add relationship handles
+        private static XDocument character_handle = null;
+        private static XDocument character_relationship_handle = null;
+        private static XDocument location_handle = null;
+        private static XDocument event_handle = null;
+        private static XDocument event_relationship_handle = null;
+        private static XDocument note_handle = null;
+
+        private static XMLEntityParser instance = null;
+        private static string FolderPath;
+
+        private XMLEntityParser(string folderPath)
+        {
+            FolderPath = folderPath;
+            UpdateHandles();
+        }
+
+        private void SetHandle(string folderName, string documentName, ref XDocument handle)
+        {
+            string filePath = folderName + $"\\{documentName}.xml";
+            if (!File.Exists(filePath))
+            {
+                StreamWriter s = File.CreateText(folderName + $"\\{documentName}.xml");
+                s.WriteLine("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
+                s.WriteLine($"<{documentName}>");
+                s.WriteLine($"");
+                s.WriteLine($"</{documentName}>");
+                s.Close();
+            }
+
+            handle = XDocument.Load(filePath);
+        }
+        public void UpdateHandles()
+        {
+            SetHandle(FolderPath, "character_notes", ref character_handle);
+            SetHandle(FolderPath, "character_relationship_notes", ref character_relationship_handle);
+            SetHandle(FolderPath, "location_notes", ref location_handle);
+            SetHandle(FolderPath, "event_notes", ref event_handle);
+            SetHandle(FolderPath, "event_relationship_notes", ref event_relationship_handle);
+            SetHandle(FolderPath, "general_notes", ref note_handle);
+        }
+
+        public static XMLEntityParser GetInstance(string folderPath = "")
+        {
+            if (instance == null)
+            {
+                instance = new XMLEntityParser(folderPath);
+            }
+
+            return instance;
+        }
+
+        public XDocument GetCharacterHandle()
+        {
+            return character_handle;
+        }
+        public XDocument GetLocationHandle()
+        {
+            return location_handle;
+        }
+        public XDocument GetEventHandle()
+        {
+            return event_handle;
+        }
+        public XDocument GetNoteHandle()
+        {
+            return note_handle;
+        }
+
+
         //Obsolete
         public static string attemptParse()
         {
@@ -189,10 +259,11 @@ namespace citadel_wpf
         }
 
         //TODO use this to revive XML only model
-        public static StreamWriter RemoveLastLine(string filePath)
+        public static StreamWriter RemoveEndTag(string filePath)
         {
             //Deletes the last line in the xml file, the closing content tag
             string line = null;
+            string finalLine = null;
             List<string> deferredLines = new List<string>();
             using (TextReader inputReader = new StreamReader(filePath))
             {
@@ -200,7 +271,14 @@ namespace citadel_wpf
                 {
                     deferredLines.Add(line);
                 }
+                finalLine = deferredLines[deferredLines.Count - 1];
                 deferredLines.RemoveAt(deferredLines.Count - 1);
+
+                while(!finalLine[finalLine.Count() - 1].Equals('/'))
+                {
+                    finalLine = finalLine.Remove(finalLine.Count() - 1, 1);
+                }
+                finalLine = finalLine.Remove(finalLine.Count() - 2, 2);
             }
 
             StreamWriter stream = new StreamWriter(filePath, false);
@@ -209,50 +287,43 @@ namespace citadel_wpf
             {
                 stream.Write(deferredLines[i]);
             }
+            stream.Write(finalLine);
 
             return stream;
         }
 
-        public static List<List<string>> GetAllCharacterNotes(string fullFilePath, bool initialize = false)
+        public List<List<string>> GetAllCharacterNotes()
         {
             List<List<string>> returnList = new List<List<string>>();
+            
+            // Query the data and write out a subset of contacts
+            var character = from c in GetCharacterHandle().Root.Descendants("character")
+                            //where ((string)c.Element("name")).Equals("Ygritte")
+                        select new
+                        {
+                            Name = c.Element("name").Value,
+                            Gender = c.Element("gender").Value,
+                            Description = c.Element("description").Value
+                        };
 
-            if (File.Exists(fullFilePath))
+            foreach (var characterEntry in character)
             {
-                var xml = XDocument.Load(fullFilePath);
 
-                // Query the data and write out a subset of contacts
-                var character = from c in xml.Root.Descendants("character")
-                                //where ((string)c.Element("name")).Equals("Ygritte")
-                            select new
-                            {
-                                Name = c.Element("name").Value,
-                                Gender = c.Element("gender").Value,
-                                Description = c.Element("description").Value
-                            };
+                List<string> temp = new List<string>();
 
-                foreach (var characterEntry in character)
-                {
-                    if (initialize)
-                    {
-                        Character.AddRecord(new Character(characterEntry.Name, characterEntry.Gender, characterEntry.Description));
-                    }
-
-                    List<string> temp = new List<string>();
-
-                    temp.Add("Name\\" + characterEntry.Name);
-                    temp.Add("Gender\\" + characterEntry.Gender);
-                    temp.Add("Description\\" + characterEntry.Description);
-                    returnList.Add(temp);
-                }
-
-                //TODO: after all characters added, add all relationships
-                
+                temp.Add("Name\\" + characterEntry.Name);
+                temp.Add("Gender\\" + characterEntry.Gender);
+                temp.Add("Description\\" + characterEntry.Description);
+                returnList.Add(temp);
             }
+
+            //TODO: after all characters added, add all relationships
+                
             return returnList;
         }
 
-        public static List<List<string>> GetAllCharacterRelationships(string fullFilePath, Character focusCharacter, bool initialize = false)
+        //TODO this
+        public static List<List<string>> GetAllCharacterRelationships(string fullFilePath)
         {
             List<List<string>> returnList = new List<List<string>>();
 
@@ -260,7 +331,6 @@ namespace citadel_wpf
             {
                 var xml = XDocument.Load(fullFilePath);
 
-                // Query the data and write out a subset of contacts
                 var query = from c in xml.Root.Descendants("character")
                                 //where ((string)c.Element("name")).Equals("Ygritte")
                             select new
@@ -272,10 +342,6 @@ namespace citadel_wpf
 
                 foreach (var characterEntry in query)
                 {
-                    if (initialize)
-                    {
-                        Character.AddRecord(new Character(characterEntry.Name, characterEntry.Gender, characterEntry.Description));
-                    }
 
                     List<string> temp = new List<string>();
 
@@ -288,108 +354,81 @@ namespace citadel_wpf
             return returnList;
         }
 
-        public static List<List<string>> GetAllGeneralNotes(string fullFilePath, bool initialize = false)
+        public List<List<string>> GetAllGeneralNotes()
         {
             List<List<string>> returnList = new List<List<string>>();
+            
+            var query = from c in GetNoteHandle().Root.Descendants("general_note")
+                        select new {
+                            Name = c.Element("name").Value,
+                            Description = c.Element("description").Value
+                        };
 
-            if (File.Exists(fullFilePath))
+            foreach (var noteEntry in query)
             {
-                var xml = XDocument.Load(fullFilePath);
 
-                // Query the data and write out a subset of contacts
-                var query = from c in xml.Root.Descendants("general_note")
-                            select new {
-                                Name = c.Element("name").Value,
-                                Description = c.Element("description").Value
-                            };
-
-                foreach (var noteEntry in query)
-                {
-                    if (initialize)
-                    {
-                        GeneralNote.AddRecord(new GeneralNote(noteEntry.Name, noteEntry.Description));
-                    }
-
-                    List<string> temp = new List<string>();
-                    temp.Add("Name\\" + noteEntry.Name);
-                    temp.Add("Note\\" + noteEntry.Description);
-                    returnList.Add(temp);
-                }
+                List<string> temp = new List<string>();
+                temp.Add("Name\\" + noteEntry.Name);
+                temp.Add("Note\\" + noteEntry.Description);
+                returnList.Add(temp);
             }
+            
             return returnList;
         }
 
-        public static List<List<string>> GetAllLocationNotes(string fullFilePath, bool initialize = false)
+        public List<List<string>> GetAllLocationNotes()
         {
             List<List<string>> returnList = new List<List<string>>();
+            
+            var query = from c in GetLocationHandle().Root.Descendants("location")
+                        select new
+                        {
+                            Name = c.Element("name").Value,
+                            Type = c.Element("type").Value,
+                            Subtype = c.Element("subtype").Value,
+                            Description = c.Element("description").Value,
+                        };
 
-            if (File.Exists(fullFilePath))
+            foreach (var locationEntry in query)
             {
-                var xml = XDocument.Load(fullFilePath);
 
-                // Query the data and write out a subset of contacts
-                var query = from c in xml.Root.Descendants("location")
-                            select new
-                            {
-                                Name = c.Element("name").Value,
-                                Type = c.Element("type").Value,
-                                Subtype = c.Element("subtype").Value,
-                                Description = c.Element("description").Value,
-                            };
-
-                foreach (var locationEntry in query)
-                {
-                    if (initialize)
-                    {
-                        Location.AddRecord(new Location(locationEntry.Name, locationEntry.Type, locationEntry.Subtype, locationEntry.Description));
-                    }
-
-                    List<string> temp = new List<string>();
-                    temp.Add("Name\\" + locationEntry.Name);
-                    temp.Add("Type\\" + locationEntry.Type);
-                    temp.Add("Subtype\\" + locationEntry.Subtype);
-                    temp.Add("Description\\" + locationEntry.Description);
-                    returnList.Add(temp);
-                }
+                List<string> temp = new List<string>();
+                temp.Add("Name\\" + locationEntry.Name);
+                temp.Add("Type\\" + locationEntry.Type);
+                temp.Add("Subtype\\" + locationEntry.Subtype);
+                temp.Add("Description\\" + locationEntry.Description);
+                returnList.Add(temp);
             }
+            
             return returnList;
         }
 
-        public static List<List<string>> GetAllEventNotes(string fullFilePath, bool initialize = false)
+        public List<List<string>> GetAllEventNotes()
         {
             List<List<string>> returnList = new List<List<string>>();
+            
+            var query = from c in GetEventHandle().Root.Descendants("event")
+                        select new
+                        {
+                            Name = c.Element("name").Value,
+                            Location = c.Element("location").Value,
+                            Unit_Date = c.Element("unit_date").Value,
+                            Date = c.Element("date").Value,
+                            Notes = c.Element("description").Value
+                        };
 
-            if (File.Exists(fullFilePath))
+            foreach (var eventEntry in query)
             {
-                var xml = XDocument.Load(fullFilePath);
 
-                // Query the data and write out a subset of contacts
-                var query = from c in xml.Root.Descendants("event")
-                            select new
-                            {
-                                Name = c.Element("name").Value,
-                                Location = c.Element("location").Value,
-                                Unit_Date = c.Element("unit_date").Value,
-                                Date = c.Element("date").Value,
-                                Notes = c.Element("description").Value
-                            };
-
-                foreach (var eventEntry in query)
-                {
-                    if (initialize)
-                    {
-                        EventNote.AddRecord(new EventNote(eventEntry.Name, eventEntry.Location, eventEntry.Unit_Date, eventEntry.Date, eventEntry.Notes));
-                    }
-
-                    List<string> temp = new List<string>();
-                    temp.Add("Name\\" + eventEntry.Name);
-                    temp.Add("Location\\" + eventEntry.Location);
-                    temp.Add("Unit Date\\" + eventEntry.Unit_Date);
-                    temp.Add("Date\\" + eventEntry.Date);
-                    temp.Add("Description\\" + eventEntry.Notes);
-                    returnList.Add(temp);
-                }
+                List<string> temp = new List<string>();
+                temp.Add("Name\\" + eventEntry.Name);
+                temp.Add("Location\\" + eventEntry.Location);
+                temp.Add("Unit Date\\" + eventEntry.Unit_Date);
+                temp.Add("Date\\" + eventEntry.Date);
+                temp.Add("Description\\" + eventEntry.Notes);
+                returnList.Add(temp);
             }
+            
             return returnList;
         }
 
@@ -453,11 +492,10 @@ namespace citadel_wpf
 
                 var xml = XDocument.Load(fullFilePath);
 
-                // Query the data and write out a subset of contacts
                 var query = from c in xml.Root.Descendants("media_note")
                             select new
                             {
-                                Title = c.Element("title").Value,
+                                Title = c.Element("name").Value,
                                 Year = c.Element("year").Value,
                                 Type = c.Element("type").Value,
                                 Genre = c.Element("genre").Value,
@@ -466,7 +504,7 @@ namespace citadel_wpf
 
                 foreach (var t in query)
                 {
-                    returnTable.Add("Title", t.Title);
+                    returnTable.Add("Name", t.Title);
                     returnTable.Add("Year", t.Year);
                     returnTable.Add("Type", t.Type);
                     returnTable.Add("Genre", t.Genre);

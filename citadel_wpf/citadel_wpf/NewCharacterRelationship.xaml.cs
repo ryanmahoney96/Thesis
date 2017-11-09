@@ -46,7 +46,7 @@ namespace citadel_wpf
 
                     if (File.Exists(filePath))
                     {
-                        character_relationships_handle = XMLEntityParser.RemoveLastLine(filePath);
+                        character_relationships_handle = XMLEntityParser.RemoveEndTag(filePath);
                     }
                     else
                     {
@@ -116,32 +116,32 @@ namespace citadel_wpf
 
         private void Add_Relationship(string character_one, string relationship, string character_two)
         {
-            var c1ref = from c in Character.GetRecords() where c.GetName().Equals(character_one) select c;
-            var c2ref = from c in Character.GetRecords() where c.GetName().Equals(character_two) select c;
+            //var c1ref = from c in Character.GetRecords() where c.GetName().Equals(character_one) select c;
+            //var c2ref = from c in Character.GetRecords() where c.GetName().Equals(character_two) select c;
 
-            //TODO if non-familial relationships are added, be conscious of this function
-            if (relationship.Contains("Parent"))
-            {
-                //character one is the parent
-                foreach(Character c in c1ref)
-                {
-                    foreach(Character t in c2ref)
-                    {
-                        c.AddChild(t);
-                    }
-                }
-            }
-            else if (relationship.Contains("Child"))
-            {
-                //character two is the parent
-                foreach (Character c in c1ref)
-                {
-                    foreach (Character t in c2ref)
-                    {
-                        t.AddChild(c);
-                    }
-                }
-            }
+            ////TODO if non-familial relationships are added, be conscious of this function
+            //if (relationship.Contains("Parent"))
+            //{
+            //    //character one is the parent
+            //    foreach(Character c in c1ref)
+            //    {
+            //        foreach(Character t in c2ref)
+            //        {
+            //            c.AddChild(t);
+            //        }
+            //    }
+            //}
+            //else if (relationship.Contains("Child"))
+            //{
+            //    //character two is the parent
+            //    foreach (Character c in c1ref)
+            //    {
+            //        foreach (Character t in c2ref)
+            //        {
+            //            t.AddChild(c);
+            //        }
+            //    }
+            //}
         }
 
         private void Add_Character(object sender, RoutedEventArgs e)

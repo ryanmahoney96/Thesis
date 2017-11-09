@@ -61,14 +61,14 @@ namespace citadel_wpf
 
                     
                     media_notes_handle = new StreamWriter(filePath, true);
-                    media_notes_handle.Write("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n\n<media_notes>\n\t");
+                    media_notes_handle.Write("<?xml version=\"1.0\" encoding=\"UTF-8\"?><media_notes>");
 
                     media_notes_handle.Write("<media_note>");
-                    media_notes_handle.Write("<name>" + name + "</name>\n\t");
-                    media_notes_handle.Write("<year>" + year + "</year>\n\t");
-                    media_notes_handle.Write("<type>" + type + "</type>\n\t");
-                    media_notes_handle.Write("<genre>" + genre + "</genre>\n\t");
-                    media_notes_handle.Write("<summary>" + summary + "</summary>\n\t");
+                    media_notes_handle.Write("<name>" + name + "</name>");
+                    media_notes_handle.Write("<year>" + year + "</year>");
+                    media_notes_handle.Write("<type>" + type + "</type>");
+                    media_notes_handle.Write("<genre>" + genre + "</genre>");
+                    media_notes_handle.Write("<summary>" + summary + "</summary>");
                     media_notes_handle.Write("</media_note>");
 
                     media_notes_handle.Write("</media_notes>");
@@ -86,10 +86,10 @@ namespace citadel_wpf
                 {
                     System.Windows.Forms.MessageBox.Show("An IO Error Occurred. Please Try Again.");
                 }
-                catch (Exception)
-                {
-                    System.Windows.Forms.MessageBox.Show("An Unexpected Error Occurred.");
-                }
+                //catch (Exception)
+                //{
+                //    System.Windows.Forms.MessageBox.Show("An Unexpected Error Occurred.");
+                //}
                 finally
                 {
                     if (!media_notes_handle.Equals(null))

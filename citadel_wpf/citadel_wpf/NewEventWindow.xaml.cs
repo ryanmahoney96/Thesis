@@ -47,10 +47,8 @@ namespace citadel_wpf
         override protected void Save(object sender, RoutedEventArgs e)
         {
             //TODO: check texts
-            if(EventNote.AddRecord(new EventNote(name_text.Text, location_combo_box.Text, event_unit_date_number.Text, event_date_number.Text, notes_text.Text))){
-                controlTexts.Add(name_text.Text);
-                controlTexts.Add(notes_text.Text);
-                SaveEntity(sender, e, controlTexts, required_text, "event_notes", EventNote.GetRecords());
+            if (SaveEntity(sender, e, XMLEntityParser.GetInstance().GetEventHandle(), "event_notes", name_text.Text, Entity.EventToXML(name_text.Text, location_combo_box.Text, event_unit_date_number.Text, event_date_number.Text, description_text.Text)))
+            {
                 UpdateReliantWindows();
             }
             else
