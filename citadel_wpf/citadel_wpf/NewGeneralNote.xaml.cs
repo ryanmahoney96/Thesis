@@ -28,10 +28,9 @@ namespace citadel_wpf
         override protected void Save(object sender, RoutedEventArgs e)
         {
             //TODO: Check text fill PRE-ADD
-            if (GeneralNote.AddRecord(new GeneralNote(note_name.Text, note_text.Text))){
-                controlTexts.Add(note_name.Text);
-                controlTexts.Add(note_text.Text);
-                SaveEntity(sender, e, controlTexts, required_text, "general_notes", GeneralNote.GetRecords());
+            if (SaveEntity(sender, e, controlTexts, required_text, "general_notes", 
+                note_name.Text, Entity.NoteToXML(note_name.Text, note_text.Text)))
+            {
                 UpdateReliantWindows();
             }
             else

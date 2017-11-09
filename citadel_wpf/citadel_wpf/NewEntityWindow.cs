@@ -54,7 +54,7 @@ namespace citadel_wpf
 
         protected abstract void Save(object sender, RoutedEventArgs e);
 
-        protected void SaveEntity(object sender, RoutedEventArgs e, List<String> controlTexts, TextBlock required_text, string docName, List<IEntity> entities)
+        protected bool SaveEntity(object sender, RoutedEventArgs e, List<String> controlTexts, TextBlock required_text, string docName, string entityName, string entityAsXML)
         {
 
             StreamWriter handle = null;
@@ -77,23 +77,19 @@ namespace citadel_wpf
 
                     string filePath = folderPath + "\\" + docName + ".xml";
 
-                    //if (File.Exists(filePath))
-                    //{
-                    //    handle = XMLParserClass.RemoveLastLine(filePath);
-                    //}
-                    //else
-                    //{
-                    //    handle = new StreamWriter(filePath, true);
-                    //}
-
-                    handle = new StreamWriter(filePath, false);
-                    handle.Write("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n\n<" + docName + ">\n\t");
-
-
-                    foreach (IEntity entity in entities)
+                    if (File.Exists(filePath))
                     {
-                        handle.Write(entity.ToXMLString());
+                        handle = XMLEntityParser.RemoveLastLine(filePath);
                     }
+                    else
+                    {
+                        handle = new StreamWriter(filePath, true);
+                        handle.Write("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n\n<" + docName + ">\n\t");
+                    }
+                    
+                    //TODO
+                    //Verify entity is not already present -> otherwise return false
+                    //Add entity and return true
 
                     handle.Write("</" + docName + ">");
 
@@ -125,6 +121,8 @@ namespace citadel_wpf
             {
                 required_text.Foreground = Brushes.Red;
             }
+
+            return true;
         }
 
         public abstract void UpdateReliantWindows();

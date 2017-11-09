@@ -29,11 +29,9 @@ namespace citadel_wpf
         override protected void Save(object sender, RoutedEventArgs e)
         {
             //TODO double check values before save
-            if (Character.AddRecord(new Character(name_text.Text, gender_combo_box.Text, description_text.Text)))
+            //if character does not exist
+            if (SaveEntity(sender, e, controlTexts, required_text, "character_notes", name_text.Text, Entity.CharacterToXML(name_text.Text, gender_combo_box.Text, description_text.Text)))
             {
-                controlTexts.Add(name_text.Text);
-                controlTexts.Add(gender_combo_box.Text);
-                SaveEntity(sender, e, controlTexts, required_text, "character_notes", Character.GetRecords());
                 UpdateReliantWindows();
             }
             else

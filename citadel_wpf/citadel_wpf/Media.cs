@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace citadel_wpf
 {
-    class Media : IEntity
+    class Media
     {
         string Title;
         string Year;

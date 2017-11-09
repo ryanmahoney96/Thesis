@@ -28,7 +28,7 @@ namespace citadel_wpf
             StreamWriter streamWriter = File.CreateText(textPath);
             streamWriter.Write(echo);
             streamWriter.Close();
-            
+
             //Process process = new Process();
             //ProcessStartInfo startInfo = new ProcessStartInfo();
             //startInfo.WindowStyle = ProcessWindowStyle.Maximized;
@@ -41,61 +41,61 @@ namespace citadel_wpf
             Process.Start("cmd.exe", @"/C" + $"dot -Tpng {textPath} -o {folderPath}/outfile.png & del {textPath}");
             //Process.Start("cmd.exe", @"/C" + $"dot -Tpng {textPath} -o {folderPath}/outfile.png").WaitForExit();
             //Process.Start("cmd.exe", @"/C" + $"del {textPath}");
-
-            TestCharacterRelationship(folderPath, Character.GetRecords(), null);
-
-
-            TestFamilyTree(folderPath, (Character)Character.GetRecords()[0], Character.GetRecords());
         }
+        //    TestCharacterRelationship(folderPath, Character.GetRecords(), null);
 
-        public static void TestCharacterRelationship(string folderPath, List<IEntity> characters, Character focusCharacter)
-        {
-            string echo = $"graph s {{ label=\"Test Relationship\"; {characters[0].GetName()} -- {characters[1].GetName()}; }}";
-            string textPath = folderPath + "\\testRelationship.dot";
-            StreamWriter streamWriter = File.CreateText(textPath);
-            streamWriter.Write(echo);
-            streamWriter.Close();
 
-            Process.Start("cmd.exe", @"/C" + $"dot -Tpng {textPath} -o {folderPath}/testRelationship.png  & del {textPath}");
-        }
+        //    TestFamilyTree(folderPath, (Character)Character.GetRecords()[0], Character.GetRecords());
+        //}
 
-        public static bool TestFamilyTree(string folderPath, Character focusCharacter, List<IEntity> characters)
-        {
-            StringBuilder echo = new StringBuilder($"graph s {{ label=\"Test Tree\";");
-            List<Character> relevantCharacters = new List<Character>();
-            relevantCharacters.Add(focusCharacter);
+        //public static void TestCharacterRelationship(string folderPath, List<IEntity> characters, Character focusCharacter)
+        //{
+        //    string echo = $"graph s {{ label=\"Test Relationship\"; {characters[0].GetName()} -- {characters[1].GetName()}; }}";
+        //    string textPath = folderPath + "\\testRelationship.dot";
+        //    StreamWriter streamWriter = File.CreateText(textPath);
+        //    streamWriter.Write(echo);
+        //    streamWriter.Close();
 
-            focusCharacter.GetName();
+        //    Process.Start("cmd.exe", @"/C" + $"dot -Tpng {textPath} -o {folderPath}/testRelationship.png  & del {textPath}");
+        //}
 
-            foreach(Character c in characters)
-            {
-                bool present = c.GetChildren().Where(s => s.GetName().Equals(focusCharacter.GetName())).Count() > 0 ? true : false;
-                c.GetName();
-                if (present)
-                {
-                    relevantCharacters.Add(c);
-                }
-            }
+        //public static bool TestFamilyTree(string folderPath, Character focusCharacter, List<IEntity> characters)
+        //{
+        //    StringBuilder echo = new StringBuilder($"graph s {{ label=\"Test Tree\";");
+        //    List<Character> relevantCharacters = new List<Character>();
+        //    relevantCharacters.Add(focusCharacter);
 
-            foreach(Character c in relevantCharacters)
-            {
-                foreach(var t in c.GetChildren())
-                {
-                    echo.Append($"{c.GetName()} -- {t.GetName()}; ");
-                }
-            }
+        //    focusCharacter.GetName();
 
-            echo.Append("}}");
+        //    foreach(Character c in characters)
+        //    {
+        //        bool present = c.GetChildren().Where(s => s.GetName().Equals(focusCharacter.GetName())).Count() > 0 ? true : false;
+        //        c.GetName();
+        //        if (present)
+        //        {
+        //            relevantCharacters.Add(c);
+        //        }
+        //    }
 
-            string textPath = folderPath + "\\testTree.dot";
-            StreamWriter streamWriter = File.CreateText(textPath);
-            streamWriter.Write(echo);
-            streamWriter.Close();
+        //    foreach(Character c in relevantCharacters)
+        //    {
+        //        foreach(var t in c.GetChildren())
+        //        {
+        //            echo.Append($"{c.GetName()} -- {t.GetName()}; ");
+        //        }
+        //    }
 
-            Process.Start("cmd.exe", @"/C" + $"dot -Tpng {textPath} -o {folderPath}/testTree.png");
+        //    echo.Append("}}");
 
-            return true;
-        }
+        //    string textPath = folderPath + "\\testTree.dot";
+        //    StreamWriter streamWriter = File.CreateText(textPath);
+        //    streamWriter.Write(echo);
+        //    streamWriter.Close();
+
+        //    Process.Start("cmd.exe", @"/C" + $"dot -Tpng {textPath} -o {folderPath}/testTree.png");
+
+        //    return true;
+        //}
 
     }
 }
