@@ -12,6 +12,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using System.Xml.Linq;
 
 namespace citadel_wpf
 {
@@ -34,17 +35,33 @@ namespace citadel_wpf
 
         override protected void Save(object sender, RoutedEventArgs e)
         {
-            //TODO double check values before save
-            //if character does not exist
-            if (SaveEntity(sender, e, XMLEntityParser.GetInstance().GetCharacterXDocument(), "character_notes", name_text.Text, Entity.CharacterToXML(name_text.Text, gender_combo_box.Text, description_text.Text)))
-            {
-                UpdateReliantWindows();
-            }
-            else
+            //TODO make this method generic in NewEntityWindow?
+            if (XMLEntityParser.IsPresent(XMLEntityParser.GetInstance().GetCharacterXDocument(), name_text.Text))
             {
                 System.Windows.Forms.MessageBox.Show("This character already exists, please try again.");
             }
+            else
+            {
+                if (name_text.Text.Equals(""))
+                {
+                    required_text.Foreground = Brushes.Red;
+                }
+                else
+                {
+                    XElement newCharacter = new XElement("character",
+                    new XElement("name", name_text.Text),
+                    new XElement("gender", gender_combo_box.Text),
+                    new XElement("description", description_text.Text));
 
+                    string temp = newCharacter.ToString();
+
+                    XMLEntityParser.GetInstance().GetCharacterXDocument().Root.Add(newCharacter);
+                    XMLEntityParser.GetInstance().GetCharacterXDocument().Save(FrontPage.FolderPath + "\\character_notes.xml");
+
+                    UpdateReliantWindows();
+                    Close();
+                }
+            }
 
             //StreamWriter character_notes_handle = null;
 

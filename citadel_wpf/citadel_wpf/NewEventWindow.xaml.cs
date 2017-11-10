@@ -14,6 +14,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using System.Xml.Linq;
 
 namespace citadel_wpf
 {
@@ -34,7 +35,7 @@ namespace citadel_wpf
 
             location_combo_box.Items.Clear();
 
-            List<string> locationNames = XMLEntityParser.GetAllNames(FrontPage.FolderPath + "\\location_notes.xml", "location");
+            List<string> locationNames = XMLEntityParser.GetAllNames(XMLEntityParser.GetInstance().GetLocationXDocument());
 
             foreach (string location in locationNames)
             {
@@ -46,79 +47,98 @@ namespace citadel_wpf
 
         override protected void Save(object sender, RoutedEventArgs e)
         {
-            //TODO: check texts
-            if (SaveEntity(sender, e, XMLEntityParser.GetInstance().GetEventXDocument(), "event_notes", name_text.Text, Entity.EventToXML(name_text.Text, location_combo_box.Text, event_unit_date_number.Text, event_date_number.Text, description_text.Text)))
-            {
-                UpdateReliantWindows();
-            }
-            else
+            if (XMLEntityParser.IsPresent(XMLEntityParser.GetInstance().GetEventXDocument(), name_text.Text))
             {
                 System.Windows.Forms.MessageBox.Show("This event already exists, please try again.");
             }
-
-    /*StreamWriter event_notes_handle = null;
-
-    if (!name_text.Text.Equals("") && !notes_text.Text.Equals(""))
-    {
-        try
-        {
-            string name = name_text.Text;
-            string location = location_combo_box.Text;
-            string unit_date = event_unit_date_number.Text;
-            string date = event_date_number.Text;
-            string description = notes_text.Text;
-            string filePath = base.folderPath + "\\event_notes.xml";
-
-            if (File.Exists(filePath))
+            else
             {
-                event_notes_handle = XMLParserClass.RemoveLastLine(filePath);
+                if (name_text.Text.Equals("") || description_text.Text.Equals(""))
+                {
+                    required_text.Foreground = Brushes.Red;
+                }
+                else
+                {
+                    XElement newEvent = new XElement("event",
+                    new XElement("name", name_text.Text),
+                    new XElement("location", location_combo_box.Text),
+                    new XElement("unit_date", event_unit_date_number.Text),
+                    new XElement("date", event_date_number.Text),
+                    new XElement("description", description_text.Text));
+
+                    string temp = newEvent.ToString();
+
+                    XMLEntityParser.GetInstance().GetEventXDocument().Root.Add(newEvent);
+                    XMLEntityParser.GetInstance().GetEventXDocument().Save(FrontPage.FolderPath + "\\event_notes.xml");
+
+                    UpdateReliantWindows();
+                    Close();
+                }
+            }
+
+            /*StreamWriter event_notes_handle = null;
+
+            if (!name_text.Text.Equals("") && !notes_text.Text.Equals(""))
+            {
+                try
+                {
+                    string name = name_text.Text;
+                    string location = location_combo_box.Text;
+                    string unit_date = event_unit_date_number.Text;
+                    string date = event_date_number.Text;
+                    string description = notes_text.Text;
+                    string filePath = base.folderPath + "\\event_notes.xml";
+
+                    if (File.Exists(filePath))
+                    {
+                        event_notes_handle = XMLParserClass.RemoveLastLine(filePath);
+                    }
+                    else
+                    {
+                        event_notes_handle = new StreamWriter(filePath, true);
+                        event_notes_handle.Write("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n\n<events>\n\t");
+                    }
+
+                    event_notes_handle.Write("<event>\n\t\t");
+                    event_notes_handle.Write("<name>" + name + "</name>\n\t\t");
+                    event_notes_handle.Write("<location>" + location + "</location>\n\t\t");
+                    event_notes_handle.Write("<unit_date>" + unit_date + "</unit_date>\n\t\t");
+                    event_notes_handle.Write("<date>" + date + "</date>\n\t\t");
+                    event_notes_handle.Write("<description>" + description + "</description>\n\t");
+                    event_notes_handle.Write("</event>\n\n");
+
+                    event_notes_handle.Write("</events>");
+
+                    event_notes_handle.Close();
+
+                    UpdateReliantWindows();
+
+                    base.Close();
+                }
+                catch (IOException)
+                {
+                    System.Windows.Forms.MessageBox.Show("An IO Error Occurred. Please Try Again.");
+                }
+                catch (Exception)
+                {
+                    System.Windows.Forms.MessageBox.Show("An Unexpected Error Occurred.");
+                }
+                finally
+                {
+                    if (!event_notes_handle.Equals(null))
+                    {
+                        event_notes_handle.Close();
+                    }
+
+                    base.Close();
+                }
             }
             else
             {
-                event_notes_handle = new StreamWriter(filePath, true);
-                event_notes_handle.Write("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n\n<events>\n\t");
+                required_text.Foreground = Brushes.Red;
             }
-
-            event_notes_handle.Write("<event>\n\t\t");
-            event_notes_handle.Write("<name>" + name + "</name>\n\t\t");
-            event_notes_handle.Write("<location>" + location + "</location>\n\t\t");
-            event_notes_handle.Write("<unit_date>" + unit_date + "</unit_date>\n\t\t");
-            event_notes_handle.Write("<date>" + date + "</date>\n\t\t");
-            event_notes_handle.Write("<description>" + description + "</description>\n\t");
-            event_notes_handle.Write("</event>\n\n");
-
-            event_notes_handle.Write("</events>");
-
-            event_notes_handle.Close();
-
-            UpdateReliantWindows();
-
-            base.Close();
+            */
         }
-        catch (IOException)
-        {
-            System.Windows.Forms.MessageBox.Show("An IO Error Occurred. Please Try Again.");
-        }
-        catch (Exception)
-        {
-            System.Windows.Forms.MessageBox.Show("An Unexpected Error Occurred.");
-        }
-        finally
-        {
-            if (!event_notes_handle.Equals(null))
-            {
-                event_notes_handle.Close();
-            }
-
-            base.Close();
-        }
-    }
-    else
-    {
-        required_text.Foreground = Brushes.Red;
-    }
-    */
-}
 
         public override void UpdateReliantWindows()
         {

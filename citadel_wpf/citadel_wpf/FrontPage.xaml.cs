@@ -90,22 +90,8 @@ namespace citadel_wpf
             NewEntityWindow.InitializeModalWindow(this, (new NewEventRelationship()));
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            //testHeader.Content = XMLParserClass.attemptParse();
-            //testHeader.Content = XMLParserClass.attemptSpecificParse();
-            //testButton.Content = XMLParserClass.XPathParse(folderPath + "\\character_notes.xml", "/characters/character/*");
-            //testButton.Content += XMLParserClass.LINQParseTest(folderPath + "\\character_notes.xml");
-            //Fill_Note_Pages();
-        }
-
         private void Update_Note_Pages()
         {
-            //Fill_Note_Area(XMLParserClass.GetAllCharacterNotes(folderPath + "\\character_notes.xml"), character_notes_area);
-            //Fill_Note_Area(XMLParserClass.GetAllGeneralNotes(folderPath + "\\general_notes.xml"), general_notes_area);
-            //Fill_Note_Area(XMLParserClass.GetAllLocationNotes(folderPath + "\\location_notes.xml"), location_notes_area);
-            //Fill_Note_Area(XMLParserClass.GetAllEventNotes(folderPath + "\\event_notes.xml"), event_notes_area);
-
             Fill_Media_Area(XMLEntityParser.GetMediaInformation(FolderPath + "\\media_notes.xml"));
             Fill_Note_Area(XMLEntityParser.GetInstance().GetAllGeneralNotes(), general_notes_area);
             Fill_Note_Area(XMLEntityParser.GetInstance().GetAllCharacterNotes(), character_notes_area);

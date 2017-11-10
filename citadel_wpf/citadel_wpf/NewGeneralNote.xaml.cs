@@ -12,6 +12,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using System.Xml.Linq;
 
 namespace citadel_wpf
 {
@@ -27,70 +28,85 @@ namespace citadel_wpf
 
         override protected void Save(object sender, RoutedEventArgs e)
         {
-            //TODO: Check text fill PRE-ADD
-            //
-            if (SaveEntity(sender, e, XMLEntityParser.GetInstance().GetNoteXDocument(), "general_notes", 
-                note_name.Text, Entity.NoteToXML(note_name.Text, note_text.Text)))
-            {
-                UpdateReliantWindows();
-            }
-            else
+
+            if (XMLEntityParser.IsPresent(XMLEntityParser.GetInstance().GetNoteXDocument(), name_text.Text))
             {
                 System.Windows.Forms.MessageBox.Show("This note already exists, please try again.");
             }
-
-    /*StreamWriter general_notes_handle = null;
-
-    if (!note_text.Text.Equals(""))
-    {
-        try
-        {
-            string note = note_text.Text;
-            string filePath = folderPath + "\\general_notes.xml";
-
-            if (File.Exists(filePath))
+            else
             {
-                general_notes_handle = XMLParserClass.RemoveLastLine(filePath);
+                if (name_text.Text.Equals("") || description_text.Text.Equals(""))
+                {
+                    required_text.Foreground = Brushes.Red;
+                }
+                else
+                {
+                    XElement newNote = new XElement("general_note",
+                    new XElement("name", name_text.Text),
+                    new XElement("description", description_text.Text));
+
+                    string temp = newNote.ToString();
+
+                    XMLEntityParser.GetInstance().GetNoteXDocument().Root.Add(newNote);
+                    XMLEntityParser.GetInstance().GetNoteXDocument().Save(FrontPage.FolderPath + "\\general_notes.xml");
+
+                    UpdateReliantWindows();
+                    Close();
+                }
+            }
+
+            /*StreamWriter general_notes_handle = null;
+
+            if (!note_text.Text.Equals(""))
+            {
+                try
+                {
+                    string note = note_text.Text;
+                    string filePath = folderPath + "\\general_notes.xml";
+
+                    if (File.Exists(filePath))
+                    {
+                        general_notes_handle = XMLParserClass.RemoveLastLine(filePath);
+                    }
+                    else
+                    {
+                        general_notes_handle = new StreamWriter(filePath, true);
+                        general_notes_handle.Write("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n\n<general_notes>\n\t");
+                    }
+
+                    general_notes_handle.Write("<note>\n\t<content>" + note + "\n\t</content></note>\n");
+
+                    general_notes_handle.Write("</general_notes>");
+
+                    general_notes_handle.Close();
+
+                    UpdateReliantWindows();
+
+                    Close();
+                }
+                catch (IOException)
+                {
+                    System.Windows.Forms.MessageBox.Show("An IO Error Occurred. Please Try Again.");
+                }
+                catch (Exception)
+                {
+                    System.Windows.Forms.MessageBox.Show("An Unexpected Error Occurred.");
+                }
+                finally
+                {
+                    if (!general_notes_handle.Equals(null))
+                    {
+                        general_notes_handle.Close();
+                    }
+
+                    Close();
+                }
             }
             else
             {
-                general_notes_handle = new StreamWriter(filePath, true);
-                general_notes_handle.Write("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n\n<general_notes>\n\t");
-            }
-
-            general_notes_handle.Write("<note>\n\t<content>" + note + "\n\t</content></note>\n");
-
-            general_notes_handle.Write("</general_notes>");
-
-            general_notes_handle.Close();
-
-            UpdateReliantWindows();
-
-            Close();
+                required_text.Foreground = Brushes.Red;
+            }*/
         }
-        catch (IOException)
-        {
-            System.Windows.Forms.MessageBox.Show("An IO Error Occurred. Please Try Again.");
-        }
-        catch (Exception)
-        {
-            System.Windows.Forms.MessageBox.Show("An Unexpected Error Occurred.");
-        }
-        finally
-        {
-            if (!general_notes_handle.Equals(null))
-            {
-                general_notes_handle.Close();
-            }
-
-            Close();
-        }
-    }
-    else
-    {
-        required_text.Foreground = Brushes.Red;
-    }*/
-}
 
         public override void UpdateReliantWindows()
         {

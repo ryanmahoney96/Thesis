@@ -92,7 +92,7 @@ namespace citadel_wpf
             event_one_combo.Items.Clear();
             event_two_combo.Items.Clear();
 
-            List<string> eventNames = XMLEntityParser.GetAllNames(FrontPage.FolderPath + "\\event_notes.xml", "event");
+            List<string> eventNames = XMLEntityParser.GetAllNames(XMLEntityParser.GetInstance().GetEventXDocument());
 
             ComboBoxItem cBoxItem;
 

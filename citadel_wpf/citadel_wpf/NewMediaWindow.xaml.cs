@@ -29,7 +29,7 @@ namespace citadel_wpf
             folderPath = fp;
         }
 
-        //TODO: use generic save method? Requires a media entity
+        //TODO use adapted save?
         override protected void Save(object sender, RoutedEventArgs e)
         {
             StreamWriter media_notes_handle = null;
