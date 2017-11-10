@@ -65,21 +65,21 @@ namespace citadel_wpf
             return instance;
         }
 
-        public XDocument GetCharacterXDocument()
+        public ref XDocument GetCharacterXDocument()
         {
-            return characterXDocument;
+            return ref characterXDocument;
         }
-        public XDocument GetLocationXDocument()
+        public ref XDocument GetLocationXDocument()
         {
-            return locationXDocument;
+            return ref locationXDocument;
         }
-        public XDocument GetEventXDocument()
+        public ref XDocument GetEventXDocument()
         {
-            return eventXDocument;
+            return ref eventXDocument;
         }
-        public XDocument GetNoteXDocument()
+        public ref XDocument GetNoteXDocument()
         {
-            return noteXDocument;
+            return ref noteXDocument;
         }
 
         public static StreamWriter RemoveEndTag(string filePath)
@@ -282,27 +282,23 @@ namespace citadel_wpf
             return returnList;
         }
 
-        public static List<string> GetAllNames(string fullFilePath, string rootName)
+        public static List<string> GetAllNames(XDocument handle)
         {
             List<string> returnList = new List<string>();
+            
+            var query = from c in handle.Root.Elements()
+                        select new
+                        {
+                            Name = c.Element("name").Value
+                        };
 
-            //TODO xml exception
-            if (File.Exists(fullFilePath))
+            foreach (var entry in query)
             {
-                var xml = XDocument.Load(fullFilePath);
-
-                // Query the data and write out a subset of contacts
-                var query = from c in xml.Root.Descendants(rootName)
-                            select new
-                            {
-                                Name = c.Element("name").Value
-                            };
-
-                foreach (var entry in query)
-                {
-                    returnList.Add(entry.Name);
-                }
+                returnList.Add(entry.Name);
             }
+
+            returnList.Sort();
+
             return returnList;
         }
 
@@ -337,6 +333,13 @@ namespace citadel_wpf
             }
 
             return returnTable;
+        }
+
+        public static bool IsPresent(XDocument handle, string entityName)
+        {
+            return (from c in handle.Root.Elements()
+                    where c.Element("name").Value.ToString().Equals(entityName)
+                    select c).Count() > 0 ? true : false;
         }
     }
 }

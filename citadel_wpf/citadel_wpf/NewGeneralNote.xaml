@@ -29,11 +29,11 @@
         </Grid.ColumnDefinitions>
 
         <TextBlock Text="*Name this Note:" Grid.Row="1" Grid.Column="1" TextWrapping="Wrap"></TextBlock>
-        <TextBox Name="note_name" Grid.Row="1" Grid.Column="2" Margin="5,5" VerticalAlignment="Center" VerticalContentAlignment="Center" Height="20"></TextBox>
+        <TextBox Name="name_text" Grid.Row="1" Grid.Column="2" Margin="5,5" VerticalAlignment="Center" VerticalContentAlignment="Center" Height="20"></TextBox>
 
         <TextBlock Text="*Enter your Note:" Grid.Row="2" Grid.Column="1" TextWrapping="Wrap"></TextBlock>
         <ScrollViewer Grid.Row="2" Grid.Column="2" Width="280" Height="150">
-            <TextBox Name="note_text" TextWrapping="Wrap"></TextBox>
+            <TextBox Name="description_text" TextWrapping="Wrap"></TextBox>
         </ScrollViewer>
 
         <TextBlock Name="required_text" Text="*Required Field" Grid.Row="5" Grid.Column="1"></TextBlock>

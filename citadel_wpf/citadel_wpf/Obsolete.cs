@@ -188,5 +188,71 @@ namespace citadel_wpf
             return temp;
         }
 
+        //protected bool SaveEntity(XDocument handle, string docName, string entityName, string entityAsXML)
+        //{
+        //    StreamWriter fileHandle = null;
+        //    string docURI = FrontPage.FolderPath + $"\\{docName}.xml";
+
+        //    try
+        //    {
+
+        //        if (IsPresent(handle, entityName))
+        //        {
+        //            return false;
+        //        }
+        //        else
+        //        {
+        //            if (File.Exists(docURI))
+        //            {
+        //                fileHandle = XMLEntityParser.RemoveEndTag(docURI);
+        //            }
+        //            else
+        //            {
+        //                fileHandle = new StreamWriter(docURI, true);
+        //                fileHandle.Write("<?xml version=\"1.0\" encoding=\"UTF-8\"?><" + docName + ">");
+        //            }
+
+        //            fileHandle.Write(entityAsXML);
+
+        //            fileHandle.Write("</" + docName + ">");
+
+        //            fileHandle.Close();
+
+        //            //UpdateReliantWindows();
+
+        //            //Close();
+        //            XMLEntityParser.GetInstance().UpdateXDocuments();
+
+        //            return true;
+        //        }
+
+
+        //    }
+        //    catch (IOException)
+        //    {
+        //        System.Windows.Forms.MessageBox.Show("An IO Error Occurred. Please Try Again.");
+        //    }
+        //    //catch (Exception)
+        //    //{
+        //    //    System.Windows.Forms.MessageBox.Show("An Unexpected Error Occurred.");
+        //    //}
+        //    finally
+        //    {
+        //        if (fileHandle != null)
+        //        {
+        //            fileHandle.Close();
+        //        }
+
+        //        base.Close();
+        //    }
+
+
+        //    return false;
+
+        //    //else
+        //    //{
+        //    //    required_text.Foreground = Brushes.Red;
+        //    //}
+        //}
     }
 }
