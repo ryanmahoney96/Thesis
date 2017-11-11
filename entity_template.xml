@@ -40,13 +40,10 @@
 	</characters>
 
 	<character_relationships>
-		<character_relationship>
-			<character></character>
-			<character></character>
-			<!-- mother, father, sibling -->
-			<title></title>
-			<directionality></directionality>
-		</character_relationship>
+		<character>
+			<name></name>
+			<relationship relationship_name = "", name = ""></relationship>
+		</character>
 	</character_relationships>
 
 	<locations>

@@ -41,61 +41,62 @@ namespace citadel_wpf
             Process.Start("cmd.exe", @"/C" + $"dot -Tpng {textPath} -o {folderPath}/outfile.png & del {textPath}");
             //Process.Start("cmd.exe", @"/C" + $"dot -Tpng {textPath} -o {folderPath}/outfile.png").WaitForExit();
             //Process.Start("cmd.exe", @"/C" + $"del {textPath}");
+
+            TestCharacterRelationship("Ryan", "Matt");
+
+
+            TestFamilyTree("Adam");
         }
-        //    TestCharacterRelationship(folderPath, Character.GetRecords(), null);
 
+        public static void TestCharacterRelationship(string c1, string c2)
+        {
+            string echo = $"graph s {{ label=\"test relationship\"; {c1} -- {c2}; }}";
+            string textpath = FrontPage.FolderPath + "\\testRelationship.dot";
+            StreamWriter streamwriter = File.CreateText(textpath);
+            streamwriter.Write(echo);
+            streamwriter.Close();
 
-        //    TestFamilyTree(folderPath, (Character)Character.GetRecords()[0], Character.GetRecords());
-        //}
+            Process.Start("cmd.exe", @"/c" + $"dot -Tpng {textpath} -o {FrontPage.FolderPath}/testRelationship.png  & del {textpath}");
+        }
 
-        //public static void TestCharacterRelationship(string folderPath, List<IEntity> characters, Character focusCharacter)
-        //{
-        //    string echo = $"graph s {{ label=\"Test Relationship\"; {characters[0].GetName()} -- {characters[1].GetName()}; }}";
-        //    string textPath = folderPath + "\\testRelationship.dot";
-        //    StreamWriter streamWriter = File.CreateText(textPath);
-        //    streamWriter.Write(echo);
-        //    streamWriter.Close();
+        public static bool TestFamilyTree(string focusCharacter)
+        {
+            StringBuilder echo = new StringBuilder($"graph s {{ label=\"test tree\"; ");
 
-        //    Process.Start("cmd.exe", @"/C" + $"dot -Tpng {textPath} -o {folderPath}/testRelationship.png  & del {textPath}");
-        //}
+            var parents = from c in XMLEntityParser.GetInstance().GetCharacterRelationshipXDocument().Root.Descendants("character_relationship")
+                          where c.Element("entity_one").Value.ToString().Equals(focusCharacter)
+                          && c.Element("relationship").Value.ToString().Equals("Is the Child of")
+                          select c.Element("entity_two");
 
-        //public static bool TestFamilyTree(string folderPath, Character focusCharacter, List<IEntity> characters)
-        //{
-        //    StringBuilder echo = new StringBuilder($"graph s {{ label=\"Test Tree\";");
-        //    List<Character> relevantCharacters = new List<Character>();
-        //    relevantCharacters.Add(focusCharacter);
+            var children = from c in XMLEntityParser.GetInstance().GetCharacterRelationshipXDocument().Root.Descendants("character_relationship")
+                          where c.Element("entity_one").Value.ToString().Equals(focusCharacter)
+                          && c.Element("relationship").Value.ToString().Equals("Is the Parent of")
+                          select c.Element("entity_two");
 
-        //    focusCharacter.GetName();
+            foreach(var c in parents)
+            {
+                echo.Append($"{c.Value.ToString()} -- {focusCharacter}; ");
+            }
 
-        //    foreach(Character c in characters)
-        //    {
-        //        bool present = c.GetChildren().Where(s => s.GetName().Equals(focusCharacter.GetName())).Count() > 0 ? true : false;
-        //        c.GetName();
-        //        if (present)
-        //        {
-        //            relevantCharacters.Add(c);
-        //        }
-        //    }
+            foreach (var c in children)
+            {
+                echo.Append($"{focusCharacter} -- {c.Value.ToString()}; ");
+            }
 
-        //    foreach(Character c in relevantCharacters)
-        //    {
-        //        foreach(var t in c.GetChildren())
-        //        {
-        //            echo.Append($"{c.GetName()} -- {t.GetName()}; ");
-        //        }
-        //    }
+            //< ComboBoxItem Content = "Is the Parent of" />
+            // < ComboBoxItem Content = "Is the Child of" />
 
-        //    echo.Append("}}");
+            echo.Append("}");
 
-        //    string textPath = folderPath + "\\testTree.dot";
-        //    StreamWriter streamWriter = File.CreateText(textPath);
-        //    streamWriter.Write(echo);
-        //    streamWriter.Close();
+            string textPath = FrontPage.FolderPath + "\\testTree.dot";
+            StreamWriter streamwriter = File.CreateText(textPath);
+            streamwriter.Write(echo);
+            streamwriter.Close();
 
-        //    Process.Start("cmd.exe", @"/C" + $"dot -Tpng {textPath} -o {folderPath}/testTree.png");
+            Process.Start("cmd.exe", @"/c" + $"dot -Tpng {textPath} -o {FrontPage.FolderPath}/testTree.png");
 
-        //    return true;
-        //}
+            return true;
+        }
 
     }
 }

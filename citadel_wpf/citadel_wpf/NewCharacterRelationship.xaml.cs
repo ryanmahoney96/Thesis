@@ -12,6 +12,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using System.Xml.Linq;
 
 namespace citadel_wpf
 {
@@ -33,32 +34,41 @@ namespace citadel_wpf
         override protected void Save(object sender, RoutedEventArgs e)
         {
             //TODO make functional
-            //if (IsPresent(XMLEntityParser.GetInstance().GetCharacterXDocument(), name_text.Text))
-            //{
-            //    System.Windows.Forms.MessageBox.Show("This character already exists, please try again.");
-            //}
-            //else
-            //{
-            //    if (!character_one_combo.Text.Equals("") && !relationship_combo.Text.Equals("") && !character_two_combo.Text.Equals(""))
-            //    {
-            //        required_text.Foreground = Brushes.Red;
-            //    }
-            //    else
-            //    {
-            //        XElement newCharacter = new XElement("character",
-            //        new XElement("name", name_text.Text),
-            //        new XElement("gender", gender_combo_box.Text),
-            //        new XElement("description", description_text.Text));
+            if (IsRelationshipPresent(XMLEntityParser.GetInstance().GetCharacterRelationshipXDocument(), character_one_combo.Text, relationship_combo.Text, character_two_combo.Text))
+            {
+                System.Windows.Forms.MessageBox.Show("This character already exists, please try again.");
+            }
+            else
+            {
+                if (character_one_combo.Text.Equals("") || relationship_combo.Text.Equals("") || character_two_combo.Text.Equals(""))
+                {
+                    required_text.Foreground = Brushes.Red;
+                }
+                else
+                {
+                    XElement newCharacterRelationship = new XElement("character_relationship",
+                    new XElement("entity_one", character_one_combo.Text),
+                    new XElement("relationship", relationship_combo.Text),
+                    new XElement("entity_two", character_two_combo.Text));
 
-            //        string temp = newCharacter.ToString();
+                    string temp = newCharacterRelationship.ToString();
 
-            //        XMLEntityParser.GetInstance().GetCharacterXDocument().Root.Add(newCharacter);
-            //        XMLEntityParser.GetInstance().GetCharacterXDocument().Save(FrontPage.FolderPath + "\\character_notes.xml");
+                    XMLEntityParser.GetInstance().GetCharacterRelationshipXDocument().Root.Add(newCharacterRelationship);
+                    XMLEntityParser.GetInstance().GetCharacterRelationshipXDocument().Save(FrontPage.FolderPath + "\\character_relationship_notes.xml");
 
-            //        UpdateReliantWindows();
-            //        Close();
-            //    }
-            //}
+                    UpdateReliantWindows();
+                    Close();
+                }
+            }
+        }
+
+        public static bool IsRelationshipPresent(XDocument handle, string entityOne, string relationship, string entityTwo)
+        {
+            return ((from c in handle.Root.Elements()
+                     where c.Element("entity_one").Value.ToString().Equals(entityOne)
+                     && c.Element("relationship").Value.ToString().Equals(relationship)
+                     && c.Element("entity_two").Value.ToString().Equals(entityTwo)
+                     select c).Count() > 0 ? true : false);
         }
 
         private void Fill_Character_Boxes()

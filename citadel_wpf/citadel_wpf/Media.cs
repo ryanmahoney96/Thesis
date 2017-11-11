@@ -51,7 +51,7 @@ namespace citadel_wpf
             StringBuilder s = new StringBuilder();
 
             s.Append("<media_note>");
-            s.Append("<title>" + Title + "</title>");
+            s.Append("<name>" + Title + "</name>");
             s.Append("<year>" + Year + "</year>");
             s.Append("<type>" + Type + "</type>");
             s.Append("<genre>" + Genre + "</genre>");

@@ -69,6 +69,10 @@ namespace citadel_wpf
         {
             return ref characterXDocument;
         }
+        public ref XDocument GetCharacterRelationshipXDocument()
+        {
+            return ref characterRelationshipXDocument;
+        }
         public ref XDocument GetLocationXDocument()
         {
             return ref locationXDocument;
@@ -76,6 +80,10 @@ namespace citadel_wpf
         public ref XDocument GetEventXDocument()
         {
             return ref eventXDocument;
+        }
+        public ref XDocument GetEventRelationshipXDocument()
+        {
+            return ref eventRelationshipXDocument;
         }
         public ref XDocument GetNoteXDocument()
         {
@@ -150,30 +158,30 @@ namespace citadel_wpf
         {
             List<List<string>> returnList = new List<List<string>>();
 
-            if (File.Exists(fullFilePath))
-            {
-                var xml = XDocument.Load(fullFilePath);
+            //if (File.Exists(fullFilePath))
+            //{
+            //    var xml = XDocument.Load(fullFilePath);
 
-                var query = from c in xml.Root.Descendants("character")
-                                //where ((string)c.Element("name")).Equals("Ygritte")
-                            select new
-                            {
-                                Name = c.Element("name").Value,
-                                Gender = c.Element("gender").Value,
-                                Description = c.Element("description").Value
-                            };
+            //    var query = from c in xml.Root.Descendants("character")
+            //                    //where ((string)c.Element("name")).Equals("Ygritte")
+            //                select new
+            //                {
+            //                    Name = c.Element("name").Value,
+            //                    Gender = c.Element("gender").Value,
+            //                    Description = c.Element("description").Value
+            //                };
 
-                foreach (var characterEntry in query)
-                {
+            //    foreach (var characterEntry in query)
+            //    {
 
-                    List<string> temp = new List<string>();
+            //        List<string> temp = new List<string>();
 
-                    temp.Add("Name\\" + characterEntry.Name);
-                    temp.Add("Gender\\" + characterEntry.Gender);
-                    temp.Add("Description\\" + characterEntry.Description);
-                    returnList.Add(temp);
-                }
-            }
+            //        temp.Add("Name\\" + characterEntry.Name);
+            //        temp.Add("Gender\\" + characterEntry.Gender);
+            //        temp.Add("Description\\" + characterEntry.Description);
+            //        returnList.Add(temp);
+            //    }
+            //}
             return returnList;
         }
 
