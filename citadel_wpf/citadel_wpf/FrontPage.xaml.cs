@@ -20,16 +20,12 @@ namespace citadel_wpf
     /// </summary>
     public partial class FrontPage : Window
     {
-        //TODO: Take out the OOP and make all saving query based -> restructure XML if necessary
         //TODO: Make "> \ <" in all text unusable 
         //TODO: Separate new folder and select folder dialogs
         //TODO: When making a new folder, verify that a media entry does not exist
         //TODO: Organize so event has list of pointers to things before and things after. Use this when adding new relationship to filter out contradictory data
-        //TODO: Take out sibling relationship? Each character entity will have a list of its literal children
-        //TODO: Add relationships to both character entities of a pair (rather than separate files) to reduce search/organization time?
         //TODO: Family Trees
         //TODO: Add location v event graph
-        //TODO: Alphabetize entities in the lists
         //TODO: Stylize with https://github.com/MahApps/MahApps.Metro
 
         public static String FolderPath;

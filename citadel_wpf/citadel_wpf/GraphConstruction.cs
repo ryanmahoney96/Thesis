@@ -44,8 +44,9 @@ namespace citadel_wpf
 
             TestCharacterRelationship("Ryan", "Matt");
 
-
-            TestFamilyTree("Adam");
+            TestImmediateFamilyTree("Adam");
+            TestExtendedFamilyTree("Donald");
+            TestExtendedFamilyTree("Ryan");
         }
 
         public static void TestCharacterRelationship(string c1, string c2)
@@ -59,44 +60,113 @@ namespace citadel_wpf
             Process.Start("cmd.exe", @"/c" + $"dot -Tpng {textpath} -o {FrontPage.FolderPath}/testRelationship.png  & del {textpath}");
         }
 
-        public static bool TestFamilyTree(string focusCharacter)
+        public static bool TestImmediateFamilyTree(string focusCharacter)
         {
-            StringBuilder echo = new StringBuilder($"graph s {{ label=\"test tree\"; ");
+            StringBuilder echo = new StringBuilder($"graph s {{ label=\"Test Immediate Family Tree for {focusCharacter}\"; ");
 
-            var parents = from c in XMLEntityParser.GetInstance().GetCharacterRelationshipXDocument().Root.Descendants("character_relationship")
-                          where c.Element("entity_one").Value.ToString().Equals(focusCharacter)
-                          && c.Element("relationship").Value.ToString().Equals("Is the Child of")
-                          select c.Element("entity_two");
+            var parents = GetParentsOf(focusCharacter);
+            var children = GetChildrenOf(focusCharacter);
 
-            var children = from c in XMLEntityParser.GetInstance().GetCharacterRelationshipXDocument().Root.Descendants("character_relationship")
-                          where c.Element("entity_one").Value.ToString().Equals(focusCharacter)
-                          && c.Element("relationship").Value.ToString().Equals("Is the Parent of")
-                          select c.Element("entity_two");
-
-            foreach(var c in parents)
+            foreach (var c in parents)
             {
-                echo.Append($"{c.Value.ToString()} -- {focusCharacter}; ");
+                echo.Append($"{c} -- {focusCharacter}; ");
+    
+                //Siblings
+                foreach (var t in GetSiblingsOf(c, focusCharacter))
+                {
+                    echo.Append($"{c} -- {t}; ");
+                }
             }
 
             foreach (var c in children)
             {
-                echo.Append($"{focusCharacter} -- {c.Value.ToString()}; ");
+                echo.Append($"{focusCharacter} -- {c}; ");
             }
-
-            //< ComboBoxItem Content = "Is the Parent of" />
-            // < ComboBoxItem Content = "Is the Child of" />
 
             echo.Append("}");
 
-            string textPath = FrontPage.FolderPath + "\\testTree.dot";
+            string textPath = FrontPage.FolderPath + "\\testImmediateTree.dot";
             StreamWriter streamwriter = File.CreateText(textPath);
             streamwriter.Write(echo);
             streamwriter.Close();
 
-            Process.Start("cmd.exe", @"/c" + $"dot -Tpng {textPath} -o {FrontPage.FolderPath}/testTree.png");
+            Process.Start("cmd.exe", @"/c" + $"dot -Tpng {textPath} -o {FrontPage.FolderPath}/testImmediateTree.png");
 
             return true;
         }
+
+        public static bool TestExtendedFamilyTree(string focusCharacter)
+        {
+            //Granparents/children + aunts/uncles + cousins
+            //TODO aunts/uncles, cousins
+            StringBuilder echo = new StringBuilder($"graph s {{ label=\"Test Extended Family Tree for {focusCharacter}\"; ");
+
+            var parents = GetParentsOf(focusCharacter);
+            var children = GetChildrenOf(focusCharacter);
+
+            foreach (var c in parents)
+            {
+                echo.Append($"{c} -- {focusCharacter}; ");
+
+                //GrandParents
+                foreach (var q in GetParentsOf(c))
+                {
+                    echo.Append($"{q} -- {c}; ");
+                }
+
+                //Siblings
+                foreach (var t in GetSiblingsOf(c, focusCharacter))
+                {
+                    echo.Append($"{c} -- {t}; ");
+                }
+            }
+
+            foreach (var c in children)
+            {
+                echo.Append($"{focusCharacter} -- {c}; ");
+
+                //GrandChildren
+                foreach (var q in GetChildrenOf(c))
+                {
+                    echo.Append($"{c} -- {q}; ");
+                }
+            }
+
+            echo.Append("}");
+
+            string textPath = FrontPage.FolderPath + "\\testExtendedTree.dot";
+            StreamWriter streamwriter = File.CreateText(textPath);
+            streamwriter.Write(echo);
+            streamwriter.Close();
+
+            Process.Start("cmd.exe", @"/c" + $"dot -Tpng {textPath} -o {FrontPage.FolderPath}/testExtendedTree.png");
+
+            return true;
+        }
+
+        //TODO move format to XMLEntityParser
+        private static IEnumerable<string> GetGenerationNames(string focusCharacter, string relationshipName, string otherCharacter = "")
+        {
+            return (from c in XMLEntityParser.GetInstance().GetCharacterRelationshipXDocument().Root.Descendants("character_relationship")
+                    where c.Element("entity_one").Value.ToString().Equals(focusCharacter)
+                    && c.Element("relationship").Value.ToString().Equals(relationshipName)
+                    && (otherCharacter.Equals("") || (!otherCharacter.Equals("") && (!c.Element("entity_two").Value.ToString().Equals(otherCharacter))))
+                    select c.Element("entity_two").Value.ToString());
+        }
+
+        private static IEnumerable<string> GetParentsOf(string focusCharacter)
+        {
+            return GetGenerationNames(focusCharacter, "Is the Child of");
+        }
+        private static IEnumerable<string> GetChildrenOf(string focusCharacter)
+        {
+            return GetGenerationNames(focusCharacter, "Is the Parent of");
+        }
+        private static IEnumerable<string> GetSiblingsOf(string focusCharacter, string otherCharacter)
+        {
+            return GetGenerationNames(focusCharacter, "Is the Parent of", otherCharacter);
+        }
+
 
     }
 }

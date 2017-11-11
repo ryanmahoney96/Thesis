@@ -13,7 +13,6 @@ namespace citadel_wpf
 {
     class XMLEntityParser
     {
-        //TODO add relationship handles
         private static XDocument characterXDocument = null;
         private static XDocument characterRelationshipXDocument = null;
         private static XDocument locationXDocument = null;

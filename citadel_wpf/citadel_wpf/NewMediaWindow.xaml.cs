@@ -29,7 +29,7 @@ namespace citadel_wpf
             folderPath = fp;
         }
 
-        //TODO use adapted save?
+        //TODO use adapted save
         override protected void Save(object sender, RoutedEventArgs e)
         {
             StreamWriter media_notes_handle = null;
@@ -60,7 +60,6 @@ namespace citadel_wpf
                     string genre = genre_combobox.Text;
                     string summary = summary_text.Text;
                     string filePath = folderPath + "\\media_notes.xml";
-
                     
                     media_notes_handle = new StreamWriter(filePath, true);
                     media_notes_handle.Write("<?xml version=\"1.0\" encoding=\"UTF-8\"?><media_notes>");

@@ -33,27 +33,43 @@ namespace citadel_wpf
 
         override protected void Save(object sender, RoutedEventArgs e)
         {
-            //TODO make functional
-            if (IsRelationshipPresent(XMLEntityParser.GetInstance().GetCharacterRelationshipXDocument(), character_one_combo.Text, relationship_combo.Text, character_two_combo.Text))
+            //TODO parent/child split
+            string relationship = relationship_combo.Text;
+            string opposite = "Is the Child of";
+            if (relationship.Equals("Is the Child of"))
             {
-                System.Windows.Forms.MessageBox.Show("This character already exists, please try again.");
+                opposite = "Is the Parent of";
             }
+
+            if (character_one_combo.Text.Equals("") || relationship_combo.Text.Equals("") || character_two_combo.Text.Equals(""))
+            {
+                required_text.Foreground = Brushes.Red;
+            }
+            
             else
             {
-                if (character_one_combo.Text.Equals("") || relationship_combo.Text.Equals("") || character_two_combo.Text.Equals(""))
+                if (IsRelationshipPresent(XMLEntityParser.GetInstance().GetCharacterRelationshipXDocument(), character_one_combo.Text, relationship, character_two_combo.Text)
+                || IsRelationshipPresent(XMLEntityParser.GetInstance().GetCharacterRelationshipXDocument(), character_two_combo.Text, opposite, character_one_combo.Text))
                 {
-                    required_text.Foreground = Brushes.Red;
+                    System.Windows.Forms.MessageBox.Show("This relationship already exists, please try again.");
                 }
                 else
                 {
                     XElement newCharacterRelationship = new XElement("character_relationship",
                     new XElement("entity_one", character_one_combo.Text),
-                    new XElement("relationship", relationship_combo.Text),
+                    new XElement("relationship", relationship),
                     new XElement("entity_two", character_two_combo.Text));
 
-                    string temp = newCharacterRelationship.ToString();
+                    XMLEntityParser.GetInstance().GetCharacterRelationshipXDocument().Root.Add(newCharacterRelationship);
+
+                    newCharacterRelationship = new XElement("character_relationship",
+                    new XElement("entity_one", character_two_combo.Text),
+                    new XElement("relationship", opposite),
+                    new XElement("entity_two", character_one_combo.Text));
 
                     XMLEntityParser.GetInstance().GetCharacterRelationshipXDocument().Root.Add(newCharacterRelationship);
+
+
                     XMLEntityParser.GetInstance().GetCharacterRelationshipXDocument().Save(FrontPage.FolderPath + "\\character_relationship_notes.xml");
 
                     UpdateReliantWindows();
@@ -62,6 +78,7 @@ namespace citadel_wpf
             }
         }
 
+        //TODO move to XMLEntityParser
         public static bool IsRelationshipPresent(XDocument handle, string entityOne, string relationship, string entityTwo)
         {
             return ((from c in handle.Root.Elements()
