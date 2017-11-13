@@ -28,12 +28,18 @@ namespace citadel_wpf
         public NewCharacterRelationship() : base()
         {
             InitializeComponent();
-            Fill_Character_Boxes();
+            XMLParser.FillBoxWithNames(XMLParser.GetInstance().GetCharacterXDocument(), ref character_one_combo);
+        }
+
+        private void character_one_combo_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            XMLParser.FillBoxWithNames(XMLParser.GetInstance().GetCharacterXDocument(), ref character_two_combo, character_one_combo.Text);
         }
 
         override protected void Save(object sender, RoutedEventArgs e)
         {
-            //TODO parent/child split
+            //TODO is married to
+            //TODO was married to
             string relationship = relationship_combo.Text;
             string opposite = "Is the Child of";
             if (relationship.Equals("Is the Child of"))
@@ -48,8 +54,8 @@ namespace citadel_wpf
             
             else
             {
-                if (IsRelationshipPresent(XMLEntityParser.GetInstance().GetCharacterRelationshipXDocument(), character_one_combo.Text, relationship, character_two_combo.Text)
-                || IsRelationshipPresent(XMLEntityParser.GetInstance().GetCharacterRelationshipXDocument(), character_two_combo.Text, opposite, character_one_combo.Text))
+                if (XMLParser.IsRelationshipPresent(XMLParser.GetInstance().GetCharacterRelationshipXDocument(), character_one_combo.Text, relationship, character_two_combo.Text)
+                || XMLParser.IsRelationshipPresent(XMLParser.GetInstance().GetCharacterRelationshipXDocument(), character_two_combo.Text, opposite, character_one_combo.Text))
                 {
                     System.Windows.Forms.MessageBox.Show("This relationship already exists, please try again.");
                 }
@@ -60,52 +66,21 @@ namespace citadel_wpf
                     new XElement("relationship", relationship),
                     new XElement("entity_two", character_two_combo.Text));
 
-                    XMLEntityParser.GetInstance().GetCharacterRelationshipXDocument().Root.Add(newCharacterRelationship);
+                    XMLParser.GetInstance().GetCharacterRelationshipXDocument().Root.Add(newCharacterRelationship);
 
                     newCharacterRelationship = new XElement("character_relationship",
                     new XElement("entity_one", character_two_combo.Text),
                     new XElement("relationship", opposite),
                     new XElement("entity_two", character_one_combo.Text));
 
-                    XMLEntityParser.GetInstance().GetCharacterRelationshipXDocument().Root.Add(newCharacterRelationship);
+                    XMLParser.GetInstance().GetCharacterRelationshipXDocument().Root.Add(newCharacterRelationship);
 
 
-                    XMLEntityParser.GetInstance().GetCharacterRelationshipXDocument().Save(FrontPage.FolderPath + "\\character_relationship_notes.xml");
+                    XMLParser.GetInstance().GetCharacterRelationshipXDocument().Save(FrontPage.FolderPath + "\\character_relationship_notes.xml");
 
                     UpdateReliantWindows();
                     Close();
                 }
-            }
-        }
-
-        //TODO move to XMLEntityParser
-        public static bool IsRelationshipPresent(XDocument handle, string entityOne, string relationship, string entityTwo)
-        {
-            return ((from c in handle.Root.Elements()
-                     where c.Element("entity_one").Value.ToString().Equals(entityOne)
-                     && c.Element("relationship").Value.ToString().Equals(relationship)
-                     && c.Element("entity_two").Value.ToString().Equals(entityTwo)
-                     select c).Count() > 0 ? true : false);
-        }
-
-        private void Fill_Character_Boxes()
-        {
-            character_one_combo.Items.Clear();
-            character_two_combo.Items.Clear();
-
-            List<string> characterNames = XMLEntityParser.GetAllNames(XMLEntityParser.GetInstance().GetCharacterXDocument());
-
-            ComboBoxItem cBoxItem;
-
-            foreach (string character in characterNames)
-            {
-                cBoxItem = new ComboBoxItem();
-                cBoxItem.Content = character;
-                character_one_combo.Items.Add(cBoxItem);
-
-                cBoxItem = new ComboBoxItem();
-                cBoxItem.Content = character;
-                character_two_combo.Items.Add(cBoxItem);
             }
         }
 
@@ -116,7 +91,9 @@ namespace citadel_wpf
 
         public override void UpdateReliantWindows()
         {
-            Fill_Character_Boxes();
+            XMLParser.FillBoxWithNames(XMLParser.GetInstance().GetCharacterXDocument(), ref character_one_combo);
+            character_two_combo.Items.Clear();
         }
+
     }
 }

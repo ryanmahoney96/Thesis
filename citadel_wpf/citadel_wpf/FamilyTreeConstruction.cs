@@ -9,44 +9,38 @@ using System.Threading.Tasks;
 
 namespace citadel_wpf
 {
-    class GraphConstruction
+    class FamilyTreeConstruction
     {
-        private string folderPath;
 
-        public GraphConstruction(string fp)
-        {
-            folderPath = fp;
+        public FamilyTreeConstruction() { }        
 
-        }
-
-        public static void TestGraphviz(string folderPath)
+        public static void TestGraphviz()
         {
             //Procedure: construct the proper dot information, output to a file, open cmd to parse that file
-            string echo = "digraph G { Hello->World }";
-            echo = "graph s { label=\"Test\"; A -- B; B -- C; subgraph cluster01 { label =\"\" D -- E } }";
-            string textPath = folderPath + "\\citadel.dot";
-            StreamWriter streamWriter = File.CreateText(textPath);
-            streamWriter.Write(echo);
-            streamWriter.Close();
+            //string echo = "digraph G { Hello->World }";
+            //echo = "graph s { label=\"Test\"; A -- B; B -- C; subgraph cluster01 { label =\"\" D -- E } }";
+            //string textPath = FrontPage.FolderPath + "\\citadel.dot";
+            //StreamWriter streamWriter = File.CreateText(textPath);
+            //streamWriter.Write(echo);
+            //streamWriter.Close();
 
             //Process process = new Process();
             //ProcessStartInfo startInfo = new ProcessStartInfo();
             //startInfo.WindowStyle = ProcessWindowStyle.Maximized;
             //startInfo.FileName = "cmd.exe";
-            //startInfo.Arguments = @"/C" + $"dot -Tpng {textPath} -o {folderPath}/outfile.png";
+            //startInfo.Arguments = @"/C" + $"dot -Tpng {textPath} -o {FrontPage.FolderPath}/outfile.png";
             //process.StartInfo = startInfo;
 
             //TODO take output of cmd and save file + return in this program
             //use output to open picture file?
-            Process.Start("cmd.exe", @"/C" + $"dot -Tpng {textPath} -o {folderPath}/outfile.png & del {textPath}");
-            //Process.Start("cmd.exe", @"/C" + $"dot -Tpng {textPath} -o {folderPath}/outfile.png").WaitForExit();
+            //Process.Start("cmd.exe", @"/C" + $"dot -Tpng {textPath} -o {FrontPage.FolderPath}/outfile.png & del {textPath}");
+            //Process.Start("cmd.exe", @"/C" + $"dot -Tpng {textPath} -o {FrontPage.FolderPath}/outfile.png").WaitForExit();
             //Process.Start("cmd.exe", @"/C" + $"del {textPath}");
 
-            TestCharacterRelationship("Ryan", "Matt");
+            //TestCharacterRelationship("Ryan", "Matt");
 
             TestImmediateFamilyTree("Adam");
-            TestExtendedFamilyTree("Donald");
-            TestExtendedFamilyTree("Ryan");
+            TestExtendedFamilyTree("Adam");
         }
 
         public static void TestCharacterRelationship(string c1, string c2)
@@ -64,10 +58,7 @@ namespace citadel_wpf
         {
             StringBuilder echo = new StringBuilder($"graph s {{ label=\"Test Immediate Family Tree for {focusCharacter}\"; ");
 
-            var parents = GetParentsOf(focusCharacter);
-            var children = GetChildrenOf(focusCharacter);
-
-            foreach (var c in parents)
+            foreach (var c in GetParentsOf(focusCharacter))
             {
                 echo.Append($"{c} -- {focusCharacter}; ");
     
@@ -78,7 +69,7 @@ namespace citadel_wpf
                 }
             }
 
-            foreach (var c in children)
+            foreach (var c in GetChildrenOf(focusCharacter))
             {
                 echo.Append($"{focusCharacter} -- {c}; ");
             }
@@ -97,38 +88,54 @@ namespace citadel_wpf
 
         public static bool TestExtendedFamilyTree(string focusCharacter)
         {
-            //Granparents/children + aunts/uncles + cousins
-            //TODO aunts/uncles, cousins
+            //rankdir=\"LR\"
+            //Grandparents/children + aunts/uncles + cousins + nieces/nephews + great aunts/uncles
+            //TODO great aunts/uncles in fullFamilyTree
             StringBuilder echo = new StringBuilder($"graph s {{ label=\"Test Extended Family Tree for {focusCharacter}\"; ");
 
-            var parents = GetParentsOf(focusCharacter);
-            var children = GetChildrenOf(focusCharacter);
-
-            foreach (var c in parents)
+            foreach (var parentOfFocusCharacter in GetParentsOf(focusCharacter))
             {
-                echo.Append($"{c} -- {focusCharacter}; ");
+                echo.Append($"{parentOfFocusCharacter} -- {focusCharacter}; ");
 
                 //GrandParents
-                foreach (var q in GetParentsOf(c))
+                foreach (var grandparentOfFocusCharacter in GetParentsOf(parentOfFocusCharacter))
                 {
-                    echo.Append($"{q} -- {c}; ");
+                    echo.Append($"{grandparentOfFocusCharacter} -- {parentOfFocusCharacter}; ");
+
+                    //Aunts and Uncles
+                    foreach (var auntOrUncleOfFocusCharacter in GetSiblingsOf(grandparentOfFocusCharacter, parentOfFocusCharacter))
+                    {
+                        echo.Append($"{grandparentOfFocusCharacter} -- {auntOrUncleOfFocusCharacter}; ");
+
+                        //Cousins
+                        foreach (var cousinOfFocusCharacter in GetChildrenOf(auntOrUncleOfFocusCharacter))
+                        {
+                            echo.Append($"{auntOrUncleOfFocusCharacter} -- {cousinOfFocusCharacter}; ");
+                        }
+                    }
                 }
 
                 //Siblings
-                foreach (var t in GetSiblingsOf(c, focusCharacter))
+                foreach (var siblingOfFocusCharacter in GetSiblingsOf(parentOfFocusCharacter, focusCharacter))
                 {
-                    echo.Append($"{c} -- {t}; ");
+                    echo.Append($"{parentOfFocusCharacter} -- {siblingOfFocusCharacter}; ");
+
+                    //Nieces + Nephews
+                    foreach (var nieceOrNephewOfFocusCharacter in GetChildrenOf(siblingOfFocusCharacter))
+                    {
+                        echo.Append($"{siblingOfFocusCharacter} -- {nieceOrNephewOfFocusCharacter}; ");
+                    }
                 }
             }
 
-            foreach (var c in children)
+            foreach (var childOfFocusCharacter in GetChildrenOf(focusCharacter))
             {
-                echo.Append($"{focusCharacter} -- {c}; ");
+                echo.Append($"{focusCharacter} -- {childOfFocusCharacter}; ");
 
                 //GrandChildren
-                foreach (var q in GetChildrenOf(c))
+                foreach (var grandchildOfFocusCharacter in GetChildrenOf(childOfFocusCharacter))
                 {
-                    echo.Append($"{c} -- {q}; ");
+                    echo.Append($"{childOfFocusCharacter} -- {grandchildOfFocusCharacter}; ");
                 }
             }
 
@@ -147,7 +154,7 @@ namespace citadel_wpf
         //TODO move format to XMLEntityParser
         private static IEnumerable<string> GetGenerationNames(string focusCharacter, string relationshipName, string otherCharacter = "")
         {
-            return (from c in XMLEntityParser.GetInstance().GetCharacterRelationshipXDocument().Root.Descendants("character_relationship")
+            return (from c in XMLParser.GetInstance().GetCharacterRelationshipXDocument().Root.Descendants("character_relationship")
                     where c.Element("entity_one").Value.ToString().Equals(focusCharacter)
                     && c.Element("relationship").Value.ToString().Equals(relationshipName)
                     && (otherCharacter.Equals("") || (!otherCharacter.Equals("") && (!c.Element("entity_two").Value.ToString().Equals(otherCharacter))))

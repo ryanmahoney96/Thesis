@@ -55,11 +55,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Entity.cs" />
     <Compile Include="FrontPage.xaml.cs">
       <DependentUpon>FrontPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="GraphConstruction.cs" />
+    <Compile Include="FamilyTreeConstruction.cs" />
     <Compile Include="Media.cs" />
     <Compile Include="NewCharacterRelationship.xaml.cs">
       <DependentUpon>NewCharacterRelationship.xaml</DependentUpon>
@@ -85,7 +84,7 @@
     </Compile>
     <Compile Include="NoteNode.cs" />
     <Compile Include="Obsolete.cs" />
-    <Compile Include="XMLEntityParser.cs" />
+    <Compile Include="XMLParser.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

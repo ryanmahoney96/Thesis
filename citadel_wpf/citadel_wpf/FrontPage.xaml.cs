@@ -46,7 +46,7 @@ namespace citadel_wpf
         }
         public void Update_Notes()
         {
-            Fill_Note_Area(XMLEntityParser.GetInstance().GetAllGeneralNotes(), general_notes_area);
+            Fill_Note_Area(XMLParser.GetInstance().GetAllGeneralNotes(), general_notes_area);
         }
 
         private void New_Character_Click(object sender, RoutedEventArgs e)
@@ -55,7 +55,7 @@ namespace citadel_wpf
         }
         public void Update_Characters()
         {
-            Fill_Note_Area(XMLEntityParser.GetInstance().GetAllCharacterNotes(), character_notes_area);
+            Fill_Note_Area(XMLParser.GetInstance().GetAllCharacterNotes(), character_notes_area);
         }
 
         private void New_Event_Click(object sender, RoutedEventArgs e)
@@ -64,7 +64,7 @@ namespace citadel_wpf
         }
         public void Update_Events()
         {
-            Fill_Note_Area(XMLEntityParser.GetInstance().GetAllEventNotes(), event_notes_area);
+            Fill_Note_Area(XMLParser.GetInstance().GetAllEventNotes(), event_notes_area);
         }
 
         private void New_Location_Click(object sender, RoutedEventArgs e)
@@ -73,7 +73,7 @@ namespace citadel_wpf
         }
         public void Update_Locations()
         {
-            Fill_Note_Area(XMLEntityParser.GetInstance().GetAllLocationNotes(), location_notes_area);
+            Fill_Note_Area(XMLParser.GetInstance().GetAllLocationNotes(), location_notes_area);
         }
 
         private void Character_Relationship_Click(object sender, RoutedEventArgs e)
@@ -88,11 +88,11 @@ namespace citadel_wpf
 
         private void Update_Note_Pages()
         {
-            Fill_Media_Area(XMLEntityParser.GetMediaInformation(FolderPath + "\\media_notes.xml"));
-            Fill_Note_Area(XMLEntityParser.GetInstance().GetAllGeneralNotes(), general_notes_area);
-            Fill_Note_Area(XMLEntityParser.GetInstance().GetAllCharacterNotes(), character_notes_area);
-            Fill_Note_Area(XMLEntityParser.GetInstance().GetAllEventNotes(), event_notes_area);
-            Fill_Note_Area(XMLEntityParser.GetInstance().GetAllLocationNotes(), location_notes_area);
+            Fill_Media_Area(XMLParser.GetMediaInformation(FolderPath + "\\media_notes.xml"));
+            Fill_Note_Area(XMLParser.GetInstance().GetAllGeneralNotes(), general_notes_area);
+            Fill_Note_Area(XMLParser.GetInstance().GetAllCharacterNotes(), character_notes_area);
+            Fill_Note_Area(XMLParser.GetInstance().GetAllEventNotes(), event_notes_area);
+            Fill_Note_Area(XMLParser.GetInstance().GetAllLocationNotes(), location_notes_area);
         }
 
         private void Fill_Media_Area(Hashtable information)
@@ -148,7 +148,7 @@ namespace citadel_wpf
             m.Save(FolderPath);
 
             //GraphConstruction g = new GraphConstruction(folderPath);
-            GraphConstruction.TestGraphviz(FolderPath);
+            FamilyTreeConstruction.TestGraphviz();
         }
     }
 }

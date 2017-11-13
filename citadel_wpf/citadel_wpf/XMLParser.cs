@@ -5,13 +5,14 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Controls;
 using System.Xml;
 using System.Xml.Linq;
 using System.Xml.XPath;
 
 namespace citadel_wpf
 {
-    class XMLEntityParser
+    class XMLParser
     {
         private static XDocument characterXDocument = null;
         private static XDocument characterRelationshipXDocument = null;
@@ -20,10 +21,10 @@ namespace citadel_wpf
         private static XDocument eventRelationshipXDocument = null;
         private static XDocument noteXDocument = null;
 
-        private static XMLEntityParser instance = null;
+        private static XMLParser instance = null;
         private static string FolderPath;
 
-        private XMLEntityParser(string folderPath)
+        private XMLParser(string folderPath)
         {
             FolderPath = folderPath;
             UpdateXDocuments();
@@ -54,11 +55,11 @@ namespace citadel_wpf
             SetXDocumentContent(FolderPath, "general_notes", ref noteXDocument);
         }
 
-        public static XMLEntityParser GetInstance(string folderPath = "")
+        public static XMLParser GetInstance(string folderPath = "")
         {
             if (instance == null)
             {
-                instance = new XMLEntityParser(folderPath);
+                instance = new XMLParser(folderPath);
             }
 
             return instance;
@@ -347,6 +348,34 @@ namespace citadel_wpf
             return (from c in handle.Root.Elements()
                     where c.Element("name").Value.ToString().Equals(entityName)
                     select c).Count() > 0 ? true : false;
+        }
+
+        public static bool IsRelationshipPresent(XDocument handle, string entityOne, string relationship, string entityTwo)
+        {
+            return ((from c in handle.Root.Elements()
+                     where c.Element("entity_one").Value.ToString().Equals(entityOne)
+                     && c.Element("relationship").Value.ToString().Equals(relationship)
+                     && c.Element("entity_two").Value.ToString().Equals(entityTwo)
+                     select c).Count() > 0 ? true : false);
+        }
+
+        public static void FillBoxWithNames(XDocument handle, ref ComboBox combo, string nameToSkip = "")
+        {
+            combo.Items.Clear();
+
+            List<string> names = XMLParser.GetAllNames(handle);
+
+            ComboBoxItem cBoxItem;
+
+            foreach (string newEntity in names)
+            {
+                if (!newEntity.Equals(nameToSkip))
+                {
+                    cBoxItem = new ComboBoxItem();
+                    cBoxItem.Content = newEntity;
+                    combo.Items.Add(cBoxItem);
+                }
+            }
         }
     }
 }

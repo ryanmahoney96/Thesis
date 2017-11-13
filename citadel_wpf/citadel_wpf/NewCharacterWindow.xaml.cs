@@ -27,16 +27,10 @@ namespace citadel_wpf
             InitializeComponent();
         }
 
-
-        //override public void FillWithData(string name)
-        //{
-            
-        //}
-
         override protected void Save(object sender, RoutedEventArgs e)
         {
             //TODO make this method generic in NewEntityWindow?
-            if (XMLEntityParser.IsPresent(XMLEntityParser.GetInstance().GetCharacterXDocument(), name_text.Text))
+            if (XMLParser.IsPresent(XMLParser.GetInstance().GetCharacterXDocument(), name_text.Text))
             {
                 System.Windows.Forms.MessageBox.Show("This character already exists, please try again.");
             }
@@ -55,8 +49,8 @@ namespace citadel_wpf
 
                     string temp = newCharacter.ToString();
 
-                    XMLEntityParser.GetInstance().GetCharacterXDocument().Root.Add(newCharacter);
-                    XMLEntityParser.GetInstance().GetCharacterXDocument().Save(FrontPage.FolderPath + "\\character_notes.xml");
+                    XMLParser.GetInstance().GetCharacterXDocument().Root.Add(newCharacter);
+                    XMLParser.GetInstance().GetCharacterXDocument().Save(FrontPage.FolderPath + "\\character_notes.xml");
 
                     UpdateReliantWindows();
                     Close();
