@@ -30,3 +30,7 @@ C:\Users\Ryangigs\Documents\Thesis\citadel_wpf\citadel_wpf\obj\Debug\citadel_wpf
 C:\Users\Ryangigs\Documents\Thesis\citadel_wpf\citadel_wpf\obj\Debug\citadel_wpf.pdb
 C:\Users\Ryangigs\Documents\Thesis\citadel_wpf\citadel_wpf\obj\Debug\citadel_wpf.csprojResolveAssemblyReference.cache
 C:\Users\Ryangigs\Documents\Thesis\citadel_wpf\citadel_wpf\bin\Debug\citadel_wpf.pdb
+C:\Users\Ryangigs\Documents\Thesis\citadel_wpf\citadel_wpf\obj\Debug\CharacterPromptWindow.g.cs
+C:\Users\Ryangigs\Documents\Thesis\citadel_wpf\citadel_wpf\obj\Debug\CharacterPromptWindow.baml
+C:\Users\Ryangigs\Documents\Thesis\citadel_wpf\citadel_wpf\obj\Debug\ImageDisplayWindow.g.cs
+C:\Users\Ryangigs\Documents\Thesis\citadel_wpf\citadel_wpf\obj\Debug\ImageDisplayWindow.baml

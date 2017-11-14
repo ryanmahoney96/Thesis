@@ -55,11 +55,17 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="CharacterPromptWindow.xaml.cs">
+      <DependentUpon>CharacterPromptWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="EventMapConstruction.cs" />
     <Compile Include="FrontPage.xaml.cs">
       <DependentUpon>FrontPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="FamilyTreeConstruction.cs" />
+    <Compile Include="ImageDisplayWindow.xaml.cs">
+      <DependentUpon>ImageDisplayWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Media.cs" />
     <Compile Include="NewCharacterRelationship.xaml.cs">
       <DependentUpon>NewCharacterRelationship.xaml</DependentUpon>
@@ -87,6 +93,14 @@
     <Compile Include="Obsolete.cs" />
     <Compile Include="TimelineConstruction.cs" />
     <Compile Include="XMLParser.cs" />
+    <Page Include="CharacterPromptWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ImageDisplayWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

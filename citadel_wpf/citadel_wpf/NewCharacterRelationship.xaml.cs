@@ -22,7 +22,8 @@ namespace citadel_wpf
     public partial class NewCharacterRelationship : NewEntityWindow
     {
 
-        //TODO: Add "Other" field for other types of relationships
+        //TODO: Add an "ADD" button so that you don't have to keep going back and forth between windows for one character
+        //TODO: If the above is done, make it so any individual relationship that already exists is skipped/marked instead
         //TODO: Add the relationships on startup
 
         public NewCharacterRelationship() : base()

@@ -40,12 +40,12 @@ namespace citadel_wpf
 
             //TestCharacterRelationship("Ryan", "Matt");
 
-            ImmediateFamilyTree("Ryan");
-            ExtendedFamilyTree("Kimberly");
-            RecursiveFullFamilyTree("Adam");
+            //ImmediateFamilyTree("Ryan");
+            //ExtendedFamilyTree("Kimberly");
+            //RecursiveFullFamilyTree("Adam");
         }
 
-        public static void CharacterRelationship(string c1, string c2)
+        public static void TestCharacterRelationship(string c1, string c2)
         {
             string echo = $"graph s {{ label=\"Character Relationship\"; {c1} -- {c2}; }}";
             string textpath = FrontPage.FolderPath + "\\Relationship.dot";
@@ -56,44 +56,46 @@ namespace citadel_wpf
             Process.Start("cmd.exe", @"/c" + $"dot -Tpng {textpath} -o {FrontPage.FolderPath}/testRelationship.png  & del {textpath}");
         }
 
-        public static bool ImmediateFamilyTree(string focusCharacter)
+        public static void ImmediateFamilyTree(string focusCharacter)
         {
-            StringBuilder echo = new StringBuilder($"graph s {{ label=\"Immediate Family Tree for {focusCharacter}\"; {focusCharacter}; ");
+            StringBuilder echo = new StringBuilder($"graph s {{ label=\"Immediate Family Tree for {focusCharacter}\"; ");
+            Dictionary<string, bool> relationships = new Dictionary<string, bool>();
+            Dictionary<string, string> characters = new Dictionary<string, string>();
 
-            foreach (var c in GetParentsOf(focusCharacter))
+            AddCharacterIfAbsent(focusCharacter, ref characters);
+
+            foreach (var p in GetParentsOf(focusCharacter))
             {
-                echo.Append($"{c} -- {focusCharacter}; ");
-    
+                AddCharacterIfAbsent(p, ref characters);
+                AddRelationshipIfAbsent(p, focusCharacter, ref relationships);
+
                 //Siblings
-                foreach (var t in GetSiblingsOf(focusCharacter, c))
+                foreach (var s in GetSiblingsOf(focusCharacter, p))
                 {
-                    echo.Append($"{c} -- {t}; ");
+                    AddCharacterIfAbsent(s, ref characters);
+                    AddRelationshipIfAbsent(p, s, ref relationships);
                 }
             }
 
             foreach (var c in GetChildrenOf(focusCharacter))
             {
-                echo.Append($"{focusCharacter} -- {c}; ");
+                AddCharacterIfAbsent(c, ref characters);
+                AddRelationshipIfAbsent(focusCharacter, c, ref relationships);
             }
+
+            AddCharacterInformation(ref echo, characters, relationships);
 
             echo.Append("}");
 
-            string textPath = FrontPage.FolderPath + "\\ImmediateTree.dot";
-            StreamWriter streamwriter = File.CreateText(textPath);
-            streamwriter.Write(echo);
-            streamwriter.Close();
-
-            Process.Start("cmd.exe", @"/c" + $"dot -Tpng {textPath} -o {FrontPage.FolderPath}/ImmediateTree.png");
-
-            return true;
+            SaveEcho("ImmediateFamilyTree", focusCharacter, echo);
         }
 
-        public static bool ExtendedFamilyTree(string focusCharacter)
+        public static void ExtendedFamilyTree(string focusCharacter)
         {
-            //Grandparents/children + aunts/uncles + cousins + nieces/nephews + great aunts/uncles
+            //Grandparents/children + aunts/uncles + cousins + nieces/nephews
             StringBuilder echo = new StringBuilder($"graph s {{ label=\"Extended Family Tree for {focusCharacter}\"; ");
             Dictionary<string, bool> relationships = new Dictionary<string, bool>();
-            Dictionary<string, bool> characters = new Dictionary<string, bool>();
+            Dictionary<string, string> characters = new Dictionary<string, string>();
 
             AddCharacterIfAbsent(focusCharacter, ref characters);
 
@@ -160,90 +162,34 @@ namespace citadel_wpf
                 }
             }
 
-            foreach(var character in characters)
-            {
-                echo.Append($"\"{character.Key}\" [color={GetCharacterGender(character.Key)}]; ");
-            }
-
-            foreach (var relationship in relationships)
-            {
-                echo.Append(relationship.Key);
-            }
+            AddCharacterInformation(ref echo, characters, relationships);
 
             echo.Append("}");
 
-            string textPath = FrontPage.FolderPath + "\\ExtendedTree.dot";
-            StreamWriter streamwriter = File.CreateText(textPath);
-            streamwriter.Write(echo);
-            streamwriter.Close();
-
-            Process.Start("cmd.exe", @"/c" + $"dot -Tpng {textPath} -o {FrontPage.FolderPath}/ExtendedTree.png");
-
-            return true;
+            SaveEcho("ExtendedFamilyTree", focusCharacter, echo);
         }
 
-        //returns true if the relationship was successfully added 
-        private static bool AddRelationshipIfAbsent(string parent, string child, ref Dictionary<string, bool> relationships)
-        {
-            if (!relationships.ContainsKey($"\"{parent}\" -- \"{child}\"; "))
-            {
-                relationships.Add($"\"{parent}\" -- \"{child}\"; ", true);
-                return true;
-            }
-            return false;
-        }
-
-        //returns true if the character was successfully added 
-        private static bool AddCharacterIfAbsent(string focusCharacter, ref Dictionary<string, bool> characters)
-        {
-            if (!characters.ContainsKey(focusCharacter))
-            {
-                characters.Add(focusCharacter, true);
-                return true;
-            }
-            return false;
-        }
-
-        private static IEnumerable<string> GetGeneration(IEnumerable<string> generation)
-        {
-            return generation;
-        }
-
-        //TODO Make a function to clean up relationships -> currently VERY cluttered
-        public static bool RecursiveFullFamilyTree(string focusCharacter)
+        //TODO Make a function to clean up relationships -> currently VERY cluttered; If two characters ar emarried and have the same kids, sprout from a marriage node
+        public static void RecursiveFullFamilyTree(string focusCharacter)
         {
             //All familial relationships
             StringBuilder echo = new StringBuilder($"graph s {{ label=\"Recursive Full Family Tree for {focusCharacter}\"; ");
             Dictionary<string, bool> relationships = new Dictionary<string, bool>();
-            Dictionary<string, bool> characters = new Dictionary<string, bool>();
+            Dictionary<string, string> characters = new Dictionary<string, string>();
 
             AddCharacterIfAbsent(focusCharacter, ref characters);
 
             RecursiveTreeHelper(focusCharacter, ref characters, ref relationships);
-
-            foreach (var character in characters)
-            {
-                echo.Append($"\"{character.Key}\" [color={GetCharacterGender(character.Key)}]; ");
-            }
             //TODO catch the stack being blown and draw up to this point
-            foreach (var relationship in relationships)
-            {
-                echo.Append(relationship.Key);
-            }
+
+            AddCharacterInformation(ref echo, characters, relationships);
 
             echo.Append("}");
 
-            string textPath = FrontPage.FolderPath + "\\RecursiveFullFamilyTree.dot";
-            StreamWriter streamwriter = File.CreateText(textPath);
-            streamwriter.Write(echo);
-            streamwriter.Close();
-
-            Process.Start("cmd.exe", @"/c" + $"dot -Tpng {textPath} -o {FrontPage.FolderPath}/RecursiveFullFamilyTree.png");
-
-            return true;
+            SaveEcho("FullFamilyTree", focusCharacter, echo);
         }
 
-        public static void RecursiveTreeHelper (string focusCharacter, ref Dictionary<string, bool> characters, ref Dictionary<string, bool> relationships)
+        public static void RecursiveTreeHelper (string focusCharacter, ref Dictionary<string, string> characters, ref Dictionary<string, bool> relationships)
         {
             foreach (var p in GetParentsOf(focusCharacter))
             {
@@ -263,10 +209,56 @@ namespace citadel_wpf
             }
         }
 
+        //returns true if the relationship was successfully added 
+        private static bool AddRelationshipIfAbsent(string parent, string child, ref Dictionary<string, bool> relationships)
+        {
+            if (!relationships.ContainsKey($"\"{parent}\" -- \"{child}\"; "))
+            {
+                relationships.Add($"\"{parent}\" -- \"{child}\"; ", true);
+                return true;
+            }
+            return false;
+        }
+
+        //returns true if the character was successfully added 
+        private static bool AddCharacterIfAbsent(string focusCharacter, ref Dictionary<string, string> characters)
+        {
+            if (!characters.ContainsKey(focusCharacter))
+            {
+                characters.Add(focusCharacter, GetCharacterGender(focusCharacter));
+                return true;
+            }
+            return false;
+        }
+
+        private static void AddCharacterInformation(ref StringBuilder echo, Dictionary<string, string> characters, Dictionary<string, bool> relationships)
+        {
+            foreach (var character in characters)
+            {
+                echo.Append($"\"{character.Key}\" [color={character.Value}]; ");
+            }
+            foreach (var relationship in relationships)
+            {
+                echo.Append(relationship.Key);
+            }
+        }
+
+        private static void SaveEcho(string type, string focusCharacter, StringBuilder echo)
+        {
+            string temp = focusCharacter.Replace(" ", "_");
+            string textPath = FrontPage.FolderPath + $"/{type}.dot";
+            string imagePath = $"{FrontPage.FolderPath}/{temp}_{type}.png";
+            StreamWriter streamwriter = File.CreateText(textPath);
+            streamwriter.Write(echo);
+            streamwriter.Close();
+
+            Process.Start("cmd.exe", @"/c" + $"dot -Tpng {textPath} -o {imagePath} & del {textPath} & {imagePath}");
+        }
+
         //TODO move format to XMLEntityParser
         private static IEnumerable<string> GetGenerationNames(string focusCharacter, string relationshipName, string childToIgnore = "")
         {
-            //TODO make more iffecient by reducing the number of times the first line has to be called -> set descendant before the group of calls to this function is made
+            //TODO make more effecient by reducing the number of times the first line has to be called -> set descendant before the group of calls to this function is made
             return (from c in XMLParser.GetInstance().GetCharacterRelationshipXDocument().Root.Descendants("character_relationship")
                     where c.Element("entity_one").Value.ToString().Equals(focusCharacter)
                     && c.Element("relationship").Value.ToString().Equals(relationshipName)
@@ -276,7 +268,7 @@ namespace citadel_wpf
 
         private static string GetCharacterGender(string focusCharacter)
         {
-            //TODO make more iffecient by reducing the number of times the first line has to be called -> set descendant before the group of calls to this function is made
+            //TODO make more effecient by reducing the number of times the first line has to be called -> set descendant before the group of calls to this function is made
             return (from c in XMLParser.GetInstance().GetCharacterXDocument().Root.Descendants("character")
                     where c.Element("name").Value.ToString().Equals(focusCharacter)
                     select c.Element("gender").Value.ToString()).First().Equals("Male") ? "Blue" : "Red";
@@ -294,7 +286,6 @@ namespace citadel_wpf
         {
             return GetGenerationNames(parent, "Is the Parent of", focusCharacter);
         }
-
 
     }
 }

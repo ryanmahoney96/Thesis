@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -20,7 +21,7 @@ namespace citadel_wpf
     /// </summary>
     public partial class FrontPage : Window
     {
-        //TODO: Make "> \ <" in all text unusable 
+        //TODO: Make "> \ <" in all text unusable + all non alphanumeric characters (" ' " and " - " should be included)
         //TODO: Separate new folder and select folder dialogs
         //TODO: When making a new folder, verify that a media entry does not exist
         //TODO: Organize so event has list of pointers to things before and things after. Use this when adding new relationship to filter out contradictory data
@@ -143,28 +144,39 @@ namespace citadel_wpf
 
         private void Save_Media_Information(object sender, RoutedEventArgs e)
         {
-            //TODO: Verify all important text boxes are filled
-            Media m = new Media(titleText.Text, yearText.Text, type_combobox.Text, genre_combobox.Text, summaryText.Text);
-            m.Save(FolderPath);
+            Regex yearRegex = new Regex(@"^[0-9]*$");
 
-            //GraphConstruction g = new GraphConstruction(folderPath);
-            FamilyTreeConstruction.TestGraphviz();
+            if (titleText.Text.Equals(""))
+            {
+                System.Windows.Forms.MessageBox.Show("The Title Cannot Be Left Blank");
+            }
+            else if (!yearRegex.IsMatch(yearText.Text))
+            {
+                System.Windows.Forms.MessageBox.Show("Invalid Year Entered");
+            }
+            else
+            {
+                Media m = new Media(titleText.Text, yearText.Text, type_combobox.Text, genre_combobox.Text, summaryText.Text);
+                m.Save(FolderPath);
+            }
         }
 
-        //TODO make each button functional (need character name)
         private void NewImmediateFamilyTree(object sender, RoutedEventArgs e)
         {
-
+            Action<string> d = FamilyTreeConstruction.ImmediateFamilyTree;
+            NewEntityWindow.InitializeModalWindow(this, (new CharacterPromptWindow(d)));
         }
 
         private void NewExtendedFamilyTree(object sender, RoutedEventArgs e)
         {
-
+            Action<string> d = FamilyTreeConstruction.ExtendedFamilyTree;
+            NewEntityWindow.InitializeModalWindow(this, (new CharacterPromptWindow(d)));
         }
 
         private void NewFullFamilyTree(object sender, RoutedEventArgs e)
         {
-
+            Action<string> d = FamilyTreeConstruction.RecursiveFullFamilyTree;
+            NewEntityWindow.InitializeModalWindow(this, (new CharacterPromptWindow(d)));
         }
     }
 }
