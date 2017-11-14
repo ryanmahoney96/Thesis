@@ -126,8 +126,9 @@
                             <MenuItem Header="_File">
                                 <MenuItem Header="_New Character" Click="New_Character_Click"/>
                                 <MenuItem Header="New Character _Relationship" Click="Character_Relationship_Click"/>
-                                <MenuItem Header="New _Immediate Family Tree"/>
-                                <MenuItem Header="New _Extended Family Tree"/>
+                                <MenuItem Header="New _Immediate Family Tree" Click="NewImmediateFamilyTree"/>
+                                <MenuItem Header="New _Extended Family Tree" Click="NewExtendedFamilyTree"/>
+                                <MenuItem Header="New _Full Family Tree" Click="NewFullFamilyTree"/>
                             </MenuItem>
                         </Menu>
 

@@ -150,5 +150,21 @@ namespace citadel_wpf
             //GraphConstruction g = new GraphConstruction(folderPath);
             FamilyTreeConstruction.TestGraphviz();
         }
+
+        //TODO make each button functional (need character name)
+        private void NewImmediateFamilyTree(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void NewExtendedFamilyTree(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void NewFullFamilyTree(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }
