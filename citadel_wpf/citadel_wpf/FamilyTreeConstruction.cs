@@ -40,8 +40,8 @@ namespace citadel_wpf
 
             //TestCharacterRelationship("Ryan", "Matt");
 
-            ImmediateFamilyTree("Caitlyn");
-            ExtendedFamilyTree("Ryan");
+            ImmediateFamilyTree("Ryan");
+            ExtendedFamilyTree("Kimberly");
             RecursiveFullFamilyTree("Adam");
         }
 
@@ -204,6 +204,11 @@ namespace citadel_wpf
             return false;
         }
 
+        private static IEnumerable<string> GetGeneration(IEnumerable<string> generation)
+        {
+            return generation;
+        }
+
         //TODO Make a function to clean up relationships -> currently VERY cluttered
         public static bool RecursiveFullFamilyTree(string focusCharacter)
         {
@@ -238,24 +243,22 @@ namespace citadel_wpf
             return true;
         }
 
-        public static void RecursiveTreeHelper (string focusCharacter, ref Dictionary<string, bool> characters, ref Dictionary<string, bool> connections)
+        public static void RecursiveTreeHelper (string focusCharacter, ref Dictionary<string, bool> characters, ref Dictionary<string, bool> relationships)
         {
             foreach (var p in GetParentsOf(focusCharacter))
             {
-                if (!connections.ContainsKey($"\"{p}\" -- \"{focusCharacter}\"; "))
+                if (AddRelationshipIfAbsent(p, focusCharacter, ref relationships))
                 {
                     AddCharacterIfAbsent(p, ref characters);
-                    connections.Add($"\"{p}\" -- \"{focusCharacter}\"; ", true);
-                    RecursiveTreeHelper(p, ref characters, ref connections);
+                    RecursiveTreeHelper(p, ref characters, ref relationships);
                 }
             }
             foreach (var c in GetChildrenOf(focusCharacter))
             {
-                if (!connections.ContainsKey($"\"{focusCharacter}\" -- \"{c}\"; "))
+                if (AddRelationshipIfAbsent(focusCharacter, c, ref relationships))
                 {
                     AddCharacterIfAbsent(c, ref characters);
-                    connections.Add($"\"{focusCharacter}\" -- \"{c}\"; ", true);
-                    RecursiveTreeHelper(c, ref characters, ref connections);
+                    RecursiveTreeHelper(c, ref characters, ref relationships);
                 }
             }
         }
