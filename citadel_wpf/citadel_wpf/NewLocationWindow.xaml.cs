@@ -162,7 +162,7 @@ namespace citadel_wpf
                 subtypes.Add("Dungeon/Grave/Crypt");
                 subtypes.Add("Other");
             }
-            else if (selectionString.Equals("Unknown"))
+            else if (selectionString.Equals("Unknown") || selectionString.Equals("Other"))
             {
                 subtype_combobox.IsEnabled = false;
             }

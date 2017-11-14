@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
@@ -40,7 +41,8 @@ namespace citadel_wpf
             //TestCharacterRelationship("Ryan", "Matt");
 
             TestImmediateFamilyTree("Adam");
-            TestExtendedFamilyTree("Adam");
+            TestExtendedFamilyTree("Ryan");
+            TestRecursiveFullFamilyTree("Ryan");
         }
 
         public static void TestCharacterRelationship(string c1, string c2)
@@ -63,7 +65,7 @@ namespace citadel_wpf
                 echo.Append($"{c} -- {focusCharacter}; ");
     
                 //Siblings
-                foreach (var t in GetSiblingsOf(c, focusCharacter))
+                foreach (var t in GetSiblingsOf(focusCharacter, c))
                 {
                     echo.Append($"{c} -- {t}; ");
                 }
@@ -93,6 +95,7 @@ namespace citadel_wpf
             //TODO great aunts/uncles in fullFamilyTree
             StringBuilder echo = new StringBuilder($"graph s {{ label=\"Test Extended Family Tree for {focusCharacter}\"; ");
 
+            //Parents
             foreach (var parentOfFocusCharacter in GetParentsOf(focusCharacter))
             {
                 echo.Append($"{parentOfFocusCharacter} -- {focusCharacter}; ");
@@ -103,7 +106,7 @@ namespace citadel_wpf
                     echo.Append($"{grandparentOfFocusCharacter} -- {parentOfFocusCharacter}; ");
 
                     //Aunts and Uncles
-                    foreach (var auntOrUncleOfFocusCharacter in GetSiblingsOf(grandparentOfFocusCharacter, parentOfFocusCharacter))
+                    foreach (var auntOrUncleOfFocusCharacter in GetSiblingsOf(parentOfFocusCharacter, grandparentOfFocusCharacter))
                     {
                         echo.Append($"{grandparentOfFocusCharacter} -- {auntOrUncleOfFocusCharacter}; ");
 
@@ -116,7 +119,7 @@ namespace citadel_wpf
                 }
 
                 //Siblings
-                foreach (var siblingOfFocusCharacter in GetSiblingsOf(parentOfFocusCharacter, focusCharacter))
+                foreach (var siblingOfFocusCharacter in GetSiblingsOf(focusCharacter, parentOfFocusCharacter))
                 {
                     echo.Append($"{parentOfFocusCharacter} -- {siblingOfFocusCharacter}; ");
 
@@ -128,6 +131,7 @@ namespace citadel_wpf
                 }
             }
 
+            //Children
             foreach (var childOfFocusCharacter in GetChildrenOf(focusCharacter))
             {
                 echo.Append($"{focusCharacter} -- {childOfFocusCharacter}; ");
@@ -151,13 +155,57 @@ namespace citadel_wpf
             return true;
         }
 
+        //TODO Make a function to clean up relationships -> currently VERY cluttered
+        public static bool TestRecursiveFullFamilyTree(string focusCharacter)
+        {
+            //rankdir=\"LR\"
+            //All familial relationships
+            StringBuilder echo = new StringBuilder($"graph s {{ label=\"Test Recursive Full Family Tree for {focusCharacter}\"; ");
+            Dictionary<string, bool> dictionary = new Dictionary<string, bool>();
+
+            RecursiveTreeHelper(focusCharacter, ref echo, ref dictionary);
+
+            echo.Append("}");
+
+            string textPath = FrontPage.FolderPath + "\\testRecursiveFullFamilyTree.dot";
+            StreamWriter streamwriter = File.CreateText(textPath);
+            streamwriter.Write(echo);
+            streamwriter.Close();
+
+            Process.Start("cmd.exe", @"/c" + $"dot -Tpng {textPath} -o {FrontPage.FolderPath}/testRecursiveFullFamilyTree.png");
+
+            return true;
+        }
+
+        public static void RecursiveTreeHelper (string focusCharacter, ref StringBuilder echo, ref Dictionary<string, bool> connections)
+        {
+            foreach (var p in GetParentsOf(focusCharacter))
+            {
+                if (!connections.ContainsKey($"{p} -- {focusCharacter}; "))
+                {
+                    echo.Append($"{p} -- {focusCharacter}; ");
+                    connections.Add($"{p} -- {focusCharacter}; ", true);
+                    RecursiveTreeHelper(p, ref echo, ref connections);
+                }
+            }
+            foreach (var c in GetChildrenOf(focusCharacter))
+            {
+                if (!connections.ContainsKey($"{focusCharacter} -- {c}; "))
+                {
+                    echo.Append($"{focusCharacter} -- {c}; ");
+                    connections.Add($"{focusCharacter} -- {c}; ", true);
+                    RecursiveTreeHelper(c, ref echo, ref connections);
+                }
+            }
+        }
+
         //TODO move format to XMLEntityParser
-        private static IEnumerable<string> GetGenerationNames(string focusCharacter, string relationshipName, string otherCharacter = "")
+        private static IEnumerable<string> GetGenerationNames(string focusCharacter, string relationshipName, string childToIgnore = "")
         {
             return (from c in XMLParser.GetInstance().GetCharacterRelationshipXDocument().Root.Descendants("character_relationship")
                     where c.Element("entity_one").Value.ToString().Equals(focusCharacter)
                     && c.Element("relationship").Value.ToString().Equals(relationshipName)
-                    && (otherCharacter.Equals("") || (!otherCharacter.Equals("") && (!c.Element("entity_two").Value.ToString().Equals(otherCharacter))))
+                    && (childToIgnore.Equals("") || (!childToIgnore.Equals("") && (!c.Element("entity_two").Value.ToString().Equals(childToIgnore))))
                     select c.Element("entity_two").Value.ToString());
         }
 
@@ -169,9 +217,9 @@ namespace citadel_wpf
         {
             return GetGenerationNames(focusCharacter, "Is the Parent of");
         }
-        private static IEnumerable<string> GetSiblingsOf(string focusCharacter, string otherCharacter)
+        private static IEnumerable<string> GetSiblingsOf(string focusCharacter, string parent)
         {
-            return GetGenerationNames(focusCharacter, "Is the Parent of", otherCharacter);
+            return GetGenerationNames(parent, "Is the Parent of", focusCharacter);
         }
 
 
