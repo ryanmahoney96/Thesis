@@ -263,31 +263,23 @@ namespace citadel_wpf
             return returnList;
         }
 
-        public static List<List<string>> GetAllNotes(string fullFilePath, string rootName)
+        public static List<Dictionary<string, string>> GetAllNotes(XDocument handle)
         {
-            List<List<string>> returnList = new List<List<string>>();
-
-            //TODO xml exception
-            if (File.Exists(fullFilePath))
+            List<Dictionary<string, string>> entityInformation = new List<Dictionary<string, string>>();
+            
+            //for each entity
+            foreach (var entity in handle.Root.Elements().ToList())
             {
-                var xml = XDocument.Load(fullFilePath);
-
-                //select all entities in the file, along with their elements and attributes
-                var query = from c in xml.Root.Descendants(rootName) select c;
-                
-                //for each of these, add the attributes to a temporary list
-                foreach (var q in xml.Root.Descendants(rootName).ToList())
+                Dictionary<string, string> information = new Dictionary<string, string>();
+                //for each entity's elements
+                foreach (var t in entity.Elements())
                 {
-                    List<string> temp = new List<string>();
-                    foreach (var t in q.Elements())
-                    {
-                        temp.Add(t.Name + "\\" + t.Value);
-                        //temp.Add(t.Value);
-                    }
-                    returnList.Add(temp);
+                    information.Add(t.Name.ToString(), t.Value);
                 }
+                entityInformation.Add(information);
             }
-            return returnList;
+            
+            return entityInformation;
         }
 
         public static List<string> GetAllNames(XDocument handle)

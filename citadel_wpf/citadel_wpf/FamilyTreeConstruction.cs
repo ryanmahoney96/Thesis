@@ -12,13 +12,18 @@ namespace citadel_wpf
 {
     class FamilyTreeConstruction
     {
-        private static string font = $"fontname=\"Helvetica\"";
+        private static string fontname = $"fontname=\"Helvetica\"";
+        //TODO other
+        //TODO male = "color=navy, shape=ellipse"
+        private static string maleColor = $"navy";
+        private static string femaleColor = $"orangered";
+
 
         //public FamilyTreeConstruction() { }        
 
         public static void ImmediateFamilyTree(string focusCharacter)
         {
-            StringBuilder echo = new StringBuilder($"graph s {{ label=\"Immediate Family Tree for {focusCharacter}\" {font}; ");
+            StringBuilder echo = new StringBuilder($"graph s {{ label=\"Immediate Family Tree for {focusCharacter}\" {fontname}; ");
             Dictionary<string, bool> relationships = new Dictionary<string, bool>();
             Dictionary<string, string> characters = new Dictionary<string, string>();
 
@@ -53,7 +58,7 @@ namespace citadel_wpf
         public static void ExtendedFamilyTree(string focusCharacter)
         {
             //Grandparents/children + aunts/uncles + cousins + nieces/nephews
-            StringBuilder echo = new StringBuilder($"graph s {{ label=\"Extended Family Tree for {focusCharacter}\" {font}; ");
+            StringBuilder echo = new StringBuilder($"graph s {{ label=\"Extended Family Tree for {focusCharacter}\" {fontname}; ");
             Dictionary<string, bool> relationships = new Dictionary<string, bool>();
             Dictionary<string, string> characters = new Dictionary<string, string>();
 
@@ -133,7 +138,7 @@ namespace citadel_wpf
         public static void RecursiveFullFamilyTree(string focusCharacter)
         {
             //All familial relationships
-            StringBuilder echo = new StringBuilder($"graph s {{ label=\"Recursive Full Family Tree for {focusCharacter}\" {font}; ");
+            StringBuilder echo = new StringBuilder($"graph s {{ label=\"Recursive Full Family Tree for {focusCharacter}\" {fontname}; ");
             Dictionary<string, bool> relationships = new Dictionary<string, bool>();
             Dictionary<string, string> characters = new Dictionary<string, string>();
 
@@ -195,7 +200,7 @@ namespace citadel_wpf
         {
             foreach (var character in characters)
             {
-                echo.Append($"\"{character.Key}\" [color={character.Value}, {font}]; ");
+                echo.Append($"\"{character.Key}\" [color={character.Value}, {fontname}]; ");
             }
             foreach (var relationship in relationships)
             {
@@ -232,7 +237,7 @@ namespace citadel_wpf
             //TODO make more effecient by reducing the number of times the first line has to be called -> set descendant before the group of calls to this function is made
             return (from c in XMLParser.GetInstance().GetCharacterXDocument().Root.Descendants("character")
                     where c.Element("name").Value.ToString().Equals(focusCharacter)
-                    select c.Element("gender").Value.ToString()).First().Equals("Male") ? "Blue" : "Red";
+                    select c.Element("gender").Value.ToString()).First().Equals("Male") ? $"{maleColor}" : $"{femaleColor}";
         }
 
         private static IEnumerable<string> GetParentsOf(string focusCharacter)

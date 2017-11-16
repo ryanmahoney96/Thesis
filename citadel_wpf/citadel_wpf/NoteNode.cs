@@ -87,6 +87,29 @@ namespace citadel_wpf
 
         }
 
+        public void FillWith(Dictionary<string, string> entityNode)
+        {
+            foreach (string key in entityNode.Keys)
+            {
+                string name = ToTitleCase(key);
+
+                if (!String.IsNullOrWhiteSpace(entityNode[key]))
+                {
+                    StringBuilder t = new StringBuilder();
+                    t.Append(name);
+                    t.Append(":\n    ");
+                    t.Append(entityNode[key]);
+                    t.Append("\n");
+                    Text += t.ToString();
+                }
+            }
+        }
+
+        private string ToTitleCase(string str)
+        {
+            return System.Globalization.CultureInfo.CurrentCulture.TextInfo.ToTitleCase(str.ToLower());
+        }
+
         public string Text { get => t.Text; set => t.Text = value; }
     }
 }

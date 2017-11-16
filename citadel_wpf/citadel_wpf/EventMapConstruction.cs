@@ -21,6 +21,11 @@ namespace citadel_wpf
         private static string overlap = $"overlap=false";
         private static string bgcolor = $"bgcolor=white";
         private static string fontcolor = $"fontcolor=black";
+        private static string nodeShape = $"shape=rect";
+        private static string centerShape = $"shape=ellipse";
+        private static string nodeColor = $"color=navy";
+        private static string centerColor = $"color=orangered";
+
 
         //How many events take place at a certain location
         public static void SingleLocation(string focusLocation)
@@ -51,11 +56,11 @@ namespace citadel_wpf
 
         private static void AddEventInformation(ref StringBuilder echo, string focusLocation)
         {
-            echo.Append($"\"{focusLocation}\" [color=black, shape=ellipse, {fontname}, {fontcolor}]; ");
+            echo.Append($"\"{focusLocation}\" [{centerShape}, {centerColor}, {fontname}, {fontcolor}]; ");
 
             foreach (EventInfo e in GetEventsAtLocation(focusLocation))
             {
-                echo.Append($"\"{e.Name}\" [color=blue, shape=rectangle, {fontname}, {fontcolor}, label=\"{e.Name}");
+                echo.Append($"\"{e.Name}\" [{nodeColor}, {nodeShape}, {fontname}, {fontcolor}, label=\"{e.Name}");
                 if (!string.IsNullOrWhiteSpace(e.Unit_date))
                 {
                     echo.Append($"\n{e.Unit_date}");

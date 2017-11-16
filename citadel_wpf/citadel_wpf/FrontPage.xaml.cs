@@ -47,7 +47,7 @@ namespace citadel_wpf
         }
         public void Update_Notes()
         {
-            Fill_Note_Area(XMLParser.GetInstance().GetAllGeneralNotes(), general_notes_area);
+            Fill_Note_Area(XMLParser.GetAllNotes(XMLParser.GetInstance().GetNoteXDocument()), general_notes_area);
         }
 
         private void New_Character_Click(object sender, RoutedEventArgs e)
@@ -56,7 +56,7 @@ namespace citadel_wpf
         }
         public void Update_Characters()
         {
-            Fill_Note_Area(XMLParser.GetInstance().GetAllCharacterNotes(), character_notes_area);
+            Fill_Note_Area(XMLParser.GetAllNotes(XMLParser.GetInstance().GetCharacterXDocument()), character_notes_area);
         }
 
         private void New_Event_Click(object sender, RoutedEventArgs e)
@@ -65,7 +65,7 @@ namespace citadel_wpf
         }
         public void Update_Events()
         {
-            Fill_Note_Area(XMLParser.GetInstance().GetAllEventNotes(), event_notes_area);
+            Fill_Note_Area(XMLParser.GetAllNotes(XMLParser.GetInstance().GetEventXDocument()), event_notes_area);
         }
 
         private void New_Location_Click(object sender, RoutedEventArgs e)
@@ -74,7 +74,7 @@ namespace citadel_wpf
         }
         public void Update_Locations()
         {
-            Fill_Note_Area(XMLParser.GetInstance().GetAllLocationNotes(), location_notes_area);
+            Fill_Note_Area(XMLParser.GetAllNotes(XMLParser.GetInstance().GetLocationXDocument()), location_notes_area);
         }
 
         private void Character_Relationship_Click(object sender, RoutedEventArgs e)
@@ -90,10 +90,10 @@ namespace citadel_wpf
         private void Update_Note_Pages()
         {
             Fill_Media_Area(XMLParser.GetMediaInformation(FolderPath + "\\media_notes.xml"));
-            Fill_Note_Area(XMLParser.GetInstance().GetAllGeneralNotes(), general_notes_area);
-            Fill_Note_Area(XMLParser.GetInstance().GetAllCharacterNotes(), character_notes_area);
-            Fill_Note_Area(XMLParser.GetInstance().GetAllEventNotes(), event_notes_area);
-            Fill_Note_Area(XMLParser.GetInstance().GetAllLocationNotes(), location_notes_area);
+            Fill_Note_Area(XMLParser.GetAllNotes(XMLParser.GetInstance().GetNoteXDocument()), general_notes_area);
+            Fill_Note_Area(XMLParser.GetAllNotes(XMLParser.GetInstance().GetCharacterXDocument()), character_notes_area);
+            Fill_Note_Area(XMLParser.GetAllNotes(XMLParser.GetInstance().GetEventXDocument()), event_notes_area);
+            Fill_Note_Area(XMLParser.GetAllNotes(XMLParser.GetInstance().GetLocationXDocument()), location_notes_area);
         }
 
         private void Fill_Media_Area(Hashtable information)
@@ -108,38 +108,20 @@ namespace citadel_wpf
             }
         }
 
-        public void Fill_Note_Area(List<List<string>> entityNodes, WrapPanel area)
+        public void Fill_Note_Area(List<Dictionary<string, string>> entityNodes, WrapPanel area)
         {
             area.Children.Clear();
             area.MinHeight = NoteNode.NoteNodeHeight;
 
-            foreach (List<string> l in entityNodes)
+            foreach (Dictionary<string, string> entityNode in entityNodes)
             {
+                //TODO make this a "format" function in NoteNode
                 NoteNode n = new NoteNode();
-
-                foreach (string s in l)
-                {
-                    string[] parts = s.Split('\\');
-                    parts[0] = ToTitleCase(parts[0]);
-
-                    if (!String.IsNullOrWhiteSpace(parts[1]))
-                    {
-                        StringBuilder t = new StringBuilder();
-                        t.Append(parts[0]);
-                        t.Append(": ");
-                        t.Append(parts[1]);
-                        t.Append("\n");
-                        n.Text += t.ToString();
-                    }
-                }
+                n.FillWith(entityNode);
+                
                 area.Children.Add(n);
                 area.MinHeight += NoteNode.NoteNodeHeight / 2;
             }
-        }
-
-        private string ToTitleCase(string str)
-        {
-            return System.Globalization.CultureInfo.CurrentCulture.TextInfo.ToTitleCase(str.ToLower());
         }
 
         private void Save_Media_Information(object sender, RoutedEventArgs e)

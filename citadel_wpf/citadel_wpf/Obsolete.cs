@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Controls;
 using System.Xml;
 using System.Xml.Linq;
 using System.Xml.XPath;
@@ -264,6 +265,35 @@ namespace citadel_wpf
             streamwriter.Close();
 
             //Process.Start("cmd.exe", @"/c" + $"dot -Tpng {textpath} -o {FrontPage.FolderPath}/testRelationship.png  & del {textpath}");
+        }
+
+        public void Fill_Note_Area(List<List<string>> entityNodes, WrapPanel area)
+        {
+            area.Children.Clear();
+            area.MinHeight = NoteNode.NoteNodeHeight;
+
+            foreach (List<string> l in entityNodes)
+            {
+                NoteNode n = new NoteNode();
+
+                foreach (string s in l)
+                {
+                    string[] parts = s.Split('\\');
+                    //parts[0] = ToTitleCase(parts[0]);
+
+                    if (!String.IsNullOrWhiteSpace(parts[1]))
+                    {
+                        StringBuilder t = new StringBuilder();
+                        t.Append(parts[0]);
+                        t.Append(":\n    ");
+                        t.Append(parts[1]);
+                        t.Append("\n");
+                        n.Text += t.ToString();
+                    }
+                }
+                area.Children.Add(n);
+                area.MinHeight += NoteNode.NoteNodeHeight / 2;
+            }
         }
     }
 }
