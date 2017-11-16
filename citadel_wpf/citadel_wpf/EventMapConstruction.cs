@@ -17,12 +17,15 @@ namespace citadel_wpf
             public string Date;
         }
 
-        private static string font = $"fontname=\"Helvetica\"";
+        private static string fontname = $"fontname=\"Helvetica\"";
+        private static string overlap = $"overlap=false";
+        private static string bgcolor = $"bgcolor=white";
+        private static string fontcolor = $"fontcolor=black";
 
         //How many events take place at a certain location
         public static void SingleLocation(string focusLocation)
         {
-            StringBuilder echo = new StringBuilder($"graph s {{ label=\"Single Event Map for {focusLocation}\" {font}; ");
+            StringBuilder echo = new StringBuilder($"graph s {{ label=\"Single Event Map for {focusLocation}\" {fontname} {overlap} {bgcolor}; ");
 
             AddEventInformation(ref echo, focusLocation);
 
@@ -34,7 +37,7 @@ namespace citadel_wpf
         //Every location and the events that take place at them
         public static void AllLocations()
         {
-            StringBuilder echo = new StringBuilder($"graph s {{ label=\"Full Event Map\" {font}; ");
+            StringBuilder echo = new StringBuilder($"graph s {{ label=\"Full Event Map\" {fontname} {overlap} {bgcolor}; ");
 
             foreach (var l in XMLParser.GetAllNames(XMLParser.GetInstance().GetLocationXDocument()))
             {
@@ -48,11 +51,11 @@ namespace citadel_wpf
 
         private static void AddEventInformation(ref StringBuilder echo, string focusLocation)
         {
-            echo.Append($"\"{focusLocation}\" [color=black, shape=ellipse, {font}]; ");
+            echo.Append($"\"{focusLocation}\" [color=black, shape=ellipse, {fontname}, {fontcolor}]; ");
 
             foreach (EventInfo e in GetEventsAtLocation(focusLocation))
             {
-                echo.Append($"\"{e.Name}\" [color=blue, shape=rectangle, {font}, label=\"{e.Name}");
+                echo.Append($"\"{e.Name}\" [color=blue, shape=rectangle, {fontname}, {fontcolor}, label=\"{e.Name}");
                 if (!string.IsNullOrWhiteSpace(e.Unit_date))
                 {
                     echo.Append($"\n{e.Unit_date}");
@@ -79,7 +82,6 @@ namespace citadel_wpf
         }
 
         //if focusLocation left null, it is a full event map
-        //TODO make twopi better for this one
         private static void SaveEcho(StringBuilder echo, string type, string focusLocation = "")
         {
             if (!string.IsNullOrWhiteSpace(focusLocation))
@@ -95,7 +97,8 @@ namespace citadel_wpf
             streamwriter.Write(echo);
             streamwriter.Close();
 
-            Process.Start("cmd.exe", @"/c" + $"dot -Tpng {textPath} -o {imagePath} & del {textPath} & {imagePath}");
+            //twopi or neato
+            Process.Start("cmd.exe", @"/c" + $"twopi -Tpng {textPath} -o {imagePath} & del {textPath} & {imagePath}");
         }
     }
 }
