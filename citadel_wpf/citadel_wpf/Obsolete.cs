@@ -254,5 +254,16 @@ namespace citadel_wpf
         //    //    required_text.Foreground = Brushes.Red;
         //    //}
         //}
+
+        public static void TestCharacterRelationship(string c1, string c2)
+        {
+            string echo = $"graph s {{ label=\"Character Relationship\"; {c1} -- {c2}; }}";
+            string textpath = FrontPage.FolderPath + "\\Relationship.dot";
+            StreamWriter streamwriter = File.CreateText(textpath);
+            streamwriter.Write(echo);
+            streamwriter.Close();
+
+            //Process.Start("cmd.exe", @"/c" + $"dot -Tpng {textpath} -o {FrontPage.FolderPath}/testRelationship.png  & del {textpath}");
+        }
     }
 }

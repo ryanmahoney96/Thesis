@@ -35,6 +35,7 @@ namespace citadel_wpf
 
             location_combo_box.Items.Clear();
 
+            //TODO use new fill_box function
             List<string> locationNames = XMLParser.GetAllNames(XMLParser.GetInstance().GetLocationXDocument());
 
             foreach (string location in locationNames)

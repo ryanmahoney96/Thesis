@@ -9,6 +9,10 @@ namespace citadel_wpf
     class TimelineConstruction
     {
         //TODO rankdir=\"LR\"
+        public static void ShortTermTimeline(string focusEvent)
+        {
+
+        }
 
     }
 }

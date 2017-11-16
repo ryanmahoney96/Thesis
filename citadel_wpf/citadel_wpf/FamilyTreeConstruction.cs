@@ -12,53 +12,13 @@ namespace citadel_wpf
 {
     class FamilyTreeConstruction
     {
+        private static string font = $"fontname=\"Helvetica\"";
 
-        public FamilyTreeConstruction() { }        
-
-        public static void TestGraphviz()
-        {
-            //Procedure: construct the proper dot information, output to a file, open cmd to parse that file
-            //string echo = "digraph G { Hello->World }";
-            //echo = "graph s { label=\"Test\"; A -- B; B -- C; subgraph cluster01 { label =\"\" D -- E } }";
-            //string textPath = FrontPage.FolderPath + "\\citadel.dot";
-            //StreamWriter streamWriter = File.CreateText(textPath);
-            //streamWriter.Write(echo);
-            //streamWriter.Close();
-
-            //Process process = new Process();
-            //ProcessStartInfo startInfo = new ProcessStartInfo();
-            //startInfo.WindowStyle = ProcessWindowStyle.Maximized;
-            //startInfo.FileName = "cmd.exe";
-            //startInfo.Arguments = @"/C" + $"dot -Tpng {textPath} -o {FrontPage.FolderPath}/outfile.png";
-            //process.StartInfo = startInfo;
-
-            //TODO take output of cmd and save file + return in this program
-            //use output to open picture file?
-            //Process.Start("cmd.exe", @"/C" + $"dot -Tpng {textPath} -o {FrontPage.FolderPath}/outfile.png & del {textPath}");
-            //Process.Start("cmd.exe", @"/C" + $"dot -Tpng {textPath} -o {FrontPage.FolderPath}/outfile.png").WaitForExit();
-            //Process.Start("cmd.exe", @"/C" + $"del {textPath}");
-
-            //TestCharacterRelationship("Ryan", "Matt");
-
-            //ImmediateFamilyTree("Ryan");
-            //ExtendedFamilyTree("Kimberly");
-            //RecursiveFullFamilyTree("Adam");
-        }
-
-        public static void TestCharacterRelationship(string c1, string c2)
-        {
-            string echo = $"graph s {{ label=\"Character Relationship\"; {c1} -- {c2}; }}";
-            string textpath = FrontPage.FolderPath + "\\Relationship.dot";
-            StreamWriter streamwriter = File.CreateText(textpath);
-            streamwriter.Write(echo);
-            streamwriter.Close();
-
-            Process.Start("cmd.exe", @"/c" + $"dot -Tpng {textpath} -o {FrontPage.FolderPath}/testRelationship.png  & del {textpath}");
-        }
+        //public FamilyTreeConstruction() { }        
 
         public static void ImmediateFamilyTree(string focusCharacter)
         {
-            StringBuilder echo = new StringBuilder($"graph s {{ label=\"Immediate Family Tree for {focusCharacter}\"; ");
+            StringBuilder echo = new StringBuilder($"graph s {{ label=\"Immediate Family Tree for {focusCharacter}\" {font}; ");
             Dictionary<string, bool> relationships = new Dictionary<string, bool>();
             Dictionary<string, string> characters = new Dictionary<string, string>();
 
@@ -87,13 +47,13 @@ namespace citadel_wpf
 
             echo.Append("}");
 
-            SaveEcho("ImmediateFamilyTree", focusCharacter, echo);
+            SaveEcho(echo, "ImmediateFamilyTree", focusCharacter);
         }
 
         public static void ExtendedFamilyTree(string focusCharacter)
         {
             //Grandparents/children + aunts/uncles + cousins + nieces/nephews
-            StringBuilder echo = new StringBuilder($"graph s {{ label=\"Extended Family Tree for {focusCharacter}\"; ");
+            StringBuilder echo = new StringBuilder($"graph s {{ label=\"Extended Family Tree for {focusCharacter}\" {font}; ");
             Dictionary<string, bool> relationships = new Dictionary<string, bool>();
             Dictionary<string, string> characters = new Dictionary<string, string>();
 
@@ -166,14 +126,14 @@ namespace citadel_wpf
 
             echo.Append("}");
 
-            SaveEcho("ExtendedFamilyTree", focusCharacter, echo);
+            SaveEcho(echo, "ExtendedFamilyTree", focusCharacter);
         }
 
         //TODO Make a function to clean up relationships -> currently VERY cluttered; If two characters ar emarried and have the same kids, sprout from a marriage node
         public static void RecursiveFullFamilyTree(string focusCharacter)
         {
             //All familial relationships
-            StringBuilder echo = new StringBuilder($"graph s {{ label=\"Recursive Full Family Tree for {focusCharacter}\"; ");
+            StringBuilder echo = new StringBuilder($"graph s {{ label=\"Recursive Full Family Tree for {focusCharacter}\" {font}; ");
             Dictionary<string, bool> relationships = new Dictionary<string, bool>();
             Dictionary<string, string> characters = new Dictionary<string, string>();
 
@@ -186,7 +146,7 @@ namespace citadel_wpf
 
             echo.Append("}");
 
-            SaveEcho("FullFamilyTree", focusCharacter, echo);
+            SaveEcho(echo, "FullFamilyTree", focusCharacter);
         }
 
         public static void RecursiveTreeHelper (string focusCharacter, ref Dictionary<string, string> characters, ref Dictionary<string, bool> relationships)
@@ -225,7 +185,7 @@ namespace citadel_wpf
         {
             if (!characters.ContainsKey(focusCharacter))
             {
-                characters.Add(focusCharacter, GetCharacterGender(focusCharacter));
+                characters.Add(focusCharacter, GetGenderColor(focusCharacter));
                 return true;
             }
             return false;
@@ -235,7 +195,7 @@ namespace citadel_wpf
         {
             foreach (var character in characters)
             {
-                echo.Append($"\"{character.Key}\" [color={character.Value}]; ");
+                echo.Append($"\"{character.Key}\" [color={character.Value}, {font}]; ");
             }
             foreach (var relationship in relationships)
             {
@@ -243,11 +203,12 @@ namespace citadel_wpf
             }
         }
 
-        private static void SaveEcho(string type, string focusCharacter, StringBuilder echo)
+        private static void SaveEcho(StringBuilder echo, string type, string focusCharacter)
         {
-            string temp = focusCharacter.Replace(" ", "_");
-            string textPath = FrontPage.FolderPath + $"/{type}.dot";
-            string imagePath = $"{FrontPage.FolderPath}/{temp}_{type}.png";
+            focusCharacter = focusCharacter.Replace(" ", "_");
+            focusCharacter = focusCharacter.Replace("'", "");
+            string textPath = FrontPage.FolderPath + $"\\{type}.dot";
+            string imagePath = $"{FrontPage.FolderPath}/{focusCharacter}_{type}.png";
             StreamWriter streamwriter = File.CreateText(textPath);
             streamwriter.Write(echo);
             streamwriter.Close();
@@ -255,7 +216,7 @@ namespace citadel_wpf
             Process.Start("cmd.exe", @"/c" + $"dot -Tpng {textPath} -o {imagePath} & del {textPath} & {imagePath}");
         }
 
-        //TODO move format to XMLEntityParser
+        //TODO move format to XMLEntityParser?
         private static IEnumerable<string> GetGenerationNames(string focusCharacter, string relationshipName, string childToIgnore = "")
         {
             //TODO make more effecient by reducing the number of times the first line has to be called -> set descendant before the group of calls to this function is made
@@ -266,7 +227,7 @@ namespace citadel_wpf
                     select c.Element("entity_two").Value.ToString());
         }
 
-        private static string GetCharacterGender(string focusCharacter)
+        private static string GetGenderColor(string focusCharacter)
         {
             //TODO make more effecient by reducing the number of times the first line has to be called -> set descendant before the group of calls to this function is made
             return (from c in XMLParser.GetInstance().GetCharacterXDocument().Root.Descendants("character")

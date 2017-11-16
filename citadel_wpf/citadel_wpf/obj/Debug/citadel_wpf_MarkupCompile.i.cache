@@ -10,11 +10,11 @@ none
 false
 DEBUG;TRACE
 C:\Users\Ryangigs\Documents\Thesis\citadel_wpf\citadel_wpf\App.xaml
-11-1810807474
+12-650929633
 
-27-1349883117
+2847970621
 14-1175798665
-CharacterPromptWindow.xaml;ImageDisplayWindow.xaml;MainWindow.xaml;FrontPage.xaml;NewCharacterRelationship.xaml;NewCharacterWindow.xaml;NewEventRelationship.xaml;NewEventWindow.xaml;NewGeneralNote.xaml;NewLocationWindow.xaml;NewMediaWindow.xaml;
+EventMapPromptWindow.xaml;CharacterPromptWindow.xaml;ImageDisplayWindow.xaml;MainWindow.xaml;FrontPage.xaml;NewCharacterRelationship.xaml;NewCharacterWindow.xaml;NewEventRelationship.xaml;NewEventWindow.xaml;NewGeneralNote.xaml;NewLocationWindow.xaml;NewMediaWindow.xaml;
 
 True
 

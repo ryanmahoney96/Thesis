@@ -55,6 +55,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="EventMapPromptWindow.xaml.cs">
+      <DependentUpon>EventMapPromptWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="CharacterPromptWindow.xaml.cs">
       <DependentUpon>CharacterPromptWindow.xaml</DependentUpon>
     </Compile>
@@ -93,6 +96,10 @@
     <Compile Include="Obsolete.cs" />
     <Compile Include="TimelineConstruction.cs" />
     <Compile Include="XMLParser.cs" />
+    <Page Include="EventMapPromptWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="CharacterPromptWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

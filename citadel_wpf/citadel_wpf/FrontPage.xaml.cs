@@ -163,20 +163,25 @@ namespace citadel_wpf
 
         private void NewImmediateFamilyTree(object sender, RoutedEventArgs e)
         {
-            Action<string> d = FamilyTreeConstruction.ImmediateFamilyTree;
-            NewEntityWindow.InitializeModalWindow(this, (new CharacterPromptWindow(d)));
+            Action<string> a = FamilyTreeConstruction.ImmediateFamilyTree;
+            NewEntityWindow.InitializeModalWindow(this, (new CharacterPromptWindow(a)));
         }
 
         private void NewExtendedFamilyTree(object sender, RoutedEventArgs e)
         {
-            Action<string> d = FamilyTreeConstruction.ExtendedFamilyTree;
-            NewEntityWindow.InitializeModalWindow(this, (new CharacterPromptWindow(d)));
+            Action<string> a = FamilyTreeConstruction.ExtendedFamilyTree;
+            NewEntityWindow.InitializeModalWindow(this, (new CharacterPromptWindow(a)));
         }
 
         private void NewFullFamilyTree(object sender, RoutedEventArgs e)
         {
-            Action<string> d = FamilyTreeConstruction.RecursiveFullFamilyTree;
-            NewEntityWindow.InitializeModalWindow(this, (new CharacterPromptWindow(d)));
+            Action<string> a = FamilyTreeConstruction.RecursiveFullFamilyTree;
+            NewEntityWindow.InitializeModalWindow(this, (new CharacterPromptWindow(a)));
+        }
+
+        private void NewEventMap(object sender, RoutedEventArgs e)
+        {
+            NewEntityWindow.InitializeModalWindow(this, (new LocationPromptWindow()));
         }
     }
 }

@@ -34,3 +34,5 @@ C:\Users\Ryangigs\Documents\Thesis\citadel_wpf\citadel_wpf\obj\Debug\CharacterPr
 C:\Users\Ryangigs\Documents\Thesis\citadel_wpf\citadel_wpf\obj\Debug\CharacterPromptWindow.baml
 C:\Users\Ryangigs\Documents\Thesis\citadel_wpf\citadel_wpf\obj\Debug\ImageDisplayWindow.g.cs
 C:\Users\Ryangigs\Documents\Thesis\citadel_wpf\citadel_wpf\obj\Debug\ImageDisplayWindow.baml
+C:\Users\Ryangigs\Documents\Thesis\citadel_wpf\citadel_wpf\obj\Debug\EventMapPromptWindow.g.cs
+C:\Users\Ryangigs\Documents\Thesis\citadel_wpf\citadel_wpf\obj\Debug\EventMapPromptWindow.baml
