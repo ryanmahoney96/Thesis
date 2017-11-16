@@ -13,8 +13,9 @@ namespace citadel_wpf
     class NoteNode : Decorator
     {
         private String EntityType;
-        private String EntityName;
-        private TextBlock t;
+        private TextBlock NameTextBlock;
+        private TextBlock ContentTextBlock;
+        private TextBlock DescriptionTextBlock;
 
         public static int NoteNodeWidth = 320;
         public static int NoteNodeHeight = 260;
@@ -24,9 +25,10 @@ namespace citadel_wpf
         //TODO: after reference is implemented, use this design to update instead of the "redraw all" method used now
         //TODO: make base constuctor. Make Button constructor and Text contructor that call it and each fill the node with that content
         //TODO: Make first notenode the "button" notenode for adding things -> take out the menu style used now
-
-        public NoteNode()
+        
+        public NoteNode(string t)
         {
+            EntityType = t;
             Border b = new Border();
             b.BorderThickness = new Thickness(1, 1, 1, 1);
             b.BorderBrush = new SolidColorBrush(Colors.DarkBlue);
@@ -39,33 +41,39 @@ namespace citadel_wpf
             StackPanel stackPanel = new StackPanel();
             b.Child = stackPanel;
 
+            NameTextBlock = new TextBlock();
+            NameTextBlock.HorizontalAlignment = HorizontalAlignment.Center;
+            NameTextBlock.FontSize = 16;
+            stackPanel.Children.Add(NameTextBlock);
+
+            stackPanel.Children.Add(new Separator());
+
+            ContentTextBlock = new TextBlock();
+            ContentTextBlock.TextWrapping = TextWrapping.Wrap;
+            ContentTextBlock.FontSize = 15;
+            stackPanel.Children.Add(ContentTextBlock);
+
             Button button = new Button();
             button.Content = "Edit";
             button.Click += EditClick;
 
             ScrollViewer s = new ScrollViewer();
+            DescriptionTextBlock = new TextBlock();
+            DescriptionTextBlock.FontSize = 15;
+            s.Content = DescriptionTextBlock;
+
             stackPanel.Children.Add(s);
             stackPanel.Children.Add(button);
 
-            t = new TextBlock();
-            Text = "";
-            t.TextWrapping = TextWrapping.Wrap;
-            t.FontSize = 15;            
-            s.Content = t;
+            DescriptionText = "";
             
             this.Child = b;
-        }
-
-        public NoteNode (string type, string name): this()
-        {
-            EntityType = type;
-            EntityName = name;
         }
 
         public void EditClick(object sender, RoutedEventArgs e)
         {
             //TODO: Edit button
-            Text = "Test";
+            DescriptionText = "Test";
             //NewEntityWindow newWindow;
 
             //if (EntityType.Equals("character"))
@@ -91,16 +99,28 @@ namespace citadel_wpf
         {
             foreach (string key in entityNode.Keys)
             {
-                string name = ToTitleCase(key);
+                string name = ToTitleCase(entityNode[key]);
 
                 if (!String.IsNullOrWhiteSpace(entityNode[key]))
                 {
-                    StringBuilder t = new StringBuilder();
-                    t.Append(name);
-                    t.Append(":\n    ");
-                    t.Append(entityNode[key]);
-                    t.Append("\n");
-                    Text += t.ToString();
+                    if (key.Equals("name"))
+                    {
+                        NameText = name;
+                    }
+                    else if (key.Equals("description"))
+                    {
+                        ContentText += "Description:\n    ";
+                        DescriptionText = entityNode[key];
+                    }
+                    else
+                    {
+                        StringBuilder t = new StringBuilder();
+                        t.Append(ToTitleCase(key));
+                        t.Append(":\n    ");
+                        t.Append(entityNode[key]);
+                        t.Append("\n");
+                        ContentText += t.ToString();
+                    }
                 }
             }
         }
@@ -110,6 +130,9 @@ namespace citadel_wpf
             return System.Globalization.CultureInfo.CurrentCulture.TextInfo.ToTitleCase(str.ToLower());
         }
 
-        public string Text { get => t.Text; set => t.Text = value; }
+        public string NameText { get => NameTextBlock.Text; set => NameTextBlock.Text = value; }
+        public string ContentText { get => ContentTextBlock.Text; set => ContentTextBlock.Text = value; }
+        public string DescriptionText { get => DescriptionTextBlock.Text; set => DescriptionTextBlock.Text = value; }
+
     }
 }

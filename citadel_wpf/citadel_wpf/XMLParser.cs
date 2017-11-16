@@ -278,7 +278,10 @@ namespace citadel_wpf
                 }
                 entityInformation.Add(information);
             }
-            
+
+            //Order by the entity name
+            entityInformation = entityInformation.OrderBy(o => o["name"]).ToList();
+
             return entityInformation;
         }
 

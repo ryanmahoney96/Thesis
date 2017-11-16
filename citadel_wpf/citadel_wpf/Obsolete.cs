@@ -288,7 +288,7 @@ namespace citadel_wpf
                         t.Append(":\n    ");
                         t.Append(parts[1]);
                         t.Append("\n");
-                        n.Text += t.ToString();
+                        n.DescriptionText += t.ToString();
                     }
                 }
                 area.Children.Add(n);

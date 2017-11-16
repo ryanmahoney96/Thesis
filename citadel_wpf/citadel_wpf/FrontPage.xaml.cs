@@ -112,10 +112,10 @@ namespace citadel_wpf
         {
             area.Children.Clear();
             area.MinHeight = NoteNode.NoteNodeHeight;
+            //TODO button notenode
 
             foreach (Dictionary<string, string> entityNode in entityNodes)
             {
-                //TODO make this a "format" function in NoteNode
                 NoteNode n = new NoteNode();
                 n.FillWith(entityNode);
                 
