@@ -17,7 +17,7 @@ namespace citadel_wpf
         //TODO male = "color=navy, shape=ellipse"
         private static string maleColor = $"navy";
         private static string femaleColor = $"orangered";
-
+        private static string otherColor = $"darkgreen";
 
         //public FamilyTreeConstruction() { }        
 
@@ -235,9 +235,21 @@ namespace citadel_wpf
         private static string GetGenderColor(string focusCharacter)
         {
             //TODO make more effecient by reducing the number of times the first line has to be called -> set descendant before the group of calls to this function is made
-            return (from c in XMLParser.GetInstance().GetCharacterXDocument().Root.Descendants("character")
-                    where c.Element("name").Value.ToString().Equals(focusCharacter)
-                    select c.Element("gender").Value.ToString()).First().Equals("Male") ? $"{maleColor}" : $"{femaleColor}";
+            var result = (from c in XMLParser.GetInstance().GetCharacterXDocument().Root.Descendants("character")
+            where c.Element("name").Value.ToString().Equals(focusCharacter)
+            select c.Element("gender").Value.ToString()).First();
+
+            string returnString = $"{maleColor}";
+
+            if (result.Equals("Female"))
+            {
+                returnString = $"{femaleColor}";
+            }
+            else if (result.Equals("Other")){
+                returnString = $"{otherColor}";
+            }
+
+            return returnString;
         }
 
         private static IEnumerable<string> GetParentsOf(string focusCharacter)

@@ -10,7 +10,7 @@
         Background="#fcfcff"
         BorderBrush="DarkBlue"
         BorderThickness="0, 1, 0, 0"
-        Icon="./castle_vbr_icon.ico"
+        Icon="./citadel_icon.ico"
         Title="Add a New Event Relationship" Height="185" Width="540">
     <Grid>
 

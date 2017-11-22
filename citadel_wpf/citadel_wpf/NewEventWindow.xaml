@@ -10,7 +10,7 @@
         Background="#fcfcff"
         BorderBrush="DarkBlue"
         BorderThickness="0, 1, 0, 0"
-        Icon="./castle_vbr_icon.ico"
+        Icon="./citadel_icon.ico"
         Title="Add a New Event" 
         Height="375"
         Width="560">
@@ -49,7 +49,7 @@
 
         <TextBlock Text="*Enter a Description of What Happened:" Grid.Row="5" Grid.Column="1" TextWrapping="Wrap"></TextBlock>
         <ScrollViewer Grid.Row="5" Grid.Column="2" Width="280" Height="150">
-            <TextBox Name="description_text" TextWrapping="Wrap"></TextBox>
+            <TextBox Name="description_text" AcceptsReturn="True" TextWrapping="Wrap"></TextBox>
         </ScrollViewer>
 
         <TextBlock Name="required_text" Text="*Required Field" Grid.Row="6" Grid.Column="1"></TextBlock>

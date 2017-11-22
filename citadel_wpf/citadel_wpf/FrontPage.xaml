@@ -9,10 +9,10 @@
         Background="#fcfcff"
         BorderBrush="DarkBlue"
         BorderThickness="0, 1, 0, 0"
-        Icon="./castle_vbr_icon.ico"
-        ResizeMode="CanMinimize"
-        Height="510" 
-        Width="740">
+        Icon="./citadel_icon.ico"
+        ResizeMode="CanResize"
+        MinHeight="510" 
+        MinWidth="760">
     <!--WindowState="Maximized"-->
         
     <Grid>
@@ -70,7 +70,7 @@
 
                         <TextBlock Text="Edit the Summary:" Grid.Row="5" Grid.Column="1" VerticalAlignment="Center"></TextBlock>
                         <ScrollViewer Margin="2, 2, 2, 2" Grid.Row="5" Grid.Column="2">
-                            <TextBox Name="summaryText" TextWrapping="Wrap"></TextBox>
+                            <TextBox Name="summaryText" AcceptsReturn="True" TextWrapping="Wrap"></TextBox>
                         </ScrollViewer>
 
                         <Button Content="Save Changes" Click="Save_Media_Information"  Grid.Row="6" Grid.Column="3" Width="110" Height="30" HorizontalAlignment="Center" VerticalAlignment="Center"></Button>
@@ -84,7 +84,7 @@
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="10"/>
-                            <ColumnDefinition Width="710"/>
+                            <ColumnDefinition Width="740"/>
                             <ColumnDefinition Width="10"/>
                         </Grid.ColumnDefinitions>
 
@@ -94,14 +94,14 @@
                         </Grid.RowDefinitions>
 
                         <Menu Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="1">
-                            <MenuItem Header="_File">
+                            <MenuItem Header="_New">
                                 <MenuItem Header="_New Note" Click="New_Note_Click"/>
                                 <!--<MenuItem Header="_Edit"/>-->
                             </MenuItem>
                         </Menu>
 
                         <ScrollViewer Background="White" VerticalScrollBarVisibility="Visible" HorizontalScrollBarVisibility="Auto" Grid.Row="1" Grid.Column="1">
-                            <WrapPanel Name="general_notes_area" Width="710" MinHeight="0"></WrapPanel>
+                            <WrapPanel Name="general_notes_area" Width="740" MinHeight="0"></WrapPanel>
                         </ScrollViewer>
                     </Grid>
                 </Label>
@@ -113,7 +113,7 @@
                         
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="10"/>
-                            <ColumnDefinition Width="710"/>
+                            <ColumnDefinition Width="740"/>
                             <ColumnDefinition Width="10"/>
                         </Grid.ColumnDefinitions>
 
@@ -123,7 +123,7 @@
                         </Grid.RowDefinitions>
 
                         <Menu Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="1">
-                            <MenuItem Header="_File">
+                            <MenuItem Header="_New">
                                 <MenuItem Header="_New Character" Click="New_Character_Click"/>
                                 <MenuItem Header="New Character _Relationship" Click="Character_Relationship_Click"/>
                                 <MenuItem Header="New _Immediate Family Tree" Click="NewImmediateFamilyTree"/>
@@ -133,7 +133,7 @@
                         </Menu>
 
                         <ScrollViewer Background="White" VerticalScrollBarVisibility="Visible" HorizontalScrollBarVisibility="Auto" Grid.Row="1" Grid.Column="1">
-                            <WrapPanel Name="character_notes_area" Width="710" MinHeight="0"></WrapPanel>
+                            <WrapPanel Name="character_notes_area" Width="740" MinHeight="0"></WrapPanel>
                         </ScrollViewer>
                     </Grid>
                 </Label>
@@ -144,7 +144,7 @@
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="10"/>
-                            <ColumnDefinition Width="710"/>
+                            <ColumnDefinition Width="740"/>
                             <ColumnDefinition Width="10"/>
                         </Grid.ColumnDefinitions>
 
@@ -154,7 +154,7 @@
                         </Grid.RowDefinitions>
 
                         <Menu Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="1">
-                            <MenuItem Header="_File">
+                            <MenuItem Header="_New">
                                 <MenuItem Header="_New Event" Click="New_Event_Click"/>
                                 <MenuItem Header="New Event _Relationship" Click="Event_Relationship_Click"/>
                                 <MenuItem Header="New Event _Timeline"/>
@@ -163,7 +163,7 @@
                         </Menu>
 
                         <ScrollViewer Background="White" VerticalScrollBarVisibility="Visible" HorizontalScrollBarVisibility="Auto" Grid.Row="1" Grid.Column="1">
-                            <WrapPanel Name="event_notes_area" Width="710" MinHeight="0"></WrapPanel>
+                            <WrapPanel Name="event_notes_area" Width="740" MinHeight="0"></WrapPanel>
                         </ScrollViewer>
                     </Grid>
                 </Label>
@@ -174,7 +174,7 @@
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="10"/>
-                            <ColumnDefinition Width="710"/>
+                            <ColumnDefinition Width="740"/>
                             <ColumnDefinition Width="10"/>
                         </Grid.ColumnDefinitions>
 
@@ -184,7 +184,7 @@
                         </Grid.RowDefinitions>
 
                         <Menu Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="1">
-                            <MenuItem Header="_File">
+                            <MenuItem Header="_New">
                                 <MenuItem Header="_New Location" Click="New_Location_Click"/>
                                 <MenuItem Header="New Event _Map" Click="NewEventMap"/>
                                 <!--<MenuItem Header="_Edit"/>-->
@@ -192,7 +192,7 @@
                         </Menu>
 
                         <ScrollViewer Background="White" VerticalScrollBarVisibility="Visible" HorizontalScrollBarVisibility="Auto" Grid.Row="1" Grid.Column="1">
-                            <WrapPanel Name="location_notes_area" Width="710" MinHeight="0"></WrapPanel>
+                            <WrapPanel Name="location_notes_area" Width="740" MinHeight="0"></WrapPanel>
                         </ScrollViewer>
                     </Grid>
                 </Label>

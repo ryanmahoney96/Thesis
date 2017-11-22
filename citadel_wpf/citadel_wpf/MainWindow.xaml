@@ -12,7 +12,7 @@
         ResizeMode="NoResize"
         Height="165" 
         Width="495"
-        Icon="./castle_vbr_icon.ico"
+        Icon="./citadel_icon.ico"
         WindowStartupLocation="CenterScreen">
 
     <Grid>

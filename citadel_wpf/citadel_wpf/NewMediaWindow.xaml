@@ -10,7 +10,7 @@
         Background="#fcfcff"
         BorderBrush="DarkBlue"
         BorderThickness="0, 1, 0, 0"
-        Icon="./castle_vbr_icon.ico"
+        Icon="./citadel_icon.ico"
         Title="Citadel - New Media Entry" Height="385" Width="480">
     <Grid>
 
@@ -61,7 +61,7 @@
 
         <TextBlock Text="Enter a Summary on the Entry:" Grid.Row="5" Grid.Column="1" TextWrapping="Wrap"></TextBlock>
         <ScrollViewer Grid.Row="5" Grid.Column="2" Width="280" Height="150">
-            <TextBox Name="summary_text" TextWrapping="Wrap"></TextBox>
+            <TextBox Name="summary_text" AcceptsReturn="True" TextWrapping="Wrap"></TextBox>
         </ScrollViewer>
 
         <TextBlock Name="required_text" Text="*Required Field" Grid.Row="6" Grid.Column="1"></TextBlock>

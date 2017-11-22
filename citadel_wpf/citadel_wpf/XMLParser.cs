@@ -90,179 +90,6 @@ namespace citadel_wpf
             return ref noteXDocument;
         }
 
-        public static StreamWriter RemoveEndTag(string filePath)
-        {
-            //Deletes the last line in the xml file, the closing content tag
-            string line = null;
-            string finalLine = null;
-            List<string> deferredLines = new List<string>();
-            using (TextReader inputReader = new StreamReader(filePath))
-            {
-                while ((line = inputReader.ReadLine()) != null)
-                {
-                    deferredLines.Add(line);
-                }
-                finalLine = deferredLines[deferredLines.Count - 1];
-                deferredLines.RemoveAt(deferredLines.Count - 1);
-
-                while(!finalLine[finalLine.Count() - 1].Equals('/'))
-                {
-                    finalLine = finalLine.Remove(finalLine.Count() - 1, 1);
-                }
-                finalLine = finalLine.Remove(finalLine.Count() - 2, 2);
-            }
-
-            StreamWriter stream = new StreamWriter(filePath, false);
-
-            for (int i = 0; i < deferredLines.Count; i++)
-            {
-                stream.Write(deferredLines[i]);
-            }
-            stream.Write(finalLine);
-
-            return stream;
-        }
-
-        public List<List<string>> GetAllCharacterNotes()
-        {
-            List<List<string>> returnList = new List<List<string>>();
-            
-            // Query the data and write out a subset of contacts
-            var character = from c in GetCharacterXDocument().Root.Descendants("character")
-                            //where ((string)c.Element("name")).Equals("Ygritte")
-                        select new
-                        {
-                            Name = c.Element("name").Value,
-                            Gender = c.Element("gender").Value,
-                            Description = c.Element("description").Value
-                        };
-
-            foreach (var characterEntry in character)
-            {
-
-                List<string> temp = new List<string>();
-
-                temp.Add("Name\\" + characterEntry.Name);
-                temp.Add("Gender\\" + characterEntry.Gender);
-                temp.Add("Description\\" + characterEntry.Description);
-                returnList.Add(temp);
-            }
-
-            //TODO: after all characters added, add all relationships
-                
-            return returnList;
-        }
-
-        //TODO this
-        public static List<List<string>> GetAllCharacterRelationships(string fullFilePath)
-        {
-            List<List<string>> returnList = new List<List<string>>();
-
-            //if (File.Exists(fullFilePath))
-            //{
-            //    var xml = XDocument.Load(fullFilePath);
-
-            //    var query = from c in xml.Root.Descendants("character")
-            //                    //where ((string)c.Element("name")).Equals("Ygritte")
-            //                select new
-            //                {
-            //                    Name = c.Element("name").Value,
-            //                    Gender = c.Element("gender").Value,
-            //                    Description = c.Element("description").Value
-            //                };
-
-            //    foreach (var characterEntry in query)
-            //    {
-
-            //        List<string> temp = new List<string>();
-
-            //        temp.Add("Name\\" + characterEntry.Name);
-            //        temp.Add("Gender\\" + characterEntry.Gender);
-            //        temp.Add("Description\\" + characterEntry.Description);
-            //        returnList.Add(temp);
-            //    }
-            //}
-            return returnList;
-        }
-
-        public List<List<string>> GetAllGeneralNotes()
-        {
-            List<List<string>> returnList = new List<List<string>>();
-            
-            var query = from c in GetNoteXDocument().Root.Descendants("general_note")
-                        select new {
-                            Name = c.Element("name").Value,
-                            Description = c.Element("description").Value
-                        };
-
-            foreach (var noteEntry in query)
-            {
-
-                List<string> temp = new List<string>();
-                temp.Add("Name\\" + noteEntry.Name);
-                temp.Add("Note\\" + noteEntry.Description);
-                returnList.Add(temp);
-            }
-            
-            return returnList;
-        }
-
-        public List<List<string>> GetAllLocationNotes()
-        {
-            List<List<string>> returnList = new List<List<string>>();
-            
-            var query = from c in GetLocationXDocument().Root.Descendants("location")
-                        select new
-                        {
-                            Name = c.Element("name").Value,
-                            Type = c.Element("type").Value,
-                            Subtype = c.Element("subtype").Value,
-                            Description = c.Element("description").Value,
-                        };
-
-            foreach (var locationEntry in query)
-            {
-
-                List<string> temp = new List<string>();
-                temp.Add("Name\\" + locationEntry.Name);
-                temp.Add("Type\\" + locationEntry.Type);
-                temp.Add("Subtype\\" + locationEntry.Subtype);
-                temp.Add("Description\\" + locationEntry.Description);
-                returnList.Add(temp);
-            }
-            
-            return returnList;
-        }
-
-        public List<List<string>> GetAllEventNotes()
-        {
-            List<List<string>> returnList = new List<List<string>>();
-            
-            var query = from c in GetEventXDocument().Root.Descendants("event")
-                        select new
-                        {
-                            Name = c.Element("name").Value,
-                            Location = c.Element("location").Value,
-                            Unit_Date = c.Element("unit_date").Value,
-                            Date = c.Element("date").Value,
-                            Notes = c.Element("description").Value
-                        };
-
-            foreach (var eventEntry in query)
-            {
-
-                List<string> temp = new List<string>();
-                temp.Add("Name\\" + eventEntry.Name);
-                temp.Add("Location\\" + eventEntry.Location);
-                temp.Add("Unit Date\\" + eventEntry.Unit_Date);
-                temp.Add("Date\\" + eventEntry.Date);
-                temp.Add("Description\\" + eventEntry.Notes);
-                returnList.Add(temp);
-            }
-            
-            return returnList;
-        }
-
         public static List<Dictionary<string, string>> GetAllNotes(XDocument handle)
         {
             List<Dictionary<string, string>> entityInformation = new List<Dictionary<string, string>>();
@@ -338,6 +165,7 @@ namespace citadel_wpf
             return returnTable;
         }
 
+        //is this entity present in the XDocument
         public static bool IsPresent(XDocument handle, string entityName)
         {
             return (from c in handle.Root.Elements()
@@ -345,6 +173,7 @@ namespace citadel_wpf
                     select c).Count() > 0 ? true : false;
         }
 
+        //is this relationship present in the XDocument
         public static bool IsRelationshipPresent(XDocument handle, string entityOne, string relationship, string entityTwo)
         {
             return ((from c in handle.Root.Elements()
