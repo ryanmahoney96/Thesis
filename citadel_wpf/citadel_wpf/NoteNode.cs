@@ -24,7 +24,7 @@ namespace citadel_wpf
         public static int ButtonWidth = 40;
 
         public static int NoteNodeWidth = 350;
-        public static int NoteNodeHeight = NameBoxHeight + ContentBoxHeight + ButtonHeight + 20;
+        public static int NoteNodeHeight = NameBoxHeight + ContentBoxHeight + ButtonHeight + 25;
 
         //TODO: give each notenode a reference to the entity it represents
         //TODO: Add edit and delete buttons to notenode. Because of reference to entity you can manipulate the node and update

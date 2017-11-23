@@ -12,7 +12,7 @@
         Icon="./citadel_icon.ico"
         ResizeMode="CanResize"
         MinHeight="510" 
-        MinWidth="760">
+        MinWidth="780">
     <!--WindowState="Maximized"-->
         
     <Grid>
@@ -94,7 +94,7 @@
                         </Grid.RowDefinitions>
 
                         <Menu Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="1">
-                            <MenuItem Header="_New">
+                            <MenuItem Header="_Entity">
                                 <MenuItem Header="_New Note" Click="New_Note_Click"/>
                                 <!--<MenuItem Header="_Edit"/>-->
                             </MenuItem>
@@ -123,12 +123,12 @@
                         </Grid.RowDefinitions>
 
                         <Menu Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="1">
-                            <MenuItem Header="_New">
+                            <MenuItem Header="_Entity">
                                 <MenuItem Header="_New Character" Click="New_Character_Click"/>
-                                <MenuItem Header="New Character _Relationship" Click="Character_Relationship_Click"/>
-                                <MenuItem Header="New _Immediate Family Tree" Click="NewImmediateFamilyTree"/>
-                                <MenuItem Header="New _Extended Family Tree" Click="NewExtendedFamilyTree"/>
-                                <MenuItem Header="New _Full Family Tree" Click="NewFullFamilyTree"/>
+                                <MenuItem Header="View Character _Relationships" Click="Character_Relationship_Click"/>
+                                <MenuItem Header="Create _Immediate Family Tree" Click="NewImmediateFamilyTree"/>
+                                <MenuItem Header="Create _Extended Family Tree" Click="NewExtendedFamilyTree"/>
+                                <MenuItem Header="Create _Full Family Tree" Click="NewFullFamilyTree"/>
                             </MenuItem>
                         </Menu>
 
@@ -154,11 +154,11 @@
                         </Grid.RowDefinitions>
 
                         <Menu Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="1">
-                            <MenuItem Header="_New">
+                            <MenuItem Header="_Entity">
                                 <MenuItem Header="_New Event" Click="New_Event_Click"/>
                                 <MenuItem Header="New Event _Relationship" Click="Event_Relationship_Click"/>
-                                <MenuItem Header="New Event _Timeline"/>
-                                <MenuItem Header="New Event _Map" Click="NewEventMap"/>
+                                <MenuItem Header="Create Event _Timeline"/>
+                                <MenuItem Header="Create Event _Map" Click="NewEventMap"/>
                             </MenuItem>
                         </Menu>
 
@@ -184,9 +184,9 @@
                         </Grid.RowDefinitions>
 
                         <Menu Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="1">
-                            <MenuItem Header="_New">
+                            <MenuItem Header="_Entity">
                                 <MenuItem Header="_New Location" Click="New_Location_Click"/>
-                                <MenuItem Header="New Event _Map" Click="NewEventMap"/>
+                                <MenuItem Header="Create Event _Map" Click="NewEventMap"/>
                                 <!--<MenuItem Header="_Edit"/>-->
                             </MenuItem>
                         </Menu>

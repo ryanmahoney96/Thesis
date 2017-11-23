@@ -138,7 +138,7 @@ namespace citadel_wpf
         public static void RecursiveFullFamilyTree(string focusCharacter)
         {
             //All familial relationships
-            StringBuilder echo = new StringBuilder($"graph s {{ label=\"Recursive Full Family Tree for {focusCharacter}\" {fontname}; ");
+            StringBuilder echo = new StringBuilder($"graph s {{ label=\"Full Family Tree for {focusCharacter}\" {fontname}; ");
             Dictionary<string, bool> relationships = new Dictionary<string, bool>();
             Dictionary<string, string> characters = new Dictionary<string, string>();
 

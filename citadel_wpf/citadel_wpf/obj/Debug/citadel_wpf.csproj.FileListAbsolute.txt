@@ -36,3 +36,5 @@ C:\Users\Ryangigs\Documents\Thesis\citadel_wpf\citadel_wpf\obj\Debug\ImageDispla
 C:\Users\Ryangigs\Documents\Thesis\citadel_wpf\citadel_wpf\obj\Debug\ImageDisplayWindow.baml
 C:\Users\Ryangigs\Documents\Thesis\citadel_wpf\citadel_wpf\obj\Debug\EventMapPromptWindow.g.cs
 C:\Users\Ryangigs\Documents\Thesis\citadel_wpf\citadel_wpf\obj\Debug\EventMapPromptWindow.baml
+C:\Users\Ryangigs\Documents\Thesis\citadel_wpf\citadel_wpf\obj\Debug\RelationshipPrompt.g.cs
+C:\Users\Ryangigs\Documents\Thesis\citadel_wpf\citadel_wpf\obj\Debug\RelationshipPrompt.baml

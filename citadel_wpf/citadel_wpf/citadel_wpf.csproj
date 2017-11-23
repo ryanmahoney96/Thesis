@@ -94,6 +94,9 @@
     </Compile>
     <Compile Include="NoteNode.cs" />
     <Compile Include="Obsolete.cs" />
+    <Compile Include="RelationshipPrompt.xaml.cs">
+      <DependentUpon>RelationshipPrompt.xaml</DependentUpon>
+    </Compile>
     <Compile Include="TimelineConstruction.cs" />
     <Compile Include="XMLParser.cs" />
     <Page Include="EventMapPromptWindow.xaml">
@@ -149,6 +152,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="NewMediaWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="RelationshipPrompt.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
