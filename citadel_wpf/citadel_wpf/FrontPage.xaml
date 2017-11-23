@@ -94,7 +94,7 @@
                         </Grid.RowDefinitions>
 
                         <Menu Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="1">
-                            <MenuItem Header="_New">
+                            <MenuItem Header="_Entity">
                                 <MenuItem Header="_New Note" Click="New_Note_Click"/>
                                 <!--<MenuItem Header="_Edit"/>-->
                             </MenuItem>
@@ -123,7 +123,7 @@
                         </Grid.RowDefinitions>
 
                         <Menu Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="1">
-                            <MenuItem Header="_New">
+                            <MenuItem Header="_Entity">
                                 <MenuItem Header="_New Character" Click="New_Character_Click"/>
                                 <MenuItem Header="New Character _Relationship" Click="Character_Relationship_Click"/>
                                 <MenuItem Header="New _Immediate Family Tree" Click="NewImmediateFamilyTree"/>
@@ -154,7 +154,7 @@
                         </Grid.RowDefinitions>
 
                         <Menu Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="1">
-                            <MenuItem Header="_New">
+                            <MenuItem Header="_Entity">
                                 <MenuItem Header="_New Event" Click="New_Event_Click"/>
                                 <MenuItem Header="New Event _Relationship" Click="Event_Relationship_Click"/>
                                 <MenuItem Header="New Event _Timeline"/>
@@ -184,7 +184,7 @@
                         </Grid.RowDefinitions>
 
                         <Menu Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="1">
-                            <MenuItem Header="_New">
+                            <MenuItem Header="_Entity">
                                 <MenuItem Header="_New Location" Click="New_Location_Click"/>
                                 <MenuItem Header="New Event _Map" Click="NewEventMap"/>
                                 <!--<MenuItem Header="_Edit"/>-->

@@ -20,7 +20,7 @@ namespace citadel_wpf
     {
         string FocusCharacter;
 
-        public RelationshipPrompt(string fc) : base()
+        public RelationshipPrompt(string fc, params NewEntityWindow[] rw) : base(rw)
         {
             InitializeComponent();
 
@@ -81,12 +81,16 @@ namespace citadel_wpf
         private void Add_Character(object sender, RoutedEventArgs e)
         {
             NewEntityWindow.InitializeModalWindow(this, new NewCharacterWindow(this));
+            XMLParser.FillBoxWithNames(XMLParser.GetInstance().GetCharacterXDocument(), ref character_two_combo, FocusCharacter);
         }
 
         public override void UpdateReliantWindows()
         {
-            XMLParser.FillBoxWithNames(XMLParser.GetInstance().GetCharacterXDocument(), ref character_two_combo);
-            character_two_combo.Items.Clear();
+
+            foreach (NewEntityWindow w in reliantWindows)
+            {
+                w.UpdateReliantWindows();
+            }
         }
 
     }
