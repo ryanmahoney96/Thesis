@@ -5,6 +5,9 @@ citadel_wpf/citadel_wpf/Properties
 citadel_wpf/citadel_wpf/App.config
 citadel_wpf/citadel_wpf/App.xaml
 citadel_wpf/citadel_wpf/App.xaml.cs
+entity_template.xml
+graphviz_notes/
+makefile
 *.ide
 *.suo
 *.sln
