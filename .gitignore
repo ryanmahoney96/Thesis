@@ -1,6 +1,10 @@
-citadel_wpf/.vs/ 
+citadel_wpf/citadel_wpf/.vs/ 
+citadel_wpf/citadel_wpf/obj
+citadel_wpf/citadel_wpf/bin
+citadel_wpf/citadel_wpf/Properties
 *.ide
 *.suo
+*.sln
 
 # Compiled source #
 ###################
