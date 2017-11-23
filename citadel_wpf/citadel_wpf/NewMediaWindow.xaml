@@ -7,10 +7,6 @@
         mc:Ignorable="d"
         WindowStartupLocation="CenterScreen"
         ResizeMode="CanMinimize"
-        Background="#fcfcff"
-        BorderBrush="DarkBlue"
-        BorderThickness="0, 1, 0, 0"
-        Icon="./citadel_icon.ico"
         Title="Citadel - New Media Entry" Height="385" Width="480">
     <Grid>
 

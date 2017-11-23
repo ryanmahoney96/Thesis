@@ -5,14 +5,10 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:citadel_wpf"
         mc:Ignorable="d"
-        Background="#fcfcff"
-        BorderBrush="DarkBlue"
-        BorderThickness="0, 1, 0, 0"
         Title="Character Prompt"
         ResizeMode="NoResize"
         Height="130" 
         Width="330"
-        Icon="./citadel_icon.ico"
         WindowStartupLocation="CenterScreen">
 
     <Grid>
