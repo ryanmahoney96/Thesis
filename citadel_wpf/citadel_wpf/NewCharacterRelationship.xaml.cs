@@ -130,12 +130,17 @@ namespace citadel_wpf
         public override void UpdateReliantWindows()
         {
             XMLParser.FillBoxWithNames(XMLParser.GetInstance().GetCharacterXDocument(), ref focus_character_combo);
+            focus_character_combo.Text = "";
+            relationship_stackpanel.Children.Clear();
             //Get all relationships
         }
 
         private void add_relationship_button_Click(object sender, RoutedEventArgs e)
         {
-            NewEntityWindow.InitializeModalWindow(this, new RelationshipPrompt(focus_character_combo.Text, this));
+            if (!string.IsNullOrWhiteSpace(focus_character_combo.Text))
+            {
+                NewEntityWindow.InitializeModalWindow(this, new RelationshipPrompt(focus_character_combo.Text, this));
+            }
         }
     }
 }

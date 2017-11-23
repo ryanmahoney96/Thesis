@@ -73,7 +73,10 @@ namespace citadel_wpf
                     XMLParser.GetInstance().GetCharacterRelationshipXDocument().Save(FrontPage.FolderPath + "\\character_relationship_notes.xml");
 
                     UpdateReliantWindows();
-                    Close();
+                    if (MessageBox.Show("Create Another Relationship?", "Question", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.No)
+                    {
+                        Close();
+                    }
                 }
             }
         }
