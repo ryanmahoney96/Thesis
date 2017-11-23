@@ -24,13 +24,19 @@ namespace citadel_wpf
         protected NewEntityWindow[] reliantWindows;
         protected List<String> controlTexts;
 
-        public NewEntityWindow(params NewEntityWindow[] rw)
+        public NewEntityWindow(params NewEntityWindow[] rw): this()
         {
             reliantWindows = rw;
             controlTexts = new List<String>();
         }
         public NewEntityWindow()
         {
+            Background = (SolidColorBrush)(new BrushConverter().ConvertFrom("#fcfcff"));
+            BorderBrush = Brushes.DarkBlue;
+            BorderThickness = new Thickness(0, 1, 0, 0);
+            Uri iconUri = new Uri("../../citadel_icon.ico", UriKind.RelativeOrAbsolute);
+            Icon = BitmapFrame.Create(iconUri);
+            WindowStartupLocation = WindowStartupLocation.CenterScreen;
         }
 
         public static void InitializeModalWindow(Window owner, Window child)

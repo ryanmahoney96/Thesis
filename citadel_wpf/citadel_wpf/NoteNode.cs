@@ -20,7 +20,7 @@ namespace citadel_wpf
 
         public static int NameBoxHeight = 24;
         public static int ContentBoxHeight = 175;
-        public static int ButtonHeight = 20;
+        public static int ButtonHeight = 22;
         public static int ButtonWidth = 40;
 
         public static int NoteNodeWidth = 350;

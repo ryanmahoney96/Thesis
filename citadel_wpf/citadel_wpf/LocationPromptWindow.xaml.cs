@@ -14,23 +14,16 @@ using System.Windows.Shapes;
 
 namespace citadel_wpf
 {
-    /// <summary>
-    /// Interaction logic for CharacterPromptWindow.xaml
-    /// </summary>
-    public partial class LocationPromptWindow : Window
+
+    public partial class LocationPromptWindow : NewEntityWindow
     {
         //TODO Tooltips
-        public LocationPromptWindow()
+        public LocationPromptWindow(params NewEntityWindow[] rw) : base(rw)
         {
             InitializeComponent();
         }
 
-        private void Cancel_Click(object sender, RoutedEventArgs e)
-        {
-            Close();
-        }
-
-        private void Create_Click(object sender, RoutedEventArgs e)
+        override protected void Save(object sender, RoutedEventArgs e)
         {
             if (!String.IsNullOrWhiteSpace(eventMapType.Text) && (locationName.IsEnabled && !String.IsNullOrWhiteSpace(locationName.Text)
                 ||
@@ -53,14 +46,28 @@ namespace citadel_wpf
             }
         }
 
+        public override void UpdateReliantWindows()
+        {
+            //
+        }
+
         private void map_type_changed(object sender, SelectionChangedEventArgs e)
         {
-            locationName.IsEnabled = !locationName.IsEnabled;
-
-            if (locationName.IsEnabled)
+            if (eventMapType.SelectedItem != null && !string.IsNullOrWhiteSpace(eventMapType.SelectedItem.ToString()))
             {
-                XMLParser.FillBoxWithNames(XMLParser.GetInstance().GetLocationXDocument(), ref locationName);
+                string emt = eventMapType.SelectedItem.ToString().Split(':')[1].Substring(1);
+
+                if (emt.Equals("Single Event Map"))
+                {
+                    locationName.IsEnabled = true;
+                    XMLParser.FillBoxWithNames(XMLParser.GetInstance().GetLocationXDocument(), ref locationName);
+                }
+                else
+                {
+                    locationName.IsEnabled = false;
+                }
             }
+
         }
     }
 }

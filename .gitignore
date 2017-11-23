@@ -2,9 +2,13 @@ citadel_wpf/citadel_wpf/.vs/
 citadel_wpf/citadel_wpf/obj
 citadel_wpf/citadel_wpf/bin
 citadel_wpf/citadel_wpf/Properties
+citadel_wpf/citadel_wpf/App.config
+citadel_wpf/citadel_wpf/App.xaml
+citadel_wpf/citadel_wpf/App.xaml.cs
 *.ide
 *.suo
 *.sln
+*.config
 
 # Compiled source #
 ###################
