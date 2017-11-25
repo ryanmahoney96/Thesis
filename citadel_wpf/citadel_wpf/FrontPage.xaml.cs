@@ -40,6 +40,62 @@ namespace citadel_wpf
             Title += " - " + FolderPath;
             Update_Note_Pages();
             FrontPageReference = this;
+            SizeChanged += FrontPage_SizeChanged;
+            Loaded += FrontPage_Loaded;
+        }
+
+        private void FrontPage_Loaded(object sender, EventArgs e)
+        {
+            FrontPage_SizeChanged(null, null);
+        }
+
+        private void FrontPage_SizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            string selectedName = ((TabItem)MainTabControl.SelectedItem).Header as string;
+            double referenceWidth = 780;
+            if (selectedName.Equals("General Notes"))
+            {
+                referenceWidth = note_scrollview.ActualWidth;
+            }
+            else if (selectedName.Equals("Characters"))
+            {
+                referenceWidth = character_scrollview.ActualWidth;
+            }
+            else if (selectedName.Equals("Events"))
+            {
+                referenceWidth = event_scrollview.ActualWidth;
+            }
+            else if (selectedName.Equals("Locations"))
+            {
+                referenceWidth = location_scrollview.ActualWidth;
+            }
+            SetWidths(ref general_notes_area, referenceWidth);
+            SetWidths(ref character_notes_area, referenceWidth);
+            SetWidths(ref event_notes_area, referenceWidth);
+            SetWidths(ref location_notes_area, referenceWidth);
+            MiddleColumn.Width = new GridLength(Width - 300);
+        }
+
+        private void SetWidths(ref WrapPanel panel, double referenceWidth)
+        {
+            SetMinWidth(ref panel);
+            SetMaxWidth(ref panel, referenceWidth);
+        }
+
+        private void SetMinWidth(ref WrapPanel panel)
+        {
+            panel.MinWidth = (NoteNode.NoteNodeWidth);
+        }
+        private void SetMaxWidth(ref WrapPanel panel, double referenceWidth)
+        {
+            if (location_scrollview.ActualWidth > 0)
+            {
+                panel.MaxWidth = (referenceWidth / NoteNode.NoteNodeWidth) * (NoteNode.NoteNodeWidth);
+            }
+            else
+            {
+                panel.MaxWidth = Width;
+            }
         }
 
         private void New_Note_Click(object sender, RoutedEventArgs e)

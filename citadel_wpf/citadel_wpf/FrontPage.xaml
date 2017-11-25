@@ -11,20 +11,19 @@
         BorderThickness="0, 1, 0, 0"
         Icon="./citadel_icon.ico"
         ResizeMode="CanResize"
-        MinHeight="510" 
-        MinWidth="780">
-    <!--WindowState="Maximized"-->
-        
-    <Grid>
+        MinHeight="530"
+        MinWidth="780"
+        Width="800">
 
-        <TabControl Background="#fcfcff" BorderBrush="DarkBlue" BorderThickness="0, 1, 0, 0">
+    <Grid>
+        <TabControl Name="MainTabControl" Background="#fcfcff" BorderBrush="DarkBlue" BorderThickness="0, 1, 0, 0">
             <TabItem Header="Media Information">
                 <Label FontSize="14">
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="10"/>
                             <ColumnDefinition Width="130"/>
-                            <ColumnDefinition Width="430"/>
+                            <ColumnDefinition Name="MiddleColumn" MinWidth="450" Width="auto"/>
                             <ColumnDefinition Width="150"/>
                             <ColumnDefinition Width="10"/>
                         </Grid.ColumnDefinitions>
@@ -35,13 +34,13 @@
                             <RowDefinition Height="40"/>
                             <RowDefinition Height="40"/>
                             <RowDefinition Height="40"/>
-                            <RowDefinition Height="210"/>
+                            <RowDefinition Height="230"/>
                             <RowDefinition Height="50"/>
                         </Grid.RowDefinitions>
 
                         <TextBlock Text="Edit the Title:" Margin="2, 2, 2, 2" Grid.Row="1" Grid.Column="1" VerticalAlignment="Center"></TextBlock>
                         <TextBox Name="titleText" Margin="2, 1, 2, 1" Grid.Row="1" Grid.Column="2" VerticalAlignment="Center"></TextBox>
-                        
+
                         <TextBlock Text="Edit the Year:" Grid.Row="2" Grid.Column="1" VerticalAlignment="Center"></TextBlock>
                         <TextBox Name="yearText" Margin="2, 1, 2, 1" Grid.Row="2" Grid.Column="2" VerticalAlignment="Center"></TextBox>
 
@@ -78,126 +77,63 @@
                     </Grid>
                 </Label>
             </TabItem>
-            
+
             <TabItem Header="General Notes">
-                <Label>
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="10"/>
-                            <ColumnDefinition Width="740"/>
-                            <ColumnDefinition Width="10"/>
-                        </Grid.ColumnDefinitions>
+                <DockPanel>
+                    <Menu DockPanel.Dock="Top">
+                        <MenuItem Header="_New Note" Click="New_Note_Click"/>
+                    </Menu>
 
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="20"/>
-                            <RowDefinition Height="480"/>
-                        </Grid.RowDefinitions>
-
-                        <Menu Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="1">
-                            <MenuItem Header="_Entity">
-                                <MenuItem Header="_New Note" Click="New_Note_Click"/>
-                                <!--<MenuItem Header="_Edit"/>-->
-                            </MenuItem>
-                        </Menu>
-
-                        <ScrollViewer Background="White" VerticalScrollBarVisibility="Visible" HorizontalScrollBarVisibility="Auto" Grid.Row="1" Grid.Column="1">
-                            <WrapPanel Name="general_notes_area" Width="740" MinHeight="0"></WrapPanel>
-                        </ScrollViewer>
-                    </Grid>
-                </Label>
+                    <ScrollViewer Name="note_scrollview" Background="White" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" DockPanel.Dock="Top">
+                        <WrapPanel Name="general_notes_area"></WrapPanel>
+                    </ScrollViewer>
+                </DockPanel>
             </TabItem>
 
             <TabItem Header="Characters">
-                <Label>
-                    <Grid>
-                        
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="10"/>
-                            <ColumnDefinition Width="740"/>
-                            <ColumnDefinition Width="10"/>
-                        </Grid.ColumnDefinitions>
+                <DockPanel>
+                    <Menu DockPanel.Dock="Top">
+                        <MenuItem Header="_New Character" Click="New_Character_Click"/>
+                        <MenuItem Header="View Character _Relationships" Click="Character_Relationship_Click"/>
+                        <MenuItem Header="Create _Immediate Family Tree" Click="NewImmediateFamilyTree"/>
+                        <MenuItem Header="Create _Extended Family Tree" Click="NewExtendedFamilyTree"/>
+                        <MenuItem Header="Create _Full Family Tree" Click="NewFullFamilyTree"/>
+                    </Menu>
 
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="20"/>
-                            <RowDefinition Height="480"/>
-                        </Grid.RowDefinitions>
-
-                        <Menu Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="1">
-                            <MenuItem Header="_Entity">
-                                <MenuItem Header="_New Character" Click="New_Character_Click"/>
-                                <MenuItem Header="View Character _Relationships" Click="Character_Relationship_Click"/>
-                                <MenuItem Header="Create _Immediate Family Tree" Click="NewImmediateFamilyTree"/>
-                                <MenuItem Header="Create _Extended Family Tree" Click="NewExtendedFamilyTree"/>
-                                <MenuItem Header="Create _Full Family Tree" Click="NewFullFamilyTree"/>
-                            </MenuItem>
-                        </Menu>
-
-                        <ScrollViewer Background="White" VerticalScrollBarVisibility="Visible" HorizontalScrollBarVisibility="Auto" Grid.Row="1" Grid.Column="1">
-                            <WrapPanel Name="character_notes_area" Width="740" MinHeight="0"></WrapPanel>
-                        </ScrollViewer>
-                    </Grid>
-                </Label>
+                    <ScrollViewer Name="character_scrollview" Background="White" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" DockPanel.Dock="Top">
+                        <WrapPanel Name="character_notes_area"></WrapPanel>
+                    </ScrollViewer>
+                </DockPanel>
             </TabItem>
 
             <TabItem Header="Events">
-                <Label>
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="10"/>
-                            <ColumnDefinition Width="740"/>
-                            <ColumnDefinition Width="10"/>
-                        </Grid.ColumnDefinitions>
+                <DockPanel>
+                    <Menu DockPanel.Dock="Top">
+                        <MenuItem Header="_New Event" Click="New_Event_Click"/>
+                        <MenuItem Header="New Event _Relationship" Click="Event_Relationship_Click"/>
+                        <MenuItem Header="Create Event _Timeline"/>
+                        <MenuItem Header="Create Event _Map" Click="NewEventMap"/>
+                    </Menu>
 
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="20"/>
-                            <RowDefinition Height="480"/>
-                        </Grid.RowDefinitions>
-
-                        <Menu Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="1">
-                            <MenuItem Header="_Entity">
-                                <MenuItem Header="_New Event" Click="New_Event_Click"/>
-                                <MenuItem Header="New Event _Relationship" Click="Event_Relationship_Click"/>
-                                <MenuItem Header="Create Event _Timeline"/>
-                                <MenuItem Header="Create Event _Map" Click="NewEventMap"/>
-                            </MenuItem>
-                        </Menu>
-
-                        <ScrollViewer Background="White" VerticalScrollBarVisibility="Visible" HorizontalScrollBarVisibility="Auto" Grid.Row="1" Grid.Column="1">
-                            <WrapPanel Name="event_notes_area" Width="740" MinHeight="0"></WrapPanel>
-                        </ScrollViewer>
-                    </Grid>
-                </Label>
+                    <ScrollViewer Name="event_scrollview" Background="White" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto"  DockPanel.Dock="Top">
+                        <WrapPanel Name="event_notes_area"></WrapPanel>
+                    </ScrollViewer>
+                </DockPanel>
             </TabItem>
 
             <TabItem Header="Locations">
-                <Label>
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="10"/>
-                            <ColumnDefinition Width="740"/>
-                            <ColumnDefinition Width="10"/>
-                        </Grid.ColumnDefinitions>
+                <DockPanel>
+                    <Menu DockPanel.Dock="Top">
+                        <MenuItem Header="_New Location" Click="New_Location_Click"/>
+                        <MenuItem Header="Create Event _Map" Click="NewEventMap"/>
+                    </Menu>
 
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="20"/>
-                            <RowDefinition Height="480"/>
-                        </Grid.RowDefinitions>
-
-                        <Menu Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="1">
-                            <MenuItem Header="_Entity">
-                                <MenuItem Header="_New Location" Click="New_Location_Click"/>
-                                <MenuItem Header="Create Event _Map" Click="NewEventMap"/>
-                                <!--<MenuItem Header="_Edit"/>-->
-                            </MenuItem>
-                        </Menu>
-
-                        <ScrollViewer Background="White" VerticalScrollBarVisibility="Visible" HorizontalScrollBarVisibility="Auto" Grid.Row="1" Grid.Column="1">
-                            <WrapPanel Name="location_notes_area" Width="740" MinHeight="0"></WrapPanel>
-                        </ScrollViewer>
-                    </Grid>
-                </Label>
+                    <ScrollViewer Name="location_scrollview" Background="White" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" DockPanel.Dock="Top">
+                        <WrapPanel Name="location_notes_area"/>
+                    </ScrollViewer>
+                </DockPanel>
             </TabItem>
-            
+
         </TabControl>
 
     </Grid>

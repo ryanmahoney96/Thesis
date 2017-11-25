@@ -13,13 +13,10 @@ namespace citadel_wpf
     class FamilyTreeConstruction
     {
         private static string fontname = $"fontname=\"Helvetica\"";
-        //TODO other
-        //TODO male = "color=navy, shape=ellipse"
+        //male = "color=navy, shape=ellipse"
         private static string maleColor = $"navy";
         private static string femaleColor = $"orangered";
         private static string otherColor = $"darkgreen";
-
-        //public FamilyTreeConstruction() { }        
 
         public static void ImmediateFamilyTree(string focusCharacter)
         {
