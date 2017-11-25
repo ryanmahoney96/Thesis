@@ -19,14 +19,14 @@ namespace citadel_wpf
     /// <summary>
     /// Interaction logic for NewCharacterRelationship.xaml
     /// </summary>
-    public partial class NewCharacterRelationship : NewEntityWindow
+    public partial class ViewCharacterRelationships : NewEntityWindow
     {
 
         //TODO: Add an "ADD" button so that you don't have to keep going back and forth between windows for one character
         //TODO: If the above is done, make it so any individual relationship that already exists is skipped/marked instead
         //TODO: Add the relationships on startup
 
-        public NewCharacterRelationship() : base()
+        public ViewCharacterRelationships() : base()
         {
             InitializeComponent();
             XMLParser.FillBoxWithNames(XMLParser.GetInstance().GetCharacterXDocument(), ref focus_character_combo);
@@ -40,7 +40,7 @@ namespace citadel_wpf
             FillPanelWithRelationships(relationship_stackpanel);
         }
 
-        private void FillPanelWithRelationships(StackPanel s)
+        private void FillPanelWithRelationships(StackPanel stackpanel)
         {
             if (focus_character_combo.SelectedItem != null && !string.IsNullOrWhiteSpace(focus_character_combo.SelectedItem.ToString()))
             {
@@ -53,24 +53,33 @@ namespace citadel_wpf
                                   Entity_Two = c.Element("entity_two").Value.ToString(),
                               };
 
-                s.Children.Clear();
+                stackpanel.Children.Clear();
 
                 foreach (var r in results)
                 {
-                    WrapPanel p = new WrapPanel();
-                    TextBlock t = new TextBlock();
-                    t.Text = fc + " " + r.Relationship + " " + r.Entity_Two;
-                    t.Margin = new Thickness(3);
-                    //TODO functionality
-                    Button b = new Button();
-                    b.Content = "Delete";
-                    b.Margin = new Thickness(3);
-                    b.Width = 60;
-                    p.Children.Add(t);
-                    p.Children.Add(b);
-                    s.Children.Add(p);
-                    s.Children.Add(new Separator());
+                    WrapPanel panel = new WrapPanel();
+                    TextBlock textblock = new TextBlock();
+                    textblock.Text = fc + " " + r.Relationship + " " + r.Entity_Two;
+                    textblock.Margin = new Thickness(3);
+                    Button deleteButton = new Button();
+                    deleteButton.Click += DeleteButton_Click;
+                    deleteButton.Content = "Delete";
+                    deleteButton.Margin = new Thickness(3);
+                    deleteButton.Width = 60;
+                    panel.Children.Add(textblock);
+                    panel.Children.Add(deleteButton);
+                    stackpanel.Children.Add(panel);
+                    stackpanel.Children.Add(new Separator());
                 }
+            }
+        }
+
+        private void DeleteButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (MessageBox.Show("Are you sure you want to delete this relationship?", "Delete Relationship", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
+            {
+                //TODO functionality
+                //Delete
             }
         }
 

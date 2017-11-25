@@ -34,7 +34,7 @@
                             <RowDefinition Height="40"/>
                             <RowDefinition Height="40"/>
                             <RowDefinition Height="40"/>
-                            <RowDefinition Height="230"/>
+                            <RowDefinition Name="MiddleRow" MinHeight="230" Height="auto"/>
                             <RowDefinition Height="50"/>
                         </Grid.RowDefinitions>
 
@@ -72,7 +72,8 @@
                             <TextBox Name="summaryText" AcceptsReturn="True" TextWrapping="Wrap"></TextBox>
                         </ScrollViewer>
 
-                        <Button Content="Save Changes" Click="Save_Media_Information"  Grid.Row="6" Grid.Column="3" Width="110" Height="30" HorizontalAlignment="Center" VerticalAlignment="Center"></Button>
+                        <Button Content="Save Changes" Click="Save_Media_Information"  Grid.Row="6" Grid.Column="3" Width="110" Height="30" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        <Button Content="Back to Main Menu" Click="ReturnToMainMenu" Grid.Row="6" Grid.Column="1" Grid.ColumnSpan="2" Width="140" Height="30" HorizontalAlignment="Left" VerticalAlignment="Center"/>
 
                     </Grid>
                 </Label>

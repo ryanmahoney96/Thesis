@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 
 namespace citadel_wpf
 {
@@ -187,7 +188,8 @@ namespace citadel_wpf
         {
             if (!characters.ContainsKey(focusCharacter))
             {
-                characters.Add(focusCharacter, GetGenderColor(focusCharacter));
+                XElement tempRoot = XMLParser.GetInstance().GetCharacterXDocument().Root;
+                characters.Add(focusCharacter, GetGenderColor(focusCharacter, tempRoot));
                 return true;
             }
             return false;
@@ -219,20 +221,18 @@ namespace citadel_wpf
         }
 
         //TODO move format to XMLEntityParser?
-        private static IEnumerable<string> GetGenerationNames(string focusCharacter, string relationshipName, string childToIgnore = "")
+        private static IEnumerable<string> GetGenerationNames(string focusCharacter, string relationshipName, XElement rootPlaceholder, string childToIgnore = "")
         {
-            //TODO make more effecient by reducing the number of times the first line has to be called -> set descendant before the group of calls to this function is made
-            return (from c in XMLParser.GetInstance().GetCharacterRelationshipXDocument().Root.Descendants("character_relationship")
+            return (from c in rootPlaceholder.Descendants("character_relationship")
                     where c.Element("entity_one").Value.ToString().Equals(focusCharacter)
                     && c.Element("relationship").Value.ToString().Equals(relationshipName)
                     && (childToIgnore.Equals("") || (!childToIgnore.Equals("") && (!c.Element("entity_two").Value.ToString().Equals(childToIgnore))))
                     select c.Element("entity_two").Value.ToString());
         }
 
-        private static string GetGenderColor(string focusCharacter)
+        private static string GetGenderColor(string focusCharacter, XElement rootPlaceholder)
         {
-            //TODO make more effecient by reducing the number of times the first line has to be called -> set descendant before the group of calls to this function is made
-            var result = (from c in XMLParser.GetInstance().GetCharacterXDocument().Root.Descendants("character")
+            var result = (from c in rootPlaceholder.Descendants("character")
             where c.Element("name").Value.ToString().Equals(focusCharacter)
             select c.Element("gender").Value.ToString()).First();
 
@@ -251,15 +251,15 @@ namespace citadel_wpf
 
         private static IEnumerable<string> GetParentsOf(string focusCharacter)
         {
-            return GetGenerationNames(focusCharacter, "Is the Child of");
+            return GetGenerationNames(focusCharacter, "Is the Child of", XMLParser.GetInstance().GetCharacterRelationshipXDocument().Root);
         }
         private static IEnumerable<string> GetChildrenOf(string focusCharacter)
         {
-            return GetGenerationNames(focusCharacter, "Is the Parent of");
+            return GetGenerationNames(focusCharacter, "Is the Parent of", XMLParser.GetInstance().GetCharacterRelationshipXDocument().Root);
         }
         private static IEnumerable<string> GetSiblingsOf(string focusCharacter, string parent)
         {
-            return GetGenerationNames(parent, "Is the Parent of", focusCharacter);
+            return GetGenerationNames(parent, "Is the Parent of", XMLParser.GetInstance().GetCharacterRelationshipXDocument().Root, focusCharacter);
         }
 
     }

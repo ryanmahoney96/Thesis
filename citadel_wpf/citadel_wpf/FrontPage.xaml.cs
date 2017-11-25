@@ -23,7 +23,7 @@ namespace citadel_wpf
     public partial class FrontPage : Window
     {
         //TODO: Make "> \ <" in all text unusable + all non alphanumeric characters (" ' " and " - " should be included)
-        //TODO: Separate new folder and select folder dialogs
+        //TODO: On front page add option to go back to main menu
         //TODO: When making a new folder, verify that a media entry does not exist
         //TODO: Organize so event has list of pointers to things before and things after. Use this when adding new relationship to filter out contradictory data
         //TODO: Family Trees
@@ -74,6 +74,7 @@ namespace citadel_wpf
             SetWidths(ref event_notes_area, referenceWidth);
             SetWidths(ref location_notes_area, referenceWidth);
             MiddleColumn.Width = new GridLength(Width - 300);
+            MiddleRow.Height = new GridLength(Height - 300);
         }
 
         private void SetWidths(ref WrapPanel panel, double referenceWidth)
@@ -136,7 +137,7 @@ namespace citadel_wpf
 
         private void Character_Relationship_Click(object sender, RoutedEventArgs e)
         {
-            NewEntityWindow.InitializeModalWindow(this, (new NewCharacterRelationship()));
+            NewEntityWindow.InitializeModalWindow(this, (new ViewCharacterRelationships()));
         }
 
         private void Event_Relationship_Click(object sender, RoutedEventArgs e)
@@ -180,6 +181,16 @@ namespace citadel_wpf
                 
                 area.Children.Add(n);
                 //area.MinHeight += NoteNode.NoteNodeHeight / 2;
+            }
+        }
+
+        private void ReturnToMainMenu(object sender, RoutedEventArgs e)
+        {
+            if (MessageBox.Show("Are you sure you want to go back? Any unsaved data will be lost.", "Return to Main Menu", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
+            {
+                MainWindow m = new MainWindow();
+                m.Show();
+                Close();
             }
         }
 

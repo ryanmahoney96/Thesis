@@ -70,8 +70,8 @@
       <DependentUpon>ImageDisplayWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Media.cs" />
-    <Compile Include="NewCharacterRelationship.xaml.cs">
-      <DependentUpon>NewCharacterRelationship.xaml</DependentUpon>
+    <Compile Include="ViewCharacterRelationships.xaml.cs">
+      <DependentUpon>ViewCharacterRelationships.xaml</DependentUpon>
     </Compile>
     <Compile Include="NewEntityWindow.cs" />
     <Compile Include="NewEventRelationship.xaml.cs">
@@ -127,7 +127,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="NewCharacterRelationship.xaml">
+    <Page Include="ViewCharacterRelationships.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

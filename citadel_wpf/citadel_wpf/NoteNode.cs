@@ -20,15 +20,11 @@ namespace citadel_wpf
 
         public static int NameBoxHeight = 24;
         public static int ContentBoxHeight = 175;
-        public static int ButtonHeight = 22;
+        public static int ButtonHeight = 24;
         public static int ButtonWidth = 40;
 
         public static int NoteNodeWidth = 350;
         public static int NoteNodeHeight = NameBoxHeight + ContentBoxHeight + ButtonHeight + 25;
-
-        //TODO: give each notenode a reference to the entity it represents
-        //TODO: Add edit and delete buttons to notenode. Because of reference to entity you can manipulate the node and update
-        //TODO: make base constuctor. Make Button constructor and Text contructor that call it and each fill the node with that content
 
         public NoteNode(XDocument source)
         {
@@ -66,20 +62,41 @@ namespace citadel_wpf
 
             MainPanel.Children.Add(new Separator());
 
+            WrapPanel wrap = new WrapPanel();
+            wrap.HorizontalAlignment = HorizontalAlignment.Right;
+
             Button editButton = new Button();
             editButton.Content = "Edit";
             editButton.Click += EditClick;
             editButton.Height = ButtonHeight;
             editButton.Width = ButtonWidth;
+            editButton.Margin = new Thickness(2);
+            wrap.Children.Add(editButton);
 
-            MainPanel.Children.Add(editButton);
+            Button deleteButton = new Button();
+            deleteButton.Content = "Delete";
+            deleteButton.Click += DeleteClick; ;
+            deleteButton.Height = ButtonHeight;
+            deleteButton.Width = ButtonWidth;
+            deleteButton.Margin = new Thickness(2);
+            wrap.Children.Add(deleteButton);
+
+            MainPanel.Children.Add(wrap);
 
             this.Child = borderLine;
         }
 
+        private void DeleteClick(object sender, RoutedEventArgs e)
+        {
+            if (MessageBox.Show($"Are you sure you want to delete \"{NameText}?\"", "Delete Entity", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
+            {
+                //TODO Delete it
+            }
+        }
+
         public void EditClick(object sender, RoutedEventArgs e)
         {
-            //TODO: Edit button
+            //TODO Actually Edit 
             //ContentText = "Test";
             //NewEntityWindow newWindow;
 
@@ -153,7 +170,6 @@ namespace citadel_wpf
         }
 
         public string NameText { get => NameTextBlock.Text; set => NameTextBlock.Text = value; }
-        //public string ContentText { get => ContentTextBlock.Text; set => ContentTextBlock.Text = value; }
 
     }
 }
