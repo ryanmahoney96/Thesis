@@ -30,6 +30,7 @@ namespace citadel_wpf
         public FrontPage() : base()
         {
             InitializeComponent();
+            XMLParser.Instance.UpdateMediaXDocument();
             base.Title += " - " + XMLParser.FolderPath;
             Update_Note_Pages();
             FrontPageReference = this;
@@ -195,14 +196,16 @@ namespace citadel_wpf
             {
                 System.Windows.Forms.MessageBox.Show("The Title Is Invalid");
             }
+            else if (string.IsNullOrWhiteSpace(type_combobox.Text))
+            {
+                System.Windows.Forms.MessageBox.Show("Please Select a Media Type");
+            }
             else if (!XMLParser.IsYearValid(yearText.Text))
             {
                 System.Windows.Forms.MessageBox.Show("Invalid Year Entered");
             }
             else
             {
-                //TODO save confirmation
-
                 XElement mediaReference = (from c in XMLParser.MediaXDocument.Handle.Root.Descendants("media_note")
                                                where c.Element("name").Value.Equals(XMLName)
                                                select c).First();

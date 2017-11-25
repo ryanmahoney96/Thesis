@@ -35,7 +35,7 @@ namespace citadel_wpf
             }
             else
             {
-                if (!XMLParser.IsTextValid(name_text.Text) || !XMLParser.IsTextValid(description_text.Text))
+                if (!XMLParser.IsTextValid(name_text.Text) || string.IsNullOrWhiteSpace(description_text.Text))
                 {
                     required_text.Foreground = Brushes.Red;
                 }
@@ -55,57 +55,6 @@ namespace citadel_wpf
                 }
             }
 
-            /*StreamWriter general_notes_handle = null;
-
-            if (!note_text.Text.Equals(""))
-            {
-                try
-                {
-                    string note = note_text.Text;
-                    string filePath = folderPath + "\\general_notes.xml";
-
-                    if (File.Exists(filePath))
-                    {
-                        general_notes_handle = XMLParserClass.RemoveLastLine(filePath);
-                    }
-                    else
-                    {
-                        general_notes_handle = new StreamWriter(filePath, true);
-                        general_notes_handle.Write("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n\n<general_notes>\n\t");
-                    }
-
-                    general_notes_handle.Write("<note>\n\t<content>" + note + "\n\t</content></note>\n");
-
-                    general_notes_handle.Write("</general_notes>");
-
-                    general_notes_handle.Close();
-
-                    UpdateReliantWindows();
-
-                    Close();
-                }
-                catch (IOException)
-                {
-                    System.Windows.Forms.MessageBox.Show("An IO Error Occurred. Please Try Again.");
-                }
-                catch (Exception)
-                {
-                    System.Windows.Forms.MessageBox.Show("An Unexpected Error Occurred.");
-                }
-                finally
-                {
-                    if (!general_notes_handle.Equals(null))
-                    {
-                        general_notes_handle.Close();
-                    }
-
-                    Close();
-                }
-            }
-            else
-            {
-                required_text.Foreground = Brushes.Red;
-            }*/
         }
 
         override public void UpdateReliantWindows()

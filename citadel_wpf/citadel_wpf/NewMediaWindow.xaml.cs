@@ -22,14 +22,13 @@ namespace citadel_wpf
     /// </summary>
     public partial class NewMediaWindow : EntityWindow
     {
-        string folderPath;
 
         public NewMediaWindow(): base()
         {
             InitializeComponent();
+            XMLParser.Instance.UpdateMediaXDocument();
         }
 
-        //TODO use adapted save
         override protected void Save(object sender, RoutedEventArgs e)
         {
 
@@ -43,7 +42,7 @@ namespace citadel_wpf
                 required_text.Text = "Invalid Year";
                 required_text.Foreground = Brushes.Red;
             }
-            else if (!XMLParser.IsTextValid(type_combobox.Text))
+            else if (string.IsNullOrWhiteSpace(type_combobox.Text))
             {
                 required_text.Text = "Select a Media Type";
                 required_text.Foreground = Brushes.Red;
@@ -64,33 +63,7 @@ namespace citadel_wpf
                     XMLParser.MediaXDocument.Handle.Root.Add(newMedia);
                     XMLParser.MediaXDocument.Save();
 
-                    //string name = name_text.Text;
-                    //string year = year_text.Text;
-                    //string type = type_combobox.Text;
-                    //string genre = genre_combobox.Text;
-                    //string summary = summary_text.Text;
-                    //string filePath = folderPath + "\\media_notes.xml";
-
-                    //media_notes_handle = new StreamWriter(filePath, true);
-                    //media_notes_handle.Write("<?xml version=\"1.0\" encoding=\"UTF-8\"?><media_notes>");
-
-                    //media_notes_handle.Write("<media_note>");
-                    //media_notes_handle.Write("<name>" + name + "</name>");
-                    //media_notes_handle.Write("<year>" + year + "</year>");
-                    //media_notes_handle.Write("<type>" + type + "</type>");
-                    //media_notes_handle.Write("<genre>" + genre + "</genre>");
-                    //media_notes_handle.Write("<summary>" + summary + "</summary>");
-                    //media_notes_handle.Write("</media_note>");
-
-                    //media_notes_handle.Write("</media_notes>");
-
-                    //media_notes_handle.Close();
-
-                    //FrontPage frontPage = new FrontPage();
-                    //frontPage.Topmost = true;
-                    //frontPage.Topmost = false;
-                    //frontPage.Show();
-                    EntityWindow.InitializeModalWindow(this, new FrontPage());
+                    InitializeModalWindow(this, new FrontPage());
 
                     Close();
                 }

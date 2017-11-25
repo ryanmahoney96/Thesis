@@ -34,7 +34,7 @@ namespace citadel_wpf
             }
             else
             {
-                if (!XMLParser.IsTextValid(name_text.Text) || !XMLParser.IsTextValid(type_combobox.Text))
+                if (!XMLParser.IsTextValid(name_text.Text) || string.IsNullOrWhiteSpace(type_combobox.Text))
                 {
                     required_text.Foreground = Brushes.Red;
                 }
@@ -57,65 +57,6 @@ namespace citadel_wpf
                 }
             }
 
-            //StreamWriter location_notes_handle = null;
-
-            //if (!name_text.Text.Equals("") && !type_combobox.Text.Equals(""))
-            //{
-            //    try
-            //    {
-            //        string name = name_text.Text;
-            //        string type = type_combobox.Text;
-            //        string subtype = subtype_combobox.Text;
-            //        string description = description_text.Text;
-            //        string filePath = folderPath + "\\location_notes.xml";
-
-            //        if (File.Exists(filePath))
-            //        {
-            //            location_notes_handle = XMLParserClass.RemoveLastLine(filePath);
-            //        }
-            //        else
-            //        {
-            //            location_notes_handle = new StreamWriter(filePath, true);
-            //            location_notes_handle.Write("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n\n<locations>\n\t");
-            //        }
-
-            //        location_notes_handle.Write("<location>\n\t\t");
-            //        location_notes_handle.Write("<name>" + name + "</name>\n\t\t");
-            //        location_notes_handle.Write("<type>" + type + "</type>\n\t\t");
-            //        location_notes_handle.Write("<subtype>" + subtype + "</subtype>\n\t\t");
-            //        location_notes_handle.Write("<description>" + description + "</description>\n\t");
-            //        location_notes_handle.Write("</location>\n\n");
-
-            //        location_notes_handle.Write("</locations>");
-
-            //        location_notes_handle.Close();
-
-            //        UpdateReliantWindows();
-
-            //        Close();
-            //    }
-            //    catch (IOException)
-            //    {
-            //        System.Windows.Forms.MessageBox.Show("An IO Error Occurred. Please Try Again.");
-            //    }
-            //    catch (Exception)
-            //    {
-            //        System.Windows.Forms.MessageBox.Show("An Unexpected Error Occurred.");
-            //    }
-            //    finally
-            //    {
-            //        if (!location_notes_handle.Equals(null))
-            //        {
-            //            location_notes_handle.Close();
-            //        }
-
-            //        Close();
-            //    }
-            //}
-            //else
-            //{
-            //    required_text.Foreground = Brushes.Red;
-            //}
         }
 
         private void updateSubtypes()

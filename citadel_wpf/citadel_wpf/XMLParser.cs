@@ -50,6 +50,8 @@ namespace citadel_wpf
         private void SetXDocumentContent(string documentName, ref XDocumentPair handle)
         {
             string filePath = FolderPath + $"\\{documentName}.xml";
+
+            //TODO necessary?
             if (!File.Exists(filePath))
             {
                 StreamWriter s = File.CreateText(filePath);
@@ -63,6 +65,12 @@ namespace citadel_wpf
             handle.Handle = XDocument.Load(filePath);
             handle.Path = filePath;
         }
+
+        public void UpdateMediaXDocument()
+        {
+            SetXDocumentContent("media_notes", ref MediaXDocument);
+        }
+
         public void UpdateXDocuments()
         {
             SetXDocumentContent("character_notes", ref CharacterXDocument);
@@ -71,7 +79,6 @@ namespace citadel_wpf
             SetXDocumentContent("event_notes", ref EventXDocument);
             SetXDocumentContent("event_relationship_notes", ref EventRelationshipXDocument);
             SetXDocumentContent("general_notes", ref NoteXDocument);
-            SetXDocumentContent("media_notes", ref MediaXDocument);
         }
 
         public static List<Dictionary<string, string>> GetAllEntities(XDocument handle)

@@ -20,10 +20,10 @@ namespace citadel_wpf
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class MainWindow : EntityWindow
     {
 
-        public MainWindow()
+        public MainWindow(): base()
         {
             InitializeComponent();
         }
@@ -69,7 +69,12 @@ namespace citadel_wpf
 
         }
 
-        private void Submit_Folder(object sender, RoutedEventArgs e)
+        override public void UpdateReliantWindows()
+        {
+            //
+        }
+
+        override protected void Save(object sender, RoutedEventArgs e)
         {
             if (!string.IsNullOrWhiteSpace(folderName.Text))
             {
