@@ -19,17 +19,16 @@ namespace citadel_wpf
     /// <summary>
     /// Interaction logic for NewEntityWindow.xaml
     /// </summary>
-    public abstract class NewEntityWindow : Window
+    public abstract class EntityWindow : Window
     {
-        protected NewEntityWindow[] reliantWindows;
-        protected List<String> controlTexts;
+        protected EntityWindow[] reliantWindows;
 
-        public NewEntityWindow(params NewEntityWindow[] rw): this()
+        public EntityWindow(params EntityWindow[] rw): this()
         {
             reliantWindows = rw;
-            controlTexts = new List<String>();
         }
-        public NewEntityWindow()
+
+        public EntityWindow()
         {
             Background = (SolidColorBrush)(new BrushConverter().ConvertFrom("#fcfcff"));
             BorderBrush = Brushes.DarkBlue;

@@ -16,11 +16,11 @@ using System.Xml.Linq;
 
 namespace citadel_wpf
 {
-    public partial class RelationshipPrompt : NewEntityWindow
+    public partial class RelationshipPrompt : EntityWindow
     {
         string FocusCharacter;
 
-        public RelationshipPrompt(string fc, params NewEntityWindow[] rw) : base(rw)
+        public RelationshipPrompt(string fc, params EntityWindow[] rw) : base(rw)
         {
             InitializeComponent();
 
@@ -69,8 +69,7 @@ namespace citadel_wpf
 
                     XMLParser.CharacterRelationshipXDocument.Handle.Root.Add(newCharacterRelationship);
 
-
-                    XMLParser.CharacterRelationshipXDocument.Handle.Save(XMLParser.FolderPath + "\\character_relationship_notes.xml");
+                    XMLParser.CharacterRelationshipXDocument.Save();
 
                     UpdateReliantWindows();
                     if (MessageBox.Show($"Would you like to create another relationship for \"{FocusCharacter}?\"", "Create Another Relationship", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.No)
@@ -83,14 +82,14 @@ namespace citadel_wpf
 
         private void Add_Character(object sender, RoutedEventArgs e)
         {
-            NewEntityWindow.InitializeModalWindow(this, new NewCharacterWindow(this));
+            EntityWindow.InitializeModalWindow(this, new NewCharacterWindow(this));
             XMLParser.FillComboboxWithNames(XMLParser.CharacterXDocument.Handle, ref character_two_combo, FocusCharacter);
         }
 
-        public override void UpdateReliantWindows()
+        override public void UpdateReliantWindows()
         {
 
-            foreach (NewEntityWindow w in reliantWindows)
+            foreach (EntityWindow w in reliantWindows)
             {
                 w.UpdateReliantWindows();
             }

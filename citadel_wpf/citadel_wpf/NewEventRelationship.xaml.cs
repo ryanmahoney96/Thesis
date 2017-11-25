@@ -19,7 +19,7 @@ namespace citadel_wpf
     /// <summary>
     /// Interaction logic for NewEventRelationship.xaml
     /// </summary>
-    public partial class NewEventRelationship : NewEntityWindow
+    public partial class NewEventRelationship : EntityWindow
     {
 
         public NewEventRelationship() : base()
@@ -70,7 +70,7 @@ namespace citadel_wpf
 
                     XMLParser.EventRelationshipXDocument.Handle.Root.Add(newEventRelationship);
 
-                    XMLParser.EventRelationshipXDocument.Handle.Save(XMLParser.FolderPath + "\\event_relationship_notes.xml");
+                    XMLParser.EventRelationshipXDocument.Save();
 
                     UpdateReliantWindows();
                     Close();
@@ -80,10 +80,10 @@ namespace citadel_wpf
 
         private void Add_Event(object sender, RoutedEventArgs e)
         {
-            NewEntityWindow.InitializeModalWindow(this, new NewEventWindow(this));      
+            EntityWindow.InitializeModalWindow(this, new NewEventWindow(this));      
         }
 
-        public override void UpdateReliantWindows()
+        override public void UpdateReliantWindows()
         {
             XMLParser.FillComboboxWithNames(XMLParser.EventXDocument.Handle, ref event_one_combo);
             event_two_combo.Items.Clear();

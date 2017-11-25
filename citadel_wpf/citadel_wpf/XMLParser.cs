@@ -32,12 +32,14 @@ namespace citadel_wpf
         public static XDocumentPair EventXDocument;
         public static XDocumentPair EventRelationshipXDocument;
         public static XDocumentPair NoteXDocument;
+        public static XDocumentPair MediaXDocument;
 
         public static string FolderPath;
 
         public static XMLParser Instance;
 
         private static Regex validCharacterRegex = new Regex(@"^[a-zA-Z0-9'\- ]+$");
+        private static Regex yearRegex = new Regex(@"^[0-9]*$");
 
         public XMLParser(string folderPath)
         {
@@ -69,6 +71,7 @@ namespace citadel_wpf
             SetXDocumentContent("event_notes", ref EventXDocument);
             SetXDocumentContent("event_relationship_notes", ref EventRelationshipXDocument);
             SetXDocumentContent("general_notes", ref NoteXDocument);
+            SetXDocumentContent("media_notes", ref MediaXDocument);
         }
 
         public static List<Dictionary<string, string>> GetAllEntities(XDocument handle)
@@ -187,6 +190,10 @@ namespace citadel_wpf
         public static bool IsTextValid(string text)
         {
             return !(string.IsNullOrWhiteSpace(text) || !validCharacterRegex.IsMatch(text));
+        }
+        public static bool IsYearValid(string year)
+        {
+            return validCharacterRegex.IsMatch(year);
         }
     }
 }

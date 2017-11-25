@@ -69,11 +69,10 @@
     <Compile Include="ImageDisplayWindow.xaml.cs">
       <DependentUpon>ImageDisplayWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Media.cs" />
     <Compile Include="ViewCharacterRelationships.xaml.cs">
       <DependentUpon>ViewCharacterRelationships.xaml</DependentUpon>
     </Compile>
-    <Compile Include="NewEntityWindow.cs" />
+    <Compile Include="EntityWindow.cs" />
     <Compile Include="NewEventRelationship.xaml.cs">
       <DependentUpon>NewEventRelationship.xaml</DependentUpon>
     </Compile>

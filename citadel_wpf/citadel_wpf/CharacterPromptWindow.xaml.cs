@@ -17,7 +17,7 @@ namespace citadel_wpf
     /// <summary>
     /// Interaction logic for CharacterPromptWindow.xaml
     /// </summary>
-    public partial class CharacterPromptWindow : NewEntityWindow
+    public partial class CharacterPromptWindow : EntityWindow
     {
         private Action<string> action;
 
@@ -28,7 +28,7 @@ namespace citadel_wpf
             XMLParser.FillComboboxWithNames(XMLParser.CharacterXDocument.Handle, ref characterName);
         }
 
-        public override void UpdateReliantWindows()
+        override public void UpdateReliantWindows()
         {
             //
         }

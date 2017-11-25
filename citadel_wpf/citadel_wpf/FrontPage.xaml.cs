@@ -17,25 +17,24 @@ using System.Xml.Linq;
 
 namespace citadel_wpf
 {
-    /// <summary>
-    /// Interaction logic for Window1.xaml
-    /// </summary>
-    public partial class FrontPage : Window
+
+    public partial class FrontPage : EntityWindow
     {
         //TODO: When making a new folder, verify that a media entry does not exist
         //TODO: Organize so event has list of pointers to things before and things after. Use this when adding new relationship to filter out contradictory data
         //TODO: Stylize with https://github.com/MahApps/MahApps.Metro
 
         public static FrontPage FrontPageReference;
+        private string XMLName;
 
-        public FrontPage()
+        public FrontPage() : base()
         {
             InitializeComponent();
-            Title += " - " + XMLParser.FolderPath;
+            base.Title += " - " + XMLParser.FolderPath;
             Update_Note_Pages();
             FrontPageReference = this;
-            SizeChanged += FrontPage_SizeChanged;
-            Loaded += FrontPage_Loaded;
+            base.SizeChanged += FrontPage_SizeChanged;
+            base.Loaded += FrontPage_Loaded;
         }
 
         private void FrontPage_Loaded(object sender, EventArgs e)
@@ -67,8 +66,8 @@ namespace citadel_wpf
             SetWidths(ref character_notes_area, referenceWidth);
             SetWidths(ref event_notes_area, referenceWidth);
             SetWidths(ref location_notes_area, referenceWidth);
-            MiddleColumn.Width = new GridLength(Width - 300);
-            MiddleRow.Height = new GridLength(Height - 300);
+            MiddleColumn.Width = new GridLength(base.Width - 300);
+            MiddleRow.Height = new GridLength(base.Height - 300);
         }
 
         private void SetWidths(ref WrapPanel panel, double referenceWidth)
@@ -89,13 +88,13 @@ namespace citadel_wpf
             }
             else
             {
-                panel.MaxWidth = Width;
+                panel.MaxWidth = base.Width;
             }
         }
 
         private void New_Note_Click(object sender, RoutedEventArgs e)
         {
-            NewEntityWindow.InitializeModalWindow(this, (new NewGeneralNote()));
+            EntityWindow.InitializeModalWindow(this, (new NewGeneralNote()));
         }
         public void Update_Notes()
         {
@@ -104,7 +103,7 @@ namespace citadel_wpf
 
         private void New_Character_Click(object sender, RoutedEventArgs e)
         {
-            NewEntityWindow.InitializeModalWindow(this, (new NewCharacterWindow()));
+            EntityWindow.InitializeModalWindow(this, (new NewCharacterWindow()));
         }
         public void Update_Characters()
         {
@@ -113,7 +112,7 @@ namespace citadel_wpf
 
         private void New_Event_Click(object sender, RoutedEventArgs e)
         {
-            NewEntityWindow.InitializeModalWindow(this, (new NewEventWindow()));
+            EntityWindow.InitializeModalWindow(this, (new NewEventWindow()));
         }
         public void Update_Events()
         {
@@ -122,7 +121,7 @@ namespace citadel_wpf
 
         private void New_Location_Click(object sender, RoutedEventArgs e)
         {
-            NewEntityWindow.InitializeModalWindow(this, (new NewLocationWindow()));
+            EntityWindow.InitializeModalWindow(this, (new NewLocationWindow()));
         }
         public void Update_Locations()
         {
@@ -131,12 +130,12 @@ namespace citadel_wpf
 
         private void Character_Relationship_Click(object sender, RoutedEventArgs e)
         {
-            NewEntityWindow.InitializeModalWindow(this, (new ViewCharacterRelationships()));
+            EntityWindow.InitializeModalWindow(this, (new ViewCharacterRelationships()));
         }
 
         private void Event_Relationship_Click(object sender, RoutedEventArgs e)
         {
-            NewEntityWindow.InitializeModalWindow(this, (new NewEventRelationship()));
+            EntityWindow.InitializeModalWindow(this, (new NewEventRelationship()));
         }
 
         private void Update_Note_Pages()
@@ -152,6 +151,7 @@ namespace citadel_wpf
         {
             if (!information.Equals(null))
             {
+                XMLName = information["Name"].ToString();
                 titleText.Text = information["Name"].ToString();
                 yearText.Text = information["Year"].ToString();
                 type_combobox.Text = information["Type"].ToString();
@@ -184,51 +184,69 @@ namespace citadel_wpf
             {
                 MainWindow m = new MainWindow();
                 m.Show();
-                Close();
+                base.Close();
             }
         }
 
-        private void Save_Media_Information(object sender, RoutedEventArgs e)
+        override protected void Save(object sender, RoutedEventArgs e)
         {
-            Regex yearRegex = new Regex(@"^[0-9]*$");
 
             if (!XMLParser.IsTextValid(titleText.Text))
             {
                 System.Windows.Forms.MessageBox.Show("The Title Is Invalid");
             }
-            else if (!yearRegex.IsMatch(yearText.Text))
+            else if (!XMLParser.IsYearValid(yearText.Text))
             {
                 System.Windows.Forms.MessageBox.Show("Invalid Year Entered");
             }
             else
             {
-                Media m = new Media(titleText.Text, yearText.Text, type_combobox.Text, genre_combobox.Text, summaryText.Text);
-                m.Save(XMLParser.FolderPath);
                 //TODO save confirmation
+
+                XElement mediaReference = (from c in XMLParser.MediaXDocument.Handle.Root.Descendants("media_note")
+                                               where c.Element("name").Value.Equals(XMLName)
+                                               select c).First();
+
+                XMLName = mediaReference.Element("name").Value;
+
+                mediaReference.Element("name").Value = titleText.Text;
+                mediaReference.Element("year").Value = yearText.Text;
+                mediaReference.Element("type").Value = type_combobox.Text;
+                mediaReference.Element("genre").Value = genre_combobox.Text;
+                mediaReference.Element("summary").Value = summaryText.Text;
+
+                XMLParser.MediaXDocument.Save();
+
+                MessageBox.Show("The Media was Successfully Saved", "Success", MessageBoxButton.OK);
             }
+        }
+
+        override public void UpdateReliantWindows()
+        {
+            //
         }
 
         private void NewImmediateFamilyTree(object sender, RoutedEventArgs e)
         {
             Action<string> a = FamilyTreeConstruction.ImmediateFamilyTree;
-            NewEntityWindow.InitializeModalWindow(this, (new CharacterPromptWindow(a)));
+            EntityWindow.InitializeModalWindow(this, (new CharacterPromptWindow(a)));
         }
 
         private void NewExtendedFamilyTree(object sender, RoutedEventArgs e)
         {
             Action<string> a = FamilyTreeConstruction.ExtendedFamilyTree;
-            NewEntityWindow.InitializeModalWindow(this, (new CharacterPromptWindow(a)));
+            EntityWindow.InitializeModalWindow(this, (new CharacterPromptWindow(a)));
         }
 
         private void NewFullFamilyTree(object sender, RoutedEventArgs e)
         {
             Action<string> a = FamilyTreeConstruction.RecursiveFullFamilyTree;
-            NewEntityWindow.InitializeModalWindow(this, (new CharacterPromptWindow(a)));
+            EntityWindow.InitializeModalWindow(this, (new CharacterPromptWindow(a)));
         }
 
         private void NewEventMap(object sender, RoutedEventArgs e)
         {
-            NewEntityWindow.InitializeModalWindow(this, (new LocationPromptWindow()));
+            EntityWindow.InitializeModalWindow(this, (new LocationPromptWindow()));
         }
     }
 }

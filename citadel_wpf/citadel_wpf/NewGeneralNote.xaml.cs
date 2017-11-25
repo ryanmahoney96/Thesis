@@ -19,9 +19,9 @@ namespace citadel_wpf
     /// <summary>
     /// Interaction logic for NewGeneralNote.xaml
     /// </summary>
-    public partial class NewGeneralNote : NewEntityWindow
+    public partial class NewGeneralNote : EntityWindow
     {
-        public NewGeneralNote(params NewEntityWindow[] rw) : base(rw)
+        public NewGeneralNote(params EntityWindow[] rw) : base(rw)
         {
             InitializeComponent();
         }
@@ -48,7 +48,7 @@ namespace citadel_wpf
                     string temp = newNote.ToString();
 
                     XMLParser.NoteXDocument.Handle.Root.Add(newNote);
-                    XMLParser.NoteXDocument.Handle.Save(XMLParser.FolderPath + "\\general_notes.xml");
+                    XMLParser.NoteXDocument.Save();
 
                     UpdateReliantWindows();
                     Close();
@@ -108,11 +108,11 @@ namespace citadel_wpf
             }*/
         }
 
-        public override void UpdateReliantWindows()
+        override public void UpdateReliantWindows()
         {
             FrontPage.FrontPageReference.Update_Notes();
 
-            foreach (NewEntityWindow w in reliantWindows)
+            foreach (EntityWindow w in reliantWindows)
             {
                 w.UpdateReliantWindows();
             }

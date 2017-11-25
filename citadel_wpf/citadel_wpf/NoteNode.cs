@@ -99,7 +99,7 @@ namespace citadel_wpf
             //TODO Actually Edit 
             NewCharacterWindow ncw = new NewCharacterWindow(null);
             ncw.FillWith("Ryan");
-            NewEntityWindow.InitializeModalWindow(null, ncw);
+            EntityWindow.InitializeModalWindow(null, ncw);
 
             //ContentText = "Test";
             //NewEntityWindow newWindow;

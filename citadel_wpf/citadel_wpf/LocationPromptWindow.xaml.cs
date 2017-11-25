@@ -15,10 +15,10 @@ using System.Windows.Shapes;
 namespace citadel_wpf
 {
 
-    public partial class LocationPromptWindow : NewEntityWindow
+    public partial class LocationPromptWindow : EntityWindow
     {
         //TODO Tooltips
-        public LocationPromptWindow(params NewEntityWindow[] rw) : base(rw)
+        public LocationPromptWindow(params EntityWindow[] rw) : base(rw)
         {
             InitializeComponent();
         }
@@ -46,7 +46,7 @@ namespace citadel_wpf
             }
         }
 
-        public override void UpdateReliantWindows()
+        override public void UpdateReliantWindows()
         {
             //
         }

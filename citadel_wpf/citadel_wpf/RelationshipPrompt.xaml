@@ -1,4 +1,4 @@
-﻿<base:NewEntityWindow x:Class="citadel_wpf.RelationshipPrompt"
+﻿<base:EntityWindow x:Class="citadel_wpf.RelationshipPrompt"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -13,7 +13,6 @@
 
         <Grid.RowDefinitions>
             <RowDefinition Height="5"/>
-            <RowDefinition Height="35"/>
             <RowDefinition Height="35"/>
             <RowDefinition Height="35"/>
             <RowDefinition Height="35"/>
@@ -51,4 +50,4 @@
         <Button Content="Save" Click="Save" Grid.Row="4" Grid.Column="3" Width="50" Height="25" Margin="0,0,5,0" HorizontalAlignment="Right"></Button>
 
     </Grid>
-</base:NewEntityWindow>
+</base:EntityWindow>

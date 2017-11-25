@@ -19,11 +19,11 @@ namespace citadel_wpf
     /// <summary>
     /// Interaction logic for NewCharacterWindow.xaml
     /// </summary>
-    public partial class NewCharacterWindow : NewEntityWindow
+    public partial class NewCharacterWindow : EntityWindow
     {
         private bool Editing = false;
 
-        public NewCharacterWindow(params NewEntityWindow[] rw) : base(rw)
+        public NewCharacterWindow(params EntityWindow[] rw) : base(rw)
         {
             InitializeComponent();
         }
@@ -64,6 +64,7 @@ namespace citadel_wpf
                 }
                 else
                 {
+                    //TODO distribute
                     if (Editing)
                     {
                         XElement characterReference = (from c in XMLParser.CharacterXDocument.Handle.Root.Descendants("character")
@@ -72,7 +73,7 @@ namespace citadel_wpf
 
                         characterReference.Element("gender").Value = gender_combo_box.Text;
                         characterReference.Element("description").Value = description_text.Text;
-                        XMLParser.CharacterXDocument.Handle.Save(XMLParser.CharacterXDocument.Path);
+                        XMLParser.CharacterXDocument.Save();
                     }
                     else
                     {
@@ -84,7 +85,7 @@ namespace citadel_wpf
                         string temp = newCharacter.ToString();
 
                         XMLParser.CharacterXDocument.Handle.Root.Add(newCharacter);
-                        XMLParser.CharacterXDocument.Handle.Save(XMLParser.CharacterXDocument.Path);
+                        XMLParser.CharacterXDocument.Save();
                     }
                     
 
@@ -94,11 +95,11 @@ namespace citadel_wpf
             }
         }
 
-        public override void UpdateReliantWindows()
+        override public void UpdateReliantWindows()
         {
             FrontPage.FrontPageReference.Update_Characters();
 
-            foreach (NewEntityWindow w in reliantWindows)
+            foreach (EntityWindow w in reliantWindows)
             {
                 w.UpdateReliantWindows();
             }

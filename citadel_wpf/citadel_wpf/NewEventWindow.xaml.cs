@@ -21,10 +21,10 @@ namespace citadel_wpf
     /// <summary>
     /// Interaction logic for NewCharacterWindow.xaml
     /// </summary>
-    public partial class NewEventWindow : NewEntityWindow
+    public partial class NewEventWindow : EntityWindow
     {
 
-        public NewEventWindow(params NewEntityWindow[] rw) : base(rw)
+        public NewEventWindow(params EntityWindow[] rw) : base(rw)
         {
             InitializeComponent();
             Initialize_Locations();
@@ -62,7 +62,7 @@ namespace citadel_wpf
                     string temp = newEvent.ToString();
 
                     XMLParser.EventXDocument.Handle.Root.Add(newEvent);
-                    XMLParser.EventXDocument.Handle.Save(XMLParser.EventXDocument.Path);
+                    XMLParser.EventXDocument.Save();
 
                     UpdateReliantWindows();
                     Close();
@@ -133,12 +133,12 @@ namespace citadel_wpf
             */
         }
 
-        public override void UpdateReliantWindows()
+        override public void UpdateReliantWindows()
         {
             FrontPage.FrontPageReference.Update_Events();
             Initialize_Locations();
 
-            foreach (NewEntityWindow w in reliantWindows)
+            foreach (EntityWindow w in reliantWindows)
             {
                 w.UpdateReliantWindows();
             }
@@ -146,7 +146,7 @@ namespace citadel_wpf
 
         private void Add_New_Location(object sender, RoutedEventArgs e)
         {
-            NewEntityWindow.InitializeModalWindow(this, new NewLocationWindow(this));
+            EntityWindow.InitializeModalWindow(this, new NewLocationWindow(this));
         }
     }
 }

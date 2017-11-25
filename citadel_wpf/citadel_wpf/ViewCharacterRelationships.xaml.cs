@@ -19,7 +19,7 @@ namespace citadel_wpf
     /// <summary>
     /// Interaction logic for NewCharacterRelationship.xaml
     /// </summary>
-    public partial class ViewCharacterRelationships : NewEntityWindow
+    public partial class ViewCharacterRelationships : EntityWindow
     {
 
         //TODO: Add an "ADD" button so that you don't have to keep going back and forth between windows for one character
@@ -133,10 +133,10 @@ namespace citadel_wpf
 
         private void Add_Character(object sender, RoutedEventArgs e)
         {
-            NewEntityWindow.InitializeModalWindow(this, new NewCharacterWindow(this));
+            EntityWindow.InitializeModalWindow(this, new NewCharacterWindow(this));
         }
 
-        public override void UpdateReliantWindows()
+        override public void UpdateReliantWindows()
         {
             XMLParser.FillComboboxWithNames(XMLParser.CharacterXDocument.Handle, ref focus_character_combo);
             focus_character_combo.Text = "";
@@ -148,7 +148,7 @@ namespace citadel_wpf
         {
             if (!string.IsNullOrWhiteSpace(focus_character_combo.Text))
             {
-                NewEntityWindow.InitializeModalWindow(this, new RelationshipPrompt(focus_character_combo.Text, this));
+                EntityWindow.InitializeModalWindow(this, new RelationshipPrompt(focus_character_combo.Text, this));
             }
         }
     }

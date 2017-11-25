@@ -19,9 +19,9 @@ namespace citadel_wpf
     /// <summary>
     /// Interaction logic for NewLocationWindow.xaml
     /// </summary>
-    public partial class NewLocationWindow : NewEntityWindow
+    public partial class NewLocationWindow : EntityWindow
     {
-        public NewLocationWindow(params NewEntityWindow[] rw) : base(rw)
+        public NewLocationWindow(params EntityWindow[] rw) : base(rw)
         {
             InitializeComponent();
         }
@@ -50,7 +50,7 @@ namespace citadel_wpf
                     string temp = newLocation.ToString();
 
                     XMLParser.LocationXDocument.Handle.Root.Add(newLocation);
-                    XMLParser.LocationXDocument.Handle.Save(XMLParser.FolderPath + "\\location_notes.xml");
+                    XMLParser.LocationXDocument.Save();
 
                     UpdateReliantWindows();
                     Close();
@@ -180,11 +180,11 @@ namespace citadel_wpf
             updateSubtypes();
         }
 
-        public override void UpdateReliantWindows()
+        override public void UpdateReliantWindows()
         {
             FrontPage.FrontPageReference.Update_Locations();
 
-            foreach (NewEntityWindow w in reliantWindows)
+            foreach (EntityWindow w in reliantWindows)
             {
                 w.UpdateReliantWindows();
             }

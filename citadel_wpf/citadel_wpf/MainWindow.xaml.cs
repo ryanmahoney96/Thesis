@@ -81,12 +81,11 @@ namespace citadel_wpf
         {
             string mediaNotes = folderName.Text + "\\media_notes.xml";
 
-            //TODO create here, drop singleton pattern
             XMLParser.Instance = new XMLParser(folderName.Text);
 
             if (!File.Exists(mediaNotes))
             {
-                NewMediaWindow nmw = new NewMediaWindow(folderName.Text);
+                NewMediaWindow nmw = new NewMediaWindow();
                 nmw.Topmost = true;
                 nmw.Topmost = false;
                 nmw.Show();
