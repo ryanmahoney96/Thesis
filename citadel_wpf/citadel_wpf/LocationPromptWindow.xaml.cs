@@ -60,7 +60,7 @@ namespace citadel_wpf
                 if (emt.Equals("Single Event Map"))
                 {
                     locationName.IsEnabled = true;
-                    XMLParser.FillBoxWithNames(XMLParser.GetInstance().GetLocationXDocument(), ref locationName);
+                    XMLParser.FillComboboxWithNames(XMLParser.LocationXDocument.Handle, ref locationName);
                 }
                 else
                 {

@@ -28,7 +28,7 @@ namespace citadel_wpf
 
         override protected void Save(object sender, RoutedEventArgs e)
         {
-            if (XMLParser.IsPresent(XMLParser.GetInstance().GetLocationXDocument(), name_text.Text))
+            if (XMLParser.IsEntityPresent(XMLParser.LocationXDocument.Handle, name_text.Text))
             {
                 System.Windows.Forms.MessageBox.Show("This location already exists, please try again.");
             }
@@ -49,8 +49,8 @@ namespace citadel_wpf
 
                     string temp = newLocation.ToString();
 
-                    XMLParser.GetInstance().GetLocationXDocument().Root.Add(newLocation);
-                    XMLParser.GetInstance().GetLocationXDocument().Save(FrontPage.FolderPath + "\\location_notes.xml");
+                    XMLParser.LocationXDocument.Handle.Root.Add(newLocation);
+                    XMLParser.LocationXDocument.Handle.Save(XMLParser.FolderPath + "\\location_notes.xml");
 
                     UpdateReliantWindows();
                     Close();

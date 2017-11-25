@@ -44,7 +44,7 @@ namespace citadel_wpf
         {
             StringBuilder echo = new StringBuilder($"graph s {{ label=\"Full Event Map\" {fontname} {overlap} {bgcolor}; ");
 
-            foreach (var l in XMLParser.GetAllNames(XMLParser.GetInstance().GetLocationXDocument()))
+            foreach (var l in XMLParser.GetAllEntityNames(XMLParser.LocationXDocument.Handle))
             {
                 AddEventInformation(ref echo, l);
             }
@@ -76,7 +76,7 @@ namespace citadel_wpf
 
         private static IEnumerable<EventInfo> GetEventsAtLocation(string focusLocation)
         {
-            return (from c in XMLParser.GetInstance().GetEventXDocument().Root.Descendants("event")
+            return (from c in XMLParser.EventXDocument.Handle.Root.Descendants("event")
                     where c.Element("location").Value.ToString().Equals(focusLocation)
                     select new EventInfo
                     {
@@ -96,8 +96,8 @@ namespace citadel_wpf
                 focusLocation += "_";
             }
 
-            string textPath = FrontPage.FolderPath + $"\\{type}.dot";
-            string imagePath = $"{FrontPage.FolderPath}/{focusLocation}{type}.png";
+            string textPath = XMLParser.FolderPath + $"\\{type}.dot";
+            string imagePath = $"{XMLParser.FolderPath}/{focusLocation}{type}.png";
             StreamWriter streamwriter = File.CreateText(textPath);
             streamwriter.Write(echo);
             streamwriter.Close();

@@ -76,7 +76,7 @@ namespace citadel_wpf
 
                     media_notes_handle.Close();
 
-                    FrontPage frontPage = new FrontPage(folderPath);
+                    FrontPage frontPage = new FrontPage();
                     frontPage.Topmost = true;
                     frontPage.Topmost = false;
                     frontPage.Show();
@@ -87,10 +87,6 @@ namespace citadel_wpf
                 {
                     System.Windows.Forms.MessageBox.Show("An IO Error Occurred. Please Try Again.");
                 }
-                //catch (Exception)
-                //{
-                //    System.Windows.Forms.MessageBox.Show("An Unexpected Error Occurred.");
-                //}
                 finally
                 {
                     if (!media_notes_handle.Equals(null))

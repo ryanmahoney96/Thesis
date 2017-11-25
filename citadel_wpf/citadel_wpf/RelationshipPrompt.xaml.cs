@@ -27,7 +27,7 @@ namespace citadel_wpf
             FocusCharacter = fc;
             focus_character.Text = FocusCharacter;
 
-            XMLParser.FillBoxWithNames(XMLParser.GetInstance().GetCharacterXDocument(), ref character_two_combo, FocusCharacter);
+            XMLParser.FillComboboxWithNames(XMLParser.CharacterXDocument.Handle, ref character_two_combo, FocusCharacter);
         }
 
         override protected void Save(object sender, RoutedEventArgs e)
@@ -48,8 +48,8 @@ namespace citadel_wpf
 
             else
             {
-                if (XMLParser.IsRelationshipPresent(XMLParser.GetInstance().GetCharacterRelationshipXDocument(), FocusCharacter, relationship, character_two_combo.Text)
-                || XMLParser.IsRelationshipPresent(XMLParser.GetInstance().GetCharacterRelationshipXDocument(), character_two_combo.Text, opposite, FocusCharacter))
+                if (XMLParser.IsRelationshipPresent(XMLParser.CharacterRelationshipXDocument.Handle, FocusCharacter, relationship, character_two_combo.Text)
+                || XMLParser.IsRelationshipPresent(XMLParser.CharacterRelationshipXDocument.Handle, character_two_combo.Text, opposite, FocusCharacter))
                 {
                     System.Windows.Forms.MessageBox.Show("This relationship already exists, please try again.");
                 }
@@ -60,17 +60,17 @@ namespace citadel_wpf
                     new XElement("relationship", relationship),
                     new XElement("entity_two", character_two_combo.Text));
 
-                    XMLParser.GetInstance().GetCharacterRelationshipXDocument().Root.Add(newCharacterRelationship);
+                    XMLParser.CharacterRelationshipXDocument.Handle.Root.Add(newCharacterRelationship);
 
                     newCharacterRelationship = new XElement("character_relationship",
                     new XElement("entity_one", character_two_combo.Text),
                     new XElement("relationship", opposite),
                     new XElement("entity_two", FocusCharacter));
 
-                    XMLParser.GetInstance().GetCharacterRelationshipXDocument().Root.Add(newCharacterRelationship);
+                    XMLParser.CharacterRelationshipXDocument.Handle.Root.Add(newCharacterRelationship);
 
 
-                    XMLParser.GetInstance().GetCharacterRelationshipXDocument().Save(FrontPage.FolderPath + "\\character_relationship_notes.xml");
+                    XMLParser.CharacterRelationshipXDocument.Handle.Save(XMLParser.FolderPath + "\\character_relationship_notes.xml");
 
                     UpdateReliantWindows();
                     if (MessageBox.Show($"Would you like to create another relationship for \"{FocusCharacter}?\"", "Create Another Relationship", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.No)
@@ -84,7 +84,7 @@ namespace citadel_wpf
         private void Add_Character(object sender, RoutedEventArgs e)
         {
             NewEntityWindow.InitializeModalWindow(this, new NewCharacterWindow(this));
-            XMLParser.FillBoxWithNames(XMLParser.GetInstance().GetCharacterXDocument(), ref character_two_combo, FocusCharacter);
+            XMLParser.FillComboboxWithNames(XMLParser.CharacterXDocument.Handle, ref character_two_combo, FocusCharacter);
         }
 
         public override void UpdateReliantWindows()

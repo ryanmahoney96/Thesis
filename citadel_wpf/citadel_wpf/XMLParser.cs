@@ -15,31 +15,42 @@ namespace citadel_wpf
 {
     class XMLParser
     {
-        private static XDocument characterXDocument = null;
-        private static XDocument characterRelationshipXDocument = null;
-        private static XDocument locationXDocument = null;
-        private static XDocument eventXDocument = null;
-        private static XDocument eventRelationshipXDocument = null;
-        private static XDocument noteXDocument = null;
+        public struct XDocumentPair
+        {
+            public XDocument Handle;
+            public string Path;
+            public void Save()
+            {
+                Handle.Save(Path);
+                Handle = XDocument.Load(Path);
+            }
+        }
 
-        private static XMLParser instance = null;
-        //TODO get rid of, or move here
-        private static string FolderPath;
+        public static XDocumentPair CharacterXDocument;
+        public static XDocumentPair CharacterRelationshipXDocument;
+        public static XDocumentPair LocationXDocument;
+        public static XDocumentPair EventXDocument;
+        public static XDocumentPair EventRelationshipXDocument;
+        public static XDocumentPair NoteXDocument;
+
+        public static string FolderPath;
+
+        public static XMLParser Instance;
 
         private static Regex validCharacterRegex = new Regex(@"^[a-zA-Z0-9'\- ]+$");
 
-        private XMLParser(string folderPath)
+        public XMLParser(string folderPath)
         {
             FolderPath = folderPath;
             UpdateXDocuments();
         }
 
-        private void SetXDocumentContent(string folderName, string documentName, ref XDocument handle)
+        private void SetXDocumentContent(string documentName, ref XDocumentPair handle)
         {
-            string filePath = folderName + $"\\{documentName}.xml";
+            string filePath = FolderPath + $"\\{documentName}.xml";
             if (!File.Exists(filePath))
             {
-                StreamWriter s = File.CreateText(folderName + $"\\{documentName}.xml");
+                StreamWriter s = File.CreateText(filePath);
                 s.WriteLine("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
                 s.WriteLine($"<{documentName}>");
                 s.WriteLine($"");
@@ -47,54 +58,20 @@ namespace citadel_wpf
                 s.Close();
             }
 
-            handle = XDocument.Load(filePath);
+            handle.Handle = XDocument.Load(filePath);
+            handle.Path = filePath;
         }
         public void UpdateXDocuments()
         {
-            SetXDocumentContent(FolderPath, "character_notes", ref characterXDocument);
-            SetXDocumentContent(FolderPath, "character_relationship_notes", ref characterRelationshipXDocument);
-            SetXDocumentContent(FolderPath, "location_notes", ref locationXDocument);
-            SetXDocumentContent(FolderPath, "event_notes", ref eventXDocument);
-            SetXDocumentContent(FolderPath, "event_relationship_notes", ref eventRelationshipXDocument);
-            SetXDocumentContent(FolderPath, "general_notes", ref noteXDocument);
+            SetXDocumentContent("character_notes", ref CharacterXDocument);
+            SetXDocumentContent("character_relationship_notes", ref CharacterRelationshipXDocument);
+            SetXDocumentContent("location_notes", ref LocationXDocument);
+            SetXDocumentContent("event_notes", ref EventXDocument);
+            SetXDocumentContent("event_relationship_notes", ref EventRelationshipXDocument);
+            SetXDocumentContent("general_notes", ref NoteXDocument);
         }
 
-        public static XMLParser GetInstance(string folderPath = "")
-        {
-            if (instance == null)
-            {
-                instance = new XMLParser(folderPath);
-            }
-
-            return instance;
-        }
-
-        public ref XDocument GetCharacterXDocument()
-        {
-            return ref characterXDocument;
-        }
-        public ref XDocument GetCharacterRelationshipXDocument()
-        {
-            return ref characterRelationshipXDocument;
-        }
-        public ref XDocument GetLocationXDocument()
-        {
-            return ref locationXDocument;
-        }
-        public ref XDocument GetEventXDocument()
-        {
-            return ref eventXDocument;
-        }
-        public ref XDocument GetEventRelationshipXDocument()
-        {
-            return ref eventRelationshipXDocument;
-        }
-        public ref XDocument GetNoteXDocument()
-        {
-            return ref noteXDocument;
-        }
-
-        public static List<Dictionary<string, string>> GetAllNotes(XDocument handle)
+        public static List<Dictionary<string, string>> GetAllEntities(XDocument handle)
         {
             List<Dictionary<string, string>> entityInformation = new List<Dictionary<string, string>>();
             
@@ -116,7 +93,7 @@ namespace citadel_wpf
             return entityInformation;
         }
 
-        public static List<string> GetAllNames(XDocument handle)
+        public static List<string> GetAllEntityNames(XDocument handle)
         {
             List<string> returnList = new List<string>();
             
@@ -136,9 +113,10 @@ namespace citadel_wpf
             return returnList;
         }
 
-        public static Hashtable GetMediaInformation (string fullFilePath)
+        public static Hashtable GetMediaInformation ()
         {
             Hashtable returnTable = new Hashtable();
+            string fullFilePath = XMLParser.FolderPath + "\\media_notes.xml";
 
             if (File.Exists(fullFilePath))
             {
@@ -170,7 +148,7 @@ namespace citadel_wpf
         }
 
         //is this entity present in the XDocument
-        public static bool IsPresent(XDocument handle, string entityName)
+        public static bool IsEntityPresent(XDocument handle, string entityName)
         {
             return (from c in handle.Root.Elements()
                     where c.Element("name").Value.ToString().Equals(entityName)
@@ -187,11 +165,11 @@ namespace citadel_wpf
                      select c).Count() > 0 ? true : false);
         }
 
-        public static void FillBoxWithNames(XDocument handle, ref ComboBox combo, string nameToSkip = "")
+        public static void FillComboboxWithNames(XDocument handle, ref ComboBox combo, string nameToSkip = "")
         {
             combo.Items.Clear();
 
-            List<string> names = XMLParser.GetAllNames(handle);
+            List<string> names = XMLParser.GetAllEntityNames(handle);
 
             ComboBoxItem cBoxItem;
 

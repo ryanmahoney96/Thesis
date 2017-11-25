@@ -26,14 +26,12 @@ namespace citadel_wpf
         //TODO: Organize so event has list of pointers to things before and things after. Use this when adding new relationship to filter out contradictory data
         //TODO: Stylize with https://github.com/MahApps/MahApps.Metro
 
-        public static String FolderPath;
         public static FrontPage FrontPageReference;
 
-        public FrontPage(String fp)
+        public FrontPage()
         {
             InitializeComponent();
-            FolderPath = fp;
-            Title += " - " + FolderPath;
+            Title += " - " + XMLParser.FolderPath;
             Update_Note_Pages();
             FrontPageReference = this;
             SizeChanged += FrontPage_SizeChanged;
@@ -101,7 +99,7 @@ namespace citadel_wpf
         }
         public void Update_Notes()
         {
-            Fill_Note_Area(XMLParser.GetInstance().GetNoteXDocument(), general_notes_area);
+            Fill_Note_Area(XMLParser.NoteXDocument.Handle, general_notes_area);
         }
 
         private void New_Character_Click(object sender, RoutedEventArgs e)
@@ -110,7 +108,7 @@ namespace citadel_wpf
         }
         public void Update_Characters()
         {
-            Fill_Note_Area(XMLParser.GetInstance().GetCharacterXDocument(), character_notes_area);
+            Fill_Note_Area(XMLParser.CharacterXDocument.Handle, character_notes_area);
         }
 
         private void New_Event_Click(object sender, RoutedEventArgs e)
@@ -119,7 +117,7 @@ namespace citadel_wpf
         }
         public void Update_Events()
         {
-            Fill_Note_Area(XMLParser.GetInstance().GetEventXDocument(), event_notes_area);
+            Fill_Note_Area(XMLParser.EventXDocument.Handle, event_notes_area);
         }
 
         private void New_Location_Click(object sender, RoutedEventArgs e)
@@ -128,7 +126,7 @@ namespace citadel_wpf
         }
         public void Update_Locations()
         {
-            Fill_Note_Area(XMLParser.GetInstance().GetLocationXDocument(), location_notes_area);
+            Fill_Note_Area(XMLParser.LocationXDocument.Handle, location_notes_area);
         }
 
         private void Character_Relationship_Click(object sender, RoutedEventArgs e)
@@ -143,11 +141,11 @@ namespace citadel_wpf
 
         private void Update_Note_Pages()
         {
-            Fill_Media_Area(XMLParser.GetMediaInformation(FolderPath + "\\media_notes.xml"));
-            Fill_Note_Area(XMLParser.GetInstance().GetNoteXDocument(), general_notes_area);
-            Fill_Note_Area(XMLParser.GetInstance().GetCharacterXDocument(), character_notes_area);
-            Fill_Note_Area(XMLParser.GetInstance().GetEventXDocument(), event_notes_area);
-            Fill_Note_Area(XMLParser.GetInstance().GetLocationXDocument(), location_notes_area);
+            Fill_Media_Area(XMLParser.GetMediaInformation());
+            Fill_Note_Area(XMLParser.NoteXDocument.Handle, general_notes_area);
+            Fill_Note_Area(XMLParser.CharacterXDocument.Handle, character_notes_area);
+            Fill_Note_Area(XMLParser.EventXDocument.Handle, event_notes_area);
+            Fill_Note_Area(XMLParser.LocationXDocument.Handle, location_notes_area);
         }
 
         private void Fill_Media_Area(Hashtable information)
@@ -164,7 +162,7 @@ namespace citadel_wpf
 
         public void Fill_Note_Area(XDocument type, WrapPanel area)
         {
-            List<Dictionary<string, string>> entityNodes = XMLParser.GetAllNotes(type);
+            List<Dictionary<string, string>> entityNodes = XMLParser.GetAllEntities(type);
             area.Children.Clear();
             area.MinHeight = NoteNode.NoteNodeHeight;
             //TODO button notenode
@@ -205,7 +203,7 @@ namespace citadel_wpf
             else
             {
                 Media m = new Media(titleText.Text, yearText.Text, type_combobox.Text, genre_combobox.Text, summaryText.Text);
-                m.Save(FolderPath);
+                m.Save(XMLParser.FolderPath);
                 //TODO save confirmation
             }
         }

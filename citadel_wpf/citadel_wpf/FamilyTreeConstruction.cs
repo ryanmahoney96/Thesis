@@ -188,7 +188,7 @@ namespace citadel_wpf
         {
             if (!characters.ContainsKey(focusCharacter))
             {
-                XElement tempRoot = XMLParser.GetInstance().GetCharacterXDocument().Root;
+                XElement tempRoot = XMLParser.CharacterXDocument.Handle.Root;
                 characters.Add(focusCharacter, GetGenderColor(focusCharacter, tempRoot));
                 return true;
             }
@@ -211,8 +211,8 @@ namespace citadel_wpf
         {
             focusCharacter = focusCharacter.Replace(" ", "_");
             focusCharacter = focusCharacter.Replace("'", "");
-            string textPath = FrontPage.FolderPath + $"\\{type}.dot";
-            string imagePath = $"{FrontPage.FolderPath}/{focusCharacter}_{type}.png";
+            string textPath = XMLParser.FolderPath + $"\\{type}.dot";
+            string imagePath = $"{XMLParser.FolderPath}/{focusCharacter}_{type}.png";
             StreamWriter streamwriter = File.CreateText(textPath);
             streamwriter.Write(echo);
             streamwriter.Close();
@@ -251,15 +251,15 @@ namespace citadel_wpf
 
         private static IEnumerable<string> GetParentsOf(string focusCharacter)
         {
-            return GetGenerationNames(focusCharacter, "Is the Child of", XMLParser.GetInstance().GetCharacterRelationshipXDocument().Root);
+            return GetGenerationNames(focusCharacter, "Is the Child of", XMLParser.CharacterRelationshipXDocument.Handle.Root);
         }
         private static IEnumerable<string> GetChildrenOf(string focusCharacter)
         {
-            return GetGenerationNames(focusCharacter, "Is the Parent of", XMLParser.GetInstance().GetCharacterRelationshipXDocument().Root);
+            return GetGenerationNames(focusCharacter, "Is the Parent of", XMLParser.CharacterRelationshipXDocument.Handle.Root);
         }
         private static IEnumerable<string> GetSiblingsOf(string focusCharacter, string parent)
         {
-            return GetGenerationNames(parent, "Is the Parent of", XMLParser.GetInstance().GetCharacterRelationshipXDocument().Root, focusCharacter);
+            return GetGenerationNames(parent, "Is the Parent of", XMLParser.CharacterRelationshipXDocument.Handle.Root, focusCharacter);
         }
 
     }

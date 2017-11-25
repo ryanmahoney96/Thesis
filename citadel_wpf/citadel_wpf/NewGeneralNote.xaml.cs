@@ -29,7 +29,7 @@ namespace citadel_wpf
         override protected void Save(object sender, RoutedEventArgs e)
         {
 
-            if (XMLParser.IsPresent(XMLParser.GetInstance().GetNoteXDocument(), name_text.Text))
+            if (XMLParser.IsEntityPresent(XMLParser.NoteXDocument.Handle, name_text.Text))
             {
                 System.Windows.Forms.MessageBox.Show("This note already exists, please try again.");
             }
@@ -47,8 +47,8 @@ namespace citadel_wpf
 
                     string temp = newNote.ToString();
 
-                    XMLParser.GetInstance().GetNoteXDocument().Root.Add(newNote);
-                    XMLParser.GetInstance().GetNoteXDocument().Save(FrontPage.FolderPath + "\\general_notes.xml");
+                    XMLParser.NoteXDocument.Handle.Root.Add(newNote);
+                    XMLParser.NoteXDocument.Handle.Save(XMLParser.FolderPath + "\\general_notes.xml");
 
                     UpdateReliantWindows();
                     Close();

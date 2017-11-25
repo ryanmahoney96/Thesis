@@ -25,12 +25,12 @@ namespace citadel_wpf
         public NewEventRelationship() : base()
         {
             InitializeComponent();
-            XMLParser.FillBoxWithNames(XMLParser.GetInstance().GetEventXDocument(), ref event_one_combo);
+            XMLParser.FillComboboxWithNames(XMLParser.EventXDocument.Handle, ref event_one_combo);
         }
 
         private void event_one_combo_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            XMLParser.FillBoxWithNames(XMLParser.GetInstance().GetEventXDocument(), ref event_two_combo, event_one_combo.Text);
+            XMLParser.FillComboboxWithNames(XMLParser.EventXDocument.Handle, ref event_two_combo, event_one_combo.Text);
         }
 
         override protected void Save(object sender, RoutedEventArgs e)
@@ -49,8 +49,8 @@ namespace citadel_wpf
 
             else
             {
-                if (XMLParser.IsRelationshipPresent(XMLParser.GetInstance().GetEventRelationshipXDocument(), event_one_combo.Text, relationship, event_two_combo.Text)
-                || XMLParser.IsRelationshipPresent(XMLParser.GetInstance().GetEventRelationshipXDocument(), event_two_combo.Text, opposite, event_one_combo.Text))
+                if (XMLParser.IsRelationshipPresent(XMLParser.EventRelationshipXDocument.Handle, event_one_combo.Text, relationship, event_two_combo.Text)
+                || XMLParser.IsRelationshipPresent(XMLParser.EventRelationshipXDocument.Handle, event_two_combo.Text, opposite, event_one_combo.Text))
                 {
                     System.Windows.Forms.MessageBox.Show("This relationship already exists, please try again.");
                 }
@@ -61,16 +61,16 @@ namespace citadel_wpf
                     new XElement("relationship", relationship),
                     new XElement("entity_two", event_two_combo.Text));
 
-                    XMLParser.GetInstance().GetEventRelationshipXDocument().Root.Add(newEventRelationship);
+                    XMLParser.EventRelationshipXDocument.Handle.Root.Add(newEventRelationship);
 
                     newEventRelationship = new XElement("event_relationship",
                     new XElement("entity_one", event_two_combo.Text),
                     new XElement("relationship", opposite),
                     new XElement("entity_two", event_one_combo.Text));
 
-                    XMLParser.GetInstance().GetEventRelationshipXDocument().Root.Add(newEventRelationship);
+                    XMLParser.EventRelationshipXDocument.Handle.Root.Add(newEventRelationship);
 
-                    XMLParser.GetInstance().GetEventRelationshipXDocument().Save(FrontPage.FolderPath + "\\event_relationship_notes.xml");
+                    XMLParser.EventRelationshipXDocument.Handle.Save(XMLParser.FolderPath + "\\event_relationship_notes.xml");
 
                     UpdateReliantWindows();
                     Close();
@@ -85,7 +85,7 @@ namespace citadel_wpf
 
         public override void UpdateReliantWindows()
         {
-            XMLParser.FillBoxWithNames(XMLParser.GetInstance().GetEventXDocument(), ref event_one_combo);
+            XMLParser.FillComboboxWithNames(XMLParser.EventXDocument.Handle, ref event_one_combo);
             event_two_combo.Items.Clear();
         }
 

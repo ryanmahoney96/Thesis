@@ -29,13 +29,13 @@ namespace citadel_wpf
         public ViewCharacterRelationships() : base()
         {
             InitializeComponent();
-            XMLParser.FillBoxWithNames(XMLParser.GetInstance().GetCharacterXDocument(), ref focus_character_combo);
+            XMLParser.FillComboboxWithNames(XMLParser.CharacterXDocument.Handle, ref focus_character_combo);
             FillPanelWithRelationships(relationship_stackpanel);
         }
 
         private void focus_character_changed(object sender, SelectionChangedEventArgs e)
         {
-            //XMLParser.FillBoxWithNames(XMLParser.GetInstance().GetCharacterXDocument(), ref character_two_combo, character_one_combo.Text);
+            //XMLParser.FillComboboxWithNames(XMLParser.CharacterXDocument.Handle, ref character_two_combo, character_one_combo.Text);
             //Refill stackpanel
             FillPanelWithRelationships(relationship_stackpanel);
         }
@@ -45,7 +45,7 @@ namespace citadel_wpf
             if (focus_character_combo.SelectedItem != null && !string.IsNullOrWhiteSpace(focus_character_combo.SelectedItem.ToString()))
             {
                 string fc = focus_character_combo.SelectedItem.ToString().Split(':')[1].Substring(1);
-                var results = from c in XMLParser.GetInstance().GetCharacterRelationshipXDocument().Root.Descendants("character_relationship")
+                var results = from c in XMLParser.CharacterRelationshipXDocument.Handle.Root.Descendants("character_relationship")
                               where c.Element("entity_one").Value.ToString().Equals(fc)
                               select new
                               {
@@ -101,8 +101,8 @@ namespace citadel_wpf
             
             //else
             //{
-            //    if (XMLParser.IsRelationshipPresent(XMLParser.GetInstance().GetCharacterRelationshipXDocument(), character_one_combo.Text, relationship, character_two_combo.Text)
-            //    || XMLParser.IsRelationshipPresent(XMLParser.GetInstance().GetCharacterRelationshipXDocument(), character_two_combo.Text, opposite, character_one_combo.Text))
+            //    if (XMLParser.IsRelationshipPresent(XMLParser.CharacterRelationshipXDocument.Handle, character_one_combo.Text, relationship, character_two_combo.Text)
+            //    || XMLParser.IsRelationshipPresent(XMLParser.CharacterRelationshipXDocument.Handle, character_two_combo.Text, opposite, character_one_combo.Text))
             //    {
             //        System.Windows.Forms.MessageBox.Show("This relationship already exists, please try again.");
             //    }
@@ -113,17 +113,17 @@ namespace citadel_wpf
             //        new XElement("relationship", relationship),
             //        new XElement("entity_two", character_two_combo.Text));
 
-            //        XMLParser.GetInstance().GetCharacterRelationshipXDocument().Root.Add(newCharacterRelationship);
+            //        XMLParser.CharacterRelationshipXDocument.Handle.Root.Add(newCharacterRelationship);
 
             //        newCharacterRelationship = new XElement("character_relationship",
             //        new XElement("entity_one", character_two_combo.Text),
             //        new XElement("relationship", opposite),
             //        new XElement("entity_two", character_one_combo.Text));
 
-            //        XMLParser.GetInstance().GetCharacterRelationshipXDocument().Root.Add(newCharacterRelationship);
+            //        XMLParser.CharacterRelationshipXDocument.Handle.Root.Add(newCharacterRelationship);
 
 
-            //        XMLParser.GetInstance().GetCharacterRelationshipXDocument().Save(FrontPage.FolderPath + "\\character_relationship_notes.xml");
+            //        XMLParser.CharacterRelationshipXDocument.Handle.Save(XMLParser.FolderPath + "\\character_relationship_notes.xml");
 
             //        UpdateReliantWindows();
             //        Close();
@@ -138,7 +138,7 @@ namespace citadel_wpf
 
         public override void UpdateReliantWindows()
         {
-            XMLParser.FillBoxWithNames(XMLParser.GetInstance().GetCharacterXDocument(), ref focus_character_combo);
+            XMLParser.FillComboboxWithNames(XMLParser.CharacterXDocument.Handle, ref focus_character_combo);
             focus_character_combo.Text = "";
             relationship_stackpanel.Children.Clear();
             //Get all relationships

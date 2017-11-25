@@ -35,12 +35,12 @@ namespace citadel_wpf
 
             location_combo_box.Items.Clear();
 
-            XMLParser.FillBoxWithNames(XMLParser.GetInstance().GetLocationXDocument(), ref location_combo_box);
+            XMLParser.FillComboboxWithNames(XMLParser.LocationXDocument.Handle, ref location_combo_box);
         }
 
         override protected void Save(object sender, RoutedEventArgs e)
         {
-            if (XMLParser.IsPresent(XMLParser.GetInstance().GetEventXDocument(), name_text.Text))
+            if (XMLParser.IsEntityPresent(XMLParser.EventXDocument.Handle, name_text.Text))
             {
                 System.Windows.Forms.MessageBox.Show("This event already exists, please try again.");
             }
@@ -61,8 +61,8 @@ namespace citadel_wpf
 
                     string temp = newEvent.ToString();
 
-                    XMLParser.GetInstance().GetEventXDocument().Root.Add(newEvent);
-                    XMLParser.GetInstance().GetEventXDocument().Save(FrontPage.FolderPath + "\\event_notes.xml");
+                    XMLParser.EventXDocument.Handle.Root.Add(newEvent);
+                    XMLParser.EventXDocument.Handle.Save(XMLParser.EventXDocument.Path);
 
                     UpdateReliantWindows();
                     Close();

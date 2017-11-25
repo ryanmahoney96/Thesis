@@ -32,7 +32,7 @@ namespace citadel_wpf
         {
             Editing = true;
 
-            var character = (from c in XMLParser.GetInstance().GetCharacterXDocument().Root.Descendants("character")
+            var character = (from c in XMLParser.CharacterXDocument.Handle.Root.Descendants("character")
                              where c.Element("name").Value.Equals(characterName)
                              select new
                              {
@@ -52,7 +52,7 @@ namespace citadel_wpf
         override protected void Save(object sender, RoutedEventArgs e)
         {
             //TODO make this method generic in NewEntityWindow?
-            if (XMLParser.IsPresent(XMLParser.GetInstance().GetCharacterXDocument(), name_text.Text) && !Editing)
+            if (XMLParser.IsEntityPresent(XMLParser.CharacterXDocument.Handle, name_text.Text) && !Editing)
             {
                 System.Windows.Forms.MessageBox.Show("This character already exists, please try again.");
             }
@@ -66,13 +66,13 @@ namespace citadel_wpf
                 {
                     if (Editing)
                     {
-                        XElement characterReference = (from c in XMLParser.GetInstance().GetCharacterXDocument().Root.Descendants("character")
+                        XElement characterReference = (from c in XMLParser.CharacterXDocument.Handle.Root.Descendants("character")
                         where c.Element("name").Value.Equals(name_text.Text)
                         select c).First();
 
                         characterReference.Element("gender").Value = gender_combo_box.Text;
                         characterReference.Element("description").Value = description_text.Text;
-                        //XMLParser.GetInstance().GetCharacterXDocument().Save()
+                        XMLParser.CharacterXDocument.Handle.Save(XMLParser.CharacterXDocument.Path);
                     }
                     else
                     {
@@ -83,8 +83,8 @@ namespace citadel_wpf
 
                         string temp = newCharacter.ToString();
 
-                        XMLParser.GetInstance().GetCharacterXDocument().Root.Add(newCharacter);
-                        XMLParser.GetInstance().GetCharacterXDocument().Save(FrontPage.FolderPath + "\\character_notes.xml");
+                        XMLParser.CharacterXDocument.Handle.Root.Add(newCharacter);
+                        XMLParser.CharacterXDocument.Handle.Save(XMLParser.CharacterXDocument.Path);
                     }
                     
 

@@ -82,7 +82,7 @@ namespace citadel_wpf
             string mediaNotes = folderName.Text + "\\media_notes.xml";
 
             //TODO create here, drop singleton pattern
-            XMLParser.GetInstance(folderName.Text);
+            XMLParser.Instance = new XMLParser(folderName.Text);
 
             if (!File.Exists(mediaNotes))
             {
@@ -93,7 +93,7 @@ namespace citadel_wpf
             }
             else
             {
-                FrontPage frontPage = new FrontPage(folderName.Text);
+                FrontPage frontPage = new FrontPage();
                 frontPage.Topmost = true;
                 frontPage.Topmost = false;
                 frontPage.Show();

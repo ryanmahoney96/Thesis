@@ -192,12 +192,12 @@ namespace citadel_wpf
         ////protected bool SaveEntity(XDocument handle, string docName, string entityName, string entityAsXML)
         ////{
         ////    StreamWriter fileHandle = null;
-        ////    string docURI = FrontPage.FolderPath + $"\\{docName}.xml";
+        ////    string docURI = XMLParser.FolderPath + $"\\{docName}.xml";
 
         ////    try
         ////    {
 
-        ////        if (IsPresent(handle, entityName))
+        ////        if (IsEntityPresent(handle, entityName))
         ////        {
         ////            return false;
         ////        }
@@ -259,12 +259,12 @@ namespace citadel_wpf
         //public static void TestCharacterRelationship(string c1, string c2)
         //{
         //    string echo = $"graph s {{ label=\"Character Relationship\"; {c1} -- {c2}; }}";
-        //    string textpath = FrontPage.FolderPath + "\\Relationship.dot";
+        //    string textpath = XMLParser.FolderPath + "\\Relationship.dot";
         //    StreamWriter streamwriter = File.CreateText(textpath);
         //    streamwriter.Write(echo);
         //    streamwriter.Close();
 
-        //    //Process.Start("cmd.exe", @"/c" + $"dot -Tpng {textpath} -o {FrontPage.FolderPath}/testRelationship.png  & del {textpath}");
+        //    //Process.Start("cmd.exe", @"/c" + $"dot -Tpng {textpath} -o {XMLParser.FolderPath}/testRelationship.png  & del {textpath}");
         //}
 
         //public void Fill_Note_Area(List<List<string>> entityNodes, WrapPanel area)
@@ -334,7 +334,7 @@ namespace citadel_wpf
         //    List<List<string>> returnList = new List<List<string>>();
 
         //    // Query the data and write out a subset of contacts
-        //    var character = from c in GetCharacterXDocument().Root.Descendants("character")
+        //    var character = from c in GetCharacterXDocument.Handle.Root.Descendants("character")
         //                        //where ((string)c.Element("name")).Equals("Ygritte")
         //                    select new
         //                    {
@@ -392,7 +392,7 @@ namespace citadel_wpf
         //{
         //    List<List<string>> returnList = new List<List<string>>();
 
-        //    var query = from c in GetNoteXDocument().Root.Descendants("general_note")
+        //    var query = from c in GetNoteXDocument.Handle.Root.Descendants("general_note")
         //                select new
         //                {
         //                    Name = c.Element("name").Value,
@@ -415,7 +415,7 @@ namespace citadel_wpf
         //{
         //    List<List<string>> returnList = new List<List<string>>();
 
-        //    var query = from c in GetLocationXDocument().Root.Descendants("location")
+        //    var query = from c in GetLocationXDocument.Handle.Root.Descendants("location")
         //                select new
         //                {
         //                    Name = c.Element("name").Value,
@@ -442,7 +442,7 @@ namespace citadel_wpf
         //{
         //    List<List<string>> returnList = new List<List<string>>();
 
-        //    var query = from c in GetEventXDocument().Root.Descendants("event")
+        //    var query = from c in GetEventXDocument.Handle.Root.Descendants("event")
         //                select new
         //                {
         //                    Name = c.Element("name").Value,

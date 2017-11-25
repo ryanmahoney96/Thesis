@@ -25,7 +25,7 @@ namespace citadel_wpf
         {
             InitializeComponent();
             action = a;
-            XMLParser.FillBoxWithNames(XMLParser.GetInstance().GetCharacterXDocument(), ref characterName);
+            XMLParser.FillComboboxWithNames(XMLParser.CharacterXDocument.Handle, ref characterName);
         }
 
         public override void UpdateReliantWindows()
