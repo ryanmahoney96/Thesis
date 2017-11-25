@@ -34,7 +34,7 @@ namespace citadel_wpf
             }
             else
             {
-                if (name_text.Text.Equals("") || type_combobox.Text.Equals(""))
+                if (!XMLParser.IsTextValid(name_text.Text) || !XMLParser.IsTextValid(type_combobox.Text))
                 {
                     required_text.Foreground = Brushes.Red;
                 }

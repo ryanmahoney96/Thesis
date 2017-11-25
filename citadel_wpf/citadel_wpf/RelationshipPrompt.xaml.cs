@@ -41,7 +41,7 @@ namespace citadel_wpf
                 opposite = "Is the Parent of";
             }
 
-            if (relationship_combo.Text.Equals("") || character_two_combo.Text.Equals(""))
+            if (!XMLParser.IsTextValid(relationship_combo.Text) || !XMLParser.IsTextValid(character_two_combo.Text))
             {
                 required_text.Foreground = Brushes.Red;
             }

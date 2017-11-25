@@ -35,7 +35,7 @@ namespace citadel_wpf
             StreamWriter media_notes_handle = null;
             Regex yearRegex = new Regex(@"^[0-9]*$");
 
-            if (name_text.Text.Equals(""))
+            if (!XMLParser.IsTextValid(name_text.Text))
             {
                 required_text.Text = "Fill in the Title";
                 required_text.Foreground = Brushes.Red;
@@ -45,7 +45,7 @@ namespace citadel_wpf
                 required_text.Text = "Invalid Year";
                 required_text.Foreground = Brushes.Red;
             }
-            else if (type_combobox.Text.Equals(""))
+            else if (!XMLParser.IsTextValid(type_combobox.Text))
             {
                 required_text.Text = "Select a Media Type";
                 required_text.Foreground = Brushes.Red;

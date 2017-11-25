@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Controls;
 using System.Xml;
@@ -23,6 +24,8 @@ namespace citadel_wpf
 
         private static XMLParser instance = null;
         private static string FolderPath;
+
+        private static Regex validCharacterRegex = new Regex(@"^[a-zA-Z0-9'\- ]+$");
 
         private XMLParser(string folderPath)
         {
@@ -199,6 +202,19 @@ namespace citadel_wpf
                     cBoxItem.Content = newEntity;
                     combo.Items.Add(cBoxItem);
                 }
+            }
+        }
+
+        public static bool IsTextValid(string text)
+        {
+
+            if (string.IsNullOrWhiteSpace(text) || !validCharacterRegex.IsMatch(text))
+            {
+                return false;
+            }
+            else
+            {
+                return true;
             }
         }
     }

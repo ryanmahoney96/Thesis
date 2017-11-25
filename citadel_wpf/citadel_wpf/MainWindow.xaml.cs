@@ -61,7 +61,7 @@ namespace citadel_wpf
             }
             else
             {
-                if (folderName.Text.Equals(""))
+                if (XMLParser.IsTextValid(folderName.Text))
                 {
                     System.Windows.Forms.MessageBox.Show("Please Select or Create a Note Folder.");
                 }
@@ -71,7 +71,7 @@ namespace citadel_wpf
 
         private void Submit_Folder(object sender, RoutedEventArgs e)
         {
-            if (!folderName.Text.Equals(""))
+            if (!string.IsNullOrWhiteSpace(folderName.Text))
             {
                 Media_Note_Validation();
             }

@@ -125,7 +125,7 @@ namespace citadel_wpf
             {
                 string name = ToTitleCase(entityNode[key]);
 
-                if (!String.IsNullOrWhiteSpace(entityNode[key]))
+                if (!string.IsNullOrWhiteSpace(entityNode[key]))
                 {
                     if (key.Equals("name"))
                     {

@@ -42,7 +42,7 @@ namespace citadel_wpf
                 opposite = "Comes After";
             }
 
-            if (event_one_combo.Text.Equals("") || relationship_combo.Text.Equals("") || event_two_combo.Text.Equals(""))
+            if (!XMLParser.IsTextValid(event_one_combo.Text) || !XMLParser.IsTextValid(relationship_combo.Text) || !XMLParser.IsTextValid(event_two_combo.Text))
             {
                 required_text.Foreground = Brushes.Red;
             }

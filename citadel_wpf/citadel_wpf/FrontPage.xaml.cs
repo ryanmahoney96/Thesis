@@ -195,9 +195,9 @@ namespace citadel_wpf
         {
             Regex yearRegex = new Regex(@"^[0-9]*$");
 
-            if (titleText.Text.Equals(""))
+            if (!XMLParser.IsTextValid(titleText.Text))
             {
-                System.Windows.Forms.MessageBox.Show("The Title Cannot Be Left Blank");
+                System.Windows.Forms.MessageBox.Show("The Title Is Invalid");
             }
             else if (!yearRegex.IsMatch(yearText.Text))
             {
@@ -207,6 +207,7 @@ namespace citadel_wpf
             {
                 Media m = new Media(titleText.Text, yearText.Text, type_combobox.Text, genre_combobox.Text, summaryText.Text);
                 m.Save(FolderPath);
+                //TODO save confirmation
             }
         }
 

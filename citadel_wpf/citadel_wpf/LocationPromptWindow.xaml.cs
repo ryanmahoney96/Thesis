@@ -53,7 +53,7 @@ namespace citadel_wpf
 
         private void map_type_changed(object sender, SelectionChangedEventArgs e)
         {
-            if (eventMapType.SelectedItem != null && !string.IsNullOrWhiteSpace(eventMapType.SelectedItem.ToString()))
+            if (eventMapType.SelectedItem != null && XMLParser.IsTextValid(eventMapType.SelectedItem.ToString()))
             {
                 string emt = eventMapType.SelectedItem.ToString().Split(':')[1].Substring(1);
 
