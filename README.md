@@ -1,22 +1,20 @@
 # Citadel: A Storyline Graphing Tool
 The aim of this project is to develop an intuitive interface for Graphviz, store user notes regarding narrative works, and enable repeated and comfortable use of the tool to an average user. Produced by Ryan Mahoney. 
 
-## Content
-- citadel_wpf folder
-
 ## Tools 
 - C# / WPF
+- LINQ
+- XML
 - DOT language
 - Graphviz
 
-## Relevant Files
-- entity_template.xml
+## Entities
+- Characters
+- Locations
+- Events
+- User Notes
 
-## Unused Directories
-- Prototype Lex/Bison Files
-- Java
-
-## Unused Files
-- Books.xml
-- makefile
-- TestInput.xml
+## Graphs
+- Family Trees
+- Timelines
+- Event Maps

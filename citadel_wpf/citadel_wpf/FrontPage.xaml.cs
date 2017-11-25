@@ -13,7 +13,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
-using System.Xml.Linq;
+using System.Xml.Linq; 
 
 namespace citadel_wpf
 {
@@ -23,11 +23,8 @@ namespace citadel_wpf
     public partial class FrontPage : Window
     {
         //TODO: Make "> \ <" in all text unusable + all non alphanumeric characters (" ' " and " - " should be included)
-        //TODO: On front page add option to go back to main menu
         //TODO: When making a new folder, verify that a media entry does not exist
         //TODO: Organize so event has list of pointers to things before and things after. Use this when adding new relationship to filter out contradictory data
-        //TODO: Family Trees
-        //TODO: Add location v event graph
         //TODO: Stylize with https://github.com/MahApps/MahApps.Metro
 
         public static String FolderPath;
