@@ -97,6 +97,10 @@ namespace citadel_wpf
         public void EditClick(object sender, RoutedEventArgs e)
         {
             //TODO Actually Edit 
+            NewCharacterWindow ncw = new NewCharacterWindow(null);
+            ncw.FillWith("Ryan");
+            NewEntityWindow.InitializeModalWindow(null, ncw);
+
             //ContentText = "Test";
             //NewEntityWindow newWindow;
 

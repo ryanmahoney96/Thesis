@@ -21,16 +21,38 @@ namespace citadel_wpf
     /// </summary>
     public partial class NewCharacterWindow : NewEntityWindow
     {
+        private bool Editing = false;
 
         public NewCharacterWindow(params NewEntityWindow[] rw) : base(rw)
         {
             InitializeComponent();
         }
 
+        public void FillWith(string characterName)
+        {
+            Editing = true;
+
+            var character = (from c in XMLParser.GetInstance().GetCharacterXDocument().Root.Descendants("character")
+                             where c.Element("name").Value.Equals(characterName)
+                             select new
+                             {
+                                 Name = c.Element("name").Value,
+                                 Gender = c.Element("gender").Value,
+                                 Description = c.Element("description").Value
+                             }).First();
+
+            name_text.Text = character.Name;
+            name_text.IsEnabled = false;
+
+            gender_combo_box.Text = character.Gender;
+            description_text.Text = character.Description;
+
+        }
+
         override protected void Save(object sender, RoutedEventArgs e)
         {
             //TODO make this method generic in NewEntityWindow?
-            if (XMLParser.IsPresent(XMLParser.GetInstance().GetCharacterXDocument(), name_text.Text))
+            if (XMLParser.IsPresent(XMLParser.GetInstance().GetCharacterXDocument(), name_text.Text) && !Editing)
             {
                 System.Windows.Forms.MessageBox.Show("This character already exists, please try again.");
             }
@@ -42,78 +64,34 @@ namespace citadel_wpf
                 }
                 else
                 {
-                    XElement newCharacter = new XElement("character",
-                    new XElement("name", name_text.Text),
-                    new XElement("gender", gender_combo_box.Text),
-                    new XElement("description", description_text.Text));
+                    if (Editing)
+                    {
+                        XElement characterReference = (from c in XMLParser.GetInstance().GetCharacterXDocument().Root.Descendants("character")
+                        where c.Element("name").Value.Equals(name_text.Text)
+                        select c).First();
 
-                    string temp = newCharacter.ToString();
+                        characterReference.Element("gender").Value = gender_combo_box.Text;
+                        characterReference.Element("description").Value = description_text.Text;
+                        //XMLParser.GetInstance().GetCharacterXDocument().Save()
+                    }
+                    else
+                    {
+                        XElement newCharacter = new XElement("character",
+                            new XElement("name", name_text.Text),
+                            new XElement("gender", gender_combo_box.Text),
+                            new XElement("description", description_text.Text));
 
-                    XMLParser.GetInstance().GetCharacterXDocument().Root.Add(newCharacter);
-                    XMLParser.GetInstance().GetCharacterXDocument().Save(FrontPage.FolderPath + "\\character_notes.xml");
+                        string temp = newCharacter.ToString();
+
+                        XMLParser.GetInstance().GetCharacterXDocument().Root.Add(newCharacter);
+                        XMLParser.GetInstance().GetCharacterXDocument().Save(FrontPage.FolderPath + "\\character_notes.xml");
+                    }
+                    
 
                     UpdateReliantWindows();
                     Close();
                 }
             }
-
-            //StreamWriter character_notes_handle = null;
-
-            //if (!name_text.Text.Equals("") && !gender_combo_box.Text.Equals(""))
-            //{
-            //    try
-            //    {
-            //        string name = name_text.Text;
-            //        string gender = gender_combo_box.Text;
-            //        string description = description_text.Text;
-            //        string filePath = folderPath + "\\character_notes.xml";
-
-            //        if (File.Exists(filePath))
-            //        {
-            //            character_notes_handle = XMLParserClass.RemoveLastLine(filePath);
-            //        }
-            //        else
-            //        {
-            //            character_notes_handle = new StreamWriter(filePath, true);
-            //            character_notes_handle.Write("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n\n<characters>\n\t");
-            //        }
-
-            //        character_notes_handle.Write("<character>\n\t\t");
-            //        character_notes_handle.Write("<name>" + name + "</name>\n\t\t");
-            //        character_notes_handle.Write("<gender>" + gender + "</gender>\n\t\t");
-            //        character_notes_handle.Write("<description>" + description + "</description>\n\t");
-            //        character_notes_handle.Write("</character>\n\n");
-
-            //        character_notes_handle.Write("</characters>");
-
-            //        character_notes_handle.Close();
-
-            //        UpdateReliantWindows();
-
-            //        base.Close();
-            //    }
-            //    catch (IOException)
-            //    {
-            //        System.Windows.Forms.MessageBox.Show("An IO Error Occurred. Please Try Again.");
-            //    }
-            //    catch (Exception)
-            //    {
-            //        System.Windows.Forms.MessageBox.Show("An Unexpected Error Occurred.");
-            //    }
-            //    finally
-            //    {
-            //        if (!character_notes_handle.Equals(null))
-            //        {
-            //            character_notes_handle.Close();
-            //        }
-
-            //        base.Close();
-            //    }
-            //}
-            //else
-            //{
-            //    required_text.Foreground = Brushes.Red;
-            //}
         }
 
         public override void UpdateReliantWindows()

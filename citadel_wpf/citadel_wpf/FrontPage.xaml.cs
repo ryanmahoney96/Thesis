@@ -22,7 +22,6 @@ namespace citadel_wpf
     /// </summary>
     public partial class FrontPage : Window
     {
-        //TODO: Make "> \ <" in all text unusable + all non alphanumeric characters (" ' " and " - " should be included)
         //TODO: When making a new folder, verify that a media entry does not exist
         //TODO: Organize so event has list of pointers to things before and things after. Use this when adding new relationship to filter out contradictory data
         //TODO: Stylize with https://github.com/MahApps/MahApps.Metro

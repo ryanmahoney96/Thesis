@@ -81,6 +81,7 @@ namespace citadel_wpf
         {
             string mediaNotes = folderName.Text + "\\media_notes.xml";
 
+            //TODO create here, drop singleton pattern
             XMLParser.GetInstance(folderName.Text);
 
             if (!File.Exists(mediaNotes))

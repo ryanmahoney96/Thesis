@@ -23,6 +23,7 @@ namespace citadel_wpf
         private static XDocument noteXDocument = null;
 
         private static XMLParser instance = null;
+        //TODO get rid of, or move here
         private static string FolderPath;
 
         private static Regex validCharacterRegex = new Regex(@"^[a-zA-Z0-9'\- ]+$");
@@ -207,15 +208,7 @@ namespace citadel_wpf
 
         public static bool IsTextValid(string text)
         {
-
-            if (string.IsNullOrWhiteSpace(text) || !validCharacterRegex.IsMatch(text))
-            {
-                return false;
-            }
-            else
-            {
-                return true;
-            }
+            return !(string.IsNullOrWhiteSpace(text) || !validCharacterRegex.IsMatch(text));
         }
     }
 }
