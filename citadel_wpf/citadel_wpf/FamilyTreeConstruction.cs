@@ -15,8 +15,8 @@ namespace citadel_wpf
         private static string fontname = $"fontname=\"Helvetica\"";
         //male = "color=navy, shape=ellipse"
         private static string maleColor = $"navy";
-        private static string femaleColor = $"orangered";
-        private static string otherColor = $"darkgreen";
+        private static string femaleColor = $"orangered2";
+        private static string otherColor = $"mediumvioletred";
 
         public static void ImmediateFamilyTree(string focusCharacter)
         {

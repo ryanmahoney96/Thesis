@@ -25,6 +25,7 @@ namespace citadel_wpf
 
         }
 
+        //TODO make XML standard
         public void Save(string folderPath)
         {
             System.IO.StreamWriter handle = null;

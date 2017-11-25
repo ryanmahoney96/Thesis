@@ -354,12 +354,9 @@ namespace citadel_wpf
         //        returnList.Add(temp);
         //    }
 
-        //    //TODO: after all characters added, add all relationships
-
         //    return returnList;
         //}
 
-        ////TODO this
         //public static List<List<string>> GetAllCharacterRelationships(string fullFilePath)
         //{
         //    List<List<string>> returnList = new List<List<string>>();

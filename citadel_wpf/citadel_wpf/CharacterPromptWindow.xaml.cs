@@ -17,7 +17,7 @@ namespace citadel_wpf
     /// <summary>
     /// Interaction logic for CharacterPromptWindow.xaml
     /// </summary>
-    public partial class CharacterPromptWindow : Window
+    public partial class CharacterPromptWindow : NewEntityWindow
     {
         private Action<string> action;
 
@@ -26,6 +26,16 @@ namespace citadel_wpf
             InitializeComponent();
             action = a;
             XMLParser.FillBoxWithNames(XMLParser.GetInstance().GetCharacterXDocument(), ref characterName);
+        }
+
+        public override void UpdateReliantWindows()
+        {
+            //
+        }
+
+        protected override void Save(object sender, RoutedEventArgs e)
+        {
+            //
         }
 
         private void Cancel_Click(object sender, RoutedEventArgs e)

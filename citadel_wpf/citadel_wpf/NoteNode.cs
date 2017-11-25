@@ -28,9 +28,7 @@ namespace citadel_wpf
 
         //TODO: give each notenode a reference to the entity it represents
         //TODO: Add edit and delete buttons to notenode. Because of reference to entity you can manipulate the node and update
-        //TODO: after reference is implemented, use this design to update instead of the "redraw all" method used now
         //TODO: make base constuctor. Make Button constructor and Text contructor that call it and each fill the node with that content
-        //TODO: Make first notenode the "button" notenode for adding things -> take out the menu style used now
 
         public NoteNode(XDocument source)
         {

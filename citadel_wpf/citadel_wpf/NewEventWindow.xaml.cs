@@ -35,15 +35,7 @@ namespace citadel_wpf
 
             location_combo_box.Items.Clear();
 
-            //TODO use new fill_box function
-            List<string> locationNames = XMLParser.GetAllNames(XMLParser.GetInstance().GetLocationXDocument());
-
-            foreach (string location in locationNames)
-            {
-                ComboBoxItem cBoxItem = new ComboBoxItem();
-                cBoxItem.Content = location;
-                location_combo_box.Items.Add(cBoxItem);
-            }
+            XMLParser.FillBoxWithNames(XMLParser.GetInstance().GetLocationXDocument(), ref location_combo_box);
         }
 
         override protected void Save(object sender, RoutedEventArgs e)
