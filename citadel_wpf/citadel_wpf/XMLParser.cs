@@ -13,11 +13,12 @@ using System.Xml.XPath;
 
 namespace citadel_wpf
 {
-    class XMLParser
+    public class XMLParser
     {
         public struct XDocumentPair
         {
             public XDocument Handle;
+            public string Name;
             public string Path;
             public void Save()
             {
@@ -64,6 +65,7 @@ namespace citadel_wpf
 
             handle.Handle = XDocument.Load(filePath);
             handle.Path = filePath;
+            handle.Name = documentName;
         }
 
         public void UpdateMediaXDocument()

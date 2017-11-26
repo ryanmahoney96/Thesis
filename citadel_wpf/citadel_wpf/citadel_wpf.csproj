@@ -55,6 +55,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="INewEntity.cs" />
     <Compile Include="LocationPromptWindow.xaml.cs">
       <DependentUpon>LocationPromptWindow.xaml</DependentUpon>
     </Compile>

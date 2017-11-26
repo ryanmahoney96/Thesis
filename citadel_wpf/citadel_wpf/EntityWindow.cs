@@ -52,7 +52,6 @@ namespace citadel_wpf
         }
 
         protected abstract void Save(object sender, RoutedEventArgs e);
-
         public abstract void UpdateReliantWindows();
 
     }

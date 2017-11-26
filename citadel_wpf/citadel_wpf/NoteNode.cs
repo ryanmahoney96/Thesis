@@ -12,7 +12,7 @@ namespace citadel_wpf
 {
     class NoteNode : Decorator
     {
-        private XDocument EntityType;
+        private string EntityType;
         private TextBlock NameTextBlock;
         private StackPanel ContentStackPanel;
         private StackPanel MainPanel;
@@ -26,9 +26,9 @@ namespace citadel_wpf
         public static int NoteNodeWidth = 350;
         public static int NoteNodeHeight = NameBoxHeight + ContentBoxHeight + ButtonHeight + 25;
 
-        public NoteNode(XDocument source)
+        public NoteNode(string sourceName)
         {
-            EntityType = source;
+            EntityType = sourceName;
             borderLine = new Border();
             borderLine.BorderThickness = new Thickness(1, 1, 1, 1);
             borderLine.BorderBrush = new SolidColorBrush(Colors.DarkBlue);
@@ -96,31 +96,28 @@ namespace citadel_wpf
 
         public void EditClick(object sender, RoutedEventArgs e)
         {
-            //TODO Actually Edit 
-            NewCharacterWindow ncw = new NewCharacterWindow(null);
-            ncw.FillWith("Ryan");
-            EntityWindow.InitializeModalWindow(null, ncw);
+            
+            INewEntity newWindow;
 
-            //ContentText = "Test";
-            //NewEntityWindow newWindow;
+            if (EntityType.Equals(XMLParser.CharacterXDocument.Name))
+            {
+                newWindow = new NewCharacterWindow();
+            }
+            else if (EntityType.Equals(XMLParser.EventXDocument.Name))
+            {
+                newWindow = new NewEventWindow();
+            }
+            else if (EntityType.Equals(XMLParser.LocationXDocument.Name))
+            {
+                newWindow = new NewLocationWindow();
+            }
+            else
+            {
+                newWindow = new NewGeneralNote();
+            }
 
-            //if (EntityType.Equals("character"))
-            //{
-            //    //new window = character window -> open modally
-            //}
-            //else if (EntityType.Equals("event"))
-            //{
-
-            //}
-            //else if (EntityType.Equals("location"))
-            //{
-
-            //}
-            //else
-            //{
-
-            //}
-
+            newWindow.FillWith(NameTextBlock.Text);
+            EntityWindow.InitializeModalWindow(FrontPage.FrontPageReference, (EntityWindow)newWindow);
         }
 
         public double FillWith(Dictionary<string, string> entityNode)

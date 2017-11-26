@@ -99,7 +99,7 @@ namespace citadel_wpf
         }
         public void Update_Notes()
         {
-            Fill_Note_Area(XMLParser.NoteXDocument.Handle, general_notes_area);
+            Fill_Note_Area(XMLParser.NoteXDocument, general_notes_area);
         }
 
         private void New_Character_Click(object sender, RoutedEventArgs e)
@@ -108,7 +108,7 @@ namespace citadel_wpf
         }
         public void Update_Characters()
         {
-            Fill_Note_Area(XMLParser.CharacterXDocument.Handle, character_notes_area);
+            Fill_Note_Area(XMLParser.CharacterXDocument, character_notes_area);
         }
 
         private void New_Event_Click(object sender, RoutedEventArgs e)
@@ -117,7 +117,7 @@ namespace citadel_wpf
         }
         public void Update_Events()
         {
-            Fill_Note_Area(XMLParser.EventXDocument.Handle, event_notes_area);
+            Fill_Note_Area(XMLParser.EventXDocument, event_notes_area);
         }
 
         private void New_Location_Click(object sender, RoutedEventArgs e)
@@ -126,7 +126,7 @@ namespace citadel_wpf
         }
         public void Update_Locations()
         {
-            Fill_Note_Area(XMLParser.LocationXDocument.Handle, location_notes_area);
+            Fill_Note_Area(XMLParser.LocationXDocument, location_notes_area);
         }
 
         private void Character_Relationship_Click(object sender, RoutedEventArgs e)
@@ -142,10 +142,10 @@ namespace citadel_wpf
         private void Update_Note_Pages()
         {
             Fill_Media_Area(XMLParser.GetMediaInformation());
-            Fill_Note_Area(XMLParser.NoteXDocument.Handle, general_notes_area);
-            Fill_Note_Area(XMLParser.CharacterXDocument.Handle, character_notes_area);
-            Fill_Note_Area(XMLParser.EventXDocument.Handle, event_notes_area);
-            Fill_Note_Area(XMLParser.LocationXDocument.Handle, location_notes_area);
+            Fill_Note_Area(XMLParser.NoteXDocument, general_notes_area);
+            Fill_Note_Area(XMLParser.CharacterXDocument, character_notes_area);
+            Fill_Note_Area(XMLParser.EventXDocument, event_notes_area);
+            Fill_Note_Area(XMLParser.LocationXDocument, location_notes_area);
         }
 
         private void Fill_Media_Area(Hashtable information)
@@ -161,16 +161,16 @@ namespace citadel_wpf
             }
         }
 
-        public void Fill_Note_Area(XDocument type, WrapPanel area)
+        public void Fill_Note_Area(XMLParser.XDocumentPair type, WrapPanel area)
         {
-            List<Dictionary<string, string>> entityNodes = XMLParser.GetAllEntities(type);
+            List<Dictionary<string, string>> entityNodes = XMLParser.GetAllEntities(type.Handle);
             area.Children.Clear();
             area.MinHeight = NoteNode.NoteNodeHeight;
             //TODO button notenode
 
             foreach (Dictionary<string, string> entityNode in entityNodes)
             {
-                NoteNode n = new NoteNode(type);
+                NoteNode n = new NoteNode(type.Name);
                 //TODO adjust this
                 area.MinHeight += Convert.ToInt32(n.FillWith(entityNode)) ;
                 

@@ -19,11 +19,32 @@ namespace citadel_wpf
     /// <summary>
     /// Interaction logic for NewGeneralNote.xaml
     /// </summary>
-    public partial class NewGeneralNote : EntityWindow
+    public partial class NewGeneralNote : EntityWindow, INewEntity
     {
+        private bool Editing = false;
+
         public NewGeneralNote(params EntityWindow[] rw) : base(rw)
         {
             InitializeComponent();
+        }
+
+        public void FillWith(string noteName)
+        {
+            Editing = true;
+
+            var note = (from c in XMLParser.NoteXDocument.Handle.Root.Descendants("general_note")
+                             where c.Element("name").Value.Equals(noteName)
+                             select new
+                             {
+                                 Name = c.Element("name").Value,
+                                 Description = c.Element("description").Value
+                             }).First();
+
+            name_text.Text = note.Name;
+            name_text.IsEnabled = false;
+
+            description_text.Text = note.Description;
+
         }
 
         override protected void Save(object sender, RoutedEventArgs e)
@@ -41,13 +62,25 @@ namespace citadel_wpf
                 }
                 else
                 {
-                    XElement newNote = new XElement("general_note",
-                    new XElement("name", name_text.Text),
-                    new XElement("description", description_text.Text));
+                    if (Editing)
+                    {
+                        XElement noteReference = (from c in XMLParser.NoteXDocument.Handle.Root.Descendants("general_note")
+                                                       where c.Element("name").Value.Equals(name_text.Text)
+                                                       select c).First();
 
-                    string temp = newNote.ToString();
+                        noteReference.Element("description").Value = description_text.Text;
+                    }
+                    else
+                    {
+                        XElement newNote = new XElement("general_note",
+                        new XElement("name", name_text.Text),
+                        new XElement("description", description_text.Text));
 
-                    XMLParser.NoteXDocument.Handle.Root.Add(newNote);
+                        string temp = newNote.ToString();
+
+                        XMLParser.NoteXDocument.Handle.Root.Add(newNote);
+                    }
+
                     XMLParser.NoteXDocument.Save();
 
                     UpdateReliantWindows();

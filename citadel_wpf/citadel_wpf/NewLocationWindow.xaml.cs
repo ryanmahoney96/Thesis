@@ -19,11 +19,36 @@ namespace citadel_wpf
     /// <summary>
     /// Interaction logic for NewLocationWindow.xaml
     /// </summary>
-    public partial class NewLocationWindow : EntityWindow
+    public partial class NewLocationWindow : EntityWindow, INewEntity
     {
+        private bool Editing = false;
+
         public NewLocationWindow(params EntityWindow[] rw) : base(rw)
         {
             InitializeComponent();
+        }
+
+        public void FillWith(string locationName)
+        {
+            Editing = true;
+
+            var location = (from c in XMLParser.LocationXDocument.Handle.Root.Descendants("location")
+                             where c.Element("name").Value.Equals(locationName)
+                             select new
+                             {
+                                 Name = c.Element("name").Value,
+                                 Type = c.Element("type").Value,
+                                 Subtype = c.Element("subtype").Value,
+                                 Description = c.Element("description").Value
+                             }).First();
+
+            name_text.Text = location.Name;
+            name_text.IsEnabled = false;
+
+            type_combobox.Text = location.Type;
+            subtype_combobox.Text = location.Subtype;
+            description_text.Text = location.Description;
+
         }
 
         override protected void Save(object sender, RoutedEventArgs e)
@@ -40,16 +65,29 @@ namespace citadel_wpf
                 }
                 else
                 {
+                    if (Editing)
+                    {
+                        XElement locationReference = (from c in XMLParser.LocationXDocument.Handle.Root.Descendants("location")
+                                                       where c.Element("name").Value.Equals(name_text.Text)
+                                                       select c).First();
 
-                    XElement newLocation = new XElement("location",
-                    new XElement("name", name_text.Text),
-                    new XElement("type", type_combobox.Text),
-                    new XElement("subtype", subtype_combobox.Text),
-                    new XElement("description", description_text.Text));
+                        locationReference.Element("type").Value = type_combobox.Text;
+                        locationReference.Element("subtype").Value = subtype_combobox.Text;
+                        locationReference.Element("description").Value = description_text.Text;
+                    }
+                    else
+                    {
+                        XElement newLocation = new XElement("location",
+                        new XElement("name", name_text.Text),
+                        new XElement("type", type_combobox.Text),
+                        new XElement("subtype", subtype_combobox.Text),
+                        new XElement("description", description_text.Text));
 
-                    string temp = newLocation.ToString();
+                        string temp = newLocation.ToString();
 
-                    XMLParser.LocationXDocument.Handle.Root.Add(newLocation);
+                        XMLParser.LocationXDocument.Handle.Root.Add(newLocation);
+                    }
+
                     XMLParser.LocationXDocument.Save();
 
                     UpdateReliantWindows();

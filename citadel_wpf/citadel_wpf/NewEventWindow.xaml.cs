@@ -19,8 +19,9 @@ using System.Xml.Linq;
 namespace citadel_wpf
 {
 
-    public partial class NewEventWindow : EntityWindow
+    public partial class NewEventWindow : EntityWindow, INewEntity
     {
+        private bool Editing = false;
 
         public NewEventWindow(params EntityWindow[] rw) : base(rw)
         {
@@ -34,6 +35,31 @@ namespace citadel_wpf
             location_combo_box.Items.Clear();
 
             XMLParser.FillComboboxWithNames(XMLParser.LocationXDocument.Handle, ref location_combo_box);
+        }
+
+        public void FillWith(string eventName)
+        {
+            Editing = true;
+
+            var eventRef = (from c in XMLParser.CharacterXDocument.Handle.Root.Descendants("event")
+                             where c.Element("name").Value.Equals(eventName)
+                             select new
+                             {
+                                 Name = c.Element("name").Value,
+                                 Location = c.Element("location").Value,
+                                 UnitDate = c.Element("unit_date").Value,
+                                 Date = c.Element("date").Value,
+                                 Description = c.Element("description").Value
+                             }).First();
+
+            name_text.Text = eventRef.Name;
+            name_text.IsEnabled = false;
+
+            location_combo_box.Text = eventRef.Location;
+            event_unit_date_number.Text = eventRef.UnitDate;
+            event_date_number.Text = eventRef.Date;
+            description_text.Text = eventRef.Description;
+
         }
 
         override protected void Save(object sender, RoutedEventArgs e)
@@ -50,16 +76,31 @@ namespace citadel_wpf
                 }
                 else
                 {
-                    XElement newEvent = new XElement("event",
-                    new XElement("name", name_text.Text),
-                    new XElement("location", location_combo_box.Text),
-                    new XElement("unit_date", event_unit_date_number.Text),
-                    new XElement("date", event_date_number.Text),
-                    new XElement("description", description_text.Text));
+                    if (Editing)
+                    {
+                        XElement eventReference = (from c in XMLParser.EventXDocument.Handle.Root.Descendants("event")
+                                                   where c.Element("name").Value.Equals(name_text.Text)
+                                                   select c).First();
 
-                    string temp = newEvent.ToString();
+                        eventReference.Element("location").Value = location_combo_box.Text;
+                        eventReference.Element("unit_date").Value = event_unit_date_number.Text;
+                        eventReference.Element("date").Value = event_date_number.Text;
+                        eventReference.Element("description").Value = description_text.Text;
+                    }
+                    else
+                    {
+                        XElement newEvent = new XElement("event",
+                        new XElement("name", name_text.Text),
+                        new XElement("location", location_combo_box.Text),
+                        new XElement("unit_date", event_unit_date_number.Text),
+                        new XElement("date", event_date_number.Text),
+                        new XElement("description", description_text.Text));
 
-                    XMLParser.EventXDocument.Handle.Root.Add(newEvent);
+                        string temp = newEvent.ToString();
+
+                        XMLParser.EventXDocument.Handle.Root.Add(newEvent);
+                    }
+
                     XMLParser.EventXDocument.Save();
 
                     UpdateReliantWindows();
