@@ -57,7 +57,7 @@
 
         <TextBlock Text="Enter a Summary on the Entry:" Grid.Row="5" Grid.Column="1" TextWrapping="Wrap"></TextBlock>
         <ScrollViewer Grid.Row="5" Grid.Column="2" Width="280" Height="150">
-            <TextBox Name="summary_text" AcceptsReturn="True" TextWrapping="Wrap"></TextBox>
+            <TextBox Name="summary_text" TextWrapping="Wrap"></TextBox>
         </ScrollViewer>
 
         <TextBlock Name="required_text" Text="*Required Field" Grid.Row="6" Grid.Column="1"></TextBlock>

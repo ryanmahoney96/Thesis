@@ -21,7 +21,6 @@ namespace citadel_wpf
     public partial class FrontPage : EntityWindow
     {
         //TODO Tooltips throughout
-        //TODO: When making a new folder, verify that a media entry does not exist
         //TODO: Organize so event has list of pointers to things before and things after. Use this when adding new relationship to filter out contradictory data
         //TODO: Stylize with https://github.com/MahApps/MahApps.Metro
 
@@ -100,7 +99,7 @@ namespace citadel_wpf
         }
         public void Update_Notes()
         {
-            Fill_Note_Area(XMLParser.NoteXDocument, general_notes_area);
+            Fill_Note_Area(ref XMLParser.NoteXDocument, general_notes_area);
         }
 
         private void New_Character_Click(object sender, RoutedEventArgs e)
@@ -109,7 +108,7 @@ namespace citadel_wpf
         }
         public void Update_Characters()
         {
-            Fill_Note_Area(XMLParser.CharacterXDocument, character_notes_area);
+            Fill_Note_Area(ref XMLParser.CharacterXDocument, character_notes_area);
         }
 
         private void New_Event_Click(object sender, RoutedEventArgs e)
@@ -118,7 +117,7 @@ namespace citadel_wpf
         }
         public void Update_Events()
         {
-            Fill_Note_Area(XMLParser.EventXDocument, event_notes_area);
+            Fill_Note_Area(ref XMLParser.EventXDocument, event_notes_area);
         }
 
         private void New_Location_Click(object sender, RoutedEventArgs e)
@@ -127,7 +126,7 @@ namespace citadel_wpf
         }
         public void Update_Locations()
         {
-            Fill_Note_Area(XMLParser.LocationXDocument, location_notes_area);
+            Fill_Note_Area(ref XMLParser.LocationXDocument, location_notes_area);
         }
 
         private void Character_Relationship_Click(object sender, RoutedEventArgs e)
@@ -143,10 +142,10 @@ namespace citadel_wpf
         private void Update_Note_Pages()
         {
             Fill_Media_Area(XMLParser.GetMediaInformation());
-            Fill_Note_Area(XMLParser.NoteXDocument, general_notes_area);
-            Fill_Note_Area(XMLParser.CharacterXDocument, character_notes_area);
-            Fill_Note_Area(XMLParser.EventXDocument, event_notes_area);
-            Fill_Note_Area(XMLParser.LocationXDocument, location_notes_area);
+            Fill_Note_Area(ref XMLParser.NoteXDocument, general_notes_area);
+            Fill_Note_Area(ref XMLParser.CharacterXDocument, character_notes_area);
+            Fill_Note_Area(ref XMLParser.EventXDocument, event_notes_area);
+            Fill_Note_Area(ref XMLParser.LocationXDocument, location_notes_area);
         }
 
         private void Fill_Media_Area(Hashtable information)
@@ -162,7 +161,7 @@ namespace citadel_wpf
             }
         }
 
-        public void Fill_Note_Area(XMLParser.XDocumentPair type, WrapPanel area)
+        public void Fill_Note_Area(ref XMLParser.XDocumentInformation type, WrapPanel area)
         {
             List<Dictionary<string, string>> entityNodes = XMLParser.GetAllEntities(type.Handle);
             area.Children.Clear();
@@ -170,12 +169,31 @@ namespace citadel_wpf
 
             foreach (Dictionary<string, string> entityNode in entityNodes)
             {
-                NoteNode n = new NoteNode(type.Name);
-                //TODO adjust this
+                NoteNode n = new NoteNode(ref type);
+
                 area.MinHeight += Convert.ToInt32(n.FillWith(entityNode)) ;
                 
                 area.Children.Add(n);
-                //area.MinHeight += NoteNode.NoteNodeHeight / 2;
+            }
+        }
+
+        public void UpdatePage(XMLParser.XDocumentInformation x)
+        {
+            if (x.Name.Equals(XMLParser.CharacterXDocument.Name))
+            {
+                Update_Characters();
+            }
+            else if (x.Name.Equals(XMLParser.LocationXDocument.Name))
+            {
+                Update_Locations();
+            }
+            else if (x.Name.Equals(XMLParser.EventXDocument.Name))
+            {
+                Update_Events();
+            }
+            else
+            {
+                Update_Notes();
             }
         }
 
@@ -196,7 +214,7 @@ namespace citadel_wpf
             {
                 System.Windows.Forms.MessageBox.Show("The Title Is Invalid");
             }
-            else if (string.IsNullOrWhiteSpace(type_combobox.Text))
+            else if (!XMLParser.IsTextValid(type_combobox.Text))
             {
                 System.Windows.Forms.MessageBox.Show("Please Select a Media Type");
             }

@@ -59,7 +59,7 @@ namespace citadel_wpf
             }
             else
             {
-                if (!XMLParser.IsTextValid(name_text.Text) || string.IsNullOrWhiteSpace(type_combobox.Text))
+                if (!XMLParser.IsTextValid(name_text.Text) || !XMLParser.IsTextValid(type_combobox.Text))
                 {
                     required_text.Foreground = Brushes.Red;
                 }

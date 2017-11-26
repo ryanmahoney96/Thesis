@@ -15,7 +15,8 @@ namespace citadel_wpf
 {
     public class XMLParser
     {
-        public struct XDocumentPair
+        //TODO refactor
+        public struct XDocumentInformation
         {
             public XDocument Handle;
             public string Name;
@@ -27,19 +28,19 @@ namespace citadel_wpf
             }
         }
 
-        public static XDocumentPair CharacterXDocument;
-        public static XDocumentPair CharacterRelationshipXDocument;
-        public static XDocumentPair LocationXDocument;
-        public static XDocumentPair EventXDocument;
-        public static XDocumentPair EventRelationshipXDocument;
-        public static XDocumentPair NoteXDocument;
-        public static XDocumentPair MediaXDocument;
+        public static XDocumentInformation CharacterXDocument;
+        public static XDocumentInformation CharacterRelationshipXDocument;
+        public static XDocumentInformation LocationXDocument;
+        public static XDocumentInformation EventXDocument;
+        public static XDocumentInformation EventRelationshipXDocument;
+        public static XDocumentInformation NoteXDocument;
+        public static XDocumentInformation MediaXDocument;
 
         public static string FolderPath;
 
         public static XMLParser Instance;
 
-        private static Regex validCharacterRegex = new Regex(@"^[a-zA-Z0-9'\- ]+$");
+        private static Regex validCharacterRegex = new Regex(@"^[a-zA-Z0-9'\!\$\%\&\(\)\,\.\;\:\+\=\- ]+$");
         private static Regex yearRegex = new Regex(@"^[0-9]*$");
 
         public XMLParser(string folderPath)
@@ -48,7 +49,7 @@ namespace citadel_wpf
             UpdateXDocuments();
         }
 
-        private void SetXDocumentContent(string documentName, ref XDocumentPair handle)
+        private void SetXDocumentContent(string documentName, ref XDocumentInformation handle)
         {
             string filePath = FolderPath + $"\\{documentName}.xml";
 

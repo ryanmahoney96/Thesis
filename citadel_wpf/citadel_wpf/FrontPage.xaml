@@ -65,7 +65,7 @@
 
                         <TextBlock Text="Edit the Summary:" Grid.Row="5" Grid.Column="1" VerticalAlignment="Center"></TextBlock>
                         <ScrollViewer Margin="2, 2, 2, 2" Grid.Row="5" Grid.Column="2">
-                            <TextBox Name="summaryText" AcceptsReturn="True" TextWrapping="Wrap"></TextBox>
+                            <TextBox Name="summaryText" TextWrapping="Wrap"></TextBox>
                         </ScrollViewer>
 
                         <Button Content="Save Changes" Click="Save"  Grid.Row="6" Grid.Column="3" Width="110" Height="30" HorizontalAlignment="Center" VerticalAlignment="Center"/>

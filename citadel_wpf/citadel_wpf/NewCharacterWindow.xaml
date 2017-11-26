@@ -38,7 +38,7 @@
 
         <TextBlock Text="Enter a Physical Description and Notes on the Character:" Grid.Row="3" Grid.Column="1" TextWrapping="Wrap"></TextBlock>
         <ScrollViewer Grid.Row="3" Grid.Column="2" Width="280" Height="150">
-            <TextBox Name="description_text" AcceptsReturn="True" TextWrapping="Wrap"></TextBox>
+            <TextBox Name="description_text"  TextWrapping="Wrap"></TextBox>
         </ScrollViewer>
 
         <TextBlock Name="required_text" Text="*Required Field" Grid.Row="4" Grid.Column="1"></TextBlock>

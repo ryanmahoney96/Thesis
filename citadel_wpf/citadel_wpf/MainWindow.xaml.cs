@@ -78,32 +78,27 @@ namespace citadel_wpf
         {
             if (!string.IsNullOrWhiteSpace(folderName.Text))
             {
-                Media_Note_Validation();
+                string mediaNotes = folderName.Text + "\\media_notes.xml";
+
+                XMLParser.Instance = new XMLParser(folderName.Text);
+
+                if (!File.Exists(mediaNotes))
+                {
+                    NewMediaWindow nmw = new NewMediaWindow();
+                    nmw.Topmost = true;
+                    nmw.Topmost = false;
+                    nmw.Show();
+                }
+                else
+                {
+                    FrontPage frontPage = new FrontPage();
+                    frontPage.Topmost = true;
+                    frontPage.Topmost = false;
+                    frontPage.Show();
+                }
+
+                this.Close();
             }
-        }
-
-        private void Media_Note_Validation()
-        {
-            string mediaNotes = folderName.Text + "\\media_notes.xml";
-
-            XMLParser.Instance = new XMLParser(folderName.Text);
-
-            if (!File.Exists(mediaNotes))
-            {
-                NewMediaWindow nmw = new NewMediaWindow();
-                nmw.Topmost = true;
-                nmw.Topmost = false;
-                nmw.Show();
-            }
-            else
-            {
-                FrontPage frontPage = new FrontPage();
-                frontPage.Topmost = true;
-                frontPage.Topmost = false;
-                frontPage.Show();
-            }
-
-            this.Close();
         }
 
     }

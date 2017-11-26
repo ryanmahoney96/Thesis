@@ -25,9 +25,9 @@ namespace citadel_wpf
 
         override protected void Save(object sender, RoutedEventArgs e)
         {
-            if (!String.IsNullOrWhiteSpace(eventMapType.Text) && (locationName.IsEnabled && !String.IsNullOrWhiteSpace(locationName.Text)
+            if (!XMLParser.IsTextValid(eventMapType.Text) && (locationName.IsEnabled && !XMLParser.IsTextValid(locationName.Text)
                 ||
-                !String.IsNullOrWhiteSpace(eventMapType.Text) && locationName.IsEnabled == false))
+                !XMLParser.IsTextValid(eventMapType.Text) && locationName.IsEnabled == false))
             {
                 
                 if (eventMapType.Text.Equals("Single Event Map"))

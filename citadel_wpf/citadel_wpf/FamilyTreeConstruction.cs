@@ -143,7 +143,6 @@ namespace citadel_wpf
             AddCharacterIfAbsent(focusCharacter, ref characters);
 
             RecursiveTreeHelper(focusCharacter, ref characters, ref relationships);
-            //TODO catch the stack being blown and draw up to this point
 
             AddCharacterInformation(ref echo, characters, relationships);
 
@@ -220,7 +219,6 @@ namespace citadel_wpf
             Process.Start("cmd.exe", @"/c" + $"dot -Tpng {textPath} -o {imagePath} & del {textPath} & {imagePath}");
         }
 
-        //TODO move format to XMLEntityParser?
         private static IEnumerable<string> GetGenerationNames(string focusCharacter, string relationshipName, XElement rootPlaceholder, string childToIgnore = "")
         {
             return (from c in rootPlaceholder.Descendants("character_relationship")

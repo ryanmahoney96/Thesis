@@ -13,7 +13,7 @@ namespace citadel_wpf
     class NoteNode : Decorator
     {
         private string EntityName;
-        private string EntityType;
+        private XMLParser.XDocumentInformation EntityType;
         private TextBlock NameTextBlock;
         private StackPanel ContentStackPanel;
         private StackPanel MainPanel;
@@ -27,9 +27,9 @@ namespace citadel_wpf
         public static int NoteNodeWidth = 350;
         public static int NoteNodeHeight = NameBoxHeight + ContentBoxHeight + ButtonHeight + 25;
 
-        public NoteNode(string sourceName)
+        public NoteNode(ref XMLParser.XDocumentInformation source)
         {
-            EntityType = sourceName;
+            EntityType = source;
             borderLine = new Border();
             borderLine.BorderThickness = new Thickness(1, 1, 1, 1);
             borderLine.BorderBrush = new SolidColorBrush(Colors.DarkBlue);
@@ -89,9 +89,15 @@ namespace citadel_wpf
 
         private void DeleteClick(object sender, RoutedEventArgs e)
         {
-            if (MessageBox.Show($"Are you sure you want to delete \"{NameText}?\"", "Delete Entity", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
+            if (MessageBox.Show($"Are you sure you want to delete \"{EntityName}?\"", "Delete Entity", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
             {
-                //TODO Delete it
+                //TODO when deleting a character, event, or location, you must delete relationships it has
+                var entity = (from c in EntityType.Handle.Root.Elements()
+                             where c.Element("name").Value.Equals(EntityName)
+                             select c).First();
+                entity.Remove();
+                EntityType.Save();
+                FrontPage.FrontPageReference.UpdatePage(EntityType);
             }
         }
 
@@ -100,15 +106,15 @@ namespace citadel_wpf
             
             INewEntity newWindow;
 
-            if (EntityType.Equals(XMLParser.CharacterXDocument.Name))
+            if (EntityType.Name.Equals(XMLParser.CharacterXDocument.Name))
             {
                 newWindow = new NewCharacterWindow();
             }
-            else if (EntityType.Equals(XMLParser.EventXDocument.Name))
+            else if (EntityType.Name.Equals(XMLParser.EventXDocument.Name))
             {
                 newWindow = new NewEventWindow();
             }
-            else if (EntityType.Equals(XMLParser.LocationXDocument.Name))
+            else if (EntityType.Name.Equals(XMLParser.LocationXDocument.Name))
             {
                 newWindow = new NewLocationWindow();
             }

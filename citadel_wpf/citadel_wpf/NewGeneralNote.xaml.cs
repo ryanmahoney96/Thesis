@@ -56,7 +56,7 @@ namespace citadel_wpf
             }
             else
             {
-                if (!XMLParser.IsTextValid(name_text.Text) || string.IsNullOrWhiteSpace(description_text.Text))
+                if (!XMLParser.IsTextValid(name_text.Text) || !XMLParser.IsTextValid(description_text.Text))
                 {
                     required_text.Foreground = Brushes.Red;
                 }

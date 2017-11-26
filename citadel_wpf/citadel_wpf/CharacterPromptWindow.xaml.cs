@@ -45,7 +45,7 @@ namespace citadel_wpf
 
         private void Create_Click(object sender, RoutedEventArgs e)
         {
-            if (!String.IsNullOrWhiteSpace(characterName.Text))
+            if (!XMLParser.IsTextValid(characterName.Text))
             {
                 action(characterName.Text);
                 Close();
