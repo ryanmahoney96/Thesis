@@ -12,6 +12,7 @@ namespace citadel_wpf
 {
     class NoteNode : Decorator
     {
+        private string EntityName;
         private string EntityType;
         private TextBlock NameTextBlock;
         private StackPanel ContentStackPanel;
@@ -116,7 +117,7 @@ namespace citadel_wpf
                 newWindow = new NewGeneralNote();
             }
 
-            newWindow.FillWith(NameTextBlock.Text);
+            newWindow.FillWith(EntityName);
             EntityWindow.InitializeModalWindow(FrontPage.FrontPageReference, (EntityWindow)newWindow);
         }
 
@@ -124,21 +125,19 @@ namespace citadel_wpf
         {
             foreach (string key in entityNode.Keys)
             {
-                string name = ToTitleCase(entityNode[key]);
+                string fieldName = entityNode[key];
+                    //ToTitleCase(entityNode[key]);
 
                 if (!string.IsNullOrWhiteSpace(entityNode[key]))
                 {
                     if (key.Equals("name"))
                     {
-                        NameText = name;
+                        NameText = fieldName;
+                        EntityName = entityNode[key];
                     }
                     else
                     {
-                        //StringBuilder t = new StringBuilder();
-                        //if (!string.IsNullOrWhiteSpace(ContentText))
-                        //{
-                        //    t.Append("\n");
-                        //}
+
                         TextBlock titleText = new TextBlock();
                         titleText.Text = ToTitleCase(key);
                         titleText.TextWrapping = TextWrapping.Wrap;
@@ -153,10 +152,6 @@ namespace citadel_wpf
                         contentText.Foreground = Brushes.Black;
                         ContentStackPanel.Children.Add(contentText);
 
-                        //t.Append(ToTitleCase(key));
-                        //t.Append(":\n    ");
-                        //t.Append(entityNode[key]);
-                        //ContentText += t.ToString();
                     }
                 }
             }

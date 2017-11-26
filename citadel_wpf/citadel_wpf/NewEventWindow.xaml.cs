@@ -41,7 +41,7 @@ namespace citadel_wpf
         {
             Editing = true;
 
-            var eventRef = (from c in XMLParser.CharacterXDocument.Handle.Root.Descendants("event")
+            var eventRef = (from c in XMLParser.EventXDocument.Handle.Root.Descendants("event")
                              where c.Element("name").Value.Equals(eventName)
                              select new
                              {
@@ -64,13 +64,13 @@ namespace citadel_wpf
 
         override protected void Save(object sender, RoutedEventArgs e)
         {
-            if (XMLParser.IsEntityPresent(XMLParser.EventXDocument.Handle, name_text.Text))
+            if (XMLParser.IsEntityPresent(XMLParser.EventXDocument.Handle, name_text.Text) && !Editing)
             {
                 System.Windows.Forms.MessageBox.Show("This event already exists, please try again.");
             }
             else
             {
-                if (!XMLParser.IsTextValid(name_text.Text) || !XMLParser.IsTextValid(description_text.Text))
+                if (!XMLParser.IsTextValid(name_text.Text) || string.IsNullOrWhiteSpace(description_text.Text))
                 {
                     required_text.Foreground = Brushes.Red;
                 }

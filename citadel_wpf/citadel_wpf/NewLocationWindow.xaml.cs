@@ -53,7 +53,7 @@ namespace citadel_wpf
 
         override protected void Save(object sender, RoutedEventArgs e)
         {
-            if (XMLParser.IsEntityPresent(XMLParser.LocationXDocument.Handle, name_text.Text))
+            if (XMLParser.IsEntityPresent(XMLParser.LocationXDocument.Handle, name_text.Text) && !Editing)
             {
                 System.Windows.Forms.MessageBox.Show("This location already exists, please try again.");
             }

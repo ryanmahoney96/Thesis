@@ -20,6 +20,7 @@ namespace citadel_wpf
 
     public partial class FrontPage : EntityWindow
     {
+        //TODO Tooltips throughout
         //TODO: When making a new folder, verify that a media entry does not exist
         //TODO: Organize so event has list of pointers to things before and things after. Use this when adding new relationship to filter out contradictory data
         //TODO: Stylize with https://github.com/MahApps/MahApps.Metro
@@ -166,7 +167,6 @@ namespace citadel_wpf
             List<Dictionary<string, string>> entityNodes = XMLParser.GetAllEntities(type.Handle);
             area.Children.Clear();
             area.MinHeight = NoteNode.NoteNodeHeight;
-            //TODO button notenode
 
             foreach (Dictionary<string, string> entityNode in entityNodes)
             {

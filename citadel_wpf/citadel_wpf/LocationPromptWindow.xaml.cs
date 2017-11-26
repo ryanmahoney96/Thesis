@@ -17,7 +17,7 @@ namespace citadel_wpf
 
     public partial class LocationPromptWindow : EntityWindow
     {
-        //TODO Tooltips
+
         public LocationPromptWindow(params EntityWindow[] rw) : base(rw)
         {
             InitializeComponent();

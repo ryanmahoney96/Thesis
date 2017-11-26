@@ -50,7 +50,7 @@ namespace citadel_wpf
         override protected void Save(object sender, RoutedEventArgs e)
         {
 
-            if (XMLParser.IsEntityPresent(XMLParser.NoteXDocument.Handle, name_text.Text))
+            if (XMLParser.IsEntityPresent(XMLParser.NoteXDocument.Handle, name_text.Text) && !Editing)
             {
                 System.Windows.Forms.MessageBox.Show("This note already exists, please try again.");
             }

@@ -64,7 +64,7 @@ namespace citadel_wpf
                 }
                 else
                 {
-                    //TODO distribute
+
                     if (Editing)
                     {
                         XElement characterReference = (from c in XMLParser.CharacterXDocument.Handle.Root.Descendants("character")
