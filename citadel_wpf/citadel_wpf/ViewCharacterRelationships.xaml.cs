@@ -21,6 +21,17 @@ namespace citadel_wpf
     /// </summary>
     public partial class ViewCharacterRelationships : EntityWindow
     {
+        struct NodeInformation
+        {
+            public string EntityOne;
+            public string Relationship;
+            public string EntityTwo;
+
+            override public string ToString()
+            {
+                return (EntityOne + " " + Relationship + " " + EntityTwo);
+            }
+        }
 
         public ViewCharacterRelationships() : base()
         {
@@ -41,6 +52,7 @@ namespace citadel_wpf
             if (focus_character_combo.SelectedItem != null && !string.IsNullOrWhiteSpace(focus_character_combo.SelectedItem.ToString()))
             {
                 string fc = focus_character_combo.SelectedItem.ToString().Split(':')[1].Substring(1);
+                //TODO this query is marked for change when relationship is redone
                 var results = from c in XMLParser.CharacterRelationshipXDocument.Handle.Root.Descendants("character_relationship")
                               where c.Element("entity_one").Value.ToString().Equals(fc)
                               select new
@@ -53,11 +65,17 @@ namespace citadel_wpf
 
                 foreach (var r in results)
                 {
+                    //TODO retain some information
                     WrapPanel panel = new WrapPanel();
                     TextBlock textblock = new TextBlock();
-                    textblock.Text = fc + " " + r.Relationship + " " + r.Entity_Two;
+                    NodeInformation n;
+                    n.EntityOne = fc;
+                    n.Relationship = r.Relationship;
+                    n.EntityTwo = r.Entity_Two;
+                    textblock.Text = n.ToString();
                     textblock.Margin = new Thickness(3);
                     Button deleteButton = new Button();
+                    deleteButton.Tag = n;
                     deleteButton.Click += DeleteButton_Click;
                     deleteButton.Content = "Delete";
                     deleteButton.Margin = new Thickness(3);
@@ -74,8 +92,21 @@ namespace citadel_wpf
         {
             if (MessageBox.Show("Are you sure you want to delete this relationship?", "Delete Relationship", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
             {
-                //TODO functionality
-                //Delete
+                NodeInformation n = (NodeInformation)((Button)sender).Tag;
+
+                var relationship = from c in XMLParser.CharacterRelationshipXDocument.Handle.Root.Elements()
+                              where c.Element("entity_one").Value.Equals(n.EntityOne)
+                              && c.Element("relationship").Value.Equals(n.Relationship)
+                              && c.Element("entity_two").Value.Equals(n.EntityTwo)
+                                    select c;
+
+                foreach(var r in relationship)
+                {
+                    r.Remove();
+                }
+
+                XMLParser.CharacterRelationshipXDocument.Save();
+                FillPanelWithRelationships(relationship_stackpanel);
             }
         }
 
@@ -97,11 +128,11 @@ namespace citadel_wpf
 
         }
 
-        private void add_relationship_button_Click(object sender, RoutedEventArgs e)
+        private void AddRelationship_Button_Click(object sender, RoutedEventArgs e)
         {
             if (!string.IsNullOrWhiteSpace(focus_character_combo.Text))
             {
-                EntityWindow.InitializeModalWindow(this, new RelationshipPrompt(focus_character_combo.Text, this));
+                EntityWindow.InitializeModalWindow(this, new CharacterRelationshipPrompt(focus_character_combo.Text, this));
             }
         }
     }

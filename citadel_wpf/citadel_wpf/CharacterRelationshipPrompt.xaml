@@ -1,4 +1,4 @@
-﻿<base:EntityWindow x:Class="citadel_wpf.RelationshipPrompt"
+﻿<base:EntityWindow x:Class="citadel_wpf.CharacterRelationshipPrompt"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -38,6 +38,7 @@
         <ComboBox Name="relationship_combo" Margin="5, 0" Grid.Row="3" Grid.Column="2" VerticalAlignment="Center" VerticalContentAlignment="Center" Height="22">
             <ComboBoxItem Content="Is the Parent of"/>
             <ComboBoxItem Content="Is the Child of"/>
+            <ComboBoxItem Content="Married"/>
             <!--<ComboBoxItem Content="Is the Sibling of"/>-->
         </ComboBox>
 

@@ -87,6 +87,7 @@ namespace citadel_wpf
             this.Child = borderLine;
         }
 
+        //TODO move to XMLParser
         private void DeleteClick(object sender, RoutedEventArgs e)
         {
             if (MessageBox.Show($"Are you sure you want to delete \"{EntityName}?\"", "Delete Entity", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)

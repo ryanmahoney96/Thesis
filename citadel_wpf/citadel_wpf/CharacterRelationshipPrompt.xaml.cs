@@ -16,11 +16,15 @@ using System.Xml.Linq;
 
 namespace citadel_wpf
 {
-    public partial class RelationshipPrompt : EntityWindow
+    public partial class CharacterRelationshipPrompt : EntityWindow
     {
+        public const string ChildOf = "Is the Child of";
+        public const string ParentOf = "Is the Parent of";
+        public const string MarriedTo = "Married";
+
         string FocusCharacter;
 
-        public RelationshipPrompt(string fc, params EntityWindow[] rw) : base(rw)
+        public CharacterRelationshipPrompt(string fc, params EntityWindow[] rw) : base(rw)
         {
             InitializeComponent();
 
@@ -34,6 +38,7 @@ namespace citadel_wpf
         {
             //TODO is married to
             //TODO was married to
+            //TODO this query is marked for change when relationship is redone
             string relationship = relationship_combo.Text;
             string opposite = "Is the Child of";
             if (relationship.Equals("Is the Child of"))

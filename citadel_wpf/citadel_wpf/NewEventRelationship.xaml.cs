@@ -35,6 +35,7 @@ namespace citadel_wpf
 
         override protected void Save(object sender, RoutedEventArgs e)
         {
+            //TODO this query is marked for change when relationship is redone
             string relationship = relationship_combo.Text;
             string opposite = "Comes Before";
             if (relationship.Equals("Comes Before"))

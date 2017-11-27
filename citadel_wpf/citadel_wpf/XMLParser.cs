@@ -52,21 +52,19 @@ namespace citadel_wpf
         private void SetXDocumentContent(string documentName, ref XDocumentInformation handle)
         {
             string filePath = FolderPath + $"\\{documentName}.xml";
-
-            //TODO necessary?
-            if (!File.Exists(filePath))
-            {
-                StreamWriter s = File.CreateText(filePath);
-                s.WriteLine("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
-                s.WriteLine($"<{documentName}>");
-                s.WriteLine($"");
-                s.WriteLine($"</{documentName}>");
-                s.Close();
-            }
-
-            handle.Handle = XDocument.Load(filePath);
             handle.Path = filePath;
             handle.Name = documentName;
+
+            if (!File.Exists(filePath))
+            {
+                handle.Handle = new XDocument(new XElement(documentName));
+                handle.Save();
+            }
+            else
+            {
+                handle.Handle = XDocument.Load(filePath);
+            }
+            
         }
 
         public void UpdateMediaXDocument()

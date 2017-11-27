@@ -91,7 +91,7 @@
                 <DockPanel>
                     <Menu DockPanel.Dock="Top">
                         <MenuItem Header="_New Character" Click="New_Character_Click"/>
-                        <MenuItem Header="View Character _Relationships" Click="Character_Relationship_Click"/>
+                        <MenuItem Header="Add/View Character _Relationships" Click="Character_Relationship_Click"/>
                         <MenuItem Header="Create _Immediate Family Tree" Click="NewImmediateFamilyTree"/>
                         <MenuItem Header="Create _Extended Family Tree" Click="NewExtendedFamilyTree"/>
                         <MenuItem Header="Create _Full Family Tree" Click="NewFullFamilyTree"/>

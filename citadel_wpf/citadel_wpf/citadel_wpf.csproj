@@ -94,8 +94,8 @@
     </Compile>
     <Compile Include="NoteNode.cs" />
     <Compile Include="Obsolete.cs" />
-    <Compile Include="RelationshipPrompt.xaml.cs">
-      <DependentUpon>RelationshipPrompt.xaml</DependentUpon>
+    <Compile Include="CharacterRelationshipPrompt.xaml.cs">
+      <DependentUpon>CharacterRelationshipPrompt.xaml</DependentUpon>
     </Compile>
     <Compile Include="TimelineConstruction.cs" />
     <Compile Include="XMLParser.cs" />
@@ -155,7 +155,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="RelationshipPrompt.xaml">
+    <Page Include="CharacterRelationshipPrompt.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
