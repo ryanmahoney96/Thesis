@@ -18,19 +18,22 @@ namespace citadel_wpf
 {
     public partial class EventRelationshipPrompt : EntityWindow
     {
+        //This class can be adjusted using the Strategy Pattern
         public const string ComesBefore = "Comes Before";
         public const string ComesAfter = "Comes After";
         public const string SameTime = "Occurs at the Same Time as";
+        //TODO this -> another window
+        public const string ParticipatedIn = "Participated In";
 
         public string[] Relationships = { ComesBefore, ComesAfter, SameTime };
 
         string FocusEvent;
 
-        public EventRelationshipPrompt(string fc, params EntityWindow[] rw) : base(rw)
+        public EventRelationshipPrompt(string fe, params EntityWindow[] rw) : base(rw)
         {
             InitializeComponent();
 
-            FocusEvent = fc;
+            FocusEvent = fe;
             focus_event.Text = FocusEvent;
 
             XMLParser.FillComboboxWithNames(XMLParser.EventXDocument.Handle, ref event_two_combo, FocusEvent);
@@ -53,7 +56,7 @@ namespace citadel_wpf
 
         override protected void Save(object sender, RoutedEventArgs e)
         {
-            //TODO this query is marked for change when relationship is redone
+
             string relationship = relationship_combo.Text;
             string opposite = ComesBefore;
             if (relationship.Equals(ComesBefore))

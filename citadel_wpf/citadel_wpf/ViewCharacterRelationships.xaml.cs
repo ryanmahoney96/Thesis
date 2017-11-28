@@ -41,7 +41,7 @@ namespace citadel_wpf
             if (focus_character_combo.SelectedItem != null && !string.IsNullOrWhiteSpace(focus_character_combo.SelectedItem.ToString()))
             {
                 string fc = focus_character_combo.SelectedItem.ToString().Split(':')[1].Substring(1);
-                //TODO this query is marked for change when relationship is redone
+
                 var results = from c in XMLParser.CharacterRelationshipXDocument.Handle.Root.Descendants("character_relationship")
                               where c.Element("entity_one").Value.ToString().Equals(fc)
                               select new
@@ -54,7 +54,7 @@ namespace citadel_wpf
 
                 foreach (var r in results)
                 {
-                    //TODO retain some information
+
                     WrapPanel panel = new WrapPanel();
                     TextBlock textblock = new TextBlock();
                     XMLParser.NodeInformation n;

@@ -20,7 +20,7 @@ namespace citadel_wpf
 
     public partial class FrontPage : EntityWindow
     {
-        //TODO only store one half of each relationship -> easier to delete and manage, harder to query for
+
         //TODO Tooltips throughout
         //TODO: Organize so event has list of pointers to things before and things after. Use this when adding new relationship to filter out contradictory data
         //TODO: Stylize with https://github.com/MahApps/MahApps.Metro

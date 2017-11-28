@@ -55,6 +55,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="BaseRelationshipPrompt.xaml.cs">
+      <DependentUpon>BaseRelationshipPrompt.xaml</DependentUpon>
+    </Compile>
     <Compile Include="INewEntity.cs" />
     <Compile Include="LocationPromptWindow.xaml.cs">
       <DependentUpon>LocationPromptWindow.xaml</DependentUpon>
@@ -102,6 +105,10 @@
       <DependentUpon>ViewEventRelationships.xaml</DependentUpon>
     </Compile>
     <Compile Include="XMLParser.cs" />
+    <Page Include="BaseRelationshipPrompt.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="LocationPromptWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
