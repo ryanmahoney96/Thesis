@@ -18,9 +18,11 @@ namespace citadel_wpf
 {
     public partial class CharacterRelationshipPrompt : EntityWindow
     {
-        public const string ChildOf = "Is the Child of";
-        public const string ParentOf = "Is the Parent of";
-        public const string MarriedTo = "Married";
+        public const string IsChildOf = "Is the Child of";
+        public const string IsParentOf = "Is the Parent of";
+        public const string Married = "Married";
+
+        public string[] Relationships = {IsChildOf, IsParentOf, Married};
 
         string FocusCharacter;
 
@@ -34,16 +36,29 @@ namespace citadel_wpf
             XMLParser.FillComboboxWithNames(XMLParser.CharacterXDocument.Handle, ref character_two_combo, FocusCharacter);
         }
 
+        private void FillComboboxWithRelationshipTypes()
+        {
+            relationship_combo.Items.Clear();
+
+            ComboBoxItem cBoxItem;
+
+            foreach (string r in Relationships)
+            {
+                cBoxItem = new ComboBoxItem();
+                cBoxItem.Content = r;
+                relationship_combo.Items.Add(cBoxItem);
+            }
+        }
+
         override protected void Save(object sender, RoutedEventArgs e)
         {
             //TODO is married to
-            //TODO was married to
             //TODO this query is marked for change when relationship is redone
             string relationship = relationship_combo.Text;
-            string opposite = "Is the Child of";
-            if (relationship.Equals("Is the Child of"))
+            string opposite = IsChildOf;
+            if (relationship.Equals(IsChildOf))
             {
-                opposite = "Is the Parent of";
+                opposite = IsParentOf;
             }
 
             if (!XMLParser.IsTextValid(relationship_combo.Text) || !XMLParser.IsTextValid(character_two_combo.Text))

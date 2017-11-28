@@ -21,6 +21,7 @@ namespace citadel_wpf
     /// </summary>
     public partial class NewEventRelationship : EntityWindow
     {
+        //TODO restructure to emulate Character model
 
         public NewEventRelationship() : base()
         {
@@ -28,7 +29,7 @@ namespace citadel_wpf
             XMLParser.FillComboboxWithNames(XMLParser.EventXDocument.Handle, ref event_one_combo);
         }
 
-        private void event_one_combo_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void EventOneCombobox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             XMLParser.FillComboboxWithNames(XMLParser.EventXDocument.Handle, ref event_two_combo, event_one_combo.Text);
         }

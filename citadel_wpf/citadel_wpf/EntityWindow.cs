@@ -52,6 +52,8 @@ namespace citadel_wpf
         }
 
         protected abstract void Save(object sender, RoutedEventArgs e);
+
+        //TODO change this to observer pattern
         public abstract void UpdateReliantWindows();
 
     }

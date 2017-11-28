@@ -249,15 +249,15 @@ namespace citadel_wpf
 
         private static IEnumerable<string> GetParentsOf(string focusCharacter)
         {
-            return GetGenerationNames(focusCharacter, "Is the Child of", XMLParser.CharacterRelationshipXDocument.Handle.Root);
+            return GetGenerationNames(focusCharacter, CharacterRelationshipPrompt.IsChildOf, XMLParser.CharacterRelationshipXDocument.Handle.Root);
         }
         private static IEnumerable<string> GetChildrenOf(string focusCharacter)
         {
-            return GetGenerationNames(focusCharacter, "Is the Parent of", XMLParser.CharacterRelationshipXDocument.Handle.Root);
+            return GetGenerationNames(focusCharacter, CharacterRelationshipPrompt.IsParentOf, XMLParser.CharacterRelationshipXDocument.Handle.Root);
         }
         private static IEnumerable<string> GetSiblingsOf(string focusCharacter, string parent)
         {
-            return GetGenerationNames(parent, "Is the Parent of", XMLParser.CharacterRelationshipXDocument.Handle.Root, focusCharacter);
+            return GetGenerationNames(parent, CharacterRelationshipPrompt.IsParentOf, XMLParser.CharacterRelationshipXDocument.Handle.Root, focusCharacter);
         }
 
     }
