@@ -23,9 +23,9 @@ namespace citadel_wpf
         string FocusEntity;
         string EntityName;
         string[] Relationships;
-        XMLParser.XDocumentInformation EntityType;
+        XDocumentInformation EntityType;
 
-        public BaseRelationshipPrompt(string fe, string en, string[] r, ref XMLParser.XDocumentInformation x, params EntityWindow[] rw) : base(rw)
+        public BaseRelationshipPrompt(string fe, string en, string[] r, ref XDocumentInformation x, params EntityWindow[] rw) : base(rw)
         {
             InitializeComponent();
 
@@ -107,7 +107,7 @@ namespace citadel_wpf
 
                     EntityType.Save();
 
-                    UpdateReliantWindows();
+                    Update();
                     if (MessageBox.Show($"Would you like to create another relationship for \"{FocusEntity}?\"", "Create Another Relationship", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.No)
                     {
                         Close();
@@ -132,12 +132,12 @@ namespace citadel_wpf
             XMLParser.FillComboboxWithNames(EntityType.Handle, ref entity_two_combo, FocusEntity);
         }
 
-        override public void UpdateReliantWindows()
+        override public void Update()
         {
 
             foreach (EntityWindow w in reliantWindows)
             {
-                w.UpdateReliantWindows();
+                w.Update();
             }
         }
 

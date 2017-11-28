@@ -13,32 +13,8 @@ using System.Xml.XPath;
 
 namespace citadel_wpf
 {
-    public class XMLParser
+    public partial class XMLParser
     {
-
-        public struct XDocumentInformation
-        {
-            public XDocument Handle;
-            public string Name;
-            public string Path;
-            public void Save()
-            {
-                Handle.Save(Path);
-                Handle = XDocument.Load(Path);
-            }
-        }
-
-        public struct NodeInformation
-        {
-            public string EntityOne;
-            public string Relationship;
-            public string EntityTwo;
-
-            override public string ToString()
-            {
-                return ("'" + EntityOne + "' " + Relationship + " '" + EntityTwo + "'");
-            }
-        }
 
         public static XDocumentInformation CharacterXDocument;
         public static XDocumentInformation CharacterRelationshipXDocument;
@@ -47,6 +23,8 @@ namespace citadel_wpf
         public static XDocumentInformation EventRelationshipXDocument;
         public static XDocumentInformation NoteXDocument;
         public static XDocumentInformation MediaXDocument;
+
+        public static XDocumentInformation[] XDocuments = {CharacterXDocument, CharacterRelationshipXDocument, LocationXDocument, EventXDocument, EventRelationshipXDocument, NoteXDocument, MediaXDocument };
 
         public static string FolderPath;
 
@@ -61,20 +39,20 @@ namespace citadel_wpf
             UpdateXDocuments();
         }
 
-        private void SetXDocumentContent(string documentName, ref XDocumentInformation handle)
+        private void SetXDocumentContent(string documentName, ref XDocumentInformation XDoc)
         {
             string filePath = FolderPath + $"\\{documentName}.xml";
-            handle.Path = filePath;
-            handle.Name = documentName;
+            XDoc.Path = filePath;
+            XDoc.Name = documentName;
 
             if (!File.Exists(filePath))
             {
-                handle.Handle = new XDocument(new XElement(documentName));
-                handle.Save();
+                XDoc.Handle = new XDocument(new XElement(documentName));
+                XDoc.Save();
             }
             else
             {
-                handle.Handle = XDocument.Load(filePath);
+                XDoc.Handle = XDocument.Load(filePath);
             }
             
         }
@@ -92,6 +70,14 @@ namespace citadel_wpf
             SetXDocumentContent("event_notes", ref EventXDocument);
             SetXDocumentContent("event_relationship_notes", ref EventRelationshipXDocument);
             SetXDocumentContent("general_notes", ref NoteXDocument);
+        }
+
+        public static void DetachFromAll(EntityWindow e)
+        {
+            foreach (var x in XDocuments)
+            {
+                x.Detach(e);
+            }
         }
 
         public static List<Dictionary<string, string>> GetAllEntities(XDocument handle)

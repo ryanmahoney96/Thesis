@@ -26,6 +26,7 @@ namespace citadel_wpf
         public NewGeneralNote(params EntityWindow[] rw) : base(rw)
         {
             InitializeComponent();
+            //TODO attachments
         }
 
         public void FillWith(string noteName)
@@ -83,20 +84,20 @@ namespace citadel_wpf
 
                     XMLParser.NoteXDocument.Save();
 
-                    UpdateReliantWindows();
+                    Update();
                     Close();
                 }
             }
 
         }
 
-        override public void UpdateReliantWindows()
+        override public void Update()
         {
             FrontPage.FrontPageReference.Update_Notes();
 
             foreach (EntityWindow w in reliantWindows)
             {
-                w.UpdateReliantWindows();
+                w.Update();
             }
         }
     }

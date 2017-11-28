@@ -37,6 +37,8 @@ namespace citadel_wpf
             FrontPageReference = this;
             base.SizeChanged += FrontPage_SizeChanged;
             base.Loaded += FrontPage_Loaded;
+
+            //TODO attachments
         }
 
         private void FrontPage_Loaded(object sender, EventArgs e)
@@ -162,7 +164,7 @@ namespace citadel_wpf
             }
         }
 
-        public void Fill_Note_Area(ref XMLParser.XDocumentInformation type, WrapPanel area)
+        public void Fill_Note_Area(ref XDocumentInformation type, WrapPanel area)
         {
             List<Dictionary<string, string>> entityNodes = XMLParser.GetAllEntities(type.Handle);
             area.Children.Clear();
@@ -178,8 +180,9 @@ namespace citadel_wpf
             }
         }
 
-        public void UpdatePage(XMLParser.XDocumentInformation x)
+        public void UpdatePage(XDocumentInformation x)
         {
+            //TODO exchange with Update function
             if (x.Name.Equals(XMLParser.CharacterXDocument.Name))
             {
                 Update_Characters();
@@ -243,7 +246,7 @@ namespace citadel_wpf
             }
         }
 
-        override public void UpdateReliantWindows()
+        override public void Update()
         {
             //
         }

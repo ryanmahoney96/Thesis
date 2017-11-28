@@ -27,6 +27,7 @@ namespace citadel_wpf
             InitializeComponent();
             XMLParser.FillComboboxWithNames(XMLParser.EventXDocument.Handle, ref focus_event_combo);
             FillPanelWithRelationships(relationship_stackpanel);
+            XMLParser.EventRelationshipXDocument.Attach(this);
         }
 
         private void FocusEventChanged(object sender, SelectionChangedEventArgs e)
@@ -57,10 +58,7 @@ namespace citadel_wpf
 
                     WrapPanel panel = new WrapPanel();
                     TextBlock textblock = new TextBlock();
-                    XMLParser.NodeInformation n;
-                    n.EntityOne = fc;
-                    n.Relationship = r.Relationship;
-                    n.EntityTwo = r.Entity_Two;
+                    NodeInformation n = new NodeInformation(fc, r.Relationship, r.Entity_Two);
                     textblock.Text = n.ToString();
                     textblock.Margin = new Thickness(3);
                     Button deleteButton = new Button();
@@ -81,7 +79,7 @@ namespace citadel_wpf
         {
             if (MessageBox.Show("Are you sure you want to delete this relationship?", "Delete Relationship", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
             {
-                XMLParser.NodeInformation n = (XMLParser.NodeInformation)((Button)sender).Tag;
+                NodeInformation n = (NodeInformation)((Button)sender).Tag;
 
                 var relationship = from c in XMLParser.EventRelationshipXDocument.Handle.Root.Elements()
                                    where c.Element("entity_one").Value.Equals(n.EntityOne)
@@ -94,8 +92,8 @@ namespace citadel_wpf
                     r.Remove();
                 }
 
+                XMLParser.EventRelationshipXDocument.Detach(this);
                 XMLParser.EventRelationshipXDocument.Save();
-                FillPanelWithRelationships(relationship_stackpanel);
             }
         }
 
@@ -109,12 +107,12 @@ namespace citadel_wpf
             EntityWindow.InitializeModalWindow(this, new NewEventWindow(this));
         }
 
-        override public void UpdateReliantWindows()
+        override public void Update()
         {
             XMLParser.FillComboboxWithNames(XMLParser.EventXDocument.Handle, ref focus_event_combo);
             focus_event_combo.Text = "";
             relationship_stackpanel.Children.Clear();
-
+            FillPanelWithRelationships(relationship_stackpanel);
         }
 
         private void AddRelationship_Button_Click(object sender, RoutedEventArgs e)

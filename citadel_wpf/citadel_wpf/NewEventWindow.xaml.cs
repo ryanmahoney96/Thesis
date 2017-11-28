@@ -27,6 +27,7 @@ namespace citadel_wpf
         {
             InitializeComponent();
             Initialize_Locations();
+            //TODO attachments
         }
 
         private void Initialize_Locations()
@@ -103,21 +104,21 @@ namespace citadel_wpf
 
                     XMLParser.EventXDocument.Save();
 
-                    UpdateReliantWindows();
+                    Update();
                     Close();
                 }
             }
             
         }
 
-        override public void UpdateReliantWindows()
+        override public void Update()
         {
             FrontPage.FrontPageReference.Update_Events();
             Initialize_Locations();
 
             foreach (EntityWindow w in reliantWindows)
             {
-                w.UpdateReliantWindows();
+                w.Update();
             }
         }
 

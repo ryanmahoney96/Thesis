@@ -70,9 +70,7 @@
       <DependentUpon>FrontPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="FamilyTreeConstruction.cs" />
-    <Compile Include="ImageDisplayWindow.xaml.cs">
-      <DependentUpon>ImageDisplayWindow.xaml</DependentUpon>
-    </Compile>
+    <Compile Include="NodeInformation.cs" />
     <Compile Include="ViewCharacterRelationships.xaml.cs">
       <DependentUpon>ViewCharacterRelationships.xaml</DependentUpon>
     </Compile>
@@ -107,6 +105,7 @@
     <Compile Include="ViewRelationships.xaml.cs">
       <DependentUpon>ViewRelationships.xaml</DependentUpon>
     </Compile>
+    <Compile Include="XDocumentInformation.cs" />
     <Compile Include="XMLParser.cs" />
     <Page Include="BaseRelationshipPrompt.xaml">
       <SubType>Designer</SubType>
@@ -117,10 +116,6 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="FamilyTreePromptWindow.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="ImageDisplayWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

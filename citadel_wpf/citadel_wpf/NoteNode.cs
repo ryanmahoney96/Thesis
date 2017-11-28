@@ -13,7 +13,7 @@ namespace citadel_wpf
     class NoteNode : Decorator
     {
         private string EntityName;
-        private XMLParser.XDocumentInformation EntityType;
+        private XDocumentInformation EntityType;
         private TextBlock NameTextBlock;
         private StackPanel ContentStackPanel;
         private StackPanel MainPanel;
@@ -27,7 +27,7 @@ namespace citadel_wpf
         public static int NoteNodeWidth = 350;
         public static int NoteNodeHeight = NameBoxHeight + ContentBoxHeight + ButtonHeight + 25;
 
-        public NoteNode(ref XMLParser.XDocumentInformation source)
+        public NoteNode(ref XDocumentInformation source)
         {
             EntityType = source;
             borderLine = new Border();

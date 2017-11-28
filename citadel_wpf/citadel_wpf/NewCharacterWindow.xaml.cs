@@ -26,6 +26,7 @@ namespace citadel_wpf
         public NewCharacterWindow(params EntityWindow[] rw) : base(rw)
         {
             InitializeComponent();
+            //TODO attachments
         }
 
         public void FillWith(string characterName)
@@ -88,19 +89,19 @@ namespace citadel_wpf
 
                     XMLParser.CharacterXDocument.Save();
 
-                    UpdateReliantWindows();
+                    Update();
                     Close();
                 }
             }
         }
 
-        override public void UpdateReliantWindows()
+        override public void Update()
         {
             FrontPage.FrontPageReference.Update_Characters();
 
             foreach (EntityWindow w in reliantWindows)
             {
-                w.UpdateReliantWindows();
+                w.Update();
             }
         }
     }

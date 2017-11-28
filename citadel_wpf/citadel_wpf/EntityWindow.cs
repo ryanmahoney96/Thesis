@@ -38,6 +38,11 @@ namespace citadel_wpf
             WindowStartupLocation = WindowStartupLocation.CenterScreen;
         }
 
+        ~EntityWindow()
+        {
+            XMLParser.DetachFromAll(this);
+        }
+
         public static void InitializeModalWindow(Window owner, Window child)
         {
             child.Owner = owner;
@@ -54,7 +59,7 @@ namespace citadel_wpf
         protected abstract void Save(object sender, RoutedEventArgs e);
 
         //TODO change this to observer pattern
-        public abstract void UpdateReliantWindows();
+        public abstract void Update();
 
     }
 }

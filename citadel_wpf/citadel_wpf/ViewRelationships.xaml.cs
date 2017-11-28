@@ -21,11 +21,11 @@ namespace citadel_wpf
     /// </summary>
     public partial class ViewRelationships : EntityWindow
     {
-        XMLParser.XDocumentInformation RelationshipXDoc;
+        XDocumentInformation RelationshipXDoc;
         string EntityName;
         string[] Relationships;
 
-        public ViewRelationships(ref XMLParser.XDocumentInformation x, string en, string[] r) : base()
+        public ViewRelationships(ref XDocumentInformation x, string en, string[] r) : base()
         {
             InitializeComponent();
             RelationshipXDoc = x;
@@ -67,10 +67,7 @@ namespace citadel_wpf
 
                     WrapPanel panel = new WrapPanel();
                     TextBlock textblock = new TextBlock();
-                    XMLParser.NodeInformation n;
-                    n.EntityOne = fc;
-                    n.Relationship = r.Relationship;
-                    n.EntityTwo = r.Entity_Two;
+                    NodeInformation n = new NodeInformation(fc, r.Relationship, r.Entity_Two);
                     textblock.Text = n.ToString();
                     textblock.Margin = new Thickness(3);
                     Button deleteButton = new Button();
@@ -91,7 +88,7 @@ namespace citadel_wpf
         {
             if (MessageBox.Show("Are you sure you want to delete this relationship?", "Delete Relationship", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
             {
-                XMLParser.NodeInformation n = (XMLParser.NodeInformation)((Button)sender).Tag;
+                NodeInformation n = (NodeInformation)((Button)sender).Tag;
 
                 var relationship = from c in RelationshipXDoc.Handle.Root.Elements()
                                    where c.Element("entity_one").Value.Equals(n.EntityOne)
@@ -119,7 +116,7 @@ namespace citadel_wpf
             //TODO EntityWindow.InitializeModalWindow(this, new NewCharacterWindow(this));
         }
 
-        override public void UpdateReliantWindows()
+        override public void Update()
         {
             XMLParser.FillComboboxWithNames(RelationshipXDoc.Handle, ref focus_entity_combo);
             focus_entity_combo.Text = "";

@@ -35,6 +35,8 @@ namespace citadel_wpf
 
             XMLParser.FillComboboxWithNames(XMLParser.CharacterXDocument.Handle, ref character_two_combo, FocusCharacter);
             FillComboboxWithRelationshipTypes();
+
+            //TODO attachments
         }
 
         private void FillComboboxWithRelationshipTypes()
@@ -96,7 +98,7 @@ namespace citadel_wpf
 
                     XMLParser.CharacterRelationshipXDocument.Save();
 
-                    UpdateReliantWindows();
+                    Update();
                     if (MessageBox.Show($"Would you like to create another relationship for \"{FocusCharacter}?\"", "Create Another Relationship", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.No)
                     {
                         Close();
@@ -111,12 +113,12 @@ namespace citadel_wpf
             XMLParser.FillComboboxWithNames(XMLParser.CharacterXDocument.Handle, ref character_two_combo, FocusCharacter);
         }
 
-        override public void UpdateReliantWindows()
+        override public void Update()
         {
 
             foreach (EntityWindow w in reliantWindows)
             {
-                w.UpdateReliantWindows();
+                w.Update();
             }
         }
 

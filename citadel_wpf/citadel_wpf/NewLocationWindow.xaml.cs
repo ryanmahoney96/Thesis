@@ -26,6 +26,7 @@ namespace citadel_wpf
         public NewLocationWindow(params EntityWindow[] rw) : base(rw)
         {
             InitializeComponent();
+            //TODO attachments
         }
 
         public void FillWith(string locationName)
@@ -90,7 +91,7 @@ namespace citadel_wpf
 
                     XMLParser.LocationXDocument.Save();
 
-                    UpdateReliantWindows();
+                    Update();
                     Close();
                 }
             }
@@ -159,13 +160,13 @@ namespace citadel_wpf
             updateSubtypes();
         }
 
-        override public void UpdateReliantWindows()
+        override public void Update()
         {
             FrontPage.FrontPageReference.Update_Locations();
 
             foreach (EntityWindow w in reliantWindows)
             {
-                w.UpdateReliantWindows();
+                w.Update();
             }
         }
     }

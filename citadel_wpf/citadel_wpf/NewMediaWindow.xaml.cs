@@ -74,6 +74,6 @@ namespace citadel_wpf
             }
         }
 
-        override public void UpdateReliantWindows() { }
+        override public void Update() { }
     }
 }
