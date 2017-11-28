@@ -74,8 +74,8 @@
       <DependentUpon>ViewCharacterRelationships.xaml</DependentUpon>
     </Compile>
     <Compile Include="EntityWindow.cs" />
-    <Compile Include="NewEventRelationship.xaml.cs">
-      <DependentUpon>NewEventRelationship.xaml</DependentUpon>
+    <Compile Include="EventRelationshipPrompt.xaml.cs">
+      <DependentUpon>EventRelationshipPrompt.xaml</DependentUpon>
     </Compile>
     <Compile Include="NewEventWindow.xaml.cs">
       <DependentUpon>NewEventWindow.xaml</DependentUpon>
@@ -98,6 +98,9 @@
       <DependentUpon>CharacterRelationshipPrompt.xaml</DependentUpon>
     </Compile>
     <Compile Include="TimelineConstruction.cs" />
+    <Compile Include="ViewEventRelationships.xaml.cs">
+      <DependentUpon>ViewEventRelationships.xaml</DependentUpon>
+    </Compile>
     <Compile Include="XMLParser.cs" />
     <Page Include="LocationPromptWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -135,7 +138,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="NewEventRelationship.xaml">
+    <Page Include="EventRelationshipPrompt.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -156,6 +159,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="CharacterRelationshipPrompt.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ViewEventRelationships.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

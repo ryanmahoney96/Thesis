@@ -17,32 +17,32 @@ using System.Xml.Linq;
 namespace citadel_wpf
 {
     /// <summary>
-    /// Interaction logic for NewCharacterRelationship.xaml
+    /// Interaction logic for NewEventRelationship.xaml
     /// </summary>
-    public partial class ViewCharacterRelationships : EntityWindow
+    public partial class ViewEventRelationships : EntityWindow
     {
-
-        public ViewCharacterRelationships() : base()
+        
+        public ViewEventRelationships() : base()
         {
             InitializeComponent();
-            XMLParser.FillComboboxWithNames(XMLParser.CharacterXDocument.Handle, ref focus_character_combo);
+            XMLParser.FillComboboxWithNames(XMLParser.EventXDocument.Handle, ref focus_event_combo);
             FillPanelWithRelationships(relationship_stackpanel);
         }
 
-        private void FocusCharacterChanged(object sender, SelectionChangedEventArgs e)
+        private void FocusEventChanged(object sender, SelectionChangedEventArgs e)
         {
-            //XMLParser.FillComboboxWithNames(XMLParser.CharacterXDocument.Handle, ref character_two_combo, character_one_combo.Text);
+            //XMLParser.FillComboboxWithNames(XMLParser.EventXDocument.Handle, ref event_two_combo, event_one_combo.Text);
             //Refill stackpanel
             FillPanelWithRelationships(relationship_stackpanel);
         }
 
         private void FillPanelWithRelationships(StackPanel stackpanel)
         {
-            if (focus_character_combo.SelectedItem != null && !string.IsNullOrWhiteSpace(focus_character_combo.SelectedItem.ToString()))
+            if (focus_event_combo.SelectedItem != null && !string.IsNullOrWhiteSpace(focus_event_combo.SelectedItem.ToString()))
             {
-                string fc = focus_character_combo.SelectedItem.ToString().Split(':')[1].Substring(1);
+                string fc = focus_event_combo.SelectedItem.ToString().Split(':')[1].Substring(1);
                 //TODO this query is marked for change when relationship is redone
-                var results = from c in XMLParser.CharacterRelationshipXDocument.Handle.Root.Descendants("character_relationship")
+                var results = from c in XMLParser.EventRelationshipXDocument.Handle.Root.Descendants("event_relationship")
                               where c.Element("entity_one").Value.ToString().Equals(fc)
                               select new
                               {
@@ -83,18 +83,18 @@ namespace citadel_wpf
             {
                 XMLParser.NodeInformation n = (XMLParser.NodeInformation)((Button)sender).Tag;
 
-                var relationship = from c in XMLParser.CharacterRelationshipXDocument.Handle.Root.Elements()
-                              where c.Element("entity_one").Value.Equals(n.EntityOne)
-                              && c.Element("relationship").Value.Equals(n.Relationship)
-                              && c.Element("entity_two").Value.Equals(n.EntityTwo)
-                                    select c;
+                var relationship = from c in XMLParser.EventRelationshipXDocument.Handle.Root.Elements()
+                                   where c.Element("entity_one").Value.Equals(n.EntityOne)
+                                   && c.Element("relationship").Value.Equals(n.Relationship)
+                                   && c.Element("entity_two").Value.Equals(n.EntityTwo)
+                                   select c;
 
-                foreach(var r in relationship)
+                foreach (var r in relationship)
                 {
                     r.Remove();
                 }
 
-                XMLParser.CharacterRelationshipXDocument.Save();
+                XMLParser.EventRelationshipXDocument.Save();
                 FillPanelWithRelationships(relationship_stackpanel);
             }
         }
@@ -104,24 +104,24 @@ namespace citadel_wpf
             //
         }
 
-        private void Add_Character(object sender, RoutedEventArgs e)
+        private void Add_Event(object sender, RoutedEventArgs e)
         {
-            EntityWindow.InitializeModalWindow(this, new NewCharacterWindow(this));
+            EntityWindow.InitializeModalWindow(this, new NewEventWindow(this));
         }
 
         override public void UpdateReliantWindows()
         {
-            XMLParser.FillComboboxWithNames(XMLParser.CharacterXDocument.Handle, ref focus_character_combo);
-            focus_character_combo.Text = "";
+            XMLParser.FillComboboxWithNames(XMLParser.EventXDocument.Handle, ref focus_event_combo);
+            focus_event_combo.Text = "";
             relationship_stackpanel.Children.Clear();
 
         }
 
         private void AddRelationship_Button_Click(object sender, RoutedEventArgs e)
         {
-            if (!string.IsNullOrWhiteSpace(focus_character_combo.Text))
+            if (!string.IsNullOrWhiteSpace(focus_event_combo.Text))
             {
-                EntityWindow.InitializeModalWindow(this, new CharacterRelationshipPrompt(focus_character_combo.Text, this));
+                EntityWindow.InitializeModalWindow(this, new EventRelationshipPrompt(focus_event_combo.Text, this));
             }
         }
     }

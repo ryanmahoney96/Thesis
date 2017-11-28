@@ -15,7 +15,7 @@ namespace citadel_wpf
 {
     public class XMLParser
     {
-        //TODO refactor
+
         public struct XDocumentInformation
         {
             public XDocument Handle;
@@ -25,6 +25,18 @@ namespace citadel_wpf
             {
                 Handle.Save(Path);
                 Handle = XDocument.Load(Path);
+            }
+        }
+
+        public struct NodeInformation
+        {
+            public string EntityOne;
+            public string Relationship;
+            public string EntityTwo;
+
+            override public string ToString()
+            {
+                return ("'" + EntityOne + "' " + Relationship + " '" + EntityTwo + "'");
             }
         }
 
@@ -156,6 +168,16 @@ namespace citadel_wpf
             }
 
             return returnTable;
+        }
+
+        internal static void RemoveEntityFromEventEntities(string entityName)
+        {
+            throw new NotImplementedException();
+        }
+
+        internal static void RemoveEntityFromRelationships(string entityName, XDocumentInformation characterRelationshipXDocument)
+        {
+            throw new NotImplementedException();
         }
 
         //is this entity present in the XDocument

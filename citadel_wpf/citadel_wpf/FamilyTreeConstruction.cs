@@ -14,10 +14,11 @@ namespace citadel_wpf
     class FamilyTreeConstruction
     {
         private static string fontname = $"fontname=\"Helvetica\"";
-        //male = "color=navy, shape=ellipse"
+        private static string focusShape = $"shape=box";
         private static string maleColor = $"navy";
         private static string femaleColor = $"orangered2";
         private static string otherColor = $"mediumvioletred";
+        private static string marriage = $"crimson";
 
         public static void ImmediateFamilyTree(string focusCharacter)
         {
@@ -46,7 +47,7 @@ namespace citadel_wpf
                 AddRelationshipIfAbsent(focusCharacter, c, ref relationships);
             }
 
-            AddCharacterInformation(ref echo, characters, relationships);
+            AddCharacterInformation(ref echo, characters, relationships, focusCharacter);
 
             echo.Append("}");
 
@@ -125,14 +126,14 @@ namespace citadel_wpf
                 }
             }
 
-            AddCharacterInformation(ref echo, characters, relationships);
+            AddCharacterInformation(ref echo, characters, relationships, focusCharacter);
 
             echo.Append("}");
 
             SaveEcho(echo, "ExtendedFamilyTree", focusCharacter);
         }
 
-        //TODO Make a function to clean up relationships -> currently VERY cluttered; If two characters ar emarried and have the same kids, sprout from a marriage node
+        //TODO Make a function to clean up relationships -> currently VERY cluttered; If two characters ar emarried and have the same kids, sprout from a marriage node?
         public static void RecursiveFullFamilyTree(string focusCharacter)
         {
             //All familial relationships
@@ -144,7 +145,7 @@ namespace citadel_wpf
 
             RecursiveTreeHelper(focusCharacter, ref characters, ref relationships);
 
-            AddCharacterInformation(ref echo, characters, relationships);
+            AddCharacterInformation(ref echo, characters, relationships, focusCharacter);
 
             echo.Append("}");
 
@@ -194,11 +195,16 @@ namespace citadel_wpf
             return false;
         }
 
-        private static void AddCharacterInformation(ref StringBuilder echo, Dictionary<string, string> characters, Dictionary<string, bool> relationships)
+        private static void AddCharacterInformation(ref StringBuilder echo, Dictionary<string, string> characters, Dictionary<string, bool> relationships, string focusCharacter)
         {
             foreach (var character in characters)
             {
-                echo.Append($"\"{character.Key}\" [color={character.Value}, {fontname}]; ");
+                echo.Append($"\"{character.Key}\" [color={character.Value}, {fontname}");
+                if (character.Key.Equals(focusCharacter))
+                {
+                    echo.Append($", {focusShape}");
+                }
+                echo.Append($"]; ");
             }
             foreach (var relationship in relationships)
             {
@@ -225,6 +231,14 @@ namespace citadel_wpf
                     where c.Element("entity_one").Value.ToString().Equals(focusCharacter)
                     && c.Element("relationship").Value.ToString().Equals(relationshipName)
                     && (childToIgnore.Equals("") || (!childToIgnore.Equals("") && (!c.Element("entity_two").Value.ToString().Equals(childToIgnore))))
+                    select c.Element("entity_two").Value.ToString());
+        }
+
+        private static IEnumerable<string> GetMarriages(string focusCharacter, XElement rootPlaceholder)
+        {
+            return (from c in rootPlaceholder.Descendants("character_relationship")
+                    where c.Element("entity_one").Value.ToString().Equals(focusCharacter)
+                    && c.Element("relationship").Value.ToString().Equals(CharacterRelationshipPrompt.Married)
                     select c.Element("entity_two").Value.ToString());
         }
 

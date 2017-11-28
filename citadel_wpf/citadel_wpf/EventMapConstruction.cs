@@ -26,7 +26,6 @@ namespace citadel_wpf
         private static string nodeColor = $"color=navy";
         private static string centerColor = $"color=orangered";
 
-
         //How many events take place at a certain location
         public static void SingleLocation(string focusLocation)
         {

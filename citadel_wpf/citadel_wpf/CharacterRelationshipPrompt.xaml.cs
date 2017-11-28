@@ -34,6 +34,7 @@ namespace citadel_wpf
             focus_character.Text = FocusCharacter;
 
             XMLParser.FillComboboxWithNames(XMLParser.CharacterXDocument.Handle, ref character_two_combo, FocusCharacter);
+            FillComboboxWithRelationshipTypes();
         }
 
         private void FillComboboxWithRelationshipTypes()
@@ -59,6 +60,10 @@ namespace citadel_wpf
             if (relationship.Equals(IsChildOf))
             {
                 opposite = IsParentOf;
+            }
+            else if (relationship.Equals(Married))
+            {
+                opposite = Married;
             }
 
             if (!XMLParser.IsTextValid(relationship_combo.Text) || !XMLParser.IsTextValid(character_two_combo.Text))

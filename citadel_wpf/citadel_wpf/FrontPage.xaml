@@ -107,7 +107,7 @@
                 <DockPanel>
                     <Menu DockPanel.Dock="Top">
                         <MenuItem Header="_New Event" Click="New_Event_Click"/>
-                        <MenuItem Header="New Event _Relationship" Click="Event_Relationship_Click"/>
+                        <MenuItem Header="Add/View Event _Relationship" Click="Event_Relationship_Click"/>
                         <MenuItem Header="Create Event _Timeline"/>
                         <MenuItem Header="Create Event _Map" Click="NewEventMap"/>
                     </Menu>

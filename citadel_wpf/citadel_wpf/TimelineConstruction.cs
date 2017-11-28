@@ -8,8 +8,20 @@ namespace citadel_wpf
 {
     class TimelineConstruction
     {
-        //TODO rankdir=\"LR\"
+        private static string rankdir = $"rankdir=\"LR\"";
+        private static string fontname = $"fontname=\"Helvetica\"";
+
         public static void ShortTermTimeline(string focusEvent)
+        {
+
+        }
+
+        public static void LongTermTimeline(string focusEvent)
+        {
+
+        }
+
+        public static void AllEventTimeline(string focusEvent)
         {
 
         }

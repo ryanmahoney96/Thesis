@@ -137,7 +137,7 @@ namespace citadel_wpf
 
         private void Event_Relationship_Click(object sender, RoutedEventArgs e)
         {
-            EntityWindow.InitializeModalWindow(this, (new NewEventRelationship()));
+            EntityWindow.InitializeModalWindow(this, (new ViewEventRelationships()));
         }
 
         private void Update_Note_Pages()

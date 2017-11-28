@@ -90,7 +90,7 @@ namespace citadel_wpf
         //TODO move to XMLParser
         private void DeleteClick(object sender, RoutedEventArgs e)
         {
-            if (MessageBox.Show($"Are you sure you want to delete \"{EntityName}?\"", "Delete Entity", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
+            if (MessageBox.Show($"Are you sure you want to delete \"{EntityName}?\" (This includes any relationships it has with other entities)", "Delete Entity", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
             {
                 //TODO when deleting a character, event, or location, you must delete relationships it has
                 var entity = (from c in EntityType.Handle.Root.Elements()
@@ -99,6 +99,21 @@ namespace citadel_wpf
                 entity.Remove();
                 EntityType.Save();
                 FrontPage.FrontPageReference.UpdatePage(EntityType);
+
+                if (EntityType.Name.Equals(XMLParser.CharacterXDocument.Name))
+                {
+                    XMLParser.RemoveEntityFromRelationships(EntityName, XMLParser.CharacterRelationshipXDocument);
+                    //TODO participants XMLParser.RemoveEntityFromRelationships(EntityName, XMLParser.EventXDocument);
+                }
+                else if (EntityType.Name.Equals(XMLParser.EventXDocument.Name))
+                {
+                    XMLParser.RemoveEntityFromRelationships(EntityName, XMLParser.EventRelationshipXDocument);
+                }
+                else if (EntityType.Name.Equals(XMLParser.LocationXDocument.Name))
+                {
+                    XMLParser.RemoveEntityFromEventEntities(EntityName);
+                }
+
             }
         }
 
