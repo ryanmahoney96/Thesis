@@ -17,10 +17,10 @@ namespace citadel_wpf
     /// <summary>
     /// Interaction logic for CharacterPromptWindow.xaml
     /// </summary>
-    public partial class CharacterPromptWindow : EntityWindow
+    public partial class FamilyTreePromptWindow : EntityWindow
     {
        
-        public CharacterPromptWindow()
+        public FamilyTreePromptWindow()
         {
             InitializeComponent();
 
