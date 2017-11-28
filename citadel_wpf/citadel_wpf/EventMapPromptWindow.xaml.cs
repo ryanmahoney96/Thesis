@@ -15,10 +15,10 @@ using System.Windows.Shapes;
 namespace citadel_wpf
 {
 
-    public partial class LocationPromptWindow : EntityWindow
+    public partial class EventMapPromptWindow : EntityWindow
     {
 
-        public LocationPromptWindow(params EntityWindow[] rw) : base(rw)
+        public EventMapPromptWindow(params EntityWindow[] rw) : base(rw)
         {
             InitializeComponent();
         }

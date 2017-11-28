@@ -17,18 +17,25 @@ using System.Xml.Linq;
 namespace citadel_wpf
 {
     /// <summary>
-    /// Interaction logic for NewCharacterRelationship.xaml
+    ///TODO at a later time: This class, and its sibling xaml, can be used to boil down the ViewRelationship-type windows
     /// </summary>
     public partial class ViewRelationships : EntityWindow
     {
-        XMLParser.XDocumentInformation XDoc;
+        XMLParser.XDocumentInformation RelationshipXDoc;
+        string EntityName;
+        string[] Relationships;
 
-        public ViewRelationships(ref XMLParser.XDocumentInformation x) : base()
+        public ViewRelationships(ref XMLParser.XDocumentInformation x, string en, string[] r) : base()
         {
             InitializeComponent();
-            XDoc = x;
+            RelationshipXDoc = x;
+            EntityName = en;
+            Relationships = r;
+            Title += EntityName + " Relationships";
+            FocusTitle.Text += EntityName;
+            AddButton.Content += EntityName;
 
-            XMLParser.FillComboboxWithNames(XDoc.Handle, ref focus_entity_combo);
+            XMLParser.FillComboboxWithNames(RelationshipXDoc.Handle, ref focus_entity_combo);
             FillPanelWithRelationships(relationship_stackpanel);
         }
 
@@ -45,7 +52,7 @@ namespace citadel_wpf
             {
                 string fc = focus_entity_combo.SelectedItem.ToString().Split(':')[1].Substring(1);
 
-                var results = from c in XMLParser.CharacterRelationshipXDocument.Handle.Root.Elements()
+                var results = from c in RelationshipXDoc.Handle.Root.Elements()
                               where c.Element("entity_one").Value.ToString().Equals(fc)
                               select new
                               {
@@ -86,7 +93,7 @@ namespace citadel_wpf
             {
                 XMLParser.NodeInformation n = (XMLParser.NodeInformation)((Button)sender).Tag;
 
-                var relationship = from c in XMLParser.CharacterRelationshipXDocument.Handle.Root.Elements()
+                var relationship = from c in RelationshipXDoc.Handle.Root.Elements()
                                    where c.Element("entity_one").Value.Equals(n.EntityOne)
                                    && c.Element("relationship").Value.Equals(n.Relationship)
                                    && c.Element("entity_two").Value.Equals(n.EntityTwo)
@@ -97,7 +104,7 @@ namespace citadel_wpf
                     r.Remove();
                 }
 
-                XMLParser.CharacterRelationshipXDocument.Save();
+                RelationshipXDoc.Save();
                 FillPanelWithRelationships(relationship_stackpanel);
             }
         }
@@ -109,12 +116,12 @@ namespace citadel_wpf
 
         private void Add_Entity(object sender, RoutedEventArgs e)
         {
-            EntityWindow.InitializeModalWindow(this, new NewCharacterWindow(this));
+            //TODO EntityWindow.InitializeModalWindow(this, new NewCharacterWindow(this));
         }
 
         override public void UpdateReliantWindows()
         {
-            XMLParser.FillComboboxWithNames(XMLParser.CharacterXDocument.Handle, ref focus_entity_combo);
+            XMLParser.FillComboboxWithNames(RelationshipXDoc.Handle, ref focus_entity_combo);
             focus_entity_combo.Text = "";
             relationship_stackpanel.Children.Clear();
 
@@ -124,7 +131,7 @@ namespace citadel_wpf
         {
             if (!string.IsNullOrWhiteSpace(focus_entity_combo.Text))
             {
-                EntityWindow.InitializeModalWindow(this, new CharacterRelationshipPrompt(focus_entity_combo.Text, this));
+                //TODO EntityWindow.InitializeModalWindow(this, new BaseRelationshipPrompt(focus_entity_combo.Text, EntityName, Relationships, ref XDoc, this));
             }
         }
     }

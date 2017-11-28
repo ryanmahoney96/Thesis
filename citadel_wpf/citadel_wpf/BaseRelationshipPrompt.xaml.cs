@@ -16,6 +16,8 @@ using System.Xml.Linq;
 
 namespace citadel_wpf
 {
+    ///TODO at a later time: This class, and its sibling xaml, can be used to boil down the RelationshipPrompt-type windows
+
     public partial class BaseRelationshipPrompt : EntityWindow
     {
         string FocusEntity;
@@ -31,6 +33,8 @@ namespace citadel_wpf
 
             FocusEntity = fe;
             focus_entity.Text = FocusEntity;
+
+            Title = "Relationship with " + FocusEntity;
 
             EntityName = en;
 

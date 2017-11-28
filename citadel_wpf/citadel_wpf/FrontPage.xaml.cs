@@ -250,12 +250,12 @@ namespace citadel_wpf
 
         private void NewFamilyTree(object sender, RoutedEventArgs e)
         {
-            EntityWindow.InitializeModalWindow(this, (new CharacterPromptWindow()));
+            EntityWindow.InitializeModalWindow(this, (new FamilyTreePromptWindow()));
         }
 
         private void NewEventMap(object sender, RoutedEventArgs e)
         {
-            EntityWindow.InitializeModalWindow(this, (new LocationPromptWindow()));
+            EntityWindow.InitializeModalWindow(this, (new EventMapPromptWindow()));
         }
     }
 }
