@@ -7,13 +7,15 @@
         mc:Ignorable="d"
         Title="Character Prompt"
         ResizeMode="NoResize"
-        Height="130" 
+        Height="185" 
         Width="330"
         WindowStartupLocation="CenterScreen">
 
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="5"/>
+            <RowDefinition Height="20"/>
+            <RowDefinition Height="30"/>
             <RowDefinition Height="20"/>
             <RowDefinition Height="30"/>
             <RowDefinition Height="30"/>
@@ -28,11 +30,13 @@
             <ColumnDefinition Width="5"/>
         </Grid.ColumnDefinitions>
 
-        <TextBlock Text="*Character Name" Grid.Row="1" Grid.Column="1" Margin="2, 2"/>
-        <ComboBox Name="characterName" Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="3" Margin="3, 3"/>
-        <Button Content="Cancel" Grid.Row="3" Grid.Column="2" Margin="2, 2" Click="Cancel_Click"/>
-        <Button Content="Create" Grid.Row="3" Grid.Column="3" Margin="2, 2" Click="Create_Click"/>
-        <TextBlock Name="requiredText" Text="*Required" Grid.Row="3" Grid.Column="1" Margin="2, 2"/>
+        <TextBlock Text="*Family Tree Type" Grid.Row="1" Grid.Column="1" Margin="2, 2"/>
+        <ComboBox Name="treeType" Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="3" Margin="3, 3"/>
+        <TextBlock Text="*Character Name" Grid.Row="3" Grid.Column="1" Margin="2, 2"/>
+        <ComboBox Name="characterName" Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="3" Margin="3, 3"/>
+        <Button Content="Cancel" Grid.Row="5" Grid.Column="2" Margin="2, 2" Click="Cancel_Click"/>
+        <Button Content="Create" Grid.Row="5" Grid.Column="3" Margin="2, 2" Click="Create_Click"/>
+        <TextBlock Name="requiredText" Text="*Required" Grid.Row="5" Grid.Column="1" Margin="2, 2"/>
 
     </Grid>
 </base:EntityWindow>

@@ -19,12 +19,20 @@ namespace citadel_wpf
     /// </summary>
     public partial class CharacterPromptWindow : EntityWindow
     {
-        private Action<string> action;
-
-        public CharacterPromptWindow(Action<string> a)
+       
+        public CharacterPromptWindow()
         {
             InitializeComponent();
-            action = a;
+
+            ComboBoxItem cBoxItem;
+
+            foreach (string r in FamilyTreeConstruction.Relationships)
+            {
+                cBoxItem = new ComboBoxItem();
+                cBoxItem.Content = r;
+                treeType.Items.Add(cBoxItem);
+            }
+
             XMLParser.FillComboboxWithNames(XMLParser.CharacterXDocument.Handle, ref characterName);
         }
 
@@ -45,9 +53,21 @@ namespace citadel_wpf
 
         private void Create_Click(object sender, RoutedEventArgs e)
         {
-            if (XMLParser.IsTextValid(characterName.Text))
+            if (XMLParser.IsTextValid(treeType.Text) && XMLParser.IsTextValid(characterName.Text))
             {
-                action(characterName.Text);
+                if (treeType.Text.Equals(FamilyTreeConstruction.ImmediateFamilyTreeString))
+                {
+                    FamilyTreeConstruction.ImmediateFamilyTree(characterName.Text);
+                }
+                else if (treeType.Text.Equals(FamilyTreeConstruction.ExtendedFamilyTreeString))
+                {
+                    FamilyTreeConstruction.ExtendedFamilyTree(characterName.Text);
+                }
+                else
+                {
+                    FamilyTreeConstruction.RecursiveFullFamilyTree(characterName.Text);
+                }
+
                 Close();
             }
             else

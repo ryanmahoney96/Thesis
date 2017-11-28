@@ -37,7 +37,7 @@ namespace citadel_wpf
             Relationships = r;
 
             focus_entity.Text = FocusEntity;
-            FocusTitle.Text = "Select the " + EntityName + " and Its Relationship";
+            FocusTitle.Text = "Select the Relationship and the " + EntityName;
             SecondEntity.Text += EntityName;
             AddButton.Content += EntityName;
 

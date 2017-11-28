@@ -11,8 +11,14 @@ using System.Xml.Linq;
 
 namespace citadel_wpf
 {
-    class FamilyTreeConstruction
+    public class FamilyTreeConstruction
     {
+        public static string ImmediateFamilyTreeString = "Immediate Family Tree";
+        public static string ExtendedFamilyTreeString = "Extended Family Tree";
+        public static string FullFamilyTreeString = "Full Family Tree";
+
+        public static string[] Relationships = { ImmediateFamilyTreeString, ExtendedFamilyTreeString, FullFamilyTreeString };
+
         private static string fontname = $"fontname=\"Helvetica\"";
         private static string focusShape = $"shape=box";
         private static string maleColor = $"navy";
@@ -22,7 +28,7 @@ namespace citadel_wpf
 
         public static void ImmediateFamilyTree(string focusCharacter)
         {
-            StringBuilder echo = new StringBuilder($"graph s {{ label=\"Immediate Family Tree for {focusCharacter}\" {fontname}; ");
+            StringBuilder echo = new StringBuilder($"graph s {{ label=\"{ImmediateFamilyTreeString} for {focusCharacter}\" {fontname}; ");
             Dictionary<string, bool> relationships = new Dictionary<string, bool>();
             Dictionary<string, string> characters = new Dictionary<string, string>();
 
@@ -57,7 +63,7 @@ namespace citadel_wpf
         public static void ExtendedFamilyTree(string focusCharacter)
         {
             //Grandparents/children + aunts/uncles + cousins + nieces/nephews
-            StringBuilder echo = new StringBuilder($"graph s {{ label=\"Extended Family Tree for {focusCharacter}\" {fontname}; ");
+            StringBuilder echo = new StringBuilder($"graph s {{ label=\"{ExtendedFamilyTreeString} for {focusCharacter}\" {fontname}; ");
             Dictionary<string, bool> relationships = new Dictionary<string, bool>();
             Dictionary<string, string> characters = new Dictionary<string, string>();
 
@@ -137,7 +143,7 @@ namespace citadel_wpf
         public static void RecursiveFullFamilyTree(string focusCharacter)
         {
             //All familial relationships
-            StringBuilder echo = new StringBuilder($"graph s {{ label=\"Full Family Tree for {focusCharacter}\" {fontname}; ");
+            StringBuilder echo = new StringBuilder($"graph s {{ label=\"{FullFamilyTreeString} for {focusCharacter}\" {fontname}; ");
             Dictionary<string, bool> relationships = new Dictionary<string, bool>();
             Dictionary<string, string> characters = new Dictionary<string, string>();
 
