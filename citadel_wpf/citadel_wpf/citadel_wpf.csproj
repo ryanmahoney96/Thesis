@@ -55,9 +55,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="BaseRelationshipPrompt.xaml.cs">
-      <DependentUpon>BaseRelationshipPrompt.xaml</DependentUpon>
-    </Compile>
     <Compile Include="INewEntity.cs" />
     <Compile Include="EventMapPromptWindow.xaml.cs">
       <DependentUpon>EventMapPromptWindow.xaml</DependentUpon>
@@ -102,15 +99,8 @@
     <Compile Include="ViewEventRelationships.xaml.cs">
       <DependentUpon>ViewEventRelationships.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ViewRelationships.xaml.cs">
-      <DependentUpon>ViewRelationships.xaml</DependentUpon>
-    </Compile>
     <Compile Include="XDocumentInformation.cs" />
     <Compile Include="XMLParser.cs" />
-    <Page Include="BaseRelationshipPrompt.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="EventMapPromptWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -168,10 +158,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="ViewEventRelationships.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="ViewRelationships.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
