@@ -21,13 +21,13 @@ namespace citadel_wpf
     /// </summary>
     public abstract class EntityWindow : Window
     {
+        public static SolidColorBrush BackgroundColor = (SolidColorBrush)(new BrushConverter().ConvertFrom("#fbfaff"));
+
         private List<XDocumentInformation> Attachments = new List<XDocumentInformation>();
 
         public EntityWindow()
         {
-            Background = (SolidColorBrush)(new BrushConverter().ConvertFrom("#fcfcff"));
-            BorderBrush = Brushes.DarkBlue;
-            BorderThickness = new Thickness(0, 1, 0, 0);
+            SetDecorations(this);
             Uri iconUri = new Uri("../../citadel_icon.ico", UriKind.RelativeOrAbsolute);
             Icon = BitmapFrame.Create(iconUri);
             WindowStartupLocation = WindowStartupLocation.CenterScreen;
@@ -42,6 +42,13 @@ namespace citadel_wpf
         {
             Attachments.Add(x);
             x.Attach(this);
+        }
+
+        public static void SetDecorations(Control u)
+        {
+            u.Background = BackgroundColor;
+            u.BorderBrush = Brushes.DarkBlue;
+            u.BorderThickness = new Thickness(0, 1, 0, 0);
         }
 
         public static void InitializeModalWindow(Window owner, Window child)

@@ -31,6 +31,7 @@ namespace citadel_wpf
         public FrontPage() : base()
         {
             InitializeComponent();
+
             XMLParser.Instance.UpdateMediaXDocument();
             base.Title += " - " + XMLParser.FolderPath;
             FillNotePages();
@@ -42,61 +43,22 @@ namespace citadel_wpf
             AttachToXDocument(ref XMLParser.EventXDocument);
             AttachToXDocument(ref XMLParser.LocationXDocument);
             AttachToXDocument(ref XMLParser.NoteXDocument);
-        }
 
+            SetDecorations(MainTabControl);
+
+            MiddleColumn.MaxWidth = SystemParameters.PrimaryScreenWidth * 0.6;
+            MiddleRow.MaxHeight = SystemParameters.PrimaryScreenHeight * 0.6;
+        }
+       
         private void FrontPage_Loaded(object sender, EventArgs e)
         {
-            FrontPage_SizeChanged(null, null);
+            FrontPage_SizeChanged(sender, null);
         }
 
         private void FrontPage_SizeChanged(object sender, SizeChangedEventArgs e)
         {
-            string selectedName = ((TabItem)MainTabControl.SelectedItem).Header as string;
-            double referenceWidth = 780;
-            if (selectedName.Equals("General Notes"))
-            {
-                referenceWidth = note_scrollview.ActualWidth;
-            }
-            else if (selectedName.Equals("Characters"))
-            {
-                referenceWidth = character_scrollview.ActualWidth;
-            }
-            else if (selectedName.Equals("Events"))
-            {
-                referenceWidth = event_scrollview.ActualWidth;
-            }
-            else if (selectedName.Equals("Locations"))
-            {
-                referenceWidth = location_scrollview.ActualWidth;
-            }
-            SetWidths(ref general_notes_area, referenceWidth);
-            SetWidths(ref character_notes_area, referenceWidth);
-            SetWidths(ref event_notes_area, referenceWidth);
-            SetWidths(ref location_notes_area, referenceWidth);
-            MiddleColumn.Width = new GridLength(base.Width - 300);
-            MiddleRow.Height = new GridLength(base.Height - 300);
-        }
-
-        private void SetWidths(ref WrapPanel panel, double referenceWidth)
-        {
-            SetMinWidth(ref panel);
-            SetMaxWidth(ref panel, referenceWidth);
-        }
-
-        private void SetMinWidth(ref WrapPanel panel)
-        {
-            panel.MinWidth = (NoteNode.NoteNodeWidth);
-        }
-        private void SetMaxWidth(ref WrapPanel panel, double referenceWidth)
-        {
-            if (location_scrollview.ActualWidth > 0)
-            {
-                panel.MaxWidth = (referenceWidth / NoteNode.NoteNodeWidth) * (NoteNode.NoteNodeWidth);
-            }
-            else
-            {
-                panel.MaxWidth = base.Width;
-            }
+            MiddleColumn.Width = new GridLength(base.ActualWidth - 300);
+            MiddleRow.Height = new GridLength(base.ActualHeight - 300);
         }
 
         private void New_Note_Click(object sender, RoutedEventArgs e)

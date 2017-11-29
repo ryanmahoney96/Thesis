@@ -40,6 +40,7 @@ namespace citadel_wpf
             borderLine.MaxHeight = NoteNodeHeight;
 
             MainPanel = new StackPanel();
+            MainPanel.Background = Brushes.White;
             borderLine.Child = MainPanel;
 
             NameTextBlock = new TextBlock();

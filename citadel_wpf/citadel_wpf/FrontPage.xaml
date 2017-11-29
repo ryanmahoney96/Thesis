@@ -12,25 +12,25 @@
         Width="800">
 
     <Grid>
-        <TabControl Name="MainTabControl" Background="#fcfcff" BorderBrush="DarkBlue" BorderThickness="0, 1, 0, 0">
+        <TabControl Name="MainTabControl">
             <TabItem Header="Media Information">
                 <Label FontSize="14">
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="10"/>
                             <ColumnDefinition Width="130"/>
-                            <ColumnDefinition Name="MiddleColumn" MinWidth="450" Width="auto"/>
+                            <ColumnDefinition Name="MiddleColumn" MinWidth="450" Width="*"/>
                             <ColumnDefinition Width="150"/>
                             <ColumnDefinition Width="10"/>
                         </Grid.ColumnDefinitions>
 
                         <Grid.RowDefinitions>
                             <RowDefinition Height="20"/>
+                            <RowDefinition Height="42"/>
                             <RowDefinition Height="40"/>
                             <RowDefinition Height="40"/>
                             <RowDefinition Height="40"/>
-                            <RowDefinition Height="40"/>
-                            <RowDefinition Name="MiddleRow" MinHeight="230" Height="auto"/>
+                            <RowDefinition Name="MiddleRow" MinHeight="230" Height="*"/>
                             <RowDefinition Height="50"/>
                         </Grid.RowDefinitions>
 
@@ -81,8 +81,8 @@
                         <MenuItem Header="_New Note" Click="New_Note_Click"/>
                     </Menu>
 
-                    <ScrollViewer Name="note_scrollview" Background="White" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" DockPanel.Dock="Top">
-                        <WrapPanel Name="general_notes_area"></WrapPanel>
+                    <ScrollViewer Name="note_scrollview" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" DockPanel.Dock="Top">
+                        <WrapPanel Name="general_notes_area" Margin="5" Width="{Binding ActualWidth, ElementName=note_scrollview}"/>
                     </ScrollViewer>
                 </DockPanel>
             </TabItem>
@@ -96,8 +96,8 @@
                         <MenuItem Header="Create _Family Tree" Click="NewFamilyTree"/>
                     </Menu>
 
-                    <ScrollViewer Name="character_scrollview" Background="White" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" DockPanel.Dock="Top">
-                        <WrapPanel Name="character_notes_area"></WrapPanel>
+                    <ScrollViewer Name="character_scrollview" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" DockPanel.Dock="Top">
+                        <WrapPanel Name="character_notes_area" Margin="5" Width="{Binding ActualWidth, ElementName=character_scrollview}"/>
                     </ScrollViewer>
                 </DockPanel>
             </TabItem>
@@ -112,8 +112,8 @@
                         <MenuItem Header="Create Event _Map" Click="NewEventMap"/>
                     </Menu>
 
-                    <ScrollViewer Name="event_scrollview" Background="White" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto"  DockPanel.Dock="Top">
-                        <WrapPanel Name="event_notes_area"></WrapPanel>
+                    <ScrollViewer Name="event_scrollview" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto"  DockPanel.Dock="Top">
+                        <WrapPanel Name="event_notes_area" Margin="5" Width="{Binding ActualWidth, ElementName=event_scrollview}"/>
                     </ScrollViewer>
                 </DockPanel>
             </TabItem>
@@ -125,8 +125,8 @@
                         <MenuItem Header="Create Event _Map" Click="NewEventMap"/>
                     </Menu>
 
-                    <ScrollViewer Name="location_scrollview" Background="White" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" DockPanel.Dock="Top">
-                        <WrapPanel Name="location_notes_area"/>
+                    <ScrollViewer Name="location_scrollview" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" DockPanel.Dock="Top">
+                        <WrapPanel Name="location_notes_area" Margin="5" Width="{Binding ActualWidth, ElementName=location_scrollview}"/>
                     </ScrollViewer>
                 </DockPanel>
             </TabItem>
