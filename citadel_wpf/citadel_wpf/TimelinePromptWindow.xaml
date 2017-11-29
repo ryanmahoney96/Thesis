@@ -1,0 +1,47 @@
+﻿<base:EntityWindow x:Class="citadel_wpf.TimelinePromptWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:base="clr-namespace:citadel_wpf"
+        mc:Ignorable="d"
+        Title="Timeline Prompt"
+        ResizeMode="NoResize"
+        Height="185" 
+        Width="330"
+        WindowStartupLocation="CenterScreen">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="5"/>
+            <RowDefinition Height="20"/>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="20"/>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="5"/>
+        </Grid.RowDefinitions>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="5"/>
+            <ColumnDefinition Width="180"/>
+            <ColumnDefinition Width="60"/>
+            <ColumnDefinition Width="60"/>
+            <ColumnDefinition Width="5"/>
+        </Grid.ColumnDefinitions>
+
+        <TextBlock Text="*Timeline Type" Grid.Row="1" Grid.Column="1" Margin="2, 2"/>
+        <ComboBox Name="timelineType" Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="3" Margin="3, 3">
+            <ComboBoxItem>Short Term Timeline</ComboBoxItem>
+            <ComboBoxItem>Long Term Timeline</ComboBoxItem>
+        </ComboBox>
+
+        <TextBlock Text="*Event Name" Grid.Row="3" Grid.Column="1" Margin="2, 2"/>
+        <ComboBox Name="event_name_combo" Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="3" Margin="3, 3"/>
+
+        <Button Content="Cancel" Grid.Row="5" Grid.Column="2" Margin="2, 2" Click="Cancel_and_Close"/>
+        <Button Content="Create" Grid.Row="5" Grid.Column="3" Margin="2, 2" Click="Save"/>
+        <TextBlock Name="requiredText" Text="*Required" Grid.Row="5" Grid.Column="1" Margin="2, 2"/>
+
+    </Grid>
+</base:EntityWindow>

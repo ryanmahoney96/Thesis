@@ -71,6 +71,9 @@
     <Compile Include="ParticipantPrompt.xaml.cs">
       <DependentUpon>ParticipantPrompt.xaml</DependentUpon>
     </Compile>
+    <Compile Include="TimelinePromptWindow.xaml.cs">
+      <DependentUpon>TimelinePromptWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ViewCharacterRelationships.xaml.cs">
       <DependentUpon>ViewCharacterRelationships.xaml</DependentUpon>
     </Compile>
@@ -129,6 +132,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="ParticipantPrompt.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="TimelinePromptWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

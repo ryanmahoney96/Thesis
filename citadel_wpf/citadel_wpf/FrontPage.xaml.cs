@@ -37,7 +37,6 @@ namespace citadel_wpf
             FillNotePages();
             FrontPageReference = this;
             base.SizeChanged += FrontPage_SizeChanged;
-            base.Loaded += FrontPage_Loaded;
 
             AttachToXDocument(ref XMLParser.CharacterXDocument);
             AttachToXDocument(ref XMLParser.EventXDocument);
@@ -48,11 +47,6 @@ namespace citadel_wpf
 
             MiddleColumn.MaxWidth = SystemParameters.PrimaryScreenWidth * 0.6;
             MiddleRow.MaxHeight = SystemParameters.PrimaryScreenHeight * 0.6;
-        }
-       
-        private void FrontPage_Loaded(object sender, EventArgs e)
-        {
-            FrontPage_SizeChanged(sender, null);
         }
 
         private void FrontPage_SizeChanged(object sender, SizeChangedEventArgs e)
@@ -211,5 +205,9 @@ namespace citadel_wpf
             EntityWindow.InitializeModalWindow(this, (new EventMapPromptWindow()));
         }
 
+        private void MenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            EntityWindow.InitializeModalWindow(this, (new TimelinePromptWindow()));
+        }
     }
 }
