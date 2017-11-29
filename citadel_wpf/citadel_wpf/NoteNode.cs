@@ -87,7 +87,6 @@ namespace citadel_wpf
             this.Child = borderLine;
         }
 
-        //TODO move to XMLParser?
         private void DeleteClick(object sender, RoutedEventArgs e)
         {
             if (MessageBox.Show($"Are you sure you want to delete \"{EntityName}?\" (This includes any relationships it has with other entities)", "Delete Entity", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
@@ -98,8 +97,6 @@ namespace citadel_wpf
                              select c).First();
                 entity.Remove();
                 EntityType.Save();
-                //TODO delete this line, redundant
-                FrontPage.FrontPageReference.Update(EntityType);
 
                 if (EntityType.Name.Equals(XMLParser.CharacterXDocument.Name))
                 {
@@ -125,19 +122,19 @@ namespace citadel_wpf
 
             if (EntityType.Name.Equals(XMLParser.CharacterXDocument.Name))
             {
-                newWindow = new NewCharacterWindow();
+                newWindow = new AddCharacter();
             }
             else if (EntityType.Name.Equals(XMLParser.EventXDocument.Name))
             {
-                newWindow = new NewEventWindow();
+                newWindow = new AddEvent();
             }
             else if (EntityType.Name.Equals(XMLParser.LocationXDocument.Name))
             {
-                newWindow = new NewLocationWindow();
+                newWindow = new AddLocation();
             }
             else
             {
-                newWindow = new NewGeneralNote();
+                newWindow = new AddGeneralNote();
             }
 
             newWindow.FillWith(EntityName);

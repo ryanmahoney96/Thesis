@@ -106,7 +106,7 @@ namespace citadel_wpf
 
         private void Add_Character(object sender, RoutedEventArgs e)
         {
-            EntityWindow.InitializeModalWindow(this, new NewCharacterWindow());
+            EntityWindow.InitializeModalWindow(this, new AddCharacter());
         }
 
         override public void Update(XDocumentInformation x = null)

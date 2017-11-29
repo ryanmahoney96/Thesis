@@ -16,14 +16,12 @@ using System.Xml.Linq;
 
 namespace citadel_wpf
 {
-    /// <summary>
-    /// Interaction logic for NewCharacterWindow.xaml
-    /// </summary>
-    public partial class NewCharacterWindow : EntityWindow, INewEntity
+
+    public partial class AddCharacter : EntityWindow, INewEntity
     {
         private bool Editing = false;
 
-        public NewCharacterWindow() : base()
+        public AddCharacter() : base()
         {
             InitializeComponent();
         }
@@ -51,7 +49,7 @@ namespace citadel_wpf
 
         override protected void Save(object sender, RoutedEventArgs e)
         {
-            //TODO make this method generic in NewEntityWindow?
+
             if (XMLParser.IsEntityPresent(XMLParser.CharacterXDocument.Handle, name_text.Text) && !Editing)
             {
                 System.Windows.Forms.MessageBox.Show("This character already exists, please try again.");
@@ -96,7 +94,7 @@ namespace citadel_wpf
 
         override public void Update(XDocumentInformation x = null)
         {
-
+            //
         }
     }
 

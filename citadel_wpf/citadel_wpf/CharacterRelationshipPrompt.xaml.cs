@@ -55,8 +55,6 @@ namespace citadel_wpf
 
         override protected void Save(object sender, RoutedEventArgs e)
         {
-            //TODO is married to
-            //TODO this query is marked for change when relationship is redone
             string relationship = relationship_combo.Text;
             string opposite = IsChildOf;
             if (relationship.Equals(IsChildOf))
@@ -108,7 +106,7 @@ namespace citadel_wpf
 
         private void Add_Character(object sender, RoutedEventArgs e)
         {
-            EntityWindow.InitializeModalWindow(this, new NewCharacterWindow());
+            EntityWindow.InitializeModalWindow(this, new AddCharacter());
         }
 
         override public void Update(XDocumentInformation x = null)

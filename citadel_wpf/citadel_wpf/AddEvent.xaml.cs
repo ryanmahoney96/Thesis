@@ -19,11 +19,11 @@ using System.Xml.Linq;
 namespace citadel_wpf
 {
 
-    public partial class NewEventWindow : EntityWindow, INewEntity
+    public partial class AddEvent : EntityWindow, INewEntity
     {
         private bool Editing = false;
 
-        public NewEventWindow() : base()
+        public AddEvent() : base()
         {
             InitializeComponent();
             Initialize_Locations();
@@ -118,7 +118,7 @@ namespace citadel_wpf
 
         private void Add_New_Location(object sender, RoutedEventArgs e)
         {
-            EntityWindow.InitializeModalWindow(this, new NewLocationWindow());
+            EntityWindow.InitializeModalWindow(this, new AddLocation());
         }
     }
 }

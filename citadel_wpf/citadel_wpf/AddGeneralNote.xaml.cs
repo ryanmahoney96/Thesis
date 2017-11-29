@@ -16,14 +16,12 @@ using System.Xml.Linq;
 
 namespace citadel_wpf
 {
-    /// <summary>
-    /// Interaction logic for NewGeneralNote.xaml
-    /// </summary>
-    public partial class NewGeneralNote : EntityWindow, INewEntity
+
+    public partial class AddGeneralNote : EntityWindow, INewEntity
     {
         private bool Editing = false;
 
-        public NewGeneralNote() : base()
+        public AddGeneralNote() : base()
         {
             InitializeComponent();
         }

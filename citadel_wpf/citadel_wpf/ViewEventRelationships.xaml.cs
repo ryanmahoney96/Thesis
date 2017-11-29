@@ -106,7 +106,7 @@ namespace citadel_wpf
 
         private void Add_Event(object sender, RoutedEventArgs e)
         {
-            EntityWindow.InitializeModalWindow(this, new NewEventWindow());
+            EntityWindow.InitializeModalWindow(this, new AddEvent());
         }
 
         override public void Update(XDocumentInformation x = null)

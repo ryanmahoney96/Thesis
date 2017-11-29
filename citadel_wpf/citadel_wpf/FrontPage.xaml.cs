@@ -101,22 +101,22 @@ namespace citadel_wpf
 
         private void New_Note_Click(object sender, RoutedEventArgs e)
         {
-            EntityWindow.InitializeModalWindow(this, (new NewGeneralNote()));
+            EntityWindow.InitializeModalWindow(this, (new AddGeneralNote()));
         }
 
         private void New_Character_Click(object sender, RoutedEventArgs e)
         {
-            EntityWindow.InitializeModalWindow(this, (new NewCharacterWindow()));
+            EntityWindow.InitializeModalWindow(this, (new AddCharacter()));
         }
 
         private void New_Event_Click(object sender, RoutedEventArgs e)
         {
-            EntityWindow.InitializeModalWindow(this, (new NewEventWindow()));
+            EntityWindow.InitializeModalWindow(this, (new AddEvent()));
         }
 
         private void New_Location_Click(object sender, RoutedEventArgs e)
         {
-            EntityWindow.InitializeModalWindow(this, (new NewLocationWindow()));
+            EntityWindow.InitializeModalWindow(this, (new AddLocation()));
         }
 
         private void Character_Relationship_Click(object sender, RoutedEventArgs e)
@@ -127,6 +127,11 @@ namespace citadel_wpf
         private void Event_Relationship_Click(object sender, RoutedEventArgs e)
         {
             EntityWindow.InitializeModalWindow(this, (new ViewEventRelationships()));
+        }
+
+        private void Participant_Click(object sender, RoutedEventArgs e)
+        {
+            //TODO this
         }
 
         private void FillNotePages()
@@ -243,5 +248,6 @@ namespace citadel_wpf
         {
             EntityWindow.InitializeModalWindow(this, (new EventMapPromptWindow()));
         }
+
     }
 }

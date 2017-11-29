@@ -34,8 +34,6 @@ namespace citadel_wpf
             }
 
             XMLParser.FillComboboxWithNames(XMLParser.CharacterXDocument.Handle, ref characterName);
-
-            //TODO attachments
         }
 
         override public void Update(XDocumentInformation x = null)

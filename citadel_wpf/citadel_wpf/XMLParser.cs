@@ -157,12 +157,12 @@ namespace citadel_wpf
             return returnTable;
         }
 
-        internal static void RemoveEntityFromEventEntities(string entityName)
+        public static void RemoveEntityFromEventEntities(string entityName)
         {
             //TODO throw new NotImplementedException();
         }
 
-        internal static void RemoveEntityFromRelationships(string entityName, XDocumentInformation characterRelationshipXDocument)
+        public static void RemoveEntityFromRelationships(string entityName, XDocumentInformation XDoc)
         {
             //TODO throw new NotImplementedException();
         }

@@ -22,8 +22,6 @@ namespace citadel_wpf
         public const string ComesBefore = "Comes Before";
         public const string ComesAfter = "Comes After";
         public const string SameTime = "Occurs at the Same Time as";
-        //TODO this -> another window
-        public const string ParticipatedIn = "Participated In";
 
         public string[] Relationships = { ComesBefore, ComesAfter, SameTime };
 
@@ -110,7 +108,7 @@ namespace citadel_wpf
 
         private void Add_Event(object sender, RoutedEventArgs e)
         {
-            EntityWindow.InitializeModalWindow(this, new NewEventWindow());
+            EntityWindow.InitializeModalWindow(this, new AddEvent());
         }
 
         override public void Update(XDocumentInformation x = null)

@@ -14,6 +14,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Diagnostics;
 
 namespace citadel_wpf
 {
@@ -25,7 +26,18 @@ namespace citadel_wpf
 
         public MainWindow(): base()
         {
-            InitializeComponent();
+            Process thisProc = Process.GetCurrentProcess();
+            // Check how many total processes have the same name as the current one
+            if (Process.GetProcessesByName(thisProc.ProcessName).Length > 1)
+            {
+                // If there is more than one, than it is already running.
+                System.Windows.MessageBox.Show("Citadel is already running in another process. Please Try Again.");
+                this.Close();
+            }
+            else
+            {
+                InitializeComponent();
+            }
         }
 
         private void Browse_Folder(object sender, RoutedEventArgs e)

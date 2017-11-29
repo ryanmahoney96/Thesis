@@ -19,11 +19,11 @@ namespace citadel_wpf
     /// <summary>
     /// Interaction logic for NewLocationWindow.xaml
     /// </summary>
-    public partial class NewLocationWindow : EntityWindow, INewEntity
+    public partial class AddLocation : EntityWindow, INewEntity
     {
         private bool Editing = false;
 
-        public NewLocationWindow() : base()
+        public AddLocation() : base()
         {
             InitializeComponent();
         }

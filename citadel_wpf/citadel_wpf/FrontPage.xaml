@@ -92,6 +92,7 @@
                     <Menu DockPanel.Dock="Top">
                         <MenuItem Header="_New Character" Click="New_Character_Click"/>
                         <MenuItem Header="Add/View Character _Relationships" Click="Character_Relationship_Click"/>
+                        <MenuItem Header="Add/View _Participants" Click="Participant_Click"/>
                         <MenuItem Header="Create _Family Tree" Click="NewFamilyTree"/>
                     </Menu>
 
@@ -106,6 +107,7 @@
                     <Menu DockPanel.Dock="Top">
                         <MenuItem Header="_New Event" Click="New_Event_Click"/>
                         <MenuItem Header="Add/View Event _Relationships" Click="Event_Relationship_Click"/>
+                        <MenuItem Header="Add/View _Participants" Click="Participant_Click"/>
                         <MenuItem Header="Create Event _Timeline"/>
                         <MenuItem Header="Create Event _Map" Click="NewEventMap"/>
                     </Menu>

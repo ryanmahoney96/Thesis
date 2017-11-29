@@ -68,6 +68,9 @@
     </Compile>
     <Compile Include="FamilyTreeConstruction.cs" />
     <Compile Include="NodeInformation.cs" />
+    <Compile Include="ParticipantPrompt.xaml.cs">
+      <DependentUpon>ParticipantPrompt.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ViewCharacterRelationships.xaml.cs">
       <DependentUpon>ViewCharacterRelationships.xaml</DependentUpon>
     </Compile>
@@ -75,20 +78,20 @@
     <Compile Include="EventRelationshipPrompt.xaml.cs">
       <DependentUpon>EventRelationshipPrompt.xaml</DependentUpon>
     </Compile>
-    <Compile Include="NewEventWindow.xaml.cs">
-      <DependentUpon>NewEventWindow.xaml</DependentUpon>
+    <Compile Include="AddEvent.xaml.cs">
+      <DependentUpon>AddEvent.xaml</DependentUpon>
     </Compile>
-    <Compile Include="NewGeneralNote.xaml.cs">
-      <DependentUpon>NewGeneralNote.xaml</DependentUpon>
+    <Compile Include="AddGeneralNote.xaml.cs">
+      <DependentUpon>AddGeneralNote.xaml</DependentUpon>
     </Compile>
-    <Compile Include="NewLocationWindow.xaml.cs">
-      <DependentUpon>NewLocationWindow.xaml</DependentUpon>
+    <Compile Include="AddLocation.xaml.cs">
+      <DependentUpon>AddLocation.xaml</DependentUpon>
     </Compile>
     <Compile Include="NewMediaWindow.xaml.cs">
       <DependentUpon>NewMediaWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="NewCharacterWindow.xaml.cs">
-      <DependentUpon>NewCharacterWindow.xaml</DependentUpon>
+    <Compile Include="AddCharacter.xaml.cs">
+      <DependentUpon>AddCharacter.xaml</DependentUpon>
     </Compile>
     <Compile Include="NoteNode.cs" />
     <Compile Include="Obsolete.cs" />
@@ -125,11 +128,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="ParticipantPrompt.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="ViewCharacterRelationships.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="NewCharacterWindow.xaml">
+    <Page Include="AddCharacter.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -137,15 +144,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="NewEventWindow.xaml">
+    <Page Include="AddEvent.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="NewGeneralNote.xaml">
+    <Page Include="AddGeneralNote.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="NewLocationWindow.xaml">
+    <Page Include="AddLocation.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
