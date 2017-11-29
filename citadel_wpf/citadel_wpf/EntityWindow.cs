@@ -21,12 +21,7 @@ namespace citadel_wpf
     /// </summary>
     public abstract class EntityWindow : Window
     {
-        protected EntityWindow[] reliantWindows;
-
-        public EntityWindow(params EntityWindow[] rw): this()
-        {
-            reliantWindows = rw;
-        }
+        private List<XDocumentInformation> Attachments = new List<XDocumentInformation>();
 
         public EntityWindow()
         {
@@ -40,7 +35,13 @@ namespace citadel_wpf
 
         ~EntityWindow()
         {
-            XMLParser.DetachFromAll(this);
+            XMLParser.DetachFromAll(this, Attachments);
+        }
+
+        protected void AttachToXDocument(ref XDocumentInformation x)
+        {
+            Attachments.Add(x);
+            x.Attach(this);
         }
 
         public static void InitializeModalWindow(Window owner, Window child)
@@ -58,8 +59,7 @@ namespace citadel_wpf
 
         protected abstract void Save(object sender, RoutedEventArgs e);
 
-        //TODO change this to observer pattern
-        public abstract void Update();
+        public abstract void Update(XDocumentInformation x = null);
 
     }
 }

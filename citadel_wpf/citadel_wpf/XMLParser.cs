@@ -30,7 +30,7 @@ namespace citadel_wpf
 
         public static XMLParser Instance;
 
-        private static Regex validCharacterRegex = new Regex(@"^[a-zA-Z0-9'\!\$\%\&\(\)\,\.\;\:\+\=\- ]+$");
+        private static Regex validCharacterRegex = new Regex(@"^[a-zA-Z0-9'\!\\\$\%\&\(\)\,\.\;\:\+\=\- ]+$");
         private static Regex yearRegex = new Regex(@"^[0-9]*$");
 
         public XMLParser(string folderPath)
@@ -42,6 +42,7 @@ namespace citadel_wpf
         private void SetXDocumentContent(string documentName, ref XDocumentInformation XDoc)
         {
             string filePath = FolderPath + $"\\{documentName}.xml";
+            XDoc = new XDocumentInformation();
             XDoc.Path = filePath;
             XDoc.Name = documentName;
 
@@ -72,9 +73,9 @@ namespace citadel_wpf
             SetXDocumentContent("general_notes", ref NoteXDocument);
         }
 
-        public static void DetachFromAll(EntityWindow e)
+        public static void DetachFromAll(EntityWindow e, List<XDocumentInformation> attachments)
         {
-            foreach (var x in XDocuments)
+            foreach (var x in attachments)
             {
                 x.Detach(e);
             }
@@ -158,12 +159,12 @@ namespace citadel_wpf
 
         internal static void RemoveEntityFromEventEntities(string entityName)
         {
-            throw new NotImplementedException();
+            //TODO throw new NotImplementedException();
         }
 
         internal static void RemoveEntityFromRelationships(string entityName, XDocumentInformation characterRelationshipXDocument)
         {
-            throw new NotImplementedException();
+            //TODO throw new NotImplementedException();
         }
 
         //is this entity present in the XDocument

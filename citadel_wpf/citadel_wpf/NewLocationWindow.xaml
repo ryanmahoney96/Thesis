@@ -33,7 +33,7 @@
         <ComboBox Name="type_combobox" SelectionChanged="type_combobox_SelectionChanged" Width="250" Margin="5, 0" Grid.Row="2" Grid.Column="2" VerticalAlignment="Center" VerticalContentAlignment="Center" HorizontalAlignment="Left" Height="22" >
             <ComboBoxItem Content="Settlements"/>
             <ComboBoxItem Content="Nature"/>
-            <ComboBoxItem Content="Buildings/Monuments/Establishments"/>
+            <ComboBoxItem Content="Buildings \ Monuments \ Establishments"/>
             <ComboBoxItem Content="Other"/>
         </ComboBox>
 

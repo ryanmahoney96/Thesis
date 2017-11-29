@@ -27,6 +27,9 @@ namespace citadel_wpf
             InitializeComponent();
             XMLParser.FillComboboxWithNames(XMLParser.CharacterXDocument.Handle, ref focus_character_combo);
             FillPanelWithRelationships(relationship_stackpanel);
+
+            AttachToXDocument(ref XMLParser.CharacterXDocument);
+            AttachToXDocument(ref XMLParser.CharacterRelationshipXDocument);
         }
 
         private void FocusCharacterChanged(object sender, SelectionChangedEventArgs e)
@@ -103,10 +106,10 @@ namespace citadel_wpf
 
         private void Add_Character(object sender, RoutedEventArgs e)
         {
-            EntityWindow.InitializeModalWindow(this, new NewCharacterWindow(this));
+            EntityWindow.InitializeModalWindow(this, new NewCharacterWindow());
         }
 
-        override public void Update()
+        override public void Update(XDocumentInformation x = null)
         {
             XMLParser.FillComboboxWithNames(XMLParser.CharacterXDocument.Handle, ref focus_character_combo);
             focus_character_combo.Text = "";
@@ -118,7 +121,7 @@ namespace citadel_wpf
         {
             if (!string.IsNullOrWhiteSpace(focus_character_combo.Text))
             {
-                EntityWindow.InitializeModalWindow(this, new CharacterRelationshipPrompt(focus_character_combo.Text, this));
+                EntityWindow.InitializeModalWindow(this, new CharacterRelationshipPrompt(focus_character_combo.Text));
             }
         }
     }

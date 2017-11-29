@@ -116,7 +116,7 @@ namespace citadel_wpf
             //TODO EntityWindow.InitializeModalWindow(this, new NewCharacterWindow(this));
         }
 
-        override public void Update()
+        override public void Update(XDocumentInformation x = null)
         {
             XMLParser.FillComboboxWithNames(RelationshipXDoc.Handle, ref focus_entity_combo);
             focus_entity_combo.Text = "";

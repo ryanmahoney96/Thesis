@@ -14,6 +14,9 @@ namespace citadel_wpf
         {
             Handle = x;
         }
+        public XDocumentInformation()
+        {
+        }
 
         public void Save()
         {
@@ -36,7 +39,7 @@ namespace citadel_wpf
         {
             foreach (var i in Observers)
             {
-                i.Update();
+                i.Update(this);
             }
         }
     }

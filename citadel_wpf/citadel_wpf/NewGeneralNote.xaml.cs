@@ -23,10 +23,9 @@ namespace citadel_wpf
     {
         private bool Editing = false;
 
-        public NewGeneralNote(params EntityWindow[] rw) : base(rw)
+        public NewGeneralNote() : base()
         {
             InitializeComponent();
-            //TODO attachments
         }
 
         public void FillWith(string noteName)
@@ -91,14 +90,9 @@ namespace citadel_wpf
 
         }
 
-        override public void Update()
+        override public void Update(XDocumentInformation x = null)
         {
-            FrontPage.FrontPageReference.Update_Notes();
 
-            foreach (EntityWindow w in reliantWindows)
-            {
-                w.Update();
-            }
         }
     }
 }

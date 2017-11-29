@@ -33,12 +33,15 @@ namespace citadel_wpf
             InitializeComponent();
             XMLParser.Instance.UpdateMediaXDocument();
             base.Title += " - " + XMLParser.FolderPath;
-            Update_Note_Pages();
+            FillNotePages();
             FrontPageReference = this;
             base.SizeChanged += FrontPage_SizeChanged;
             base.Loaded += FrontPage_Loaded;
 
-            //TODO attachments
+            AttachToXDocument(ref XMLParser.CharacterXDocument);
+            AttachToXDocument(ref XMLParser.EventXDocument);
+            AttachToXDocument(ref XMLParser.LocationXDocument);
+            AttachToXDocument(ref XMLParser.NoteXDocument);
         }
 
         private void FrontPage_Loaded(object sender, EventArgs e)
@@ -100,36 +103,20 @@ namespace citadel_wpf
         {
             EntityWindow.InitializeModalWindow(this, (new NewGeneralNote()));
         }
-        public void Update_Notes()
-        {
-            Fill_Note_Area(ref XMLParser.NoteXDocument, general_notes_area);
-        }
 
         private void New_Character_Click(object sender, RoutedEventArgs e)
         {
             EntityWindow.InitializeModalWindow(this, (new NewCharacterWindow()));
-        }
-        public void Update_Characters()
-        {
-            Fill_Note_Area(ref XMLParser.CharacterXDocument, character_notes_area);
         }
 
         private void New_Event_Click(object sender, RoutedEventArgs e)
         {
             EntityWindow.InitializeModalWindow(this, (new NewEventWindow()));
         }
-        public void Update_Events()
-        {
-            Fill_Note_Area(ref XMLParser.EventXDocument, event_notes_area);
-        }
 
         private void New_Location_Click(object sender, RoutedEventArgs e)
         {
             EntityWindow.InitializeModalWindow(this, (new NewLocationWindow()));
-        }
-        public void Update_Locations()
-        {
-            Fill_Note_Area(ref XMLParser.LocationXDocument, location_notes_area);
         }
 
         private void Character_Relationship_Click(object sender, RoutedEventArgs e)
@@ -142,7 +129,7 @@ namespace citadel_wpf
             EntityWindow.InitializeModalWindow(this, (new ViewEventRelationships()));
         }
 
-        private void Update_Note_Pages()
+        private void FillNotePages()
         {
             Fill_Media_Area(XMLParser.GetMediaInformation());
             Fill_Note_Area(ref XMLParser.NoteXDocument, general_notes_area);
@@ -180,25 +167,26 @@ namespace citadel_wpf
             }
         }
 
-        public void UpdatePage(XDocumentInformation x)
+        override public void Update(XDocumentInformation x)
         {
-            //TODO exchange with Update function
+
             if (x.Name.Equals(XMLParser.CharacterXDocument.Name))
             {
-                Update_Characters();
+                Fill_Note_Area(ref XMLParser.CharacterXDocument, character_notes_area);
             }
             else if (x.Name.Equals(XMLParser.LocationXDocument.Name))
             {
-                Update_Locations();
+                Fill_Note_Area(ref XMLParser.LocationXDocument, location_notes_area);
             }
             else if (x.Name.Equals(XMLParser.EventXDocument.Name))
             {
-                Update_Events();
+                Fill_Note_Area(ref XMLParser.EventXDocument, event_notes_area);
             }
             else
             {
-                Update_Notes();
+                Fill_Note_Area(ref XMLParser.NoteXDocument, general_notes_area);
             }
+
         }
 
         private void ReturnToMainMenu(object sender, RoutedEventArgs e)
@@ -245,12 +233,7 @@ namespace citadel_wpf
                 MessageBox.Show("The Media was Successfully Saved", "Success", MessageBoxButton.OK);
             }
         }
-
-        override public void Update()
-        {
-            //
-        }
-
+        
         private void NewFamilyTree(object sender, RoutedEventArgs e)
         {
             EntityWindow.InitializeModalWindow(this, (new FamilyTreePromptWindow()));

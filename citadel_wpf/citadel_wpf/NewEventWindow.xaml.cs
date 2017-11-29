@@ -23,16 +23,16 @@ namespace citadel_wpf
     {
         private bool Editing = false;
 
-        public NewEventWindow(params EntityWindow[] rw) : base(rw)
+        public NewEventWindow() : base()
         {
             InitializeComponent();
             Initialize_Locations();
-            //TODO attachments
+
+            AttachToXDocument(ref XMLParser.LocationXDocument);
         }
 
         private void Initialize_Locations()
         {
-
             location_combo_box.Items.Clear();
 
             XMLParser.FillComboboxWithNames(XMLParser.LocationXDocument.Handle, ref location_combo_box);
@@ -111,20 +111,14 @@ namespace citadel_wpf
             
         }
 
-        override public void Update()
+        override public void Update(XDocumentInformation x = null)
         {
-            FrontPage.FrontPageReference.Update_Events();
             Initialize_Locations();
-
-            foreach (EntityWindow w in reliantWindows)
-            {
-                w.Update();
-            }
         }
 
         private void Add_New_Location(object sender, RoutedEventArgs e)
         {
-            EntityWindow.InitializeModalWindow(this, new NewLocationWindow(this));
+            EntityWindow.InitializeModalWindow(this, new NewLocationWindow());
         }
     }
 }

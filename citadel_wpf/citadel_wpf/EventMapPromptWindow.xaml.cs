@@ -18,7 +18,7 @@ namespace citadel_wpf
     public partial class EventMapPromptWindow : EntityWindow
     {
 
-        public EventMapPromptWindow(params EntityWindow[] rw) : base(rw)
+        public EventMapPromptWindow() : base()
         {
             InitializeComponent();
         }
@@ -46,7 +46,7 @@ namespace citadel_wpf
             }
         }
 
-        override public void Update()
+        override public void Update(XDocumentInformation x = null)
         {
             //
         }

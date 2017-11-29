@@ -23,10 +23,9 @@ namespace citadel_wpf
     {
         private bool Editing = false;
 
-        public NewLocationWindow(params EntityWindow[] rw) : base(rw)
+        public NewLocationWindow() : base()
         {
             InitializeComponent();
-            //TODO attachments
         }
 
         public void FillWith(string locationName)
@@ -110,36 +109,36 @@ namespace citadel_wpf
 
             if (selectionString.Equals("Settlements"))
             {
-                subtypes.Add("Neighborhood/Hamlet");
-                subtypes.Add("Village/Town");
-                subtypes.Add("City/County");
-                subtypes.Add("Country/Region");
+                subtypes.Add("Neighborhood \\ Hamlet");
+                subtypes.Add("Village \\ Town");
+                subtypes.Add("City \\ County");
+                subtypes.Add("Country \\ Region");
                 subtypes.Add("Other");
             }
             else if (selectionString.Equals("Nature"))
             {
-                subtypes.Add("Mountain/Range");
+                subtypes.Add("Mountain \\ Range");
                 subtypes.Add("Lake");
                 subtypes.Add("River");
                 subtypes.Add("Ocean");
-                subtypes.Add("Field/Grassland");
-                subtypes.Add("Forest/Jungle");
+                subtypes.Add("Field \\ Grassland");
+                subtypes.Add("Forest \\ Jungle");
                 subtypes.Add("Desert");
                 subtypes.Add("Continent");
-                subtypes.Add("Planet/Interplanetary Body");
+                subtypes.Add("Planet \\ Interplanetary Body");
                 subtypes.Add("Other");
             }
-            else if (selectionString.Equals("Buildings/Monuments/Establishments"))
+            else if (selectionString.Equals("Buildings \\ Monuments \\ Establishments"))
             {
-                subtypes.Add("House/Home");
-                subtypes.Add("Inn/Hotel");
-                subtypes.Add("Store Front/Shop");
-                subtypes.Add("Tower/Skyscraper");
-                subtypes.Add("Statue/Obelisk");     
-                subtypes.Add("Temple/Monastary/Religious Building");
-                subtypes.Add("College/University/School");
-                subtypes.Add("Fort/Castle");
-                subtypes.Add("Dungeon/Grave/Crypt");
+                subtypes.Add("House \\ Home");
+                subtypes.Add("Inn \\ Hotel");
+                subtypes.Add("Store Front \\ Shop");
+                subtypes.Add("Tower \\ Skyscraper");
+                subtypes.Add("Statue \\ Obelisk");     
+                subtypes.Add("Temple \\ Monastary \\ Religious Building");
+                subtypes.Add("College \\ University \\ School");
+                subtypes.Add("Fort \\ Castle");
+                subtypes.Add("Dungeon \\ Grave \\ Crypt");
                 subtypes.Add("Other");
             }
             else if (selectionString.Equals("Unknown") || selectionString.Equals("Other"))
@@ -160,14 +159,9 @@ namespace citadel_wpf
             updateSubtypes();
         }
 
-        override public void Update()
+        override public void Update(XDocumentInformation x = null)
         {
-            FrontPage.FrontPageReference.Update_Locations();
 
-            foreach (EntityWindow w in reliantWindows)
-            {
-                w.Update();
-            }
         }
     }
 }

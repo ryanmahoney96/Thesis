@@ -42,23 +42,23 @@
 
                         <TextBlock Text="Edit the Type:" Grid.Row="3" Grid.Column="1" VerticalAlignment="Center"></TextBlock>
                         <ComboBox Name="type_combobox" Width="200" FontSize="12" Margin="2, 0" Grid.Row="3" Grid.Column="2" VerticalAlignment="Center" VerticalContentAlignment="Center" HorizontalAlignment="Left" Height="22" >
-                            <ComboBoxItem Content="Book / Short Story"/>
+                            <ComboBoxItem Content="Book \ Short Story"/>
                             <ComboBoxItem Content="Movie"/>
-                            <ComboBoxItem Content="Tabletop / Video Game"/>
+                            <ComboBoxItem Content="Tabletop \ Video Game"/>
                             <ComboBoxItem Content="Television Show"/>
-                            <ComboBoxItem Content="History / Reality"/>
+                            <ComboBoxItem Content="History \ Reality"/>
                             <ComboBoxItem Content="Other"/>
 
                         </ComboBox>
 
                         <TextBlock Text="Edit the Genre:" Grid.Row="4" Grid.Column="1" VerticalAlignment="Center"></TextBlock>
                         <ComboBox Name="genre_combobox" Width="200" FontSize="12" Margin="2, 0" Grid.Row="4" Grid.Column="2" VerticalContentAlignment="Center" HorizontalAlignment="Left" Height="22" VerticalAlignment="Center" >
-                            <ComboBoxItem Content="Action / Adventure"/>
+                            <ComboBoxItem Content="Action \ Adventure"/>
                             <ComboBoxItem Content="Comedy"/>
                             <ComboBoxItem Content="Drama"/>
                             <ComboBoxItem Content="Horror"/>
                             <ComboBoxItem Content="Mystery"/>
-                            <ComboBoxItem Content="History / Reality / Biographical"/>
+                            <ComboBoxItem Content="History \ Reality \ Biographical"/>
                             <ComboBoxItem Content="Other"/>
 
                         </ComboBox>

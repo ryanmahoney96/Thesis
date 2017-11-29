@@ -25,7 +25,7 @@ namespace citadel_wpf
         string[] Relationships;
         XDocumentInformation EntityType;
 
-        public BaseRelationshipPrompt(string fe, string en, string[] r, ref XDocumentInformation x, params EntityWindow[] rw) : base(rw)
+        public BaseRelationshipPrompt(string fe, string en, string[] r, ref XDocumentInformation x) : base()
         {
             InitializeComponent();
 
@@ -121,24 +121,20 @@ namespace citadel_wpf
             EntityWindow temp;
             if (EntityType.Name.Equals(XMLParser.CharacterXDocument.Name))
             {
-                temp = new NewCharacterWindow(this);
+                temp = new NewCharacterWindow();
             }
             else
             {
-                temp = new NewEventWindow(this);
+                temp = new NewEventWindow();
             }
 
             EntityWindow.InitializeModalWindow(this, temp);
             XMLParser.FillComboboxWithNames(EntityType.Handle, ref entity_two_combo, FocusEntity);
         }
 
-        override public void Update()
+        override public void Update(XDocumentInformation x = null)
         {
-
-            foreach (EntityWindow w in reliantWindows)
-            {
-                w.Update();
-            }
+            
         }
 
     }

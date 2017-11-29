@@ -38,7 +38,7 @@ namespace citadel_wpf
             //TODO attachments
         }
 
-        override public void Update()
+        override public void Update(XDocumentInformation x = null)
         {
             //
         }

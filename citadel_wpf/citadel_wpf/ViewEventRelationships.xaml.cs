@@ -27,7 +27,9 @@ namespace citadel_wpf
             InitializeComponent();
             XMLParser.FillComboboxWithNames(XMLParser.EventXDocument.Handle, ref focus_event_combo);
             FillPanelWithRelationships(relationship_stackpanel);
-            XMLParser.EventRelationshipXDocument.Attach(this);
+
+            AttachToXDocument(ref XMLParser.EventXDocument);
+            AttachToXDocument(ref XMLParser.EventRelationshipXDocument);
         }
 
         private void FocusEventChanged(object sender, SelectionChangedEventArgs e)
@@ -92,7 +94,7 @@ namespace citadel_wpf
                     r.Remove();
                 }
 
-                XMLParser.EventRelationshipXDocument.Detach(this);
+
                 XMLParser.EventRelationshipXDocument.Save();
             }
         }
@@ -104,22 +106,22 @@ namespace citadel_wpf
 
         private void Add_Event(object sender, RoutedEventArgs e)
         {
-            EntityWindow.InitializeModalWindow(this, new NewEventWindow(this));
+            EntityWindow.InitializeModalWindow(this, new NewEventWindow());
         }
 
-        override public void Update()
+        override public void Update(XDocumentInformation x = null)
         {
             XMLParser.FillComboboxWithNames(XMLParser.EventXDocument.Handle, ref focus_event_combo);
             focus_event_combo.Text = "";
             relationship_stackpanel.Children.Clear();
-            FillPanelWithRelationships(relationship_stackpanel);
+            //FillPanelWithRelationships(relationship_stackpanel);
         }
 
         private void AddRelationship_Button_Click(object sender, RoutedEventArgs e)
         {
             if (!string.IsNullOrWhiteSpace(focus_event_combo.Text))
             {
-                EntityWindow.InitializeModalWindow(this, new EventRelationshipPrompt(focus_event_combo.Text, this));
+                EntityWindow.InitializeModalWindow(this, new EventRelationshipPrompt(focus_event_combo.Text));
             }
         }
     }
