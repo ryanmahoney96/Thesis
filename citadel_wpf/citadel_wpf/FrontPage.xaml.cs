@@ -87,7 +87,7 @@ namespace citadel_wpf
 
         private void Participant_Click(object sender, RoutedEventArgs e)
         {
-            //TODO this
+            EntityWindow.InitializeModalWindow(this, (new ViewParticipants()));
         }
 
         private void FillNotePages()
@@ -205,7 +205,7 @@ namespace citadel_wpf
             EntityWindow.InitializeModalWindow(this, (new EventMapPromptWindow()));
         }
 
-        private void MenuItem_Click(object sender, RoutedEventArgs e)
+        private void NewTimeline(object sender, RoutedEventArgs e)
         {
             EntityWindow.InitializeModalWindow(this, (new TimelinePromptWindow()));
         }

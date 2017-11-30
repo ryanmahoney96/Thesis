@@ -68,6 +68,7 @@
     </Compile>
     <Compile Include="FamilyTreeConstruction.cs" />
     <Compile Include="NodeInformation.cs" />
+    <Compile Include="ParticipantMapConstruction.cs" />
     <Compile Include="ParticipantPrompt.xaml.cs">
       <DependentUpon>ParticipantPrompt.xaml</DependentUpon>
     </Compile>
@@ -104,6 +105,9 @@
     <Compile Include="TimelineConstruction.cs" />
     <Compile Include="ViewEventRelationships.xaml.cs">
       <DependentUpon>ViewEventRelationships.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ViewParticipants.xaml.cs">
+      <DependentUpon>ViewParticipants.xaml</DependentUpon>
     </Compile>
     <Compile Include="XDocumentInformation.cs" />
     <Compile Include="XMLParser.cs" />
@@ -172,6 +176,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="ViewEventRelationships.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ViewParticipants.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

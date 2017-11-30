@@ -108,7 +108,7 @@
                         <MenuItem Header="_New Event" Click="New_Event_Click"/>
                         <MenuItem Header="Add/View Event _Relationships" Click="Event_Relationship_Click"/>
                         <MenuItem Header="Add/View _Participants" Click="Participant_Click"/>
-                        <MenuItem Header="Create _Timeline" Click="MenuItem_Click"/>
+                        <MenuItem Header="Create _Timeline" Click="NewTimeline"/>
                         <MenuItem Header="Create Event _Map" Click="NewEventMap"/>
                     </Menu>
 

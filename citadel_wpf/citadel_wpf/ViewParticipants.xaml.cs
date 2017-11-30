@@ -19,10 +19,10 @@ namespace citadel_wpf
     /// <summary>
     /// Interaction logic for NewEventRelationship.xaml
     /// </summary>
-    public partial class ViewEventRelationships : EntityWindow
+    public partial class ViewParticipants : EntityWindow
     {
-        
-        public ViewEventRelationships() : base()
+
+        public ViewParticipants() : base()
         {
             InitializeComponent();
             XMLParser.FillComboboxWithNames(XMLParser.EventXDocument.Handle, ref focus_event_combo);
@@ -43,16 +43,15 @@ namespace citadel_wpf
         {
             if (focus_event_combo.SelectedItem != null && !string.IsNullOrWhiteSpace(focus_event_combo.SelectedItem.ToString()))
             {
-                string fc = focus_event_combo.SelectedItem.ToString().Split(':')[1].Substring(1);
+                string focusEvent = focus_event_combo.SelectedItem.ToString().Split(':')[1].Substring(1);
 
-                //TODO adjust
-                var results = from c in XMLParser.EventRelationshipXDocument.Handle.Root.Descendants("event_relationship")
-                              where c.Element("entity_one").Value.ToString().Equals(fc)
-                                    && !c.Element("relationship").Value.ToString().Equals(ParticipantPrompt.ParticipatedIn)
+                var results = from c in XMLParser.EventRelationshipXDocument.Handle.Root.Descendants("character_participation")
+                              where c.Element("entity_two").Value.ToString().Equals(focusEvent)
+                                    && c.Element("relationship").Value.ToString().Equals(ParticipantPrompt.ParticipatedIn)
                               select new
                               {
                                   Relationship = c.Element("relationship").Value.ToString(),
-                                  Entity_Two = c.Element("entity_two").Value.ToString(),
+                                  Character = c.Element("entity_one").Value.ToString(),
                               };
 
                 stackpanel.Children.Clear();
@@ -62,7 +61,7 @@ namespace citadel_wpf
 
                     WrapPanel panel = new WrapPanel();
                     TextBlock textblock = new TextBlock();
-                    NodeInformation n = new NodeInformation(fc, r.Relationship, r.Entity_Two);
+                    NodeInformation n = new NodeInformation(r.Character, r.Relationship, focusEvent);
                     textblock.Text = n.ToString();
                     textblock.Margin = new Thickness(3);
                     Button deleteButton = new Button();
@@ -123,7 +122,15 @@ namespace citadel_wpf
         {
             if (!string.IsNullOrWhiteSpace(focus_event_combo.Text))
             {
-                EntityWindow.InitializeModalWindow(this, new EventRelationshipPrompt(focus_event_combo.Text));
+                EntityWindow.InitializeModalWindow(this, new ParticipantPrompt(focus_event_combo.Text));
+            }
+        }
+
+        private void Map_Event(object sender, RoutedEventArgs e)
+        {
+            if (!string.IsNullOrWhiteSpace(focus_event_combo.Text))
+            {
+                ParticipantMapConstruction.CreateMap(focus_event_combo.Text);
             }
         }
     }
