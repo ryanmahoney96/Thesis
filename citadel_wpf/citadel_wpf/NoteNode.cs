@@ -24,8 +24,9 @@ namespace citadel_wpf
         public static int ButtonHeight = 24;
         public static int ButtonWidth = 40;
 
-        public static int NoteNodeWidth = 350;
-        public static int NoteNodeHeight = NameBoxHeight + ContentBoxHeight + ButtonHeight + 25;
+        public static double NoteNodeWidth = SystemParameters.PrimaryScreenWidth * 0.26;
+
+        public static double NoteNodeHeight = NameBoxHeight + ContentBoxHeight + ButtonHeight + 25;
 
         public NoteNode(ref XDocumentInformation source)
         {

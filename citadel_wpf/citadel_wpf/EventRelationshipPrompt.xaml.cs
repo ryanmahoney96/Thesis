@@ -18,7 +18,9 @@ namespace citadel_wpf
 {
     public partial class EventRelationshipPrompt : EntityWindow
     {
-        //This class can be adjusted using the Strategy Pattern
+        //TODO: each event relationship is given an index. Index = before index++ on 2^62 char table
+       
+        //This class COULD be adjusted using the Strategy Pattern
         public const string ComesBefore = "Comes Before";
         public const string ComesAfter = "Comes After";
         public const string SameTime = "Occurs at the Same Time as";

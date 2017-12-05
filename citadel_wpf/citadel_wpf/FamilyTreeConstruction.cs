@@ -13,6 +13,8 @@ namespace citadel_wpf
 {
     public class FamilyTreeConstruction
     {
+        //TODO cleanup with nodes that connect two characters, then branches to each child
+
         public static string ImmediateFamilyTreeString = "Immediate Family Tree";
         public static string ExtendedFamilyTreeString = "Extended Family Tree";
         public static string FullFamilyTreeString = "Full Family Tree";
