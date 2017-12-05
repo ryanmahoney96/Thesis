@@ -107,7 +107,7 @@ namespace citadel_wpf
                 }
                 else if (EntityType.Name.Equals(XMLParser.EventXDocument.Name))
                 {
-                    XMLParser.RemoveEntityFromRelationships(EntityName, XMLParser.EventRelationshipXDocument);
+                    //TODO participant XMLParser.RemoveEntityFromRelationships(EntityName, XMLParser.ParticipantXDocument);
                 }
                 else if (EntityType.Name.Equals(XMLParser.LocationXDocument.Name))
                 {

@@ -29,7 +29,7 @@ namespace citadel_wpf
             FillPanelWithRelationships(relationship_stackpanel);
 
             AttachToXDocument(ref XMLParser.EventXDocument);
-            AttachToXDocument(ref XMLParser.EventRelationshipXDocument);
+            AttachToXDocument(ref XMLParser.ParticipantXDocument);
         }
 
         private void FocusEventChanged(object sender, SelectionChangedEventArgs e)
@@ -45,7 +45,7 @@ namespace citadel_wpf
             {
                 string focusEvent = focus_event_combo.SelectedItem.ToString().Split(':')[1].Substring(1);
 
-                var results = from c in XMLParser.EventRelationshipXDocument.Handle.Root.Descendants("character_participation")
+                var results = from c in XMLParser.ParticipantXDocument.Handle.Root.Descendants("character_participation")
                               where c.Element("entity_two").Value.ToString().Equals(focusEvent)
                                     && c.Element("relationship").Value.ToString().Equals(ParticipantPrompt.ParticipatedIn)
                               select new
@@ -84,7 +84,7 @@ namespace citadel_wpf
             {
                 NodeInformation n = (NodeInformation)((Button)sender).Tag;
 
-                var relationship = from c in XMLParser.EventRelationshipXDocument.Handle.Root.Elements()
+                var relationship = from c in XMLParser.ParticipantXDocument.Handle.Root.Elements()
                                    where c.Element("entity_one").Value.Equals(n.EntityOne)
                                    && c.Element("relationship").Value.Equals(n.Relationship)
                                    && c.Element("entity_two").Value.Equals(n.EntityTwo)
@@ -96,7 +96,7 @@ namespace citadel_wpf
                 }
 
 
-                XMLParser.EventRelationshipXDocument.Save();
+                XMLParser.ParticipantXDocument.Save();
             }
         }
 

@@ -22,7 +22,6 @@ namespace citadel_wpf
     {
 
         //TODO Tooltips throughout
-        //TODO: Organize so event has list of pointers to things before and things after. Use this when adding new relationship to filter out contradictory data
         //TODO: Stylize with https://github.com/MahApps/MahApps.Metro
         //TODO: Stylize comboboxes http://www.eidias.com/Blog/2012/2/20/customizing-wpf-combo-box-style
 

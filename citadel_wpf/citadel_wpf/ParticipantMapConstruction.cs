@@ -44,7 +44,7 @@ namespace citadel_wpf
 
         private static IEnumerable<string> GetCharactersAtEvent(string focusEvent)
         {
-            return (from c in XMLParser.EventRelationshipXDocument.Handle.Root.Descendants("character_participation")
+            return (from c in XMLParser.ParticipantXDocument.Handle.Root.Descendants("character_participation")
                     where c.Element("entity_two").Value.ToString().Equals(focusEvent)
                     select c.Element("entity_one").Value.ToString());
         }

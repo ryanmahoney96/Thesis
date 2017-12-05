@@ -18,9 +18,9 @@ namespace citadel_wpf
 {
     public partial class EventRelationshipPrompt : EntityWindow
     {
-        //TODO: each event relationship is given an index. Index = before index++ on 2^62 char table
+        //TODO: each event relationship is given an index. Index = before index++ on 2^62 char table A-Z
+        //(1.5) 1.6 1.7 1.8 1.9 1.91 (2)
        
-        //This class COULD be adjusted using the Strategy Pattern
         public const string ComesBefore = "Comes Before";
         public const string ComesAfter = "Comes After";
         public const string SameTime = "Occurs at the Same Time as";
@@ -34,77 +34,52 @@ namespace citadel_wpf
             InitializeComponent();
 
             FocusEvent = fe;
-            focus_event.Text = FocusEvent;
+            beforeText.Text += " '" + FocusEvent + "'";
+            afterText.Text += " '" + FocusEvent + "'";
 
+            XMLParser.FillComboboxWithNames(XMLParser.EventXDocument.Handle, ref event_one_combo, FocusEvent);
             XMLParser.FillComboboxWithNames(XMLParser.EventXDocument.Handle, ref event_two_combo, FocusEvent);
-            FillComboboxWithRelationshipTypes();
 
             AttachToXDocument(ref XMLParser.EventXDocument);
-        }
-
-        private void FillComboboxWithRelationshipTypes()
-        {
-            relationship_combo.Items.Clear();
-
-            ComboBoxItem cBoxItem;
-
-            foreach (string r in Relationships)
-            {
-                cBoxItem = new ComboBoxItem();
-                cBoxItem.Content = r;
-                relationship_combo.Items.Add(cBoxItem);
-            }
         }
 
         override protected void Save(object sender, RoutedEventArgs e)
         {
 
-            string relationship = relationship_combo.Text;
-            string opposite = ComesBefore;
-            if (relationship.Equals(ComesBefore))
-            {
-                opposite = ComesAfter;
-            }
-            else if (relationship.Equals(SameTime))
-            {
-                opposite = SameTime;
-            }
+            string eventOne = event_one_combo.Text;
+            string eventTwo = event_two_combo.Text;
 
-            if (!XMLParser.IsTextValid(relationship_combo.Text) || !XMLParser.IsTextValid(event_two_combo.Text))
+            if (!XMLParser.IsTextValid(event_one_combo.Text) || !XMLParser.IsTextValid(event_two_combo.Text))
             {
                 required_text.Foreground = Brushes.Red;
             }
 
             else
             {
-                if (XMLParser.IsRelationshipPresent(XMLParser.EventRelationshipXDocument.Handle, FocusEvent, relationship, event_two_combo.Text)
-                || XMLParser.IsRelationshipPresent(XMLParser.EventRelationshipXDocument.Handle, event_two_combo.Text, opposite, FocusEvent))
+                string eventOneOrderKey = (from c in XMLParser.EventXDocument.Handle.Root.Descendants("event")
+                                          where c.Element("name").Value.Equals(event_one_combo.Text)
+                                          select c.Element("order_key").Value).First();
+
+                string eventTwoOrderKey = (from c in XMLParser.EventXDocument.Handle.Root.Descendants("event")
+                                           where c.Element("name").Value.Equals(event_one_combo.Text)
+                                           select c.Element("order_key").Value).First();
+
+                if (eventOneOrderKey.CompareTo(eventTwoOrderKey) > 0)
                 {
-                    System.Windows.Forms.MessageBox.Show("This relationship already exists, please try again.");
+                    //invalid order
                 }
                 else
                 {
-                    XElement newEventRelationship = new XElement("event_relationship",
-                    new XElement("entity_one", FocusEvent),
-                    new XElement("relationship", relationship),
-                    new XElement("entity_two", event_two_combo.Text));
+                    XElement focusEventReference = (from c in XMLParser.EventXDocument.Handle.Root.Descendants("event")
+                                                    where c.Element("name").Value.Equals(FocusEvent)
+                                                    select c).First();
 
-                    XMLParser.EventRelationshipXDocument.Handle.Root.Add(newEventRelationship);
+                    //TODO evaluate the 'middle' of the two keys
+                    focusEventReference.Element("order_key").Value = "";
 
-                    newEventRelationship = new XElement("event_relationship",
-                    new XElement("entity_one", event_two_combo.Text),
-                    new XElement("relationship", opposite),
-                    new XElement("entity_two", FocusEvent));
-
-                    XMLParser.EventRelationshipXDocument.Handle.Root.Add(newEventRelationship);
-
-                    XMLParser.EventRelationshipXDocument.Save();
-
-                    if (MessageBox.Show($"Would you like to create another relationship for \"{FocusEvent}?\"", "Create Another Relationship", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.No)
-                    {
-                        Close();
-                    }
+                    XMLParser.EventXDocument.Save();
                 }
+
             }
         }
 
@@ -115,8 +90,8 @@ namespace citadel_wpf
 
         override public void Update(XDocumentInformation x = null)
         {
+            XMLParser.FillComboboxWithNames(XMLParser.EventXDocument.Handle, ref event_one_combo, FocusEvent);
             XMLParser.FillComboboxWithNames(XMLParser.EventXDocument.Handle, ref event_two_combo, FocusEvent);
-
         }
 
     }

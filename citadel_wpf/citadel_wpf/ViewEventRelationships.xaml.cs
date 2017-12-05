@@ -29,7 +29,7 @@ namespace citadel_wpf
             FillPanelWithRelationships(relationship_stackpanel);
 
             AttachToXDocument(ref XMLParser.EventXDocument);
-            AttachToXDocument(ref XMLParser.EventRelationshipXDocument);
+            //TODO ? AttachToXDocument(ref XMLParser.EventRelationshipXDocument);
         }
 
         private void FocusEventChanged(object sender, SelectionChangedEventArgs e)
@@ -45,8 +45,8 @@ namespace citadel_wpf
             {
                 string fc = focus_event_combo.SelectedItem.ToString().Split(':')[1].Substring(1);
 
-                //TODO adjust
-                var results = from c in XMLParser.EventRelationshipXDocument.Handle.Root.Descendants("event_relationship")
+                //TODO adjust using order keys
+                var results = from c in XMLParser.ParticipantXDocument.Handle.Root.Descendants("event_relationship")
                               where c.Element("entity_one").Value.ToString().Equals(fc)
                                     && !c.Element("relationship").Value.ToString().Equals(ParticipantPrompt.ParticipatedIn)
                               select new
@@ -65,39 +65,10 @@ namespace citadel_wpf
                     NodeInformation n = new NodeInformation(fc, r.Relationship, r.Entity_Two);
                     textblock.Text = n.ToString();
                     textblock.Margin = new Thickness(3);
-                    Button deleteButton = new Button();
-                    deleteButton.Tag = n;
-                    deleteButton.Click += DeleteButton_Click;
-                    deleteButton.Content = "Delete";
-                    deleteButton.Margin = new Thickness(3);
-                    deleteButton.Width = 60;
                     panel.Children.Add(textblock);
-                    panel.Children.Add(deleteButton);
                     stackpanel.Children.Add(panel);
                     stackpanel.Children.Add(new Separator());
                 }
-            }
-        }
-
-        private void DeleteButton_Click(object sender, RoutedEventArgs e)
-        {
-            if (MessageBox.Show("Are you sure you want to delete this relationship?", "Delete Relationship", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
-            {
-                NodeInformation n = (NodeInformation)((Button)sender).Tag;
-
-                var relationship = from c in XMLParser.EventRelationshipXDocument.Handle.Root.Elements()
-                                   where c.Element("entity_one").Value.Equals(n.EntityOne)
-                                   && c.Element("relationship").Value.Equals(n.Relationship)
-                                   && c.Element("entity_two").Value.Equals(n.EntityTwo)
-                                   select c;
-
-                foreach (var r in relationship)
-                {
-                    r.Remove();
-                }
-
-
-                XMLParser.EventRelationshipXDocument.Save();
             }
         }
 

@@ -49,7 +49,7 @@ namespace citadel_wpf
 
             else
             {
-                if (XMLParser.IsRelationshipPresent(XMLParser.EventRelationshipXDocument.Handle, character_combo.Text, relationship, FocusEvent))
+                if (XMLParser.IsRelationshipPresent(XMLParser.ParticipantXDocument.Handle, character_combo.Text, relationship, FocusEvent))
                 {
                     System.Windows.Forms.MessageBox.Show("This participant already exists, please try again.");
                 }
@@ -60,9 +60,9 @@ namespace citadel_wpf
                     new XElement("relationship", relationship),
                     new XElement("entity_two", FocusEvent));
 
-                    XMLParser.EventRelationshipXDocument.Handle.Root.Add(newParticipant);
+                    XMLParser.ParticipantXDocument.Handle.Root.Add(newParticipant);
 
-                    XMLParser.EventRelationshipXDocument.Save();
+                    XMLParser.ParticipantXDocument.Save();
 
                     if (MessageBox.Show($"Would you like to add another participant of \"{FocusEvent}?\"", "Add Another Participant", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.No)
                     {
