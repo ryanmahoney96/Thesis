@@ -18,8 +18,7 @@ namespace citadel_wpf
 {
     public partial class EventRelationshipPrompt : EntityWindow
     {
-        //TODO: each event relationship is given an index. Index = before index++ on 2^62 char table A-Z
-        //(1.5) 1.6 1.7 1.8 1.9 1.91 (2)
+        //TODO only need one. inc or dec
        
         public const string ComesBefore = "Comes Before";
         public const string ComesAfter = "Comes After";
@@ -63,7 +62,7 @@ namespace citadel_wpf
                 string eventTwoOrderKey = (from c in XMLParser.EventXDocument.Handle.Root.Descendants("event")
                                            where c.Element("name").Value.Equals(event_one_combo.Text)
                                            select c.Element("order_key").Value).First();
-
+                //TODO necessary?
                 if (eventOneOrderKey.CompareTo(eventTwoOrderKey) > 0)
                 {
                     //invalid order

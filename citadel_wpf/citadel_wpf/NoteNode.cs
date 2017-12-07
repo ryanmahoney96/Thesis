@@ -157,18 +157,24 @@ namespace citadel_wpf
                         NameText = fieldName;
                         EntityName = entityNode[key];
                     }
-                    else
+                    else if (!key.Equals("order_key"))
                     {
+                        string keyContent = entityNode[key];
+                        string keyTitle = key;
 
+                        if (key.Equals("unit_date"))
+                        {
+                            keyTitle = key.Replace('_', ' ');
+                        }
                         TextBlock titleText = new TextBlock();
-                        titleText.Text = ToTitleCase(key);
+                        titleText.Text = ToTitleCase(keyTitle);
                         titleText.TextWrapping = TextWrapping.Wrap;
                         titleText.FontSize = 16;
                         titleText.Foreground = Brushes.DarkBlue;
                         ContentStackPanel.Children.Add(titleText);
 
                         TextBlock contentText = new TextBlock();
-                        contentText.Text = "\t" + entityNode[key];
+                        contentText.Text = "\t" + keyContent;
                         contentText.TextWrapping = TextWrapping.Wrap;
                         contentText.FontSize = 15;
                         contentText.Foreground = Brushes.Black;

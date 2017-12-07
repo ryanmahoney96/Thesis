@@ -90,13 +90,13 @@ namespace citadel_wpf
                     }
                     else
                     {
+
                         XElement newEvent = new XElement("event",
                         new XElement("name", name_text.Text),
                         new XElement("location", location_combo_box.Text),
                         new XElement("unit_date", event_unit_date_number.Text),
                         new XElement("date", event_date_number.Text),
-                        //TODO what goes here? randomly align until user fixes?
-                        new XElement("order_key", ""),
+                        new XElement("order_key", EventOrdering.GetNewestOrderKey()),
                         new XElement("description", description_text.Text));
 
                         string temp = newEvent.ToString();

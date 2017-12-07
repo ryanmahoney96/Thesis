@@ -55,6 +55,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="EventOrdering.cs" />
     <Compile Include="INewEntity.cs" />
     <Compile Include="EventMapPromptWindow.xaml.cs">
       <DependentUpon>EventMapPromptWindow.xaml</DependentUpon>

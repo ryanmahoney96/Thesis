@@ -37,6 +37,7 @@ namespace citadel_wpf
         {
             FolderPath = folderPath;
             UpdateXDocuments();
+            EventOrdering.Initialize();
         }
 
         private void SetXDocumentContent(string documentName, ref XDocumentInformation XDoc)

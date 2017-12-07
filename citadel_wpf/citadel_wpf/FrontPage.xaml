@@ -64,7 +64,7 @@
                         </ComboBox>
 
                         <TextBlock Text="Edit the Summary:" Grid.Row="5" Grid.Column="1" VerticalAlignment="Center"></TextBlock>
-                        <ScrollViewer Margin="2, 2, 2, 2" Grid.Row="5" Grid.Column="2">
+                        <ScrollViewer Margin="2, 2, 2, 2" Grid.Row="5" Grid.Column="2" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
                             <TextBox Name="summaryText" TextWrapping="Wrap"></TextBox>
                         </ScrollViewer>
 
@@ -81,7 +81,7 @@
                         <MenuItem Header="_New Note" Click="New_Note_Click"/>
                     </Menu>
 
-                    <ScrollViewer Name="note_scrollview" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" DockPanel.Dock="Top">
+                    <ScrollViewer Name="note_scrollview" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Hidden"  DockPanel.Dock="Top">
                         <WrapPanel Name="general_notes_area" Margin="5" Width="{Binding ActualWidth, ElementName=note_scrollview}"/>
                     </ScrollViewer>
                 </DockPanel>
@@ -96,7 +96,7 @@
                         <MenuItem Header="Create _Family Tree" Click="NewFamilyTree"/>
                     </Menu>
 
-                    <ScrollViewer Name="character_scrollview" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" DockPanel.Dock="Top">
+                    <ScrollViewer Name="character_scrollview" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Hidden" DockPanel.Dock="Top">
                         <WrapPanel Name="character_notes_area" Margin="5" Width="{Binding ActualWidth, ElementName=character_scrollview}"/>
                     </ScrollViewer>
                 </DockPanel>
@@ -112,7 +112,7 @@
                         <MenuItem Header="Create Event _Map" Click="NewEventMap"/>
                     </Menu>
 
-                    <ScrollViewer Name="event_scrollview" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto"  DockPanel.Dock="Top">
+                    <ScrollViewer Name="event_scrollview" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Hidden"  DockPanel.Dock="Top">
                         <WrapPanel Name="event_notes_area" Margin="5" Width="{Binding ActualWidth, ElementName=event_scrollview}"/>
                     </ScrollViewer>
                 </DockPanel>
@@ -125,7 +125,7 @@
                         <MenuItem Header="Create Event _Map" Click="NewEventMap"/>
                     </Menu>
 
-                    <ScrollViewer Name="location_scrollview" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" DockPanel.Dock="Top">
+                    <ScrollViewer Name="location_scrollview" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Hidden" DockPanel.Dock="Top">
                         <WrapPanel Name="location_notes_area" Margin="5" Width="{Binding ActualWidth, ElementName=location_scrollview}"/>
                     </ScrollViewer>
                 </DockPanel>

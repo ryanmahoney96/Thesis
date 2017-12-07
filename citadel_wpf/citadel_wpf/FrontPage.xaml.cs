@@ -20,6 +20,7 @@ namespace citadel_wpf
 
     public partial class FrontPage : EntityWindow
     {
+        //TODO fix all name violations
 
         //TODO Tooltips throughout
         //TODO: Stylize with https://github.com/MahApps/MahApps.Metro
