@@ -21,6 +21,7 @@ namespace citadel_wpf
 
     public partial class AddEvent : EntityWindow, INewEntity
     {
+
         private bool Editing = false;
 
         public AddEvent() : base()

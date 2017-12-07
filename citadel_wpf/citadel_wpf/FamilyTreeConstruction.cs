@@ -13,6 +13,7 @@ namespace citadel_wpf
 {
     public class FamilyTreeConstruction
     {
+        //TODO change character_relationships -> include ID and parent IDs
         //TODO cleanup with nodes that connect two characters, then branches to each child
 
         public static string ImmediateFamilyTreeString = "Immediate Family Tree";

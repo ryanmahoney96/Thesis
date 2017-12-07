@@ -25,17 +25,17 @@
         </Grid.ColumnDefinitions>
 
         <TextBlock Text="*Name this Note:" Grid.Row="1" Grid.Column="1" TextWrapping="Wrap"></TextBlock>
-        <TextBox Name="name_text" Grid.Row="1" Grid.Column="2" Margin="5,5" VerticalAlignment="Center" VerticalContentAlignment="Center" Height="20"></TextBox>
+        <TextBox Name="name_text" Grid.Row="1" Grid.Column="2" VerticalAlignment="Center" VerticalContentAlignment="Center" Height="20"></TextBox>
 
         <TextBlock Text="*Enter your Note:" Grid.Row="2" Grid.Column="1" TextWrapping="Wrap"></TextBlock>
-        <ScrollViewer Grid.Row="2" Grid.Column="2" Width="280" Height="150">
+        <ScrollViewer Grid.Row="2" Grid.Column="2" VerticalScrollBarVisibility="Auto">
             <TextBox Name="description_text" TextWrapping="Wrap"></TextBox>
         </ScrollViewer>
 
         <TextBlock Name="required_text" Text="*Required Field" Grid.Row="5" Grid.Column="1"></TextBlock>
 
-        <Button Content="Cancel" Click="Cancel_and_Close" Grid.Row="5" Grid.Column="2" Width="50" Height="25" Margin="0,0,60,0" HorizontalAlignment="Right"></Button>
-        <Button Content="Save" Click="Save" Grid.Row="5" Grid.Column="2" Width="50" Height="25" Margin="0,0,5,0" HorizontalAlignment="Right"></Button>
+        <Button Content="Cancel" Click="Cancel_and_Close" Grid.Row="5" Grid.Column="2" Width="50" Height="25" Margin="0,0,55,0" HorizontalAlignment="Right"></Button>
+        <Button Content="Save" Click="Save" Grid.Row="5" Grid.Column="2" Width="50" Height="25" HorizontalAlignment="Right"></Button>
 
     </Grid>
 </base:EntityWindow>

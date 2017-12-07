@@ -11,6 +11,8 @@ namespace citadel_wpf
         //Order Key: the index string used to determine where an event lies on a timeline
         //Each event is given an index. Index = string of n char from 0-9
         //(1.5) 1.6 1.7 1.8 1.9 1.91 (2)
+        //TODO order keys ordered by 100s 
+        //1000 1100 1200 1250 1275 1300
 
         //The last order key of all events
         public static string LatestEventOrderKey = "40";
@@ -77,14 +79,14 @@ namespace citadel_wpf
             }
             else if (newKey[newKey.Length - 1].CompareTo('9') == 0)
             {
-                newKey = string.Concat(newKey.ToCharArray()[0]++, newKey.Substring(1, newKey.Length - 2), '0');
+                newKey = string.Concat(++newKey.ToCharArray()[0], newKey.Substring(1, newKey.Length - 2), '0');
             }
             else
             {
                 newKey = string.Concat(newKey.Substring(0, newKey.Length - 1), ++newKey.ToCharArray()[newKey.Length - 1]);
             }
 
-            //TODO determine incrementing
+            //TODO fine tune incrementing
 
             return newKey;
         }
