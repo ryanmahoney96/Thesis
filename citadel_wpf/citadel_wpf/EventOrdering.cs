@@ -8,14 +8,10 @@ namespace citadel_wpf
 {
     class EventOrdering
     {
-        //Order Key: the index string used to determine where an event lies on a timeline
-        //Each event is given an index. Index = string of n char from 0-9
-        //(1.5) 1.6 1.7 1.8 1.9 1.91 (2)
-        //TODO order keys ordered by 100s 
-        //1000 1100 1200 1250 1275 1300
+        //Order Key: Each event is given an index index used to determine where an event lies on a timeline
 
         //The last order key of all events
-        public static string LatestEventOrderKey = "40";
+        public static int LatestEventOrderKey = 4000;
 
         public static void Initialize()
         {
@@ -23,24 +19,23 @@ namespace citadel_wpf
             
         }
 
+        //find out if the xml has a more "recent" order key
         private static void FindLatestOrderKey()
         {
-            //TODO combine queries
-            bool eventsPresent = (from c in XMLParser.EventXDocument.Handle.Root.Descendants("event")
-                                  select c).Count() > 0 ? true : false;
+            //all order keys
+            var order_keys = from c in XMLParser.EventXDocument.Handle.Root.Descendants("event")
+                             select int.Parse(c.Element("order_key").Value);
+
+            bool eventsPresent = order_keys.Count() > 0 ? true : false;
 
             //if there are events in the list
             if (eventsPresent)
             {
-                //all order keys
-                var order_keys = from c in XMLParser.EventXDocument.Handle.Root.Descendants("event")
-                                 select c.Element("order_key").Value;
-
-
-                foreach (string o in order_keys)
+                
+                foreach (int o in order_keys)
                 {
                     //if this key comes after the latest, reset the latest
-                    if (o.CompareTo(LatestEventOrderKey) > 0)
+                    if (o > LatestEventOrderKey)
                     {
                         LatestEventOrderKey = o;
                     }
@@ -48,60 +43,73 @@ namespace citadel_wpf
             }
         }
 
-        //TODO if the event's order key is equal to the latest orderkey, reset the latest
-        public static void EventDeleted(string orderKey)
+        public static void ReorderOrderKeys()
         {
-            if (orderKey.Equals(LatestEventOrderKey))
+            //grab every order key, sort them by value, match each old order key to its new equivalent
+            List<string> listOfOrderKeys = new List<string>();
+
+            var events = from c in XMLParser.EventXDocument.Handle.Root.Descendants("event")
+                             select c;
+
+            foreach(var e in events)
             {
-                FindLatestOrderKey();
+                listOfOrderKeys.Add(e.Element("order_key").Value);
             }
+
+            listOfOrderKeys.Sort();
+
+            Dictionary<string, int> orderKeyAssigner = new Dictionary<string, int>();
+            LatestEventOrderKey = 4000;
+
+            foreach(var l in listOfOrderKeys)
+            {
+                if (!orderKeyAssigner.ContainsKey(l))
+                {
+                    LatestEventOrderKey += 200;
+                    orderKeyAssigner.Add(l, LatestEventOrderKey);
+                }
+            }
+
+            foreach (var e in events)
+            {
+                e.Element("order_key").Value = orderKeyAssigner[e.Element("order_key").Value].ToString();
+            }
+
+            XMLParser.EventXDocument.Save();
         }
 
-        public static string GetNewestOrderKey()
+        public static int GetNewOrderKey()
         {
             LatestEventOrderKey = GetKeyAfter(LatestEventOrderKey);
             return LatestEventOrderKey;
         }
 
-        public static string GetKeyBetween(string beforeKey, string afterKey)
+        public static int GetKeyBetween(int beforeKey, int afterKey)
         {
-            //TODO find middle-ish
-            return afterKey;
+            //find middle, if it would be a fraction --> reorder after
+            int average = (beforeKey + afterKey) / 2;
+
+            if ( (beforeKey + afterKey) % 2 > 0)
+            {
+                average = beforeKey + 1;
+                ReorderOrderKeys();
+            }
+
+            return average;
         }
 
         //Get the key that occurs after the given key
-        public static string GetKeyAfter(string key)
+        public static int GetKeyAfter(int key)
         {
-            String newKey = key;
-            if (newKey[0].CompareTo('9') == 0)
-            {
-                //check for 9s recursively
-            }
-            else if (newKey[newKey.Length - 1].CompareTo('9') == 0)
-            {
-                newKey = string.Concat(++newKey.ToCharArray()[0], newKey.Substring(1, newKey.Length - 2), '0');
-            }
-            else
-            {
-                newKey = string.Concat(newKey.Substring(0, newKey.Length - 1), ++newKey.ToCharArray()[newKey.Length - 1]);
-            }
-
-            //TODO fine tune incrementing
-
+            int newKey = key + 200;
+            
             return newKey;
         }
 
         //Get the key that occurs after the given key
-        public static string GetKeyBefore(string key)
+        public static int GetKeyBefore(int key)
         {
-            string newKey = key;
-            if (key[0].CompareTo('9') >= 0)
-            {
-
-            }
-
-            //TODO determine decrementing
-
+            int newKey = key - 200;
 
             return newKey;
         }
