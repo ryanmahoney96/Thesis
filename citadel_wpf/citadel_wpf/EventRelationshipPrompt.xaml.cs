@@ -18,67 +18,90 @@ namespace citadel_wpf
 {
     public partial class EventRelationshipPrompt : EntityWindow
     {
-        //TODO only need one. inc or dec
-       
-        public const string ComesBefore = "Comes Before";
-        public const string ComesAfter = "Comes After";
-        public const string SameTime = "Occurs at the Same Time as";
 
-        public string[] Relationships = { ComesBefore, ComesAfter, SameTime };
-
-        string FocusEvent;
-
-        public EventRelationshipPrompt(string fe) : base()
+        public EventRelationshipPrompt() : base()
         {
             InitializeComponent();
 
-            FocusEvent = fe;
-            beforeText.Text += " '" + FocusEvent + "'";
-            afterText.Text += " '" + FocusEvent + "'";
-
-            XMLParser.FillComboboxWithNames(XMLParser.EventXDocument.Handle, ref event_one_combo, FocusEvent);
-            XMLParser.FillComboboxWithNames(XMLParser.EventXDocument.Handle, ref event_two_combo, FocusEvent);
+            XMLParser.FillComboboxWithNames(XMLParser.EventXDocument.Handle, ref focusCombo);
 
             AttachToXDocument(ref XMLParser.EventXDocument);
         }
 
         override protected void Save(object sender, RoutedEventArgs e)
         {
+            //TODO instructional tooltip
+            //TODO double check if it is already positioned where the user is trying to put it and notify them
+            string focusEvent = focusCombo.Text;
+            string beforeEvent = event_one_combo.Text;
+            string afterEvent = event_two_combo.Text;
+            int eventOneOrderKey = 0;
+            int eventTwoOrderKey = 0;
 
-            string eventOne = event_one_combo.Text;
-            string eventTwo = event_two_combo.Text;
+            XElement focusEventOrderKey = (from c in XMLParser.EventXDocument.Handle.Root.Descendants("event")
+                                            where c.Element("name").Value.Equals(focusEvent)
+                                            select c.Element("order_key")).First();
 
-            if (!XMLParser.IsTextValid(event_one_combo.Text) || !XMLParser.IsTextValid(event_two_combo.Text))
+            bool beforeEventValid = XMLParser.IsTextValid(beforeEvent);
+            bool afterEventValid = XMLParser.IsTextValid(afterEvent);
+            bool SaveAndClose = true;
+
+            if (beforeEventValid)
             {
-                required_text.Foreground = Brushes.Red;
+                eventOneOrderKey = (from c in XMLParser.EventXDocument.Handle.Root.Descendants("event")
+                                    where c.Element("name").Value.Equals(beforeEvent)
+                                    select int.Parse(c.Element("order_key").Value)).First();
+            }
+            if (afterEventValid)
+            {
+                eventTwoOrderKey = (from c in XMLParser.EventXDocument.Handle.Root.Descendants("event")
+                                    where c.Element("name").Value.Equals(afterEvent)
+                                    select int.Parse(c.Element("order_key").Value)).First();
             }
 
+            if (beforeEventValid || afterEventValid)
+            {
+                if (beforeEventValid && !afterEventValid)
+                {
+                    if (int.Parse(focusEventOrderKey.Value) < eventOneOrderKey)
+                    {
+                        focusEventOrderKey.Value = EventOrdering.GetKeyAfter(eventOneOrderKey).ToString();
+                    }
+                }
+                else if (!beforeEventValid && afterEventValid)
+                {
+                    if (int.Parse(focusEventOrderKey.Value) > eventTwoOrderKey)
+                    {
+                        focusEventOrderKey.Value = EventOrdering.GetKeyBefore(eventTwoOrderKey).ToString();
+                    }
+                }
+
+                else if (beforeEventValid && afterEventValid)
+                {
+                    if (eventOneOrderKey > eventTwoOrderKey)
+                    {
+                        //invalid order
+                        System.Windows.Forms.MessageBox.Show("The first event must come before the second event");
+                        SaveAndClose = false;
+                    }
+                    else if (eventOneOrderKey == eventTwoOrderKey)
+                    {
+                        focusEventOrderKey.Value = eventOneOrderKey.ToString();
+                    }
+                    else
+                    {
+                        focusEventOrderKey.Value = EventOrdering.GetKeyBetween(eventOneOrderKey, eventTwoOrderKey).ToString();
+                    }
+                }
+                if (SaveAndClose)
+                {
+                    XMLParser.EventXDocument.Save();
+                    Close();
+                }
+            }
             else
             {
-                string eventOneOrderKey = (from c in XMLParser.EventXDocument.Handle.Root.Descendants("event")
-                                          where c.Element("name").Value.Equals(event_one_combo.Text)
-                                          select c.Element("order_key").Value).First();
-
-                string eventTwoOrderKey = (from c in XMLParser.EventXDocument.Handle.Root.Descendants("event")
-                                           where c.Element("name").Value.Equals(event_one_combo.Text)
-                                           select c.Element("order_key").Value).First();
-                //TODO necessary?
-                if (eventOneOrderKey.CompareTo(eventTwoOrderKey) > 0)
-                {
-                    //invalid order
-                }
-                else
-                {
-                    XElement focusEventReference = (from c in XMLParser.EventXDocument.Handle.Root.Descendants("event")
-                                                    where c.Element("name").Value.Equals(FocusEvent)
-                                                    select c).First();
-
-                    //TODO evaluate the 'middle' of the two keys
-                    focusEventReference.Element("order_key").Value = "";
-
-                    XMLParser.EventXDocument.Save();
-                }
-
+                required_text.Foreground = Brushes.Red;
             }
         }
 
@@ -89,9 +112,21 @@ namespace citadel_wpf
 
         override public void Update(XDocumentInformation x = null)
         {
-            XMLParser.FillComboboxWithNames(XMLParser.EventXDocument.Handle, ref event_one_combo, FocusEvent);
-            XMLParser.FillComboboxWithNames(XMLParser.EventXDocument.Handle, ref event_two_combo, FocusEvent);
+            XMLParser.FillComboboxWithNames(XMLParser.EventXDocument.Handle, ref focusCombo);
+            event_one_combo.Items.Clear();
+            event_two_combo.Items.Clear();
         }
 
+        private void focusCombo_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (focusCombo.SelectedItem != null && XMLParser.IsTextValid(focusCombo.SelectedItem.ToString()))
+            {
+                string fcs = focusCombo.SelectedItem.ToString().Split(':')[1].Substring(1);
+
+                XMLParser.FillComboboxWithNames(XMLParser.EventXDocument.Handle, ref event_one_combo, fcs);
+                XMLParser.FillComboboxWithNames(XMLParser.EventXDocument.Handle, ref event_two_combo, fcs);
+
+            }
+        }
     }
 }
