@@ -64,7 +64,7 @@ namespace citadel_wpf
                 {
                     echo.Append($"\n{e.Unit_date}");
                 }
-                if (!string.IsNullOrWhiteSpace(e.Unit_date))
+                if (!string.IsNullOrWhiteSpace(e.Date))
                 {
                     echo.Append($"\n{e.Date}");
                 }

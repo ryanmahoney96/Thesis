@@ -106,6 +106,7 @@ namespace citadel_wpf
             return newKey;
         }
 
+        //TODO negative?
         //Get the key that occurs after the given key
         public static int GetKeyBefore(int key)
         {

@@ -1,30 +1,121 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 
 namespace citadel_wpf
 {
     class TimelineConstruction
     {
+
         private static string rankdir = $"rankdir=\"LR\"";
         private static string fontname = $"fontname=\"Helvetica\"";
+        private static string overlap = $"overlap=false";
+        private static string bgcolor = $"bgcolor=white";
+        private static string fontcolor = $"fontcolor=black";
+        private static string nodeShape = $"shape=rect";
+        private static string centerShape = $"shape=ellipse";
+        private static string nodeColor = $"color=navy";
+        private static string clusterColor = $"color=orangered";
 
-        public static void ShortTermTimeline(string focusEvent)
+        //TODO give timeline a title
+        public static void CreateTimeline(List<string> selectedEvents, string title = "")
         {
+
+            StringBuilder echo = new StringBuilder($"digraph s {{ label=\"Timeline {title}\" {fontname} {overlap} {bgcolor} {rankdir} compound=true; ");
+
+            GetEventInformation(ref echo, selectedEvents);
+
+            echo.Append("}");
+
+            SaveEcho(echo, "Timeline", title);
+
 
         }
 
-        public static void LongTermTimeline(string focusEvent)
+        private static void GetEventInformation(ref StringBuilder echo, List<string> selectedEvents)
         {
+            //echo.Append($"\"{focusLocation}\" [{centerShape}, {centerColor}, {fontname}, {fontcolor}]; ");
+            SortedDictionary<string, List<XElement>> eventDictionary = new SortedDictionary<string, List<XElement>>();
+
+            foreach (string sel in selectedEvents)
+            {
+                XElement temp = (from e in XMLParser.EventXDocument.Handle.Root.Elements("event")
+                           where e.Element("name").Value.Equals(sel)
+                           select e).First();
+
+                if (!eventDictionary.ContainsKey(temp.Element("order_key").Value))
+                {
+                    eventDictionary[temp.Element("order_key").Value] = new List<XElement>();
+                }
+                eventDictionary[temp.Element("order_key").Value].Add(temp);
+
+            }
+
+            List<XElement> lastList = new List<XElement>();
+            int clusterIndex = 0;
+
+            foreach (var currentList in eventDictionary)
+            {
+                //adding each event as a dot node
+                foreach (var currentEvent in currentList.Value)
+                {
+                    string name = currentEvent.Element("name").Value;
+                    echo.Append($"\"{name}\" [{nodeColor}, {nodeShape}, {fontname}, {fontcolor}, label=\"{name}");
+
+                    if (!string.IsNullOrWhiteSpace(currentEvent.Element("unit_date").Value))
+                    {
+                        echo.Append($"\n{currentEvent.Element("unit_date").Value}");
+                    }
+                    if (!string.IsNullOrWhiteSpace(currentEvent.Element("date").Value))
+                    {
+                        echo.Append($"\n{currentEvent.Element("date").Value}");
+                    }
+                    echo.Append($"\"]; ");
+                }
+
+                if (currentList.Value.Count > 1)
+                {
+                    echo.Append($"subgraph cluster_{++clusterIndex} {{ ");
+
+                    foreach (var currentEvent in currentList.Value)
+                    {
+                        echo.Append($"{currentEvent.Element("name").Value}; ");
+                    }
+
+                    echo.Append($" color={clusterColor}}}; ");
+                }
+                
+
+                lastList = currentList.Value;
+            }
+
 
         }
 
-        public static void AllEventTimeline(string focusEvent)
+        //TODO make generic
+        private static void SaveEcho(StringBuilder echo, string type, string focusLocation = "")
         {
+            if (!string.IsNullOrWhiteSpace(focusLocation))
+            {
+                focusLocation = focusLocation.Replace(" ", "_");
+                focusLocation = focusLocation.Replace("'", "");
+                focusLocation += "_";
+            }
 
+            string textPath = XMLParser.FolderPath + $"\\{type}.dot";
+            string imagePath = $"{XMLParser.FolderPath}/{focusLocation}{type}.png";
+            StreamWriter streamwriter = File.CreateText(textPath);
+            streamwriter.Write(echo);
+            streamwriter.Close();
+
+            //twopi or neato
+            Process.Start("cmd.exe", @"/c" + $"dot -Tpng {textPath} -o {imagePath} & del {textPath} & {imagePath}");
         }
-
     }
 }
+
