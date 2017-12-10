@@ -46,10 +46,17 @@ namespace citadel_wpf
             AttachToXDocument(ref XMLParser.NoteXDocument);
 
             SetDecorations(MainTabControl);
-            BorderThickness = new Thickness(0, 0, 0, 0);
+            MainTabControl.BorderThickness = new Thickness(0, 0, 0, 0);
+            Background = Brushes.White;
 
             MiddleColumn.MaxWidth = SystemParameters.PrimaryScreenWidth * 0.6;
             MiddleRow.MaxHeight = SystemParameters.PrimaryScreenHeight * 0.6;
+
+            ButtonStylize(backButton);
+            ButtonStylize(saveButton);
+
+            ComboboxStylize(type_combobox);
+            ComboboxStylize(genre_combobox);
         }
 
         private void FrontPage_SizeChanged(object sender, SizeChangedEventArgs e)
@@ -211,6 +218,21 @@ namespace citadel_wpf
         private void NewTimeline(object sender, RoutedEventArgs e)
         {
             EntityWindow.InitializeModalWindow(this, (new TimelinePromptWindow()));
+        }
+
+        public void ButtonStylize (Button b)
+        {
+            b.Background = Brushes.Silver;
+            b.Foreground = Brushes.Black;
+            b.BorderThickness = new Thickness(0, 0, 0, 0);
+        }
+
+        public void ComboboxStylize(ComboBox b)
+        {
+            b.Background = Brushes.Silver;
+            b.Foreground = Brushes.Black;
+            
+            b.BorderThickness = new Thickness(0, 0, 0, 1);
         }
     }
 }

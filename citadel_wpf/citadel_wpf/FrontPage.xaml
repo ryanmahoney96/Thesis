@@ -12,46 +12,69 @@
 
     <Grid>
         <TabControl Name="MainTabControl">
+            <TabControl.Resources>
+                <Style TargetType="TabItem">
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="TabItem">
+                                <Border Name="Border" BorderThickness="0,0,0,0" BorderBrush="Black" Margin="0,0">
+                                    <ContentPresenter x:Name="ContentSite"
+                                        VerticalAlignment="Center"
+                                        HorizontalAlignment="Center"
+                                        ContentSource="Header"
+                                        Margin="8,2"/>
+                                </Border>
+                                <ControlTemplate.Triggers>
+                                    <Trigger Property="IsSelected" Value="True">
+                                        <Setter TargetName="Border" Property="Background" Value="WhiteSmoke" />
+                                        <Setter TargetName="Border" Property="BorderThickness" Value="0,0,0,1.5" />
+                                    </Trigger>
+                                    <Trigger Property="IsSelected" Value="False">
+                                        <Setter TargetName="Border" Property="Background" Value="White" />
+                                    </Trigger>
+                                </ControlTemplate.Triggers>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Style>
+            </TabControl.Resources>
             <TabItem Header="Media Information">
                 <Label FontSize="14">
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="10"/>
-                            <ColumnDefinition Width="130"/>
-                            <ColumnDefinition Name="MiddleColumn" MinWidth="450" Width="*"/>
-                            <ColumnDefinition Width="150"/>
+                            <ColumnDefinition Name="MiddleColumn" MinWidth="750"/>
                             <ColumnDefinition Width="10"/>
                         </Grid.ColumnDefinitions>
 
                         <Grid.RowDefinitions>
-                            <RowDefinition Height="20"/>
+                            <RowDefinition Height="5"/>
                             <RowDefinition Height="42"/>
-                            <RowDefinition Height="40"/>
-                            <RowDefinition Height="40"/>
-                            <RowDefinition Height="40"/>
+                            <RowDefinition Height="42"/>
+                            <RowDefinition Height="42"/>
+                            <RowDefinition Height="42"/>
                             <RowDefinition Name="MiddleRow" MinHeight="230" Height="*"/>
                             <RowDefinition Height="50"/>
                         </Grid.RowDefinitions>
 
-                        <TextBlock Text="Edit the Title:" Margin="2, 2, 2, 2" Grid.Row="1" Grid.Column="1" VerticalAlignment="Center"></TextBlock>
-                        <TextBox Name="titleText" Margin="2, 1, 2, 1" Grid.Row="1" Grid.Column="2" VerticalAlignment="Center"></TextBox>
+                        <TextBlock Text="Title:" Grid.Row="1" Grid.Column="1" VerticalAlignment="Top" Grid.ColumnSpan="2" Height="19"></TextBlock>
+                        <TextBox Name="titleText" Grid.Row="1" Grid.Column="1" VerticalAlignment="Bottom" Height="22" Margin="15,0,0,0"></TextBox>
 
-                        <TextBlock Text="Edit the Year:" Grid.Row="2" Grid.Column="1" VerticalAlignment="Center"></TextBlock>
-                        <TextBox Name="yearText" Margin="2, 1, 2, 1" Grid.Row="2" Grid.Column="2" VerticalAlignment="Center"></TextBox>
+                        <TextBlock Text="Year:" Grid.Row="2" Grid.Column="1" VerticalAlignment="Top" Height="19"></TextBlock>
+                        <TextBox Name="yearText" Grid.Row="2" Grid.Column="1" VerticalAlignment="Bottom" Height="22" Margin="15,0,0,0"></TextBox>
 
-                        <TextBlock Text="Edit the Type:" Grid.Row="3" Grid.Column="1" VerticalAlignment="Center"></TextBlock>
-                        <ComboBox Name="type_combobox" Width="200" FontSize="12" Margin="2, 0" Grid.Row="3" Grid.Column="2" VerticalAlignment="Center" VerticalContentAlignment="Center" HorizontalAlignment="Left" Height="22" >
+                        <TextBlock Text="Media Type:" Grid.Row="3" Grid.Column="1" VerticalAlignment="Top" Height="19"></TextBlock>
+                        <ComboBox Name="type_combobox" Width="200" FontSize="12" Grid.Row="3" Grid.Column="1" VerticalAlignment="Bottom" Height="22" Margin="15,0,0,0" HorizontalAlignment="Left">
                             <ComboBoxItem Content="Book \ Short Story"/>
                             <ComboBoxItem Content="Movie"/>
                             <ComboBoxItem Content="Tabletop \ Video Game"/>
                             <ComboBoxItem Content="Television Show"/>
                             <ComboBoxItem Content="History \ Reality"/>
                             <ComboBoxItem Content="Other"/>
-
                         </ComboBox>
 
-                        <TextBlock Text="Edit the Genre:" Grid.Row="4" Grid.Column="1" VerticalAlignment="Center"></TextBlock>
-                        <ComboBox Name="genre_combobox" Width="200" FontSize="12" Margin="2, 0" Grid.Row="4" Grid.Column="2" VerticalContentAlignment="Center" HorizontalAlignment="Left" Height="22" VerticalAlignment="Center" >
+                        <TextBlock Text="Genre:" Grid.Row="4" Grid.Column="1" VerticalAlignment="Top" Height="19"></TextBlock>
+                        <ComboBox Name="genre_combobox" Width="200" FontSize="12" Grid.Row="4" Grid.Column="1" VerticalAlignment="Bottom" Height="22" Margin="15,0,0,0" HorizontalAlignment="Left">
                             <ComboBoxItem Content="Action \ Adventure"/>
                             <ComboBoxItem Content="Comedy"/>
                             <ComboBoxItem Content="Drama"/>
@@ -59,16 +82,15 @@
                             <ComboBoxItem Content="Mystery"/>
                             <ComboBoxItem Content="History \ Reality \ Biographical"/>
                             <ComboBoxItem Content="Other"/>
-
                         </ComboBox>
 
-                        <TextBlock Text="Edit the Summary:" Grid.Row="5" Grid.Column="1" VerticalAlignment="Center"></TextBlock>
-                        <ScrollViewer Margin="2, 2, 2, 2" Grid.Row="5" Grid.Column="2" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
+                        <TextBlock Text="Summary:" Grid.Row="5" Grid.Column="1" VerticalAlignment="Top" Height="19"></TextBlock>
+                        <ScrollViewer Grid.Row="5" Grid.Column="1" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled" Margin="15,22,0,0">
                             <TextBox Name="summaryText" TextWrapping="Wrap"></TextBox>
                         </ScrollViewer>
 
-                        <Button Content="Save Changes" Click="Save"  Grid.Row="6" Grid.Column="3" Width="110" Height="30" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                        <Button Content="Back to Main Menu" Click="ReturnToMainMenu" Grid.Row="6" Grid.Column="1" Grid.ColumnSpan="2" Width="140" Height="30" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                        <Button Name="saveButton" Content="Save Changes" Click="Save" Grid.Row="6" Grid.Column="1" Width="110" Height="30" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,10"/>
+                        <Button Name="backButton" Content="Back to Main Menu" Click="ReturnToMainMenu" Grid.Row="6" Grid.Column="1" Grid.ColumnSpan="2" Width="140" Height="30" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="0,10"/>
 
                     </Grid>
                 </Label>

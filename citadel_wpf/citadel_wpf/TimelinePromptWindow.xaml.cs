@@ -21,28 +21,52 @@ namespace citadel_wpf
         public TimelinePromptWindow() : base()
         {
             InitializeComponent();
-            XMLParser.FillComboboxWithNames(XMLParser.EventXDocument.Handle, ref event_name_combo);
+            FillEventList();
+        }
+
+        private void FillEventList()
+        {
+            var allEvents = from e in XMLParser.EventXDocument.Handle.Root.Elements("event")
+                            orderby e.Element("name").Value
+                            select e.Element("name").Value;
+
+            foreach(var e in allEvents)
+            {
+                DockPanel d = new DockPanel();
+
+                CheckBox c = new CheckBox();
+                DockPanel.SetDock(c, Dock.Left);
+                d.Children.Add(c);
+
+                TextBlock t = new TextBlock();
+                t.Text = e;
+                DockPanel.SetDock(t, Dock.Left);
+                d.Children.Add(t);
+
+                eventList.Children.Add(d);
+            }
+
         }
 
         override protected void Save(object sender, RoutedEventArgs e)
         {
-            if (XMLParser.IsTextValid(timelineType.Text) && XMLParser.IsTextValid(event_name_combo.Text))
-            {
+            //if (XMLParser.IsTextValid(timelineType.Text) && XMLParser.IsTextValid(event_name_combo.Text))
+            //{
 
-                if (timelineType.Text.Equals("Short Term Timeline"))
-                {
-                    //TODO EventMapConstruction.SingleLocation(eventName.Text);
-                }
-                else
-                {
-                    //TODO EventMapConstruction.AllLocations();
-                }
-                Close();
-            }
-            else
-            {
-                requiredText.Foreground = Brushes.Red;
-            }
+            //    if (timelineType.Text.Equals("Short Term Timeline"))
+            //    {
+            //        //TODO EventMapConstruction.SingleLocation(eventName.Text);
+            //    }
+            //    else
+            //    {
+            //        //TODO EventMapConstruction.AllLocations();
+            //    }
+            //    Close();
+            //}
+            //else
+            //{
+            //    requiredText.Foreground = Brushes.Red;
+            //}
         }
 
         override public void Update(XDocumentInformation x = null)

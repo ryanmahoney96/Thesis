@@ -56,7 +56,7 @@ namespace citadel_wpf
 
             }
 
-            List<XElement> lastList = new List<XElement>();
+            string lastElement = "";
             int clusterIndex = 0;
 
             foreach (var currentList in eventDictionary)
@@ -88,10 +88,17 @@ namespace citadel_wpf
                     }
 
                     echo.Append($" color={clusterColor}}}; ");
-                }
-                
 
-                lastList = currentList.Value;
+                    echo.Append($" {lastElement} -> {currentList.Value.First().Element("name").Value} [ltail={lastElement} lhead=cluster_{clusterIndex} color=blue]; ");
+
+                }
+                else
+                {
+                    echo.Append($" {lastElement} -> {currentList.Value.First().Element("name").Value}; ");
+                }
+
+
+                lastElement = currentList.Value.First().Element("name").Value;
             }
 
 

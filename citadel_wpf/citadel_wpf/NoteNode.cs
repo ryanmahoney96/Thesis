@@ -32,9 +32,9 @@ namespace citadel_wpf
         {
             EntityType = source;
             borderLine = new Border();
-            borderLine.BorderThickness = new Thickness(1, 1, 1, 1);
-            borderLine.BorderBrush = new SolidColorBrush(Colors.Purple);
-            borderLine.CornerRadius = new CornerRadius(2, 2, 2, 2);
+            borderLine.BorderThickness = new Thickness(0.5, 0.5, 0.5, 0.5);
+            borderLine.BorderBrush = new SolidColorBrush(Colors.Black);
+            //borderLine.CornerRadius = new CornerRadius(2, 2, 2, 2);
             borderLine.Padding = new Thickness(1, 1, 1, 1);
             borderLine.Margin = new Thickness(5, 5, 5, 5);
             borderLine.Width = NoteNodeWidth;

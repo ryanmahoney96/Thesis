@@ -5,43 +5,36 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:base="clr-namespace:citadel_wpf"
         mc:Ignorable="d"
-        Title="Timeline Prompt"
+        Title="Create a Timeline"
         ResizeMode="NoResize"
-        Height="185" 
-        Width="330"
+        Height="350" 
+        Width="340"
         WindowStartupLocation="CenterScreen">
 
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="5"/>
             <RowDefinition Height="20"/>
-            <RowDefinition Height="30"/>
-            <RowDefinition Height="20"/>
-            <RowDefinition Height="30"/>
+            <RowDefinition Height="250"/>
             <RowDefinition Height="30"/>
             <RowDefinition Height="5"/>
         </Grid.RowDefinitions>
 
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="5"/>
-            <ColumnDefinition Width="180"/>
-            <ColumnDefinition Width="60"/>
-            <ColumnDefinition Width="60"/>
+            <ColumnDefinition Width="300"/>
             <ColumnDefinition Width="5"/>
         </Grid.ColumnDefinitions>
 
-        <TextBlock Text="*Timeline Type" Grid.Row="1" Grid.Column="1" Margin="2, 2"/>
-        <ComboBox Name="timelineType" Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="3" Margin="3, 3">
-            <ComboBoxItem>Short Term Timeline</ComboBoxItem>
-            <ComboBoxItem>Long Term Timeline</ComboBoxItem>
-        </ComboBox>
+        <TextBlock Text="Select which Events to put in the Timeline" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Center"/>
 
-        <TextBlock Text="*Event Name" Grid.Row="3" Grid.Column="1" Margin="2, 2"/>
-        <ComboBox Name="event_name_combo" Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="3" Margin="3, 3"/>
-
-        <Button Content="Cancel" Grid.Row="5" Grid.Column="2" Margin="2, 2" Click="Cancel_and_Close"/>
-        <Button Content="Create" Grid.Row="5" Grid.Column="3" Margin="2, 2" Click="Save"/>
-        <TextBlock Name="requiredText" Text="*Required" Grid.Row="5" Grid.Column="1" Margin="2, 2"/>
+        <ScrollViewer  Grid.Column="1" Grid.Row="2" VerticalScrollBarVisibility="Auto" Background="White">
+            <StackPanel Name="eventList" Margin="2, 2"></StackPanel>
+        </ScrollViewer>
+        
+        <!--<Button Content="Cancel" Grid.Row="3" Grid.Column="1" Click="Cancel_and_Close"/>-->
+        <Button Content="Create" Grid.Row="3" Grid.Column="1" Click="Save" Width="80" Margin="0, 2" HorizontalAlignment="Right"/>
+        <!--<TextBlock Name="requiredText" Text="*Required" Grid.Row="5" Grid.Column="1" Margin="2, 2"/>-->
 
     </Grid>
 </base:EntityWindow>
