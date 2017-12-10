@@ -40,8 +40,6 @@ namespace citadel_wpf
         override protected void Save(object sender, RoutedEventArgs e)
         {
 
-            string relationship = ParticipatedIn;
-
             if ( !XMLParser.IsTextValid(character_combo.Text))
             {
                 required_text.Foreground = Brushes.Red;
@@ -49,20 +47,24 @@ namespace citadel_wpf
 
             else
             {
-                if (XMLParser.IsRelationshipPresent(XMLParser.ParticipantXDocument.Handle, character_combo.Text, relationship, FocusEvent))
+                XElement EventRef = (from ev in XMLParser.EventXDocument.Handle.Root.Elements("event")
+                                where ev.Element("name").Value.ToString().Equals(FocusEvent)
+                                select ev).First();
+                bool relationshipPresentAlready = (from ev in EventRef.Element("participants").Elements()
+                                         where ev.Value.Equals(character_combo.Text)
+                                         select ev).Count() > 0 ? true : false;
+
+                if (relationshipPresentAlready)
                 {
                     System.Windows.Forms.MessageBox.Show("This participant already exists, please try again.");
                 }
                 else
                 {
-                    XElement newParticipant = new XElement("character_participation",
-                    new XElement("entity_one", character_combo.Text),
-                    new XElement("relationship", relationship),
-                    new XElement("entity_two", FocusEvent));
+                    XElement newParticipant = new XElement("character_name", character_combo.Text);
 
-                    XMLParser.ParticipantXDocument.Handle.Root.Add(newParticipant);
+                    EventRef.Element("participants").Add(newParticipant);
 
-                    XMLParser.ParticipantXDocument.Save();
+                    XMLParser.EventXDocument.Save();
 
                     if (MessageBox.Show($"Would you like to add another participant of \"{FocusEvent}?\"", "Add Another Participant", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.No)
                     {

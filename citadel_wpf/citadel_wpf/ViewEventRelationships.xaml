@@ -7,15 +7,15 @@
         mc:Ignorable="d"
         WindowStartupLocation="CenterScreen"
         ResizeMode="CanMinimize"
-        Title="Add/View Event Relationships" 
-        Height="360" Width="540">
+        Title="Event Order" 
+        Height="370" Width="540">
     <Grid Name="MainGrid">
 
         <Grid.RowDefinitions>
             <RowDefinition Height="3"/>
             <RowDefinition Height="30"/>
-            <RowDefinition Height="250"/>
-            <RowDefinition Height="35"/>
+            <RowDefinition Height="7"/>
+            <RowDefinition Height="280"/>
         </Grid.RowDefinitions>
 
         <Grid.ColumnDefinitions>
@@ -26,17 +26,17 @@
             <ColumnDefinition Width="5"/>
         </Grid.ColumnDefinitions>
 
-        <TextBlock Text="Showing All Events in Order" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center"></TextBlock>
+        <!--<TextBlock Text="Showing All Events in Order" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center"></TextBlock>-->
         <Button Content="Adjust Ordering" Click="AdjustOrdering_Click"  Grid.Row="1" Grid.Column="2" Width="100" Height="25" Margin="0,0,0,0" HorizontalAlignment="Center"></Button>
-
-        <ScrollViewer Name="relationship_scrollview" BorderBrush="DarkBlue" BorderThickness="0, 1, 0, 0" Background="White" Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="3" VerticalScrollBarVisibility="Auto">
+        <Button Content="Add a New Event" Click="Add_Event" Grid.Row="1" Grid.Column="1" Width="100" Height="25" Margin="0,0,0,0" HorizontalAlignment="Center"></Button>
+        <Button Name="timelineButton" Content="Create a Timeline" Grid.Row="1" Grid.Column="3" Width="100" Height="25" VerticalAlignment="Center" HorizontalAlignment="Center"></Button>
+        <!--<Button Name="ExitButton" Content="Close" Click="Cancel_and_Close" Grid.Row="4" Grid.Column="3" Width="50" Height="25" Margin="0,0,10,0" HorizontalAlignment="Right"></Button>-->
+       
+        <Separator Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="5"></Separator>
+        
+        <ScrollViewer Name="relationship_scrollview" BorderBrush="DarkBlue" BorderThickness="0, 1, 0, 0" Background="White" Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="3" VerticalScrollBarVisibility="Auto">
             <StackPanel Name="relationship_stackpanel" Background="White"/>
         </ScrollViewer>
-
-        <Button Content="Add New Event" Click="Add_Event" Grid.Row="4" Grid.Column="1" Width="100" Height="25" Margin="0,0,0,0" HorizontalAlignment="Center"></Button>
-        <Button Name="timelineButton" Content="Create Timeline" Grid.Row="5" Grid.Column="2" Width="100" Height="25" VerticalAlignment="Center" HorizontalAlignment="Center"></Button>
-        <Button Name="ExitButton" Content="Close" Click="Cancel_and_Close" Grid.Row="5" Grid.Column="3" Width="50" Height="25" Margin="0,0,10,0" HorizontalAlignment="Right"></Button>
-        <!--<Button Name="SaveButton" Content="Save" Click="Save" Grid.Row="5" Grid.Column="3" Width="50" Height="25" Margin="0,0,5,0" HorizontalAlignment="Right"></Button>-->
 
     </Grid>
 </base:EntityWindow>

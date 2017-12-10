@@ -31,7 +31,7 @@ namespace citadel_wpf
         override protected void Save(object sender, RoutedEventArgs e)
         {
             //TODO instructional tooltip
-            //TODO double check if it is already positioned where the user is trying to put it and notify them
+            //TODO double check between and notify if it is already there?
             string focusEvent = focusCombo.Text;
             string beforeEvent = event_one_combo.Text;
             string afterEvent = event_two_combo.Text;
@@ -67,12 +67,20 @@ namespace citadel_wpf
                     {
                         focusEventOrderKey.Value = EventOrdering.GetKeyAfter(eventOneOrderKey).ToString();
                     }
+                    else
+                    {
+                        System.Windows.Forms.MessageBox.Show("The event already lies in the order specified");
+                    }
                 }
                 else if (!beforeEventValid && afterEventValid)
                 {
                     if (int.Parse(focusEventOrderKey.Value) > eventTwoOrderKey)
                     {
                         focusEventOrderKey.Value = EventOrdering.GetKeyBefore(eventTwoOrderKey).ToString();
+                    }
+                    else
+                    {
+                        System.Windows.Forms.MessageBox.Show("The event already lies in the order specified");
                     }
                 }
 
@@ -101,7 +109,7 @@ namespace citadel_wpf
             }
             else
             {
-                required_text.Foreground = Brushes.Red;
+                System.Windows.Forms.MessageBox.Show("Please select at least one relationship.");
             }
         }
 

@@ -38,6 +38,7 @@ namespace citadel_wpf
             FillNotePages();
             FrontPageReference = this;
             base.SizeChanged += FrontPage_SizeChanged;
+            MinWidth = NoteNode.NoteNodeWidth * 2.22;
 
             AttachToXDocument(ref XMLParser.CharacterXDocument);
             AttachToXDocument(ref XMLParser.EventXDocument);
@@ -45,6 +46,7 @@ namespace citadel_wpf
             AttachToXDocument(ref XMLParser.NoteXDocument);
 
             SetDecorations(MainTabControl);
+            BorderThickness = new Thickness(0, 0, 0, 0);
 
             MiddleColumn.MaxWidth = SystemParameters.PrimaryScreenWidth * 0.6;
             MiddleRow.MaxHeight = SystemParameters.PrimaryScreenHeight * 0.6;

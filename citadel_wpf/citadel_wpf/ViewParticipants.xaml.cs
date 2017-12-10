@@ -45,33 +45,37 @@ namespace citadel_wpf
             {
                 string focusEvent = focus_event_combo.SelectedItem.ToString().Split(':')[1].Substring(1);
 
-                var results = from c in XMLParser.ParticipantXDocument.Handle.Root.Descendants("character_participation")
-                              where c.Element("entity_two").Value.ToString().Equals(focusEvent)
-                                    && c.Element("relationship").Value.ToString().Equals(ParticipantPrompt.ParticipatedIn)
-                              select new
-                              {
-                                  Relationship = c.Element("relationship").Value.ToString(),
-                                  Character = c.Element("entity_one").Value.ToString(),
-                              };
-
+                var results = (from e in XMLParser.EventXDocument.Handle.Root.Descendants("event")
+                           where e.Element("name").Value.Equals(focusEvent)
+                           && !e.Element("participants").IsEmpty
+                           select (from c in e.Element("participants").Elements("character_name")
+                                   select c.Value)).First();
+                              
                 stackpanel.Children.Clear();
 
                 foreach (var r in results)
                 {
 
-                    WrapPanel panel = new WrapPanel();
+                    DockPanel panel = new DockPanel();
                     TextBlock textblock = new TextBlock();
-                    NodeInformation n = new NodeInformation(r.Character, r.Relationship, focusEvent);
-                    textblock.Text = n.ToString();
+                    //TODO fix this for deletion
+                    NodeInformation n = new NodeInformation(r, "", "");
+                    //textblock.Text = n.ToString();
+                    textblock.Text = r;
                     textblock.Margin = new Thickness(3);
+                    DockPanel.SetDock(textblock, Dock.Left);
+
                     Button deleteButton = new Button();
                     deleteButton.Tag = n;
                     deleteButton.Click += DeleteButton_Click;
                     deleteButton.Content = "Delete";
                     deleteButton.Margin = new Thickness(3);
                     deleteButton.Width = 60;
+                    DockPanel.SetDock(deleteButton, Dock.Right);
+
                     panel.Children.Add(textblock);
                     panel.Children.Add(deleteButton);
+
                     stackpanel.Children.Add(panel);
                     stackpanel.Children.Add(new Separator());
                 }

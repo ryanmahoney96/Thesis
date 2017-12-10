@@ -97,8 +97,9 @@ namespace citadel_wpf
                         new XElement("location", location_combo_box.Text),
                         new XElement("unit_date", event_unit_date_number.Text),
                         new XElement("date", event_date_number.Text),
-                        new XElement("order_key", EventOrdering.GetNewOrderKey()),
-                        new XElement("description", description_text.Text));
+                        new XElement("description", description_text.Text),
+                        new XElement("participants"),
+                        new XElement("order_key", EventOrdering.GetNewOrderKey()));
 
                         string temp = newEvent.ToString();
 

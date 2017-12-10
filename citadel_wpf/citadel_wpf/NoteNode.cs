@@ -24,7 +24,7 @@ namespace citadel_wpf
         public static int ButtonHeight = 24;
         public static int ButtonWidth = 40;
 
-        public static double NoteNodeWidth = SystemParameters.PrimaryScreenWidth * 0.26;
+        public static double NoteNodeWidth = SystemParameters.PrimaryScreenWidth * 0.28;
 
         public static double NoteNodeHeight = NameBoxHeight + ContentBoxHeight + ButtonHeight + 25;
 
@@ -33,7 +33,7 @@ namespace citadel_wpf
             EntityType = source;
             borderLine = new Border();
             borderLine.BorderThickness = new Thickness(1, 1, 1, 1);
-            borderLine.BorderBrush = new SolidColorBrush(Colors.DarkBlue);
+            borderLine.BorderBrush = new SolidColorBrush(Colors.Purple);
             borderLine.CornerRadius = new CornerRadius(2, 2, 2, 2);
             borderLine.Padding = new Thickness(1, 1, 1, 1);
             borderLine.Margin = new Thickness(5, 5, 5, 5);
@@ -170,7 +170,7 @@ namespace citadel_wpf
                         titleText.Text = ToTitleCase(keyTitle);
                         titleText.TextWrapping = TextWrapping.Wrap;
                         titleText.FontSize = 16;
-                        titleText.Foreground = Brushes.DarkBlue;
+                        titleText.Foreground = (SolidColorBrush)(new BrushConverter().ConvertFrom("#FF600060"));
                         ContentStackPanel.Children.Add(titleText);
 
                         TextBlock contentText = new TextBlock();

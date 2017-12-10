@@ -22,7 +22,7 @@ namespace citadel_wpf
         //How many characters were at a certain event
         public static void CreateMap(string focusEvent)
         {
-            StringBuilder echo = new StringBuilder($"graph s {{ label=\"Participant Map for {focusEvent}\" {fontname} {overlap} {bgcolor}; ");
+            StringBuilder echo = new StringBuilder($"digraph s {{ label=\"Participant Map for {focusEvent}\" {fontname} {overlap} {bgcolor}; ");
 
             AddCharacterInformation(ref echo, focusEvent);
 
@@ -38,15 +38,17 @@ namespace citadel_wpf
             foreach (string c in GetCharactersAtEvent(focusEvent))
             {
                 echo.Append($"\"{c}\" [{nodeColor}, {nodeShape}, {fontname}, {fontcolor}," +
-                    $" label=\"{c}\"]; \"{c}\" -- \"{focusEvent}\"; ");
+                    $" label=\"{c}\"]; \"{c}\" -> \"{focusEvent}\"; ");
             }
         }
 
         private static IEnumerable<string> GetCharactersAtEvent(string focusEvent)
         {
-            return (from c in XMLParser.ParticipantXDocument.Handle.Root.Descendants("character_participation")
-                    where c.Element("entity_two").Value.ToString().Equals(focusEvent)
-                    select c.Element("entity_one").Value.ToString());
+            return (from e in XMLParser.EventXDocument.Handle.Root.Descendants("event")
+                                  where e.Element("name").Value.Equals(focusEvent)
+                                  && !e.Element("participants").IsEmpty
+                                  select (from c in e.Element("participants").Elements("character_name")
+                                          select c.Value)).First();
         }
 
         //if focusLocation left null, it is a full event map

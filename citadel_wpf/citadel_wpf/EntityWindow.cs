@@ -21,14 +21,14 @@ namespace citadel_wpf
     /// </summary>
     public abstract class EntityWindow : Window
     {
-        public static SolidColorBrush BackgroundColor = (SolidColorBrush)(new BrushConverter().ConvertFrom("#fbfaff"));
+        public static SolidColorBrush BackgroundColor = (SolidColorBrush)(new BrushConverter().ConvertFrom("#fcfbfc"));
 
         private List<XDocumentInformation> Attachments = new List<XDocumentInformation>();
 
         public EntityWindow()
         {
             SetDecorations(this);
-            Uri iconUri = new Uri("../../citadel_icon.ico", UriKind.RelativeOrAbsolute);
+            Uri iconUri = new Uri("../../citadel_logo.png", UriKind.RelativeOrAbsolute);
             Icon = BitmapFrame.Create(iconUri);
             WindowStartupLocation = WindowStartupLocation.CenterScreen;
         }
@@ -47,7 +47,7 @@ namespace citadel_wpf
         public static void SetDecorations(Control u)
         {
             u.Background = BackgroundColor;
-            u.BorderBrush = Brushes.DarkBlue;
+            u.BorderBrush = Brushes.Purple;
             u.BorderThickness = new Thickness(0, 1, 0, 0);
         }
 

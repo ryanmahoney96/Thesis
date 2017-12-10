@@ -8,7 +8,6 @@
         Title="Citadel"
         ResizeMode="CanResize"
         MinHeight="530"
-        MinWidth="780"
         Width="800">
 
     <Grid>
@@ -91,8 +90,8 @@
                 <DockPanel>
                     <Menu DockPanel.Dock="Top">
                         <MenuItem Header="_New Character" Click="New_Character_Click"/>
-                        <MenuItem Header="Add/View Character _Relationships" Click="Character_Relationship_Click"/>
-                        <MenuItem Header="Add/View _Participants" Click="Participant_Click"/>
+                        <MenuItem Header="View _Relationships" Click="Character_Relationship_Click"/>
+                        <MenuItem Header="View _Participants" Click="Participant_Click"/>
                         <MenuItem Header="Create _Family Tree" Click="NewFamilyTree"/>
                     </Menu>
 
@@ -106,8 +105,8 @@
                 <DockPanel>
                     <Menu DockPanel.Dock="Top">
                         <MenuItem Header="_New Event" Click="New_Event_Click"/>
-                        <MenuItem Header="Add/View Event _Relationships" Click="Event_Relationship_Click"/>
-                        <MenuItem Header="Add/View _Participants" Click="Participant_Click"/>
+                        <MenuItem Header="View Event _Order" Click="Event_Relationship_Click"/>
+                        <MenuItem Header="View _Participants" Click="Participant_Click"/>
                         <MenuItem Header="Create _Timeline" Click="NewTimeline"/>
                         <MenuItem Header="Create Event _Map" Click="NewEventMap"/>
                     </Menu>
