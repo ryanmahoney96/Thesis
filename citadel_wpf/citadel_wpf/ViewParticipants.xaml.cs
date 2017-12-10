@@ -29,7 +29,6 @@ namespace citadel_wpf
             FillPanelWithRelationships(relationship_stackpanel);
 
             AttachToXDocument(ref XMLParser.EventXDocument);
-            AttachToXDocument(ref XMLParser.ParticipantXDocument);
         }
 
         private void FocusEventChanged(object sender, SelectionChangedEventArgs e)
@@ -47,26 +46,30 @@ namespace citadel_wpf
 
                 var results = (from e in XMLParser.EventXDocument.Handle.Root.Descendants("event")
                            where e.Element("name").Value.Equals(focusEvent)
-                           && !e.Element("participants").IsEmpty
-                           select (from c in e.Element("participants").Elements("character_name")
-                                   select c.Value)).First();
-                              
+                           && e.Element("participants").HasElements
+                           select e);
+
+                IEnumerable<string> results2 = new List<string>();
+                foreach(var r in results)
+                {
+                    results2 = (from c in r.Element("participants").Elements("character_name")
+                                select c.Value);
+                    break;
+                }
+                
                 stackpanel.Children.Clear();
 
-                foreach (var r in results)
+                foreach (var r in results2)
                 {
 
                     DockPanel panel = new DockPanel();
                     TextBlock textblock = new TextBlock();
-                    //TODO fix this for deletion
-                    NodeInformation n = new NodeInformation(r, "", "");
-                    //textblock.Text = n.ToString();
                     textblock.Text = r;
                     textblock.Margin = new Thickness(3);
                     DockPanel.SetDock(textblock, Dock.Left);
 
                     Button deleteButton = new Button();
-                    deleteButton.Tag = n;
+                    deleteButton.Tag = r;
                     deleteButton.Click += DeleteButton_Click;
                     deleteButton.Content = "Delete";
                     deleteButton.Margin = new Thickness(3);
@@ -86,21 +89,21 @@ namespace citadel_wpf
         {
             if (MessageBox.Show("Are you sure you want to delete this relationship?", "Delete Relationship", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
             {
-                NodeInformation n = (NodeInformation)((Button)sender).Tag;
+                string n = (string)((Button)sender).Tag;
 
-                var relationship = from c in XMLParser.ParticipantXDocument.Handle.Root.Elements()
-                                   where c.Element("entity_one").Value.Equals(n.EntityOne)
-                                   && c.Element("relationship").Value.Equals(n.Relationship)
-                                   && c.Element("entity_two").Value.Equals(n.EntityTwo)
-                                   select c;
+                var results = (from ev in XMLParser.EventXDocument.Handle.Root.Descendants("event")
+                               where ev.Element("name").Value.Equals(focus_event_combo.Text)
+                               && !ev.Element("participants").IsEmpty
+                               select (from c in ev.Element("participants").Elements("character_name")
+                                       where c.Value.Equals(n)
+                                       select c)).First();
 
-                foreach (var r in relationship)
+                foreach (var c in results)
                 {
-                    r.Remove();
+                    c.Remove();
                 }
 
-
-                XMLParser.ParticipantXDocument.Save();
+                XMLParser.EventXDocument.Save();
             }
         }
 
@@ -116,10 +119,11 @@ namespace citadel_wpf
 
         override public void Update(XDocumentInformation x = null)
         {
+            string temp = focus_event_combo.Text;
             XMLParser.FillComboboxWithNames(XMLParser.EventXDocument.Handle, ref focus_event_combo);
-            focus_event_combo.Text = "";
+            focus_event_combo.Text = temp;
             relationship_stackpanel.Children.Clear();
-            //FillPanelWithRelationships(relationship_stackpanel);
+            FillPanelWithRelationships(relationship_stackpanel);
         }
 
         private void AddRelationship_Button_Click(object sender, RoutedEventArgs e)
