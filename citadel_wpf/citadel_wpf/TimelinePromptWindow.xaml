@@ -8,7 +8,7 @@
         Title="Create a Timeline"
         ResizeMode="NoResize"
         Height="350" 
-        Width="340"
+        Width="330"
         WindowStartupLocation="CenterScreen">
 
     <Grid>
@@ -29,9 +29,18 @@
         <TextBlock Text="Select which Events to put in the Timeline" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Center"/>
 
         <ScrollViewer  Grid.Column="1" Grid.Row="2" VerticalScrollBarVisibility="Auto" Background="White">
-            <StackPanel Name="eventList" Margin="2, 2"></StackPanel>
+            <ListBox Name="eventList" Margin="2, 2" ItemsSource="{Binding EventNames}">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel Orientation="Horizontal">
+                            <CheckBox IsChecked="{Binding Path=IsSelected, Mode=TwoWay}" />
+                            <TextBlock Text="{Binding Name}"/>
+                        </StackPanel>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
         </ScrollViewer>
-        
+
         <!--<Button Content="Cancel" Grid.Row="3" Grid.Column="1" Click="Cancel_and_Close"/>-->
         <Button Content="Create" Grid.Row="3" Grid.Column="1" Click="Save" Width="80" Margin="0, 2" HorizontalAlignment="Right"/>
         <!--<TextBlock Name="requiredText" Text="*Required" Grid.Row="5" Grid.Column="1" Margin="2, 2"/>-->

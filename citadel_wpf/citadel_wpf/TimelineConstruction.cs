@@ -69,32 +69,35 @@ namespace citadel_wpf
 
                     if (!string.IsNullOrWhiteSpace(currentEvent.Element("unit_date").Value))
                     {
-                        echo.Append($"\n{currentEvent.Element("unit_date").Value}");
+                        echo.Append($"\nSource: {currentEvent.Element("unit_date").Value}");
                     }
                     if (!string.IsNullOrWhiteSpace(currentEvent.Element("date").Value))
                     {
-                        echo.Append($"\n{currentEvent.Element("date").Value}");
+                        echo.Append($"\nDate: {currentEvent.Element("date").Value}");
                     }
                     echo.Append($"\"]; ");
                 }
 
                 if (currentList.Value.Count > 1)
                 {
-                    echo.Append($"subgraph cluster_{++clusterIndex} {{ ");
+                    echo.Append($"subgraph cluster_{++clusterIndex} {{ label=\"\" ");
 
                     foreach (var currentEvent in currentList.Value)
                     {
-                        echo.Append($"{currentEvent.Element("name").Value}; ");
+                        echo.Append($"\"{currentEvent.Element("name").Value}\"; ");
                     }
 
-                    echo.Append($" color={clusterColor}}}; ");
+                    echo.Append($" {clusterColor};}}; ");
 
-                    echo.Append($" {lastElement} -> {currentList.Value.First().Element("name").Value} [ltail={lastElement} lhead=cluster_{clusterIndex} color=blue]; ");
+                    if (!string.IsNullOrWhiteSpace(lastElement))
+                    {
+                        echo.Append($" \"{lastElement}\" -> \"{currentList.Value.First().Element("name").Value}\" [ltail=\"{lastElement}\" lhead=\"cluster_{clusterIndex}\"]; ");
+                    }
 
                 }
-                else
+                else if (!string.IsNullOrWhiteSpace(lastElement))
                 {
-                    echo.Append($" {lastElement} -> {currentList.Value.First().Element("name").Value}; ");
+                    echo.Append($" \"{lastElement}\" -> \"{currentList.Value.First().Element("name").Value}\"; ");
                 }
 
 
@@ -120,8 +123,8 @@ namespace citadel_wpf
             streamwriter.Write(echo);
             streamwriter.Close();
 
-            //twopi or neato
-            Process.Start("cmd.exe", @"/c" + $"dot -Tpng {textPath} -o {imagePath} & del {textPath} & {imagePath}");
+            /*& del {textPath}*/
+            Process.Start("cmd.exe", @"/c" + $"dot -Tpng {textPath} -o {imagePath}  & {imagePath}");
         }
     }
 }

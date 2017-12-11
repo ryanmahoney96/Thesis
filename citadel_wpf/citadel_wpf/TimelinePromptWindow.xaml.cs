@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -17,56 +18,41 @@ namespace citadel_wpf
 
     public partial class TimelinePromptWindow : EntityWindow
     {
+        public class EventItem
+        {
+            public string Name { get; set; }
+            public bool IsSelected { get; set; }
+        }
+
+        public ObservableCollection<EventItem> EventNames = new ObservableCollection<EventItem>();
+        private List<string> events = (from e in XMLParser.EventXDocument.Handle.Root.Elements("event")
+                                           orderby e.Element("name").Value
+                                           select e.Element("name").Value).ToList();
 
         public TimelinePromptWindow() : base()
         {
-            InitializeComponent();
-            FillEventList();
-        }
 
-        private void FillEventList()
-        {
-            var allEvents = from e in XMLParser.EventXDocument.Handle.Root.Elements("event")
-                            orderby e.Element("name").Value
-                            select e.Element("name").Value;
-
-            foreach(var e in allEvents)
+            foreach(var e in events)
             {
-                DockPanel d = new DockPanel();
-
-                CheckBox c = new CheckBox();
-                DockPanel.SetDock(c, Dock.Left);
-                d.Children.Add(c);
-
-                TextBlock t = new TextBlock();
-                t.Text = e;
-                DockPanel.SetDock(t, Dock.Left);
-                d.Children.Add(t);
-
-                eventList.Children.Add(d);
+                EventItem temp = new EventItem();
+                temp.Name = e;
+                temp.IsSelected = false;
+                EventNames.Add(temp);
             }
 
+            InitializeComponent();
+
+            eventList.ItemsSource = EventNames;
         }
 
         override protected void Save(object sender, RoutedEventArgs e)
         {
-            //if (XMLParser.IsTextValid(timelineType.Text) && XMLParser.IsTextValid(event_name_combo.Text))
-            //{
+            var selecteds = (from s in EventNames
+                            where s.IsSelected == true
+                            select s.Name).ToList();
 
-            //    if (timelineType.Text.Equals("Short Term Timeline"))
-            //    {
-            //        //TODO EventMapConstruction.SingleLocation(eventName.Text);
-            //    }
-            //    else
-            //    {
-            //        //TODO EventMapConstruction.AllLocations();
-            //    }
-            //    Close();
-            //}
-            //else
-            //{
-            //    requiredText.Foreground = Brushes.Red;
-            //}
+            TimelineConstruction.CreateTimeline(selecteds);
+
         }
 
         override public void Update(XDocumentInformation x = null)
