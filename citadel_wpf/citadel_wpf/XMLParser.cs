@@ -122,6 +122,7 @@ namespace citadel_wpf
             return returnList;
         }
 
+        //TODO return an XElement instead
         public static Hashtable GetMediaInformation ()
         {
             Hashtable returnTable = new Hashtable();

@@ -29,7 +29,6 @@ namespace citadel_wpf
             FillPanelWithRelationships(relationship_stackpanel);
 
             AttachToXDocument(ref XMLParser.EventXDocument);
-            //TODO show the order of the events here
         }
 
         private void FillPanelWithRelationships(StackPanel stackpanel)
@@ -84,5 +83,9 @@ namespace citadel_wpf
             EntityWindow.InitializeModalWindow(this, new EventRelationshipPrompt());
         }
 
+        private void TimelineButton_Click(object sender, RoutedEventArgs e)
+        {
+            EntityWindow.InitializeModalWindow(this, new TimelinePromptWindow());
+        }
     }
 }

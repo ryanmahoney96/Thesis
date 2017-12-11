@@ -29,7 +29,7 @@
         <!--<TextBlock Text="Showing All Events in Order" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center"></TextBlock>-->
         <Button Content="Adjust Ordering" Style="{StaticResource StyledButton}" Click="AdjustOrdering_Click"  Grid.Row="1" Grid.Column="2" Width="100" Height="25" Margin="0,0,0,0" HorizontalAlignment="Center"></Button>
         <Button Content="Add a New Event" Style="{StaticResource StyledButton}" Click="Add_Event" Grid.Row="1" Grid.Column="1" Width="100" Height="25" Margin="0,0,0,0" HorizontalAlignment="Center"></Button>
-        <Button Name="timelineButton" Style="{StaticResource StyledButton}" Content="Create a Timeline" Grid.Row="1" Grid.Column="3" Width="100" Height="25" VerticalAlignment="Center" HorizontalAlignment="Center"></Button>
+        <Button Name="timelineButton" Style="{StaticResource StyledButton}" Click="TimelineButton_Click" Content="Create a Timeline" Grid.Row="1" Grid.Column="3" Width="100" Height="25" VerticalAlignment="Center" HorizontalAlignment="Center"></Button>
         <!--<Button Name="ExitButton" Content="Close" Click="Cancel_and_Close" Grid.Row="4" Grid.Column="3" Width="50" Height="25" Margin="0,0,10,0" HorizontalAlignment="Right"></Button>-->
        
         <Separator Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="5"></Separator>
