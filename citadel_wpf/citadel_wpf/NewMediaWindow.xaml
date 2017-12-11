@@ -34,7 +34,7 @@
         <TextBox Name="year_text" Grid.Row="2" Grid.Column="2" Margin="5,0" Height="19" Width="100" HorizontalAlignment="Left"/>
 
         <TextBlock Name="media_type" Text="*Enter the Media Type:" Grid.Row="3" Grid.Column="1" VerticalAlignment="Center" Height="16" Margin="0,10"></TextBlock>
-        <ComboBox Name="type_combobox" Width="200" Margin="5, 0" Grid.Row="3" Grid.Column="2" VerticalAlignment="Center" VerticalContentAlignment="Center" HorizontalAlignment="Left" Height="22" >
+        <ComboBox Name="type_combobox" Style="{StaticResource StyledCombo}" Width="200" Margin="5, 0" Grid.Row="3" Grid.Column="2" VerticalAlignment="Center" VerticalContentAlignment="Center" HorizontalAlignment="Left" Height="22" >
             <ComboBoxItem Content="Book \ Short Story"/>
             <ComboBoxItem Content="Movie"/>
             <ComboBoxItem Content="Tabletop \ Video Game"/>
@@ -44,7 +44,7 @@
         </ComboBox>
 
         <TextBlock Name="genre_text" Text="Enter the Genre:" Grid.Row="4" Grid.Column="1" VerticalAlignment="Center" Height="16" Margin="0,10,0,10"></TextBlock>
-        <ComboBox Name="genre_combobox" Width="200" Margin="5, 0" Grid.Row="4" Grid.Column="2" VerticalAlignment="Center" VerticalContentAlignment="Center" HorizontalAlignment="Left" Height="22" >
+        <ComboBox Name="genre_combobox" Style="{StaticResource StyledCombo}" Width="200" Margin="5, 0" Grid.Row="4" Grid.Column="2" VerticalAlignment="Center" VerticalContentAlignment="Center" HorizontalAlignment="Left" Height="22" >
             <ComboBoxItem Content="Action \ Adventure"/>
             <ComboBoxItem Content="Comedy"/>
             <ComboBoxItem Content="Drama"/>
@@ -56,14 +56,14 @@
         </ComboBox>
 
         <TextBlock Text="Enter a Summary on the Entry:" Grid.Row="5" Grid.Column="1" TextWrapping="Wrap"></TextBlock>
-        <ScrollViewer Grid.Row="5" Grid.Column="2" Width="280" Height="150">
+        <ScrollViewer Grid.Row="5" Grid.Column="2" Width="280" Height="150" VerticalScrollBarVisibility="Auto">
             <TextBox Name="summary_text" TextWrapping="Wrap"></TextBox>
         </ScrollViewer>
 
         <TextBlock Name="required_text" Text="*Required Field" Grid.Row="6" Grid.Column="1"></TextBlock>
 
-        <Button Content="Cancel" Click="Cancel_and_Close" Grid.Row="6" Grid.Column="2" Width="50" Height="25" Margin="0,0,60,0" HorizontalAlignment="Right"></Button>
-        <Button Content="Create" Click="Save" Grid.Row="6" Grid.Column="2" Width="50" Height="25" Margin="0,0,5,0" HorizontalAlignment="Right"></Button>
+        <Button Content="Cancel" Style="{StaticResource StyledButton}" Click="Cancel_and_Close" Grid.Row="6" Grid.Column="2" Width="50" Height="25" Margin="0,0,60,0" HorizontalAlignment="Right"></Button>
+        <Button Content="Create" Style="{StaticResource StyledButton}" Click="Save" Grid.Row="6" Grid.Column="2" Width="50" Height="25" Margin="0,0,5,0" HorizontalAlignment="Right"></Button>
 
     </Grid>
 </base:EntityWindow>

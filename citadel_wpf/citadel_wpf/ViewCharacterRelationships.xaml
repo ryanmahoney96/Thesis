@@ -28,17 +28,17 @@
         </Grid.ColumnDefinitions>
 
         <TextBlock Text="Select a Character" Grid.Row="1" Grid.Column="1" Height="16" Margin="0,10" HorizontalAlignment="Center" VerticalAlignment="Center"></TextBlock>
-        <ComboBox Name="focus_character_combo" Grid.Row="1" Grid.Column="2" Margin="5, 0" SelectionChanged="FocusCharacterChanged" VerticalAlignment="Center" VerticalContentAlignment="Center" Height="22" />
-        <Button Name="add_relationship_button" Grid.Row="1" Grid.Column="3" Content="Add a Relationship" Click="AddRelationship_Button_Click" Width="110" Margin="3"></Button>
+        <ComboBox Name="focus_character_combo" Style="{StaticResource StyledCombo}" Grid.Row="1" Grid.Column="2" Margin="5, 0" SelectionChanged="FocusCharacterChanged" VerticalAlignment="Center" VerticalContentAlignment="Center" Height="22" />
+        <Button Name="add_relationship_button" Style="{StaticResource StyledButton}" Grid.Row="1" Grid.Column="3" Content="Add a Relationship" Click="AddRelationship_Button_Click" Width="110" Margin="3"></Button>
         <Separator Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="3" Margin="0, 0" VerticalAlignment="Bottom"/>
 
         <ScrollViewer Name="relationship_scrollview" BorderBrush="DarkBlue" BorderThickness="0, 1, 0, 0" Margin="5, 5" Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="3" VerticalScrollBarVisibility="Auto">
             <StackPanel Name="relationship_stackpanel" Background="White"/>
         </ScrollViewer>
 
-        <Button Content="Add New Character" Click="Add_Character" Grid.Row="4" Grid.Column="1" Width="125" Height="25" Margin="0,0,0,0" HorizontalAlignment="Center"></Button>
+        <Button Content="Add New Character" Style="{StaticResource StyledButton}" Click="Add_Character" Grid.Row="4" Grid.Column="1" Width="125" Height="25" Margin="0,0,0,0" HorizontalAlignment="Center"></Button>
         <!--<TextBlock Name="required_text" Text="*Required" Grid.Row="5" Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Center"></TextBlock>-->
-        <Button Name="ExitButton" Content="Close" Click="Cancel_and_Close" Grid.Row="5" Grid.Column="3" Width="50" Height="25" Margin="0,0,10,0" HorizontalAlignment="Right"></Button>
+        <Button Name="ExitButton" Style="{StaticResource StyledButton}" Content="Close" Click="Cancel_and_Close" Grid.Row="5" Grid.Column="3" Width="50" Height="25" Margin="0,0,10,0" HorizontalAlignment="Right"></Button>
         <!--<Button Name="SaveButton" Content="Save" Click="Save" Grid.Row="5" Grid.Column="3" Width="50" Height="25" Margin="0,0,5,0" HorizontalAlignment="Right"></Button>-->
 
     </Grid>

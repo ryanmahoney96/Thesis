@@ -21,7 +21,8 @@ namespace citadel_wpf
     /// </summary>
     public abstract class EntityWindow : Window
     {
-        public static SolidColorBrush BackgroundColor = (SolidColorBrush)(new BrushConverter().ConvertFrom("#fcfbfc"));
+        public static SolidColorBrush BackgroundColor = (SolidColorBrush)(new BrushConverter().ConvertFrom("#FFFbFbFb"));
+        //public static SolidColorBrush BackgroundColor = Brushes.WhiteSmoke;
 
         private List<XDocumentInformation> Attachments = new List<XDocumentInformation>();
 

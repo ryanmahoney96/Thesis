@@ -42,7 +42,7 @@
         </ScrollViewer>
 
         <!--<Button Content="Cancel" Grid.Row="3" Grid.Column="1" Click="Cancel_and_Close"/>-->
-        <Button Content="Create" Grid.Row="3" Grid.Column="1" Click="Save" Width="80" Margin="0, 2" HorizontalAlignment="Right"/>
+        <Button Content="Create" Style="{StaticResource StyledButton}" Grid.Row="3" Grid.Column="1" Click="Save" Width="80" Margin="0, 2" HorizontalAlignment="Right"/>
         <!--<TextBlock Name="requiredText" Text="*Required" Grid.Row="5" Grid.Column="1" Margin="2, 2"/>-->
 
     </Grid>

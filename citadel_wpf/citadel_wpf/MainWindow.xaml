@@ -28,11 +28,11 @@
             <ColumnDefinition Width="10"/>
         </Grid.ColumnDefinitions>
 
-        <TextBlock Name="initPrompt" TextWrapping="Wrap" Text="Citadel is a tool for constructing diagrams and taking notes about books, television, movies, history, and other narrative media."  Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" Margin="2, 2" TextAlignment="Center"/>
+        <TextBlock Name="initPrompt" TextWrapping="Wrap" Text="Citadel is a tool for constructing diagrams and taking notes about books, television, movies, history, and other narratives"  Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" Margin="2, 2" TextAlignment="Center"/>
         <Separator Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2" Margin="2, 2"/>
-        <TextBlock Name="choosePrompt" TextWrapping="Wrap" Text="Select a Note Folder to begin, or create a new folder."  Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="2" Margin="2, 2" TextAlignment="Center"/>
-        <Button Content="Browse" Grid.Row="4" Grid.Column="2" Margin="2, 2" Click="Browse_Folder"/>
-        <Button Content="Submit" Grid.Row="5" Grid.Column="2" Margin="2, 2" Click="Save"/>
+        <TextBlock Name="choosePrompt" TextWrapping="Wrap" Text="Select a Folder, or create a New Folder"  Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="2" Margin="2, 2" TextAlignment="Center"/>
+        <Button Name="browseButton" Style="{StaticResource StyledButton}" Content="Browse" Grid.Row="4" Grid.Column="2" Margin="2, 2" Click="Browse_Folder"/>
+        <Button Name="saveButton" Style="{StaticResource StyledButton}" Content="Continue" Grid.Row="5" Grid.Column="2" Margin="2, 2" Click="Save"/>
         <TextBox Name="folderName" IsReadOnly="True" Grid.Row="4" Grid.Column="1" Margin="2, 2" TextAlignment="Center"/>
 
     </Grid>

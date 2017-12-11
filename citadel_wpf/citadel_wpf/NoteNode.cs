@@ -69,6 +69,7 @@ namespace citadel_wpf
             wrap.HorizontalAlignment = HorizontalAlignment.Right;
 
             Button editButton = new Button();
+            ButtonStylize(editButton);
             editButton.Content = "Edit";
             editButton.Click += EditClick;
             editButton.Height = ButtonHeight;
@@ -77,6 +78,7 @@ namespace citadel_wpf
             wrap.Children.Add(editButton);
 
             Button deleteButton = new Button();
+            ButtonStylize(deleteButton);
             deleteButton.Content = "Delete";
             deleteButton.Click += DeleteClick; ;
             deleteButton.Height = ButtonHeight;
@@ -194,6 +196,15 @@ namespace citadel_wpf
         }
 
         public string NameText { get => NameTextBlock.Text; set => NameTextBlock.Text = value; }
+
+        public static void ButtonStylize(Button b)
+        {
+            //b.Background = Brushes.Silver;
+            b.Background = (SolidColorBrush)(new BrushConverter().ConvertFrom("#FFd0d0d0"));
+            b.Foreground = Brushes.Black;
+            b.BorderBrush = Brushes.Black;
+            b.BorderThickness = new Thickness(0, 0, 0, 1);
+        }
 
     }
 }

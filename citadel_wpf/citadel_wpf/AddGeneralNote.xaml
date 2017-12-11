@@ -34,8 +34,8 @@
 
         <TextBlock Name="required_text" Text="*Required Field" Grid.Row="5" Grid.Column="1"></TextBlock>
 
-        <Button Content="Cancel" Click="Cancel_and_Close" Grid.Row="5" Grid.Column="2" Width="50" Height="25" Margin="0,0,55,0" HorizontalAlignment="Right"></Button>
-        <Button Content="Save" Click="Save" Grid.Row="5" Grid.Column="2" Width="50" Height="25" HorizontalAlignment="Right"></Button>
+        <Button Style="{StaticResource StyledButton}" Content="Cancel" Click="Cancel_and_Close" Grid.Row="5" Grid.Column="2" Width="50" Height="25" Margin="0,0,55,0" HorizontalAlignment="Right"></Button>
+        <Button Style="{StaticResource StyledButton}" Content="Save" Click="Save" Grid.Row="5" Grid.Column="2" Width="50" Height="25" HorizontalAlignment="Right"></Button>
 
     </Grid>
 </base:EntityWindow>

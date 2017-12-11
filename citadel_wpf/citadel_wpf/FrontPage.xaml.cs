@@ -51,12 +51,6 @@ namespace citadel_wpf
 
             MiddleColumn.MaxWidth = SystemParameters.PrimaryScreenWidth * 0.6;
             MiddleRow.MaxHeight = SystemParameters.PrimaryScreenHeight * 0.6;
-
-            ButtonStylize(backButton);
-            ButtonStylize(saveButton);
-
-            ComboboxStylize(type_combobox);
-            ComboboxStylize(genre_combobox);
         }
 
         private void FrontPage_SizeChanged(object sender, SizeChangedEventArgs e)
@@ -220,19 +214,6 @@ namespace citadel_wpf
             EntityWindow.InitializeModalWindow(this, (new TimelinePromptWindow()));
         }
 
-        public void ButtonStylize (Button b)
-        {
-            b.Background = Brushes.Silver;
-            b.Foreground = Brushes.Black;
-            b.BorderThickness = new Thickness(0, 0, 0, 0);
-        }
-
-        public void ComboboxStylize(ComboBox b)
-        {
-            b.Background = Brushes.Silver;
-            b.Foreground = Brushes.Black;
-            
-            b.BorderThickness = new Thickness(0, 0, 0, 1);
-        }
+        
     }
 }

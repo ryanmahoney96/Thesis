@@ -31,16 +31,16 @@
         </Grid.ColumnDefinitions>
         
         <TextBlock Text="*Event Map Type" Grid.Row="1" Grid.Column="1" Margin="2, 2"/>
-        <ComboBox Name="eventMapType" SelectionChanged="map_type_changed" Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="3" Margin="3, 3">
+        <ComboBox Name="eventMapType" Style="{StaticResource StyledCombo}" SelectionChanged="map_type_changed" Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="3" Margin="3, 3">
             <ComboBoxItem>Single Event Map</ComboBoxItem>
             <ComboBoxItem>Full Event Map</ComboBoxItem>
         </ComboBox>
         
         <TextBlock Text="*Location Name" Grid.Row="3" Grid.Column="1" Margin="2, 2"/>
-        <ComboBox Name="locationName" IsEnabled="False" Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="3" Margin="3, 3"/>
-        
-        <Button Content="Cancel" Grid.Row="5" Grid.Column="2" Margin="2, 2" Click="Cancel_and_Close"/>
-        <Button Content="Create" Grid.Row="5" Grid.Column="3" Margin="2, 2" Click="Save"/>
+        <ComboBox Name="locationName" Style="{StaticResource StyledCombo}" IsEnabled="False" Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="3" Margin="3, 3"/>
+
+        <Button Content="Cancel" Style="{StaticResource StyledButton}" Grid.Row="5" Grid.Column="2" Margin="2, 2" Click="Cancel_and_Close"/>
+        <Button Content="Create" Style="{StaticResource StyledButton}" Grid.Row="5" Grid.Column="3" Margin="2, 2" Click="Save"/>
         <TextBlock Name="requiredText" Text="*Required" Grid.Row="5" Grid.Column="1" Margin="2, 2"/>
 
     </Grid>
