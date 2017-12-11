@@ -30,7 +30,6 @@ namespace citadel_wpf
             SetDecorations(this);
             Uri iconUri = new Uri("../../citadel_logo.png", UriKind.RelativeOrAbsolute);
             Icon = BitmapFrame.Create(iconUri);
-            
             WindowStartupLocation = WindowStartupLocation.CenterScreen;
         }
 
