@@ -247,7 +247,7 @@ namespace citadel_wpf
         {
             return (from c in rootPlaceholder.Descendants("character_relationship")
                     where c.Element("entity_one").Value.ToString().Equals(focusCharacter)
-                    && c.Element("relationship").Value.ToString().Equals(CharacterRelationshipPrompt.Married)
+                    && c.Element("relationship").Value.ToString().Equals(CharacterRelationshipPrompt.IsMarriedTo)
                     select c.Element("entity_two").Value.ToString());
         }
 

@@ -12,6 +12,8 @@ namespace citadel_wpf
 {
     class NoteNode : Decorator
     {
+        //TODO show parents, children, and participants with proper spacing?
+
         private string EntityName;
         private XDocumentInformation EntityType;
         private TextBlock NameTextBlock;

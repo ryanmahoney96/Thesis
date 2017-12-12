@@ -21,81 +21,131 @@ namespace citadel_wpf
     /// </summary>
     public partial class ViewCharacterRelationships : EntityWindow
     {
+        List<CheckBox> allCheckboxes = new List<CheckBox>();
+        XElement CurrentCharacterReference = null;
 
         public ViewCharacterRelationships() : base()
         {
             InitializeComponent();
             XMLParser.FillComboboxWithNames(XMLParser.CharacterXDocument.Handle, ref focus_character_combo);
-            FillPanelWithRelationships(relationship_stackpanel);
 
             AttachToXDocument(ref XMLParser.CharacterXDocument);
-            AttachToXDocument(ref XMLParser.CharacterRelationshipXDocument);
         }
 
         private void FocusCharacterChanged(object sender, SelectionChangedEventArgs e)
         {
-            //XMLParser.FillComboboxWithNames(XMLParser.CharacterXDocument.Handle, ref character_two_combo, character_one_combo.Text);
             //Refill stackpanel
-            FillPanelWithRelationships(relationship_stackpanel);
+            FillPanelsWithRelationships();
         }
 
-        private void FillPanelWithRelationships(StackPanel stackpanel)
+        private void FillPanelsWithRelationships()
         {
             if (focus_character_combo.SelectedItem != null && !string.IsNullOrWhiteSpace(focus_character_combo.SelectedItem.ToString()))
             {
-                string fc = focus_character_combo.SelectedItem.ToString().Split(':')[1].Substring(1);
+                allCheckboxes.Clear();
+                CurrentCharacterReference = (from c in XMLParser.CharacterXDocument.Handle.Root.Elements("character")
+                                   where c.Element("name").Value.Equals(focus_character_combo.SelectedItem.ToString().Split(':')[1].Substring(1))
+                                   select c).First();
 
-                var results = from c in XMLParser.CharacterRelationshipXDocument.Handle.Root.Descendants("character_relationship")
-                              where c.Element("entity_one").Value.ToString().Equals(fc)
-                              select new
-                              {
-                                  Relationship = c.Element("relationship").Value.ToString(),
-                                  Entity_Two = c.Element("entity_two").Value.ToString(),
-                              };
+                FillParentPanel();
+                FillChildrenPanel();
+                FillPreviousPanel();
+                FillCurrentPanel();
+            }
+        }
 
-                stackpanel.Children.Clear();
+        private void FillParentPanel()
+        {
+            parents_stackpanel.Children.Clear();
 
-                foreach (var r in results)
-                {
+            var parents = from p in CurrentCharacterReference.Element("parents").Elements()
+                          select p;
 
-                    WrapPanel panel = new WrapPanel();
-                    TextBlock textblock = new TextBlock();
-                    NodeInformation n = new NodeInformation(fc, r.Relationship, r.Entity_Two);
-                    textblock.Text = n.ToString();
-                    textblock.Margin = new Thickness(3);
-                    Button deleteButton = new Button();
-                    deleteButton.Tag = n;
-                    deleteButton.Click += DeleteButton_Click;
-                    deleteButton.Content = "Delete";
-                    deleteButton.Margin = new Thickness(3);
-                    deleteButton.Width = 60;
-                    panel.Children.Add(textblock);
-                    panel.Children.Add(deleteButton);
-                    stackpanel.Children.Add(panel);
-                    stackpanel.Children.Add(new Separator());
-                }
+            FillPanelWithEntities(parents_stackpanel, parents);
+        }
+
+        private void FillChildrenPanel()
+        {
+            children_stackpanel.Children.Clear();
+
+            var children = from c in CurrentCharacterReference.Element("children").Elements()
+                          select c;
+
+            FillPanelWithEntities(children_stackpanel, children);
+        }
+
+        private void FillPreviousPanel()
+        {
+            previous_marriages_stackpanel.Children.Clear();
+
+            var prev = from p in CurrentCharacterReference.Element("marriages").Elements("wasmarriedto")
+                          select p;
+
+            FillPanelWithEntities(previous_marriages_stackpanel, prev);
+        }
+
+        private void FillCurrentPanel()
+        {
+            current_marriages_stackpanel.Children.Clear();
+
+            var curr = from c in CurrentCharacterReference.Element("marriages").Elements("ismarriedto")
+                          select c;
+
+            FillPanelWithEntities(current_marriages_stackpanel, curr);
+        }
+
+        private void FillPanelWithEntities(StackPanel panel, IEnumerable<XElement> elements)
+        {
+            foreach (var r in elements)
+            {
+                DockPanel s = new DockPanel();
+
+                CheckBox c = new CheckBox();
+                c.Tag = r;
+                allCheckboxes.Add(c);
+                DockPanel.SetDock(c, Dock.Left);
+                s.Children.Add(c);
+
+                TextBlock textblock = new TextBlock();
+                DockPanel.SetDock(textblock, Dock.Left);
+                s.Children.Add(textblock);
+                textblock.Text = r.Value;
+                textblock.Margin = new Thickness(1);
+
+                panel.Children.Add(s);
+                panel.Children.Add(new Separator());
             }
         }
 
         private void DeleteButton_Click(object sender, RoutedEventArgs e)
         {
-            if (MessageBox.Show("Are you sure you want to delete this relationship?", "Delete Relationship", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
+            int numChecked = 0;
+            foreach(CheckBox c in allCheckboxes)
             {
-                NodeInformation n = (NodeInformation)((Button)sender).Tag;
-
-                var relationship = from c in XMLParser.CharacterRelationshipXDocument.Handle.Root.Elements()
-                              where c.Element("entity_one").Value.Equals(n.EntityOne)
-                              && c.Element("relationship").Value.Equals(n.Relationship)
-                              && c.Element("entity_two").Value.Equals(n.EntityTwo)
-                                    select c;
-
-                foreach(var r in relationship)
+                if (c.IsChecked == true)
                 {
-                    r.Remove();
+                    numChecked++;
                 }
+            }
 
-                XMLParser.CharacterRelationshipXDocument.Save();
-                FillPanelWithRelationships(relationship_stackpanel);
+            if (numChecked > 0) {
+
+                if (MessageBox.Show("Are you sure you want to delete these relationships?", "Delete Relationships", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
+                {
+                    //TODO using tag, deletion must be a two-way process
+                    foreach(CheckBox c in allCheckboxes)
+                    {
+                        if (c.IsChecked == true)
+                        {
+                            XElement x = (XElement)c.Tag;
+                            x.Remove();
+
+
+                            XMLParser.CharacterXDocument.Save();
+                            FillPanelsWithRelationships();
+                        }
+                    }
+                }
             }
         }
 
@@ -113,8 +163,11 @@ namespace citadel_wpf
         {
             XMLParser.FillComboboxWithNames(XMLParser.CharacterXDocument.Handle, ref focus_character_combo);
             focus_character_combo.Text = "";
-            relationship_stackpanel.Children.Clear();
-
+            parents_stackpanel.Children.Clear();
+            children_stackpanel.Children.Clear();
+            previous_marriages_stackpanel.Children.Clear();
+            current_marriages_stackpanel.Children.Clear();
+            FillPanelsWithRelationships();
         }
 
         private void AddRelationship_Button_Click(object sender, RoutedEventArgs e)

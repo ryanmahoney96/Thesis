@@ -65,8 +65,10 @@ namespace citadel_wpf
             Close();
         }
 
+        //TODO remove abstact keyword, make this a blank function, continue to override in implementation
         protected abstract void Save(object sender, RoutedEventArgs e);
 
+        //TODO remove abstact keyword, make this a blank function, continue to override in implementation
         public abstract void Update(XDocumentInformation x = null);
 
     }

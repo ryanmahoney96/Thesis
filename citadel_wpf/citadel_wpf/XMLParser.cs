@@ -122,41 +122,6 @@ namespace citadel_wpf
             return returnList;
         }
 
-        //TODO return an XElement instead
-        public static Hashtable GetMediaInformation ()
-        {
-            Hashtable returnTable = new Hashtable();
-            string fullFilePath = XMLParser.FolderPath + "\\media_notes.xml";
-
-            if (File.Exists(fullFilePath))
-            {
-
-                var xml = XDocument.Load(fullFilePath);
-
-                var query = from c in xml.Root.Descendants("media_note")
-                            select new
-                            {
-                                Title = c.Element("name").Value,
-                                Year = c.Element("year").Value,
-                                Type = c.Element("type").Value,
-                                Genre = c.Element("genre").Value,
-                                Summary = c.Element("summary").Value
-                            };
-
-                foreach (var t in query)
-                {
-                    returnTable.Add("Name", t.Title);
-                    returnTable.Add("Year", t.Year);
-                    returnTable.Add("Type", t.Type);
-                    returnTable.Add("Genre", t.Genre);
-                    returnTable.Add("Summary", t.Summary);
-                }
-
-            }
-
-            return returnTable;
-        }
-
         public static void RemoveEntityFromEventEntities(string entityName)
         {
             //TODO throw new NotImplementedException();
@@ -175,6 +140,7 @@ namespace citadel_wpf
                     select c).Count() > 0 ? true : false;
         }
 
+        //TODO redact
         //is this relationship present in the XDocument
         public static bool IsRelationshipPresent(XDocument handle, string entityOne, string relationship, string entityTwo)
         {
@@ -185,6 +151,7 @@ namespace citadel_wpf
                      select c).Count() > 0 ? true : false);
         }
 
+        //TODO change this to object model, returning an ObservableCollection of all names that ARENT the one to skip
         public static void FillComboboxWithNames(XDocument handle, ref ComboBox combo, string nameToSkip = "")
         {
             combo.Items.Clear();

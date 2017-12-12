@@ -8,35 +8,50 @@
         WindowStartupLocation="CenterScreen"
         ResizeMode="CanMinimize"
         Title="View Relationships" 
-        Height="355" Width="555">
+        Height="370" Width="730">
     <Grid Name="MainGrid">
 
         <Grid.RowDefinitions>
             <RowDefinition Height="5"/>
             <RowDefinition Height="35"/>
-            <RowDefinition Height="8"/>
+            <RowDefinition Height="22"/>
             <RowDefinition Height="230"/>
             <RowDefinition Height="35"/>
         </Grid.RowDefinitions>
 
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="5"/>
-            <ColumnDefinition Width="140"/>
             <ColumnDefinition Width="175"/>
-            <ColumnDefinition Width="220"/>
+            <ColumnDefinition Width="175"/>
+            <ColumnDefinition Width="175"/>
+            <ColumnDefinition Width="175"/>
             <ColumnDefinition Width="5"/>
         </Grid.ColumnDefinitions>
 
         <TextBlock Text="Select a Character" Grid.Row="1" Grid.Column="1" Height="16" Margin="0,10" HorizontalAlignment="Center" VerticalAlignment="Center"></TextBlock>
         <ComboBox Name="focus_character_combo" Style="{StaticResource StyledCombo}" Grid.Row="1" Grid.Column="2" Margin="5, 0" SelectionChanged="FocusCharacterChanged" VerticalAlignment="Center" VerticalContentAlignment="Center" Height="22" />
         <Button Name="add_relationship_button" Style="{StaticResource StyledButton}" Grid.Row="1" Grid.Column="3" Content="Add a Relationship" Click="AddRelationship_Button_Click" Width="110" Margin="6"></Button>
-        <Separator Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="3" Margin="0, 0" VerticalAlignment="Bottom"/>
+        <TextBlock Text="Parents" Grid.Row="2" Grid.Column="1" Margin="0, 0" VerticalAlignment="Bottom" HorizontalAlignment="Center"/>
+        <TextBlock Text="Children" Grid.Row="2" Grid.Column="2" Margin="0, 0" VerticalAlignment="Bottom" HorizontalAlignment="Center"/>
+        <TextBlock Text="Previous Marriages" Grid.Row="2" Grid.Column="3" Margin="0, 0" VerticalAlignment="Bottom" HorizontalAlignment="Center"/>
+        <TextBlock Text="Current Marriages" Grid.Row="2" Grid.Column="4" Margin="0, 0" VerticalAlignment="Bottom" HorizontalAlignment="Center"/>
 
-        <ScrollViewer Name="relationship_scrollview" BorderBrush="DarkBlue" BorderThickness="0, 1, 0, 0" Margin="5, 5" Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="3" VerticalScrollBarVisibility="Auto">
-            <StackPanel Name="relationship_stackpanel" Background="White"/>
+        <ScrollViewer Name="parents_scrollview" Grid.Row="3" Grid.Column="1" Margin="3" VerticalScrollBarVisibility="Auto">
+            <StackPanel Name="parents_stackpanel" Background="White"/>
+        </ScrollViewer>
+        <ScrollViewer Name="children_scrollview" Grid.Row="3" Grid.Column="2" Margin="3" VerticalScrollBarVisibility="Auto">
+            <StackPanel Name="children_stackpanel" Background="White"/>
+        </ScrollViewer>
+        <ScrollViewer Name="previous_marriages_scrollview" Grid.Row="3" Grid.Column="3" Margin="3" VerticalScrollBarVisibility="Auto">
+            <StackPanel Name="previous_marriages_stackpanel" Background="White"/>
+        </ScrollViewer>
+        <ScrollViewer Name="current_marriages_scrollview" Grid.Row="3" Grid.Column="4" Margin="3" VerticalScrollBarVisibility="Auto">
+            <StackPanel Name="current_marriages_stackpanel" Background="White"/>
         </ScrollViewer>
 
-        <Button Content="Add New Character" Style="{StaticResource StyledButton}" Click="Add_Character" Grid.Row="4" Grid.Column="1" Width="125" Height="25" Margin="0,0,0,0" HorizontalAlignment="Center"></Button>
+        <Button Content="Add New Character" Style="{StaticResource StyledButton}" Click="Add_Character" Grid.Row="1" Grid.Column="4" Width="115" Margin="6" HorizontalAlignment="Center"></Button>
+        <Button Content="Delete Selected" Style="{StaticResource StyledButton}" Click="DeleteButton_Click"  Grid.Row="4" Grid.Column="4" Width="115" Margin="3" HorizontalAlignment="Center"></Button>
+
         <!--<TextBlock Name="required_text" Text="*Required" Grid.Row="5" Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Center"></TextBlock>-->
         <!--<Button Name="ExitButton" Style="{StaticResource StyledButton}" Content="Close" Click="Cancel_and_Close" Grid.Row="5" Grid.Column="3" Width="50" Height="25" Margin="0,0,10,0" HorizontalAlignment="Right"></Button>-->
         <!--<Button Name="SaveButton" Content="Save" Click="Save" Grid.Row="5" Grid.Column="3" Width="50" Height="25" Margin="0,0,5,0" HorizontalAlignment="Right"></Button>-->

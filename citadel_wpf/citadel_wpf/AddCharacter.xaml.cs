@@ -19,7 +19,7 @@ namespace citadel_wpf
 
     public partial class AddCharacter : EntityWindow, INewEntity
     {
-        //TODO add id, parent id, replace character_relationship file
+        //TODO parent names, child names, replace character_relationship file
 
         private bool Editing = false;
 
@@ -79,7 +79,10 @@ namespace citadel_wpf
                         XElement newCharacter = new XElement("character",
                             new XElement("name", name_text.Text),
                             new XElement("gender", gender_combo_box.Text),
-                            new XElement("description", description_text.Text));
+                            new XElement("description", description_text.Text),
+                            new XElement("parents", ""),
+                            new XElement("children", ""),
+                            new XElement("marriages", ""));
 
                         string temp = newCharacter.ToString();
 

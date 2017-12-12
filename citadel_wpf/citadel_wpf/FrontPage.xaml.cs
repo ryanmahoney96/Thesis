@@ -96,24 +96,25 @@ namespace citadel_wpf
 
         private void FillNotePages()
         {
-            Fill_Media_Area(XMLParser.GetMediaInformation());
+            Fill_Media_Area();
             Fill_Note_Area(ref XMLParser.NoteXDocument, general_notes_area);
             Fill_Note_Area(ref XMLParser.CharacterXDocument, character_notes_area);
             Fill_Note_Area(ref XMLParser.EventXDocument, event_notes_area);
             Fill_Note_Area(ref XMLParser.LocationXDocument, location_notes_area);
         }
 
-        private void Fill_Media_Area(Hashtable information)
+        private void Fill_Media_Area()
         {
-            if (!information.Equals(null))
-            {
-                XMLName = information["Name"].ToString();
-                titleText.Text = information["Name"].ToString();
-                yearText.Text = information["Year"].ToString();
-                type_combobox.Text = information["Type"].ToString();
-                genre_combobox.Text = information["Genre"].ToString();
-                summaryText.Text = information["Summary"].ToString();
-            }
+            var result = (from r in XMLParser.MediaXDocument.Handle.Root.Elements("media_note")
+                         select r).First();
+
+            XMLName = result.Element("name").Value;
+            titleText.Text = XMLName;
+            yearText.Text = result.Element("year").Value;
+            type_combobox.Text = result.Element("type").Value;
+            genre_combobox.Text = result.Element("genre").Value;
+            summaryText.Text = result.Element("summary").Value;
+            
         }
 
         public void Fill_Note_Area(ref XDocumentInformation type, WrapPanel area)
