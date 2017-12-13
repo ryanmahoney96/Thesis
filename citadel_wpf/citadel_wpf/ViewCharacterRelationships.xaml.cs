@@ -132,14 +132,16 @@ namespace citadel_wpf
 
                 if (MessageBox.Show("Are you sure you want to delete these relationships?", "Delete Relationships", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
                 {
-                    //TODO using tag, deletion must be a two-way process
                     foreach(CheckBox c in allCheckboxes)
                     {
                         if (c.IsChecked == true)
                         {
                             XElement x = (XElement)c.Tag;
-                            x.Remove();
 
+                            string entityName = x.Value;
+                            string entityType = x.Name.ToString();
+                            x.Remove();
+                            RemoveParallelRelationship(entityType, entityName);
 
                             XMLParser.CharacterXDocument.Save();
                             FillPanelsWithRelationships();
@@ -147,6 +149,41 @@ namespace citadel_wpf
                     }
                 }
             }
+        }
+
+        private void RemoveParallelRelationship(string relationship, string newSourceCharacter)
+        {
+            string thisCharacterName = CurrentCharacterReference.Element("name").Value;
+
+            string ancestorTag = "parents";
+            string descendantTag = "parent";
+
+            if (relationship.Equals("parent"))
+            {
+                ancestorTag = "children";
+                descendantTag = "child";
+            }
+            else if (relationship.Equals("wasmarriedto"))
+            {
+                ancestorTag = "marriages";
+                descendantTag = "wasmarriedto";
+            }
+            else if (relationship.Equals("ismarriedto"))
+            {
+                ancestorTag = "marriages";
+                descendantTag = "ismarriedto";
+            }
+
+            XElement otherCharacterReference = (from c in XMLParser.CharacterXDocument.Handle.Root.Descendants("character")
+                                              where c.Element("name").Value.Equals(newSourceCharacter)
+                                              select c).First();
+
+            XElement otherRelationshipReference = (from r in otherCharacterReference.Element(ancestorTag).Elements(descendantTag)
+                                                  where r.Value.Equals(thisCharacterName)
+                                                  select r).First();
+
+            otherRelationshipReference.Remove();
+
         }
 
         override protected void Save(object sender, RoutedEventArgs e)

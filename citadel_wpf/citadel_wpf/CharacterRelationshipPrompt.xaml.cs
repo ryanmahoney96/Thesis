@@ -41,6 +41,7 @@ namespace citadel_wpf
             
             XMLParser.FillComboboxWithNames(XMLParser.CharacterXDocument.Handle, ref focus_character_combo);
             focus_character_combo.Text = fc;
+            XMLParser.FillComboboxWithNames(XMLParser.CharacterXDocument.Handle, ref character_two_combo, fc);
 
             AttachToXDocument(ref XMLParser.CharacterXDocument);
         }
@@ -133,8 +134,11 @@ namespace citadel_wpf
 
         override public void Update(XDocumentInformation x = null)
         {
+            string fc = focus_character_combo.Text;
             XMLParser.FillComboboxWithNames(XMLParser.CharacterXDocument.Handle, ref focus_character_combo);
-            character_two_combo.Items.Clear();
+            focus_character_combo.Text = fc;
+            XMLParser.FillComboboxWithNames(XMLParser.CharacterXDocument.Handle, ref character_two_combo, fc);
+            relationship_combo.Text = "";
         }
 
         private void focus_character_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -142,7 +146,7 @@ namespace citadel_wpf
             if (!string.IsNullOrWhiteSpace(focus_character_combo.Text) && focus_character_combo.SelectedItem != null)
             {
                 FocusCharacter = focus_character_combo.SelectedItem.ToString().Split(':')[1].Substring(1);
-                XMLParser.FillComboboxWithNames(XMLParser.CharacterXDocument.Handle, ref character_two_combo);
+                XMLParser.FillComboboxWithNames(XMLParser.CharacterXDocument.Handle, ref character_two_combo, FocusCharacter);
             }
         }
     }

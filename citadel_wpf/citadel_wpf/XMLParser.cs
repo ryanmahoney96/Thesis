@@ -140,18 +140,6 @@ namespace citadel_wpf
                     select c).Count() > 0 ? true : false;
         }
 
-        //TODO redact
-        //is this relationship present in the XDocument
-        public static bool IsRelationshipPresent(XDocument handle, string entityOne, string relationship, string entityTwo)
-        {
-            return ((from c in handle.Root.Elements()
-                     where c.Element("entity_one").Value.ToString().Equals(entityOne)
-                     && c.Element("relationship").Value.ToString().Equals(relationship)
-                     && c.Element("entity_two").Value.ToString().Equals(entityTwo)
-                     select c).Count() > 0 ? true : false);
-        }
-
-        //TODO change this to object model, returning an ObservableCollection of all names that ARENT the one to skip
         public static void FillComboboxWithNames(XDocument handle, ref ComboBox combo, string nameToSkip = "")
         {
             combo.Items.Clear();
