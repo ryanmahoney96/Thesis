@@ -37,6 +37,7 @@ namespace citadel_wpf
 
             AddCharacterIfAbsent(focusCharacter, ref characters);
 
+            //Parents
             foreach (var p in GetParentsOf(focusCharacter))
             {
                 AddCharacterIfAbsent(p, ref characters);
@@ -50,6 +51,7 @@ namespace citadel_wpf
                 }
             }
 
+            //Children
             foreach (var c in GetChildrenOf(focusCharacter))
             {
                 AddCharacterIfAbsent(c, ref characters);
@@ -65,7 +67,7 @@ namespace citadel_wpf
 
         public static void ExtendedFamilyTree(string focusCharacter)
         {
-            //Grandparents/children + aunts/uncles + cousins + nieces/nephews
+            //Grand-parents/children + aunts/uncles + cousins + nieces/nephews
             StringBuilder echo = new StringBuilder($"graph s {{ label=\"{ExtendedFamilyTreeString} for {focusCharacter}\" {fontname}; ");
             Dictionary<string, bool> relationships = new Dictionary<string, bool>();
             Dictionary<string, string> characters = new Dictionary<string, string>();
@@ -84,7 +86,7 @@ namespace citadel_wpf
                     AddCharacterIfAbsent(grandparentOfFocusCharacter, ref characters);
                     AddRelationshipIfAbsent(grandparentOfFocusCharacter, parentOfFocusCharacter, ref relationships);
 
-                    //Aunts and Uncles (By "Blood")
+                    //Aunts and Uncles
                     foreach (var auntOrUncleOfFocusCharacter in GetSiblingsOf(parentOfFocusCharacter, grandparentOfFocusCharacter))
                     {
                         AddCharacterIfAbsent(auntOrUncleOfFocusCharacter, ref characters);
@@ -96,7 +98,7 @@ namespace citadel_wpf
                             AddCharacterIfAbsent(cousinOfFocusCharacter, ref characters);
                             AddRelationshipIfAbsent(auntOrUncleOfFocusCharacter, cousinOfFocusCharacter, ref relationships);
 
-                            //Non-"Blood" Aunts and Uncles
+                            //Aunts and Uncles by cousin
                             foreach (var parentOfCousin in GetParentsOf(cousinOfFocusCharacter))
                             {
                                 AddCharacterIfAbsent(parentOfCousin, ref characters);
@@ -142,8 +144,8 @@ namespace citadel_wpf
             SaveEcho(echo, "ExtendedFamilyTree", focusCharacter);
         }
 
-        //TODO Make a function to clean up relationships -> currently VERY cluttered; If two characters ar emarried and have the same kids, sprout from a marriage node?
-        public static void RecursiveFullFamilyTree(string focusCharacter)
+        //TODO Make a function to clean up relationships -> currently VERY cluttered; If two characters have the same kids, connect
+        public static void FullFamilyTree(string focusCharacter)
         {
             //All familial relationships
             StringBuilder echo = new StringBuilder($"graph s {{ label=\"{FullFamilyTreeString} for {focusCharacter}\" {fontname}; ");
@@ -163,6 +165,7 @@ namespace citadel_wpf
 
         public static void RecursiveTreeHelper (string focusCharacter, ref Dictionary<string, string> characters, ref Dictionary<string, bool> relationships)
         {
+
             foreach (var p in GetParentsOf(focusCharacter))
             {
                 if (AddRelationshipIfAbsent(p, focusCharacter, ref relationships))
@@ -234,15 +237,7 @@ namespace citadel_wpf
             Process.Start("cmd.exe", @"/c" + $"dot -Tpng {textPath} -o {imagePath} & del {textPath} & {imagePath}");
         }
 
-        private static IEnumerable<string> GetGenerationNames(string focusCharacter, string relationshipName, XElement rootPlaceholder, string childToIgnore = "")
-        {
-            return (from c in rootPlaceholder.Descendants("character_relationship")
-                    where c.Element("entity_one").Value.ToString().Equals(focusCharacter)
-                    && c.Element("relationship").Value.ToString().Equals(relationshipName)
-                    && (childToIgnore.Equals("") || (!childToIgnore.Equals("") && (!c.Element("entity_two").Value.ToString().Equals(childToIgnore))))
-                    select c.Element("entity_two").Value.ToString());
-        }
-
+        //TODO add this
         private static IEnumerable<string> GetMarriages(string focusCharacter, XElement rootPlaceholder)
         {
             return (from c in rootPlaceholder.Descendants("character_relationship")
@@ -270,17 +265,36 @@ namespace citadel_wpf
             return returnString;
         }
 
+        private static IEnumerable<string> GetGenerationNames(string focusCharacter, string elementType, string childToIgnore = "")
+        {
+            XElement CurrentCharacterReference = (from c in XMLParser.CharacterXDocument.Handle.Root.Elements("character")
+                                         where c.Element("name").Value.Equals(focusCharacter)
+                                         select c).First();
+
+            var relations = from p in CurrentCharacterReference.Element(elementType).Elements()
+                            where (childToIgnore.Equals("") || ((!childToIgnore.Equals("") && (!p.Value.Equals(childToIgnore)))))
+                          select p.Value;
+
+            return relations;
+
+            //return (from c in XMLParser.CharacterXDocument.Handle.Root.Descendants("character")
+            //        where c.Element("name").Value.Equals(focusCharacter)
+            //        && c.Element("relationship").Value.ToString().Equals(relationshipName)
+            //        && (childToIgnore.Equals("") || (!childToIgnore.Equals("") && (!c.Element("entity_two").Value.ToString().Equals(childToIgnore))))
+            //        select c.Element("entity_two").Value.ToString());
+        }
+
         private static IEnumerable<string> GetParentsOf(string focusCharacter)
         {
-            return GetGenerationNames(focusCharacter, CharacterRelationshipPrompt.IsChildOf, XMLParser.CharacterRelationshipXDocument.Handle.Root);
+            return GetGenerationNames(focusCharacter, "parents");
         }
         private static IEnumerable<string> GetChildrenOf(string focusCharacter)
         {
-            return GetGenerationNames(focusCharacter, CharacterRelationshipPrompt.IsParentOf, XMLParser.CharacterRelationshipXDocument.Handle.Root);
+            return GetGenerationNames(focusCharacter, "children");
         }
         private static IEnumerable<string> GetSiblingsOf(string focusCharacter, string parent)
         {
-            return GetGenerationNames(parent, CharacterRelationshipPrompt.IsParentOf, XMLParser.CharacterRelationshipXDocument.Handle.Root, focusCharacter);
+            return GetGenerationNames(parent, "children", focusCharacter);
         }
 
     }

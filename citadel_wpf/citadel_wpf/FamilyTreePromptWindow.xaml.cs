@@ -36,16 +36,6 @@ namespace citadel_wpf
             XMLParser.FillComboboxWithNames(XMLParser.CharacterXDocument.Handle, ref characterName);
         }
 
-        override public void Update(XDocumentInformation x = null)
-        {
-            //
-        }
-
-        protected override void Save(object sender, RoutedEventArgs e)
-        {
-            //
-        }
-
         private void Cancel_Click(object sender, RoutedEventArgs e)
         {
             Close();
@@ -65,7 +55,7 @@ namespace citadel_wpf
                 }
                 else
                 {
-                    FamilyTreeConstruction.RecursiveFullFamilyTree(characterName.Text);
+                    FamilyTreeConstruction.FullFamilyTree(characterName.Text);
                 }
 
                 Close();

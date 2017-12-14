@@ -81,11 +81,6 @@ namespace citadel_wpf
 
         }
 
-        override public void Update(XDocumentInformation x = null)
-        {
-            //
-        }
-
         override protected void Save(object sender, RoutedEventArgs e)
         {
             if (!string.IsNullOrWhiteSpace(folderName.Text))

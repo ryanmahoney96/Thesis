@@ -87,10 +87,5 @@ namespace citadel_wpf
             }
 
         }
-
-        override public void Update(XDocumentInformation x = null)
-        {
-
-        }
     }
 }

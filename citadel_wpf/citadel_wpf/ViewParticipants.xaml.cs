@@ -107,11 +107,6 @@ namespace citadel_wpf
             }
         }
 
-        override protected void Save(object sender, RoutedEventArgs e)
-        {
-            //
-        }
-
         private void Add_Event(object sender, RoutedEventArgs e)
         {
             EntityWindow.InitializeModalWindow(this, new AddEvent());

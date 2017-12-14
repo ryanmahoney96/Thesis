@@ -54,10 +54,6 @@ namespace citadel_wpf
             TimelineConstruction.CreateTimeline(selecteds);
 
         }
-
-        override public void Update(XDocumentInformation x = null)
-        {
-            //
-        }
+        
     }
 }

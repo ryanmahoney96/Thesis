@@ -158,10 +158,5 @@ namespace citadel_wpf
         {
             updateSubtypes();
         }
-
-        override public void Update(XDocumentInformation x = null)
-        {
-
-        }
     }
 }

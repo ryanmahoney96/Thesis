@@ -20,6 +20,8 @@ namespace citadel_wpf
 
     public partial class FrontPage : EntityWindow
     {
+        //TODO fix family tree
+        //TODO nix the full event map -> combine particpant map with event map instead
         //TODO fix all name violations
 
         //TODO Tooltips throughout

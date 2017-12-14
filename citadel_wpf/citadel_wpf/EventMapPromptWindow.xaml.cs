@@ -46,11 +46,6 @@ namespace citadel_wpf
             }
         }
 
-        override public void Update(XDocumentInformation x = null)
-        {
-            //
-        }
-
         private void map_type_changed(object sender, SelectionChangedEventArgs e)
         {
             if (eventMapType.SelectedItem != null && XMLParser.IsTextValid(eventMapType.SelectedItem.ToString()))
