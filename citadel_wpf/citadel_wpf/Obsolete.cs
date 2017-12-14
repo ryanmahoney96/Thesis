@@ -264,7 +264,7 @@ namespace citadel_wpf
         //    streamwriter.Write(echo);
         //    streamwriter.Close();
 
-        //    //Process.Start("cmd.exe", @"/c" + $"dot -Tpng {textpath} -o {XMLParser.FolderPath}/testRelationship.png  & del {textpath}");
+        //    //Process.Start("cmd.exe", @"/c" + $"dot -Tsvg {textpath} -o {XMLParser.FolderPath}/testRelationship.svg  & del {textpath}");
         //}
 
         //public void Fill_Note_Area(List<List<string>> entityNodes, WrapPanel area)

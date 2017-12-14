@@ -96,13 +96,13 @@ namespace citadel_wpf
             }
 
             string textPath = XMLParser.FolderPath + $"\\{type}.dot";
-            string imagePath = $"{XMLParser.FolderPath}/{focusLocation}{type}.png";
+            string imagePath = $"{XMLParser.FolderPath}/{focusLocation}{type}.svg";
             StreamWriter streamwriter = File.CreateText(textPath);
             streamwriter.Write(echo);
             streamwriter.Close();
 
             //twopi or neato
-            Process.Start("cmd.exe", @"/c" + $"twopi -Tpng {textPath} -o {imagePath} & del {textPath} & {imagePath}");
+            Process.Start("cmd.exe", @"/c" + $"twopi -Tsvg {textPath} -o {imagePath} & del {textPath} & {imagePath}");
         }
     }
 }

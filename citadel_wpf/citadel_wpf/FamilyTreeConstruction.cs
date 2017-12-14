@@ -13,21 +13,8 @@ namespace citadel_wpf
 {
     public class FamilyTreeConstruction
     {
-        //TODO change character_relationships -> include ID and parent IDs
         //TODO cleanup with nodes that connect two characters, then branches to each child
-
-        struct Relationship
-        {
-            string characterOneName;
-            string characterTwoName;
-            string type;
-
-            override public string ToString()
-            {
-                return characterOneName + type + characterTwoName;
-            }
-
-        }
+        //TODO make a pastel color generator for the color of family trees
 
         public static string ImmediateFamilyTreeString = "Immediate Family Tree";
         public static string ExtendedFamilyTreeString = "Extended Family Tree";
@@ -38,14 +25,16 @@ namespace citadel_wpf
 
         private static string fontname = $"fontname=\"Helvetica\"";
         private static string focusShape = $"shape=box";
+        //TODO adjust these strings
         private static string maleColor = $"navy";
         private static string femaleColor = $"orangered2";
         private static string otherColor = $"mediumvioletred";
         private static string marriage = $"crimson";
+        private static string splines = $"splines=ortho";
 
-        public static void ImmediateFamilyTree(string focusCharacter)
+        public static void OldImmediateFamilyTree(string focusCharacter)
         {
-            StringBuilder echo = new StringBuilder($"graph s {{ label=\"{ImmediateFamilyTreeString} for {focusCharacter}\" {fontname}; ");
+            StringBuilder echo = new StringBuilder($"graph s {{ label=\"{ImmediateFamilyTreeString} for {focusCharacter}\" {fontname} {splines}; ");
             Dictionary<string, bool> relationships = new Dictionary<string, bool>();
             Dictionary<string, string> characters = new Dictionary<string, string>();
 
@@ -79,10 +68,46 @@ namespace citadel_wpf
             SaveEcho(echo, "ImmediateFamilyTree", focusCharacter);
         }
 
+        public static void ImmediateFamilyTree(string focusCharacter)
+        {
+            //TODO make concentrate variable, {splines}
+            StringBuilder echo = new StringBuilder($"graph s {{ label=\"{ImmediateFamilyTreeString} for {focusCharacter}\" {fontname} concentrate=true; ");
+            List<XElement> characters = new List<XElement>();
+
+            NewAddCharacterIfAbsent(focusCharacter, ref characters);
+
+            //Parents
+            foreach (var p in GetParentsOf(focusCharacter))
+            {
+                NewAddCharacterIfAbsent(p, ref characters);
+                //AddRelationshipIfAbsent(p, focusCharacter, ref relationships);
+
+                //Siblings
+                foreach (var s in GetSiblingsOf(focusCharacter, p))
+                {
+                    NewAddCharacterIfAbsent(s, ref characters);
+                    //AddRelationshipIfAbsent(p, s, ref relationships);
+                }
+            }
+
+            //Children
+            foreach (var c in GetChildrenOf(focusCharacter))
+            {
+                NewAddCharacterIfAbsent(c, ref characters);
+                //AddRelationshipIfAbsent(focusCharacter, c, ref relationships);
+            }
+
+            NewAddCharacterInformation(ref echo, characters, focusCharacter);
+
+            echo.Append("}");
+
+            SaveEcho(echo, "ImmediateFamilyTree", focusCharacter);
+        }
+
         public static void ExtendedFamilyTree(string focusCharacter)
         {
             //Grand-parents/children + aunts/uncles + cousins + nieces/nephews
-            StringBuilder echo = new StringBuilder($"graph s {{ label=\"{ExtendedFamilyTreeString} for {focusCharacter}\" {fontname}; ");
+            StringBuilder echo = new StringBuilder($"graph s {{ label=\"{ExtendedFamilyTreeString} for {focusCharacter}\" {fontname} {splines}; ");
             Dictionary<string, bool> relationships = new Dictionary<string, bool>();
             Dictionary<string, string> characters = new Dictionary<string, string>();
 
@@ -162,7 +187,7 @@ namespace citadel_wpf
         public static void FullFamilyTree(string focusCharacter)
         {
             //All familial relationships
-            StringBuilder echo = new StringBuilder($"graph s {{ label=\"{FullFamilyTreeString} for {focusCharacter}\" {fontname}; ");
+            StringBuilder echo = new StringBuilder($"graph s {{ label=\"{FullFamilyTreeString} for {focusCharacter}\" {fontname} {splines}; ");
             Dictionary<string, bool> relationships = new Dictionary<string, bool>();
             Dictionary<string, string> characters = new Dictionary<string, string>();
 
@@ -177,7 +202,7 @@ namespace citadel_wpf
             SaveEcho(echo, "FullFamilyTree", focusCharacter);
         }
 
-        public static void RecursiveTreeHelper (string focusCharacter, ref Dictionary<string, string> characters, ref Dictionary<string, bool> relationships)
+        public static void RecursiveTreeHelper(string focusCharacter, ref Dictionary<string, string> characters, ref Dictionary<string, bool> relationships)
         {
 
             foreach (var p in GetParentsOf(focusCharacter))
@@ -198,15 +223,72 @@ namespace citadel_wpf
             }
         }
 
-        //returns true if the relationship was successfully added 
-        private static bool AddRelationshipIfAbsent(string parent, string child, ref Dictionary<string, bool> relationships)
+        //returns true if the character was successfully added 
+        private static bool NewAddCharacterIfAbsent(string focusCharacter, ref List<XElement> characters)
         {
-            if (!relationships.ContainsKey($"\"{parent}\" -- \"{child}\"; "))
+            XElement characterRef = (from c in XMLParser.CharacterXDocument.Handle.Root.Elements("character")
+                                     where c.Element("name").Value.Equals(focusCharacter)
+                                     select c).First();
+
+            if (!characters.Contains(characterRef))
             {
-                relationships.Add($"\"{parent}\" -- \"{child}\"; ", true);
+                characters.Add(characterRef);
                 return true;
             }
             return false;
+        }
+
+        private static void NewAddCharacterInformation(ref StringBuilder echo, List<XElement> characters, string focusCharacter)
+        {
+            var characterReferences = from c in characters
+                                      select c;
+
+            foreach (var character in characterReferences)
+            {
+
+                echo.Append($"\"{character.Element("name").Value}\" [color={GetGenderColor(character.Element("name").Value)}, {fontname}");
+                if (character.Element("name").Value.Equals(focusCharacter))
+                {
+                    echo.Append($", {focusShape}");
+                }
+                echo.Append($"]; ");
+
+                //TODO get parent info
+            }
+            foreach (var character in characterReferences)
+            {
+                NewAddParents(ref echo, character.Element("parents"), character);
+            }
+
+        }
+
+        //TODO returns true if the relationship was successfully added 
+        private static void NewAddParents(ref StringBuilder echo, XElement parents, XElement focusCharacter)
+        {
+            List<XElement> parentList = parents.Elements().ToList().OrderBy(p => p.Value).ToList();
+
+            if (parentList.Count > 0)
+            {
+                StringBuilder parentNode = new StringBuilder("");
+                foreach (var p in parentList)
+                {
+                    parentNode.Append(p.Value);
+                }
+
+                echo.Append($"\"{parentNode.ToString()}\" [shape=point,width=0.01,height=0.01]; ");
+
+                foreach (var p in parentList)
+                {
+                    echo.Append($"\"{p.Value}\" -- \"{parentNode.ToString()}\"");
+                    echo.Append($"\"{parentNode.ToString()}\" -- \"{focusCharacter.Element("name").Value}\"; ");
+                }
+
+            }
+
+            //if (!relationships.ContainsKey($"\"{parent}\" -- \"{child}\"; "))
+            //{
+            //    relationships.Add($"\"{parent}\" -- \"{child}\"; ", true);
+            //}
         }
 
         //returns true if the character was successfully added 
@@ -215,7 +297,18 @@ namespace citadel_wpf
             if (!characters.ContainsKey(focusCharacter))
             {
                 XElement tempRoot = XMLParser.CharacterXDocument.Handle.Root;
-                characters.Add(focusCharacter, GetGenderColor(focusCharacter, tempRoot));
+                characters.Add(focusCharacter, GetGenderColor(focusCharacter));
+                return true;
+            }
+            return false;
+        }
+
+        //returns true if the relationship was successfully added 
+        private static bool AddRelationshipIfAbsent(string parent, string child, ref Dictionary<string, bool> relationships)
+        {
+            if (!relationships.ContainsKey($"\"{parent}\" -- \"{child}\"; "))
+            {
+                relationships.Add($"\"{parent}\" -- \"{child}\"; ", true);
                 return true;
             }
             return false;
@@ -243,15 +336,15 @@ namespace citadel_wpf
             focusCharacter = focusCharacter.Replace(" ", "_");
             focusCharacter = focusCharacter.Replace("'", "");
             string textPath = XMLParser.FolderPath + $"\\{type}.dot";
-            string imagePath = $"{XMLParser.FolderPath}/{focusCharacter}_{type}.png";
+            string imagePath = $"{XMLParser.FolderPath}/{focusCharacter}_{type}.svg";
             StreamWriter streamwriter = File.CreateText(textPath);
             streamwriter.Write(echo);
             streamwriter.Close();
 
-            Process.Start("cmd.exe", @"/c" + $"dot -Tpng {textPath} -o {imagePath} & del {textPath} & {imagePath}");
+            Process.Start("cmd.exe", @"/c" + $"dot -Tsvg {textPath} -o {imagePath} & del {textPath} & {imagePath}");
         }
 
-        //TODO add this
+        //TODO edit this
         private static IEnumerable<string> GetMarriages(string focusCharacter, XElement rootPlaceholder)
         {
             return (from c in rootPlaceholder.Descendants("character_relationship")
@@ -260,11 +353,11 @@ namespace citadel_wpf
                     select c.Element("entity_two").Value.ToString());
         }
 
-        private static string GetGenderColor(string focusCharacter, XElement rootPlaceholder)
+        private static string GetGenderColor(string focusCharacter)
         {
-            var result = (from c in rootPlaceholder.Descendants("character")
-            where c.Element("name").Value.ToString().Equals(focusCharacter)
-            select c.Element("gender").Value.ToString()).First();
+            var result = (from c in XMLParser.CharacterXDocument.Handle.Root.Elements("character")
+                          where c.Element("name").Value.Equals(focusCharacter)
+                          select c.Element("gender").Value).First();
 
             string returnString = $"{maleColor}";
 
@@ -272,7 +365,8 @@ namespace citadel_wpf
             {
                 returnString = $"{femaleColor}";
             }
-            else if (result.Equals("Other")){
+            else if (result.Equals("Other"))
+            {
                 returnString = $"{otherColor}";
             }
 
@@ -282,15 +376,15 @@ namespace citadel_wpf
         private static IEnumerable<string> GetGenerationNames(string focusCharacter, string elementType, string childToIgnore = "")
         {
             XElement CurrentCharacterReference = (from c in XMLParser.CharacterXDocument.Handle.Root.Elements("character")
-                                         where c.Element("name").Value.Equals(focusCharacter)
-                                         select c).First();
+                                                  where c.Element("name").Value.Equals(focusCharacter)
+                                                  select c).First();
 
             var relations = from p in CurrentCharacterReference.Element(elementType).Elements()
                             where (childToIgnore.Equals("") || ((!childToIgnore.Equals("") && (!p.Value.Equals(childToIgnore)))))
-                          select p.Value;
+                            select p.Value;
 
             return relations;
-            
+
         }
 
         private static IEnumerable<string> GetParentsOf(string focusCharacter)
@@ -305,6 +399,12 @@ namespace citadel_wpf
         {
             return GetGenerationNames(parent, "children", focusCharacter);
         }
+
+        /*Look for parents, connect child to midnode(parent1name, parent2name), midnode to parents
+
+            One parent= child --> parent
+
+            One Child = straight line?*/
 
     }
 }

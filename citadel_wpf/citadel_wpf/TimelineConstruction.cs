@@ -118,13 +118,13 @@ namespace citadel_wpf
             }
 
             string textPath = XMLParser.FolderPath + $"\\{type}.dot";
-            string imagePath = $"{XMLParser.FolderPath}/{focusLocation}{type}.png";
+            string imagePath = $"{XMLParser.FolderPath}/{focusLocation}{type}.svg";
             StreamWriter streamwriter = File.CreateText(textPath);
             streamwriter.Write(echo);
             streamwriter.Close();
 
             /*& del {textPath}*/
-            Process.Start("cmd.exe", @"/c" + $"dot -Tpng {textPath} -o {imagePath}  & {imagePath}");
+            Process.Start("cmd.exe", @"/c" + $"dot -Tsvg {textPath} -o {imagePath}  & {imagePath}");
         }
     }
 }
