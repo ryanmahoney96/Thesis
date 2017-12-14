@@ -20,7 +20,7 @@ namespace citadel_wpf
         private static string nodeShape = $"shape=rect";
         private static string centerShape = $"shape=ellipse";
         private static string nodeColor = $"color=navy";
-        private static string clusterColor = $"color=orangered";
+        private static string clusterColor = $"color=black";
 
         //TODO give timeline a title
         public static void CreateTimeline(List<string> selectedEvents, string title = "")

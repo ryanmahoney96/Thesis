@@ -16,10 +16,24 @@ namespace citadel_wpf
         //TODO change character_relationships -> include ID and parent IDs
         //TODO cleanup with nodes that connect two characters, then branches to each child
 
+        struct Relationship
+        {
+            string characterOneName;
+            string characterTwoName;
+            string type;
+
+            override public string ToString()
+            {
+                return characterOneName + type + characterTwoName;
+            }
+
+        }
+
         public static string ImmediateFamilyTreeString = "Immediate Family Tree";
         public static string ExtendedFamilyTreeString = "Extended Family Tree";
         public static string FullFamilyTreeString = "Full Family Tree";
 
+        //TODO add binding in prompt
         public static string[] Relationships = { ImmediateFamilyTreeString, ExtendedFamilyTreeString, FullFamilyTreeString };
 
         private static string fontname = $"fontname=\"Helvetica\"";
@@ -276,12 +290,7 @@ namespace citadel_wpf
                           select p.Value;
 
             return relations;
-
-            //return (from c in XMLParser.CharacterXDocument.Handle.Root.Descendants("character")
-            //        where c.Element("name").Value.Equals(focusCharacter)
-            //        && c.Element("relationship").Value.ToString().Equals(relationshipName)
-            //        && (childToIgnore.Equals("") || (!childToIgnore.Equals("") && (!c.Element("entity_two").Value.ToString().Equals(childToIgnore))))
-            //        select c.Element("entity_two").Value.ToString());
+            
         }
 
         private static IEnumerable<string> GetParentsOf(string focusCharacter)

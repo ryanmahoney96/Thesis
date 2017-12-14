@@ -193,8 +193,9 @@ namespace citadel_wpf
 
         override public void Update(XDocumentInformation x = null)
         {
+            string temp = focus_character_combo.Text;
             XMLParser.FillComboboxWithNames(XMLParser.CharacterXDocument.Handle, ref focus_character_combo);
-            focus_character_combo.Text = "";
+            focus_character_combo.Text = temp;
             parents_stackpanel.Children.Clear();
             children_stackpanel.Children.Clear();
             previous_marriages_stackpanel.Children.Clear();
