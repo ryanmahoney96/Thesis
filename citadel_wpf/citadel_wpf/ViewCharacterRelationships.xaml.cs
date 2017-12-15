@@ -142,11 +142,11 @@ namespace citadel_wpf
                             string entityType = x.Name.ToString();
                             x.Remove();
                             RemoveParallelRelationship(entityType, entityName);
-
-                            XMLParser.CharacterXDocument.Save();
-                            FillPanelsWithRelationships();
                         }
                     }
+
+                    XMLParser.CharacterXDocument.Save();
+                    FillPanelsWithRelationships();
                 }
             }
         }

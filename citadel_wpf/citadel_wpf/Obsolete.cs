@@ -466,5 +466,40 @@ namespace citadel_wpf
 
         //    return returnList;
         //}
+
+        //private static void RecursiveFamilyFinder(ref StringBuilder echo, ref List<XElement> characters, string startNodeName, int stepNumber = -1)
+        //{
+        //    //NewAddCharacterIfAbsent(startNodeName, ref characters);
+
+        //    if (stepNumber > 0 || stepNumber < 0)
+        //    {
+        //        foreach (var p in GetParentsOf(startNodeName))
+        //        {
+        //            RecursiveFamilyFinder(ref echo, ref characters, p, stepNumber - 1);
+        //        }
+        //    }
+
+        //    //TODO add Marriages
+        //    //Current Marriages
+        //    foreach (var c in GetCurrentMarriages(startNodeName))
+        //    {
+        //        //NewAddCharacterIfAbsent(c, ref characters);
+        //        //TODO add link
+        //    }
+
+        //    //Past Marriages
+        //    foreach (var p in GetPastMarriages(startNodeName))
+        //    {
+        //        //NewAddCharacterIfAbsent(p, ref characters);
+        //        //TODO add link
+        //    }
+
+        //    //add Children
+        //    foreach (var c in GetChildrenOf(startNodeName))
+        //    {
+        //        //NewAddCharacterIfAbsent(c, ref characters);
+        //    }
+
+        //}
     }
 }
