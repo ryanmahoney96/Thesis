@@ -15,24 +15,19 @@ namespace citadel_wpf
         private static string rankdir = $"rankdir=\"LR\"";
         private static string fontname = $"fontname=\"Helvetica\"";
         private static string overlap = $"overlap=false";
-        private static string bgcolor = $"bgcolor=white";
-        private static string fontcolor = $"fontcolor=black";
-        private static string nodeShape = $"shape=rect";
-        private static string centerShape = $"shape=ellipse";
-        private static string nodeColor = $"color=navy";
+        private static string eventStyle = $"style=filled, fillcolor=\"#f0fff0\" shape=rect";
         private static string clusterColor = $"color=black";
 
-        //TODO give timeline a title
-        public static void CreateTimeline(List<string> selectedEvents, string title = "")
+        public static void CreateTimeline(List<string> selectedEvents)
         {
 
-            StringBuilder echo = new StringBuilder($"digraph s {{ label=\"Timeline {title}\" {fontname} {overlap} {bgcolor} {rankdir} compound=true; ");
+            StringBuilder echo = new StringBuilder($"digraph s {{ label=\"Custom Timeline\" {fontname} {overlap} {rankdir} compound=true; ");
 
             GetEventInformation(ref echo, selectedEvents);
 
             echo.Append("}");
 
-            SaveEcho(echo, "Timeline", title);
+            SaveEcho(echo, "Timeline");
 
 
         }
@@ -65,7 +60,7 @@ namespace citadel_wpf
                 foreach (var currentEvent in currentList.Value)
                 {
                     string name = currentEvent.Element("name").Value;
-                    echo.Append($"\"{name}\" [{nodeColor}, {nodeShape}, {fontname}, {fontcolor}, label=\"{name}");
+                    echo.Append($"\"{name}\" [{eventStyle}, {fontname}, label=\"{name}");
 
                     if (!string.IsNullOrWhiteSpace(currentEvent.Element("unit_date").Value))
                     {
@@ -80,7 +75,7 @@ namespace citadel_wpf
 
                 if (currentList.Value.Count > 1)
                 {
-                    echo.Append($"subgraph cluster_{++clusterIndex} {{ label=\"\" ");
+                    echo.Append($"subgraph cluster_{++clusterIndex} {{ label=\"Same Time\" ");
 
                     foreach (var currentEvent in currentList.Value)
                     {
@@ -107,24 +102,25 @@ namespace citadel_wpf
 
         }
 
-        //TODO make generic
-        private static void SaveEcho(StringBuilder echo, string type, string focusLocation = "")
+        private static void SaveEcho(StringBuilder echo, string type)
         {
-            if (!string.IsNullOrWhiteSpace(focusLocation))
-            {
-                focusLocation = focusLocation.Replace(" ", "_");
-                focusLocation = focusLocation.Replace("'", "");
-                focusLocation += "_";
-            }
 
             string textPath = XMLParser.FolderPath + $"\\{type}.dot";
-            string imagePath = $"{XMLParser.FolderPath}/{focusLocation}{type}.svg";
+            string imagePath = $"{XMLParser.FolderPath}/{type}.svg";
             StreamWriter streamwriter = File.CreateText(textPath);
             streamwriter.Write(echo);
             streamwriter.Close();
 
             /*& del {textPath}*/
-            Process.Start("cmd.exe", @"/c" + $"dot -Tsvg {textPath} -o {imagePath}  & {imagePath}");
+            //Process.Start("cmd.exe", @"/c" + $"dot -Tsvg {textPath} -o {imagePath}  & {imagePath}");
+
+            Process process = new Process();
+            ProcessStartInfo startInfo = new ProcessStartInfo();
+            startInfo.WindowStyle = ProcessWindowStyle.Hidden;
+            startInfo.FileName = "cmd.exe";
+            startInfo.Arguments = @"/c" + $"dot -Tsvg {textPath} -o {imagePath} & del {textPath} & {imagePath}";
+            process.StartInfo = startInfo;
+            process.Start();
         }
     }
 }

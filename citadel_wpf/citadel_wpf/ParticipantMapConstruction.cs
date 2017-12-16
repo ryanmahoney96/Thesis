@@ -12,17 +12,13 @@ namespace citadel_wpf
     {
         private static string fontname = $"fontname=\"Helvetica\"";
         private static string overlap = $"overlap=false";
-        private static string bgcolor = $"bgcolor=white";
-        private static string fontcolor = $"fontcolor=black";
-        private static string nodeShape = $"shape=rect";
-        private static string centerShape = $"shape=ellipse";
-        private static string nodeColor = $"color=navy";
-        private static string centerColor = $"color=orangered";
+        private static string participantStyle = $"style=filled, fillcolor=\"#ffc6d1\" shape=oval";
+        private static string eventStyle = $"style=filled, fillcolor=\"#fff750\" shape=rect";
 
         //How many characters were at a certain event
         public static void CreateMap(string focusEvent)
         {
-            StringBuilder echo = new StringBuilder($"digraph s {{ label=\"Participant Map for {focusEvent}\" {fontname} {overlap} {bgcolor}; ");
+            StringBuilder echo = new StringBuilder($"digraph s {{ label=\"Participant Map for {focusEvent}\" {fontname} {overlap}; ");
 
             AddCharacterInformation(ref echo, focusEvent);
 
@@ -33,11 +29,11 @@ namespace citadel_wpf
 
         private static void AddCharacterInformation(ref StringBuilder echo, string focusEvent)
         {
-            echo.Append($"\"{focusEvent}\" [{centerShape}, {centerColor}, {fontname}, {fontcolor}]; ");
+            echo.Append($"\"{focusEvent}\" [{eventStyle}, {fontname}]; ");
 
             foreach (string c in GetCharactersAtEvent(focusEvent))
             {
-                echo.Append($"\"{c}\" [{nodeColor}, {nodeShape}, {fontname}, {fontcolor}," +
+                echo.AppendLine($"\"{c}\" [{participantStyle}, {fontname}," +
                     $" label=\"{c}\"]; \"{c}\" -> \"{focusEvent}\"; ");
             }
         }
@@ -68,7 +64,28 @@ namespace citadel_wpf
             streamwriter.Close();
 
             //twopi or neato
-            Process.Start("cmd.exe", @"/c" + $"twopi -Tsvg {textPath} -o {imagePath} & del {textPath} & {imagePath}");
+            //Process.Start("cmd.exe", @"/c" + $"twopi -Tsvg {textPath} -o {imagePath} & del {textPath} & {imagePath}");
+
+            Process process = new Process();
+            ProcessStartInfo startInfo = new ProcessStartInfo();
+            startInfo.WindowStyle = ProcessWindowStyle.Hidden;
+            startInfo.FileName = "cmd.exe";
+            startInfo.Arguments = @"/c" + $"twopi -Tsvg {textPath} -o {imagePath} & del {textPath} & {imagePath}";
+            process.StartInfo = startInfo;
+            process.Start();
+        }
+
+        private static void AppendLegend(ref StringBuilder echo, bool participantsOn = false)
+        {
+            echo.AppendLine($"\"Event\" [{eventStyle}, {fontname}];");
+                echo.AppendLine($"\"Participant\" [{participantStyle}, {fontname}];");
+            
+
+            echo.AppendLine($"subgraph {{ label=\"Legend\"; overlap=false; ");
+
+            echo.AppendLine($"\"Event\" -- \"Participant\" ;");
+            
+            echo.AppendLine("}");
         }
     }
 }

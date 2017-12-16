@@ -20,13 +20,10 @@ namespace citadel_wpf
 
     public partial class FrontPage : EntityWindow
     {
-        //TODO fix family tree
-        //TODO nix the full event map -> combine particpant map with event map instead
-        //TODO fix all name violations
 
+        //TODO fix all name violations
         //TODO Tooltips throughout
         //TODO: Stylize with https://github.com/MahApps/MahApps.Metro
-        //TODO: Stylize comboboxes http://www.eidias.com/Blog/2012/2/20/customizing-wpf-combo-box-style
 
         public static FrontPage FrontPageReference;
         private string XMLName;

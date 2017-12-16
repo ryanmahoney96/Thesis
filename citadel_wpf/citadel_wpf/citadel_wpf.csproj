@@ -68,7 +68,6 @@
       <DependentUpon>FrontPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="FamilyTreeConstruction.cs" />
-    <Compile Include="NodeInformation.cs" />
     <Compile Include="ParticipantMapConstruction.cs" />
     <Compile Include="ParticipantPrompt.xaml.cs">
       <DependentUpon>ParticipantPrompt.xaml</DependentUpon>

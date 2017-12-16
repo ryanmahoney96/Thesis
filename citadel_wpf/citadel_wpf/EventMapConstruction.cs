@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 
 namespace citadel_wpf
 {
@@ -19,19 +20,20 @@ namespace citadel_wpf
 
         private static string fontname = $"fontname=\"Helvetica\"";
         private static string overlap = $"overlap=false";
-        private static string bgcolor = $"bgcolor=white";
         private static string fontcolor = $"fontcolor=black";
-        private static string nodeShape = $"shape=rect";
-        private static string centerShape = $"shape=ellipse";
-        private static string nodeColor = $"color=navy";
-        private static string centerColor = $"color=orangered";
+        private static string participantStyle = $"style=filled, fillcolor=\"#ffc6d1\" shape=oval";
+        private static string eventStyle = $"style=filled, fillcolor=\"#fff790\" shape=rect";
+        private static string locationStyle = $"style=filled, fillcolor=\"#d9ffd9\" shape=rect";
+        private static int participantCounter = 1;
 
         //How many events take place at a certain location
-        public static void SingleLocation(string focusLocation)
+        public static void BasicMap(string focusLocation)
         {
-            StringBuilder echo = new StringBuilder($"graph s {{ label=\"Single Event Map for {focusLocation}\" {fontname} {overlap} {bgcolor}; ");
+            StringBuilder echo = new StringBuilder($"graph s {{ label=\"Event Map for {focusLocation}\" {fontname} {overlap}; ");
 
             AddEventInformation(ref echo, focusLocation);
+
+            AppendLegend(ref echo);
 
             echo.Append("}");
 
@@ -39,27 +41,26 @@ namespace citadel_wpf
         }
 
         //Every location and the events that take place at them
-        public static void AllLocations()
+        public static void MapWithParticipants(string focusLocation)
         {
-            StringBuilder echo = new StringBuilder($"graph s {{ label=\"Full Event Map\" {fontname} {overlap} {bgcolor}; ");
+            StringBuilder echo = new StringBuilder($"graph s {{ label=\"Event Map with Participants for {focusLocation}\" {fontname} {overlap}; ");
 
-            foreach (var l in XMLParser.GetAllEntityNames(XMLParser.LocationXDocument.Handle))
-            {
-                AddEventInformation(ref echo, l);
-            }
+            AddEventInformation(ref echo, focusLocation, true);
+
+            AppendLegend(ref echo, true);
 
             echo.Append("}");
 
             SaveEcho(echo, "FullEventMap");
         }
 
-        private static void AddEventInformation(ref StringBuilder echo, string focusLocation)
+        private static void AddEventInformation(ref StringBuilder echo, string focusLocation, bool getParticipants = false)
         {
-            echo.Append($"\"{focusLocation}\" [{centerShape}, {centerColor}, {fontname}, {fontcolor}]; ");
+            echo.AppendLine($"\"{focusLocation}\" [{locationStyle}, {fontname}, {fontcolor}]; ");
 
             foreach (EventInfo e in GetEventsAtLocation(focusLocation))
             {
-                echo.Append($"\"{e.Name}\" [{nodeColor}, {nodeShape}, {fontname}, {fontcolor}, label=\"{e.Name}");
+                echo.Append($"\"{e.Name}\" [{eventStyle}, {fontname}, {fontcolor}, label=\"{e.Name}");
                 if (!string.IsNullOrWhiteSpace(e.Unit_date))
                 {
                     echo.Append($"\n{e.Unit_date}");
@@ -68,8 +69,23 @@ namespace citadel_wpf
                 {
                     echo.Append($"\n{e.Date}");
                 }
-                echo.Append($"\"]; ");
-                echo.Append($"\"{e.Name}\" -- \"{focusLocation}\"; ");
+                echo.AppendLine($"\"]; ");
+                echo.AppendLine($"\"{e.Name}\" -- \"{focusLocation}\"; ");
+
+                if (getParticipants)
+                {
+                    foreach(var p in GetParticipantsAtEvent(e.Name))
+                    {
+                        if (!string.IsNullOrWhiteSpace(p.Value))
+                        {
+                            string participantNodeName = $"part{participantCounter++}";
+                            echo.AppendLine($"\"{participantNodeName}\" [label=\"{p.Value}\" {participantStyle} {fontname}]; ");
+
+                            echo.AppendLine($"\"{participantNodeName}\" -- \"{e.Name}\"; ");
+                        }
+                    }
+                }
+
             }
         }
 
@@ -83,6 +99,13 @@ namespace citadel_wpf
                         Unit_date = c.Element("unit_date").Value.ToString(),
                         Date = c.Element("date").Value.ToString()
                     });
+        }
+
+        private static IEnumerable<XElement> GetParticipantsAtEvent(string focusEvent)
+        {
+            return (from c in XMLParser.EventXDocument.Handle.Root.Descendants("event")
+                    where c.Element("name").Value.Equals(focusEvent)
+                    select c.Element("participants"));
         }
 
         //if focusLocation left null, it is a full event map
@@ -101,8 +124,33 @@ namespace citadel_wpf
             streamwriter.Write(echo);
             streamwriter.Close();
 
-            //twopi or neato
-            Process.Start("cmd.exe", @"/c" + $"twopi -Tsvg {textPath} -o {imagePath} & del {textPath} & {imagePath}");
+            //Process.Start("cmd.exe", @"/c" + $"neato -Tsvg {textPath} -o {imagePath}  & {imagePath}");
+
+            Process process = new Process();
+            ProcessStartInfo startInfo = new ProcessStartInfo();
+            startInfo.WindowStyle = ProcessWindowStyle.Hidden;
+            startInfo.FileName = "cmd.exe";
+            startInfo.Arguments = @"/c" + $"twopi -Tsvg {textPath} -o {imagePath} & del {textPath} & {imagePath}";
+            process.StartInfo = startInfo;
+            process.Start();
+        }
+
+        private static void AppendLegend(ref StringBuilder echo, bool participantsOn = false)
+        {
+            echo.AppendLine($"\"Location\" [{locationStyle}, {fontname}];");
+            echo.AppendLine($"\"Event\" [{eventStyle}, {fontname}];");
+            if (participantsOn)
+            {
+                echo.AppendLine($"\"Participant\" [{participantStyle}, {fontname}];");
+            }
+
+            echo.AppendLine($"subgraph {{ label=\"Legend\"; overlap=false; ");
+            echo.AppendLine($"\"Location\" -- \"Event\";");
+            if (participantsOn)
+            {
+                echo.AppendLine($"\"Event\" -- \"Participant\" ;");
+            }
+            echo.AppendLine("}");
         }
     }
 }

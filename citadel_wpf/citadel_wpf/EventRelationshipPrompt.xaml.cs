@@ -31,7 +31,7 @@ namespace citadel_wpf
         override protected void Save(object sender, RoutedEventArgs e)
         {
             //TODO instructional tooltip
-            //TODO double check between and notify if it is already there?
+            //TODO double check if it is between two events and notify if it is already ordered there? Did I do that already, below?
             string focusEvent = focusCombo.Text;
             string beforeEvent = event_one_combo.Text;
             string afterEvent = event_two_combo.Text;

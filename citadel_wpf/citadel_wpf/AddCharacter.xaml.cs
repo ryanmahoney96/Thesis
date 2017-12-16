@@ -19,7 +19,6 @@ namespace citadel_wpf
 
     public partial class AddCharacter : EntityWindow, INewEntity
     {
-        //TODO parent names, child names, replace character_relationship file
 
         private bool Editing = false;
 

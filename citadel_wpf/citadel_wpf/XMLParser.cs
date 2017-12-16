@@ -17,13 +17,12 @@ namespace citadel_wpf
     {
 
         public static XDocumentInformation CharacterXDocument;
-        //TODO public static XDocumentInformation CharacterRelationshipXDocument;
         public static XDocumentInformation LocationXDocument;
         public static XDocumentInformation EventXDocument;
         public static XDocumentInformation NoteXDocument;
         public static XDocumentInformation MediaXDocument;
 
-        public static XDocumentInformation[] XDocuments = {CharacterXDocument, /*TODO CharacterRelationshipXDocument,*/ LocationXDocument, EventXDocument, NoteXDocument, MediaXDocument };
+        public static XDocumentInformation[] XDocuments = {CharacterXDocument, LocationXDocument, EventXDocument, NoteXDocument, MediaXDocument };
 
         public static string FolderPath;
 
@@ -66,7 +65,6 @@ namespace citadel_wpf
         public void UpdateXDocuments()
         {
             SetXDocumentContent("character_notes", ref CharacterXDocument);
-            //TODO SetXDocumentContent("character_relationship_notes", ref CharacterRelationshipXDocument);
             SetXDocumentContent("location_notes", ref LocationXDocument);
             SetXDocumentContent("event_notes", ref EventXDocument);
             SetXDocumentContent("general_notes", ref NoteXDocument);

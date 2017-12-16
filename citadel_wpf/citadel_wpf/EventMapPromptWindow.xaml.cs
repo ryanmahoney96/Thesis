@@ -21,22 +21,21 @@ namespace citadel_wpf
         public EventMapPromptWindow() : base()
         {
             InitializeComponent();
+            XMLParser.FillComboboxWithNames(XMLParser.LocationXDocument.Handle, ref locationName);
         }
 
         override protected void Save(object sender, RoutedEventArgs e)
         {
-            if (XMLParser.IsTextValid(eventMapType.Text) && (locationName.IsEnabled && XMLParser.IsTextValid(locationName.Text)
-                ||
-                XMLParser.IsTextValid(eventMapType.Text) && locationName.IsEnabled == false))
+            if (XMLParser.IsTextValid(eventMapType.Text) && XMLParser.IsTextValid(locationName.Text))
             {
                 
                 if (eventMapType.Text.Equals("Single Event Map"))
                 {
-                    EventMapConstruction.SingleLocation(locationName.Text);
+                    EventMapConstruction.BasicMap(locationName.Text);
                 }
                 else
                 {
-                    EventMapConstruction.AllLocations();
+                    EventMapConstruction.MapWithParticipants(locationName.Text);
                 }
                 Close();
             }
@@ -45,24 +44,6 @@ namespace citadel_wpf
                 requiredText.Foreground = Brushes.Red;
             }
         }
-
-        private void map_type_changed(object sender, SelectionChangedEventArgs e)
-        {
-            if (eventMapType.SelectedItem != null && XMLParser.IsTextValid(eventMapType.SelectedItem.ToString()))
-            {
-                string emt = eventMapType.SelectedItem.ToString().Split(':')[1].Substring(1);
-
-                if (emt.Equals("Single Event Map"))
-                {
-                    locationName.IsEnabled = true;
-                    XMLParser.FillComboboxWithNames(XMLParser.LocationXDocument.Handle, ref locationName);
-                }
-                else
-                {
-                    locationName.IsEnabled = false;
-                }
-            }
-
-        }
+        
     }
 }

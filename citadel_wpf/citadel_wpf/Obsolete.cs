@@ -479,19 +479,16 @@ namespace citadel_wpf
         //        }
         //    }
 
-        //    //TODO add Marriages
         //    //Current Marriages
         //    foreach (var c in GetCurrentMarriages(startNodeName))
         //    {
         //        //NewAddCharacterIfAbsent(c, ref characters);
-        //        //TODO add link
         //    }
 
         //    //Past Marriages
         //    foreach (var p in GetPastMarriages(startNodeName))
         //    {
         //        //NewAddCharacterIfAbsent(p, ref characters);
-        //        //TODO add link
         //    }
 
         //    //add Children
@@ -501,5 +498,164 @@ namespace citadel_wpf
         //    }
 
         //}
+
+        ////returns true if the character was successfully added 
+        //private static bool AddCharacterIfAbsent(string focusCharacter, ref Dictionary<string, string> characters)
+        //{
+        //    if (!characters.ContainsKey(focusCharacter))
+        //    {
+        //        XElement tempRoot = XMLParser.CharacterXDocument.Handle.Root;
+        //        characters.Add(focusCharacter, GetGenderColor(focusCharacter));
+        //        return true;
+        //    }
+        //    return false;
+        //}
+
+        ////returns true if the relationship was successfully added 
+        //private static bool AddRelationshipIfAbsent(string parent, string child, ref Dictionary<string, bool> relationships)
+        //{
+        //    if (!relationships.ContainsKey($"\"{parent}\" -- \"{child}\"; "))
+        //    {
+        //        relationships.Add($"\"{parent}\" -- \"{child}\"; ", true);
+        //        return true;
+        //    }
+        //    return false;
+        //}
+
+        //private static void AddCharacterInformation(ref StringBuilder echo, Dictionary<string, string> characters, Dictionary<string, bool> relationships, string focusCharacter)
+        //{
+        //    foreach (var character in characters)
+        //    {
+        //        echo.Append($"\"{character.Key}\" [color={character.Value}, {fontname}");
+        //        if (character.Key.Equals(focusCharacter))
+        //        {
+        //            echo.Append($", {focusShape}");
+        //        }
+        //        echo.Append($"]; ");
+        //    }
+        //    foreach (var relationship in relationships)
+        //    {
+        //        echo.Append(relationship.Key);
+        //    }
+        //}
+
+
+        //public static void OldExtendedFamilyTree(string focusCharacter)
+        //{
+        //    //Grand-parents/children + aunts/uncles + cousins + nieces/nephews
+        //    StringBuilder echo = new StringBuilder($"graph s {{ label=\"{ExtendedFamilyTreeString} for {focusCharacter}\" {fontname} {splines}; ");
+        //    Dictionary<string, bool> relationships = new Dictionary<string, bool>();
+        //    Dictionary<string, string> characters = new Dictionary<string, string>();
+
+        //    AddCharacterIfAbsent(focusCharacter, ref characters);
+
+        //    //Parents
+        //    foreach (var parentOfFocusCharacter in GetParentsOf(focusCharacter))
+        //    {
+        //        AddCharacterIfAbsent(parentOfFocusCharacter, ref characters);
+        //        AddRelationshipIfAbsent(parentOfFocusCharacter, focusCharacter, ref relationships);
+
+        //        //GrandParents
+        //        foreach (var grandparentOfFocusCharacter in GetParentsOf(parentOfFocusCharacter))
+        //        {
+        //            AddCharacterIfAbsent(grandparentOfFocusCharacter, ref characters);
+        //            AddRelationshipIfAbsent(grandparentOfFocusCharacter, parentOfFocusCharacter, ref relationships);
+
+        //            //Aunts and Uncles
+        //            foreach (var auntOrUncleOfFocusCharacter in GetSiblingsOf(parentOfFocusCharacter, grandparentOfFocusCharacter))
+        //            {
+        //                AddCharacterIfAbsent(auntOrUncleOfFocusCharacter, ref characters);
+        //                AddRelationshipIfAbsent(grandparentOfFocusCharacter, auntOrUncleOfFocusCharacter, ref relationships);
+
+        //                //Cousins
+        //                foreach (var cousinOfFocusCharacter in GetChildrenOf(auntOrUncleOfFocusCharacter))
+        //                {
+        //                    AddCharacterIfAbsent(cousinOfFocusCharacter, ref characters);
+        //                    AddRelationshipIfAbsent(auntOrUncleOfFocusCharacter, cousinOfFocusCharacter, ref relationships);
+
+        //                    //Aunts and Uncles by cousin
+        //                    foreach (var parentOfCousin in GetParentsOf(cousinOfFocusCharacter))
+        //                    {
+        //                        AddCharacterIfAbsent(parentOfCousin, ref characters);
+        //                        AddRelationshipIfAbsent(parentOfCousin, cousinOfFocusCharacter, ref relationships);
+        //                    }
+        //                }
+        //            }
+        //        }
+
+        //        //Siblings
+        //        foreach (var siblingOfFocusCharacter in GetSiblingsOf(focusCharacter, parentOfFocusCharacter))
+        //        {
+        //            AddCharacterIfAbsent(siblingOfFocusCharacter, ref characters);
+        //            AddRelationshipIfAbsent(parentOfFocusCharacter, siblingOfFocusCharacter, ref relationships);
+
+        //            //Nieces + Nephews
+        //            foreach (var nieceOrNephewOfFocusCharacter in GetChildrenOf(siblingOfFocusCharacter))
+        //            {
+        //                AddCharacterIfAbsent(nieceOrNephewOfFocusCharacter, ref characters);
+        //                AddRelationshipIfAbsent(siblingOfFocusCharacter, nieceOrNephewOfFocusCharacter, ref relationships);
+        //            }
+        //        }
+        //    }
+
+        //    //Children
+        //    foreach (var childOfFocusCharacter in GetChildrenOf(focusCharacter))
+        //    {
+        //        AddCharacterIfAbsent(childOfFocusCharacter, ref characters);
+        //        AddRelationshipIfAbsent(focusCharacter, childOfFocusCharacter, ref relationships);
+
+        //        //GrandChildren
+        //        foreach (var grandchildOfFocusCharacter in GetChildrenOf(childOfFocusCharacter))
+        //        {
+        //            AddCharacterIfAbsent(grandchildOfFocusCharacter, ref characters);
+        //            AddRelationshipIfAbsent(childOfFocusCharacter, grandchildOfFocusCharacter, ref relationships);
+        //        }
+        //    }
+
+        //    AddCharacterInformation(ref echo, characters, relationships, focusCharacter);
+
+        //    echo.Append("}");
+
+        //    SaveEcho(echo, "ExtendedFamilyTree", focusCharacter);
+        //}
+
+
+        //public static void OldImmediateFamilyTree(string focusCharacter)
+        //{
+        //    StringBuilder echo = new StringBuilder($"graph s {{ label=\"{ImmediateFamilyTreeString} for {focusCharacter}\" {fontname}; ");
+        //    Dictionary<string, bool> relationships = new Dictionary<string, bool>();
+        //    Dictionary<string, string> characters = new Dictionary<string, string>();
+
+        //    AddCharacterIfAbsent(focusCharacter, ref characters);
+
+        //    //Parents
+        //    foreach (var p in GetParentsOf(focusCharacter))
+        //    {
+        //        AddCharacterIfAbsent(p, ref characters);
+        //        AddRelationshipIfAbsent(p, focusCharacter, ref relationships);
+
+        //        //Siblings
+        //        foreach (var s in GetSiblingsOf(focusCharacter, p))
+        //        {
+        //            AddCharacterIfAbsent(s, ref characters);
+        //            AddRelationshipIfAbsent(p, s, ref relationships);
+        //        }
+        //    }
+
+        //    //Children
+        //    foreach (var c in GetChildrenOf(focusCharacter))
+        //    {
+        //        AddCharacterIfAbsent(c, ref characters);
+        //        AddRelationshipIfAbsent(focusCharacter, c, ref relationships);
+        //    }
+
+        //    AddCharacterInformation(ref echo, characters, relationships, focusCharacter);
+
+        //    echo.Append("}");
+
+        //    SaveEcho(echo, "ImmediateFamilyTree", focusCharacter);
+        //}
+
+
     }
 }
