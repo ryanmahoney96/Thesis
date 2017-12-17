@@ -7,20 +7,20 @@
         mc:Ignorable="d"
         WindowStartupLocation="CenterScreen"
         ResizeMode="CanMinimize"
-        Title="Add a New Note" Height="270" Width="490">
+        Title="Add a New Note" Height="290" Width="510">
     <Grid>
 
         <Grid.RowDefinitions>
             <RowDefinition Height="5"/>
             <RowDefinition Height="30"/>
-            <RowDefinition Height="155"/>
+            <RowDefinition Height="175"/>
             <RowDefinition Height="35"/>
         </Grid.RowDefinitions>
 
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="5"/>
             <ColumnDefinition Width="175"/>
-            <ColumnDefinition Width="285"/>
+            <ColumnDefinition Width="305"/>
             <ColumnDefinition Width="5"/>
         </Grid.ColumnDefinitions>
 
@@ -29,7 +29,7 @@
 
         <TextBlock Text="*Enter your Note:" Grid.Row="2" Grid.Column="1" TextWrapping="Wrap"></TextBlock>
         <ScrollViewer Grid.Row="2" Grid.Column="2" VerticalScrollBarVisibility="Auto">
-            <TextBox Name="description_text" TextWrapping="Wrap"></TextBox>
+            <TextBox Name="description_text" AcceptsReturn="True" TextWrapping="Wrap"></TextBox>
         </ScrollViewer>
 
         <TextBlock Name="required_text" Text="*Required Field" Grid.Row="5" Grid.Column="1"></TextBlock>

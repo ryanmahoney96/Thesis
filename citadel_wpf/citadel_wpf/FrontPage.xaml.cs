@@ -21,6 +21,9 @@ namespace citadel_wpf
     public partial class FrontPage : EntityWindow
     {
 
+        //TODO make all add menus slightly bigger
+        //TODO new folder for XML files
+
         //TODO fix all name violations
         //TODO Tooltips throughout
         //TODO: Stylize with https://github.com/MahApps/MahApps.Metro
@@ -178,6 +181,10 @@ namespace citadel_wpf
             else if (!XMLParser.IsYearValid(yearText.Text))
             {
                 System.Windows.Forms.MessageBox.Show("Invalid Year Entered");
+            }
+            else if (!XMLParser.IsTextValid(summaryText.Text))
+            {
+                System.Windows.Forms.MessageBox.Show("Invalid Character in Summary");
             }
             else
             {

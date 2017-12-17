@@ -28,7 +28,7 @@ namespace citadel_wpf
 
         public static XMLParser Instance;
 
-        private static Regex validCharacterRegex = new Regex(@"^[a-zA-Z0-9'\!\\\$\%\&\(\)\,\.\;\:\+\=\- ]+$");
+        private static Regex validCharacterRegex = new Regex(@"^[a-zA-Z0-9'""\!\\\n\r\—\$\%\&\(\)\,\.\;\:\+\=\- ]+$");
         private static Regex yearRegex = new Regex(@"^[0-9]*$");
 
         public XMLParser(string folderPath)
@@ -120,14 +120,58 @@ namespace citadel_wpf
             return returnList;
         }
 
-        public static void RemoveEntityFromEventEntities(string entityName)
+        public static void RemoveLocationFromEvents(string entityName)
         {
-            //TODO throw new NotImplementedException();
+            var locationElements = from l in EventXDocument.Handle.Root.Elements("event")
+                                   where l.Element("location").Value.Equals(entityName)
+                                   select l.Element("location");
+
+            foreach(var l in locationElements)
+            {
+                l.Value = "";
+            }
+
+            EventXDocument.Save();
         }
 
-        public static void RemoveEntityFromRelationships(string entityName, XDocumentInformation XDoc)
+        public static void RemoveCharacterFromRelationships(string entityName)
         {
             //TODO throw new NotImplementedException();
+            var characterReferences = from c in CharacterXDocument.Handle.Root.Elements("character")
+                                   select c;
+
+            var eventReferences = from c in EventXDocument.Handle.Root.Elements("event")
+                                      select c;
+
+            string[] characterRelationships = { "parents", "children", "marriages" };
+
+            foreach(var c in characterReferences)
+            {
+                foreach(var r in characterRelationships)
+                {
+                    var relationships = from d in c.Element(r).Elements()
+                                       where d.Value.Equals(entityName)
+                                       select d;
+                    foreach(var t in relationships)
+                    {
+                        t.Remove();
+                    }
+                }
+            }
+
+            foreach (var e in eventReferences)
+            {
+                var participants = from d in e.Element("participants").Elements()
+                                    where d.Value.Equals(entityName)
+                                    select d;
+                foreach (var t in participants)
+                {
+                    t.Remove();
+                }
+            }
+
+            CharacterXDocument.Save();
+            EventXDocument.Save();
         }
 
         //is this entity present in the XDocument

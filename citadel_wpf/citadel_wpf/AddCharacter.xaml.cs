@@ -70,15 +70,15 @@ namespace citadel_wpf
                         where c.Element("name").Value.Equals(name_text.Text)
                         select c).First();
 
-                        characterReference.Element("gender").Value = gender_combo_box.Text;
-                        characterReference.Element("description").Value = description_text.Text;
+                        characterReference.Element("gender").Value = PrepareText(gender_combo_box.Text);
+                        characterReference.Element("description").Value = PrepareText(description_text.Text);
                     }
                     else
                     {
                         XElement newCharacter = new XElement("character",
-                            new XElement("name", name_text.Text),
-                            new XElement("gender", gender_combo_box.Text),
-                            new XElement("description", description_text.Text),
+                            new XElement("name", PrepareText(name_text.Text)),
+                            new XElement("gender", PrepareText(gender_combo_box.Text)),
+                            new XElement("description", PrepareText(description_text.Text)),
                             new XElement("parents", ""),
                             new XElement("children", ""),
                             new XElement("marriages", ""));

@@ -66,13 +66,13 @@ namespace citadel_wpf
                                                        where c.Element("name").Value.Equals(name_text.Text)
                                                        select c).First();
 
-                        noteReference.Element("description").Value = description_text.Text;
+                        noteReference.Element("description").Value = PrepareText(description_text.Text);
                     }
                     else
                     {
                         XElement newNote = new XElement("general_note",
-                        new XElement("name", name_text.Text),
-                        new XElement("description", description_text.Text));
+                        new XElement("name", PrepareText(name_text.Text)),
+                        new XElement("description", PrepareText(description_text.Text)));
 
                         string temp = newNote.ToString();
 

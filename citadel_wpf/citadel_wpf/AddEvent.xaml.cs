@@ -84,20 +84,20 @@ namespace citadel_wpf
                                                    where c.Element("name").Value.Equals(name_text.Text)
                                                    select c).First();
 
-                        eventReference.Element("location").Value = location_combo_box.Text;
-                        eventReference.Element("unit_date").Value = event_unit_date_number.Text;
-                        eventReference.Element("date").Value = event_date_number.Text;
-                        eventReference.Element("description").Value = description_text.Text;
+                        eventReference.Element("location").Value = PrepareText(location_combo_box.Text);
+                        eventReference.Element("unit_date").Value = PrepareText(event_unit_date_number.Text);
+                        eventReference.Element("date").Value = PrepareText(event_date_number.Text);
+                        eventReference.Element("description").Value = PrepareText(description_text.Text);
                     }
                     else
                     {
 
                         XElement newEvent = new XElement("event",
-                        new XElement("name", name_text.Text),
-                        new XElement("location", location_combo_box.Text),
-                        new XElement("unit_date", event_unit_date_number.Text),
-                        new XElement("date", event_date_number.Text),
-                        new XElement("description", description_text.Text),
+                        new XElement("name", PrepareText(name_text.Text)),
+                        new XElement("location", PrepareText(location_combo_box.Text)),
+                        new XElement("unit_date", PrepareText(event_unit_date_number.Text)),
+                        new XElement("date", PrepareText(event_date_number.Text)),
+                        new XElement("description", PrepareText(description_text.Text)),
                         new XElement("participants"),
                         new XElement("order_key", EventOrdering.GetNewOrderKey()));
 

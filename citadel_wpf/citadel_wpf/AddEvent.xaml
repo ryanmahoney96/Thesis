@@ -8,8 +8,8 @@
         WindowStartupLocation="CenterScreen"
         ResizeMode="CanMinimize"
         Title="Add a New Event" 
-        Height="375"
-        Width="560">
+        Height="395"
+        Width="580">
     <Grid>
 
         <Grid.RowDefinitions>
@@ -18,14 +18,14 @@
             <RowDefinition Height="35"/>
             <RowDefinition Height="35"/>
             <RowDefinition Height="35"/>
-            <RowDefinition Height="155"/>
+            <RowDefinition Height="175"/>
             <RowDefinition Height="35"/>
         </Grid.RowDefinitions>
 
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="5"/>
             <ColumnDefinition Width="235"/>
-            <ColumnDefinition Width="295"/>
+            <ColumnDefinition Width="315"/>
             <ColumnDefinition Width="5"/>
         </Grid.ColumnDefinitions>
 
@@ -45,7 +45,7 @@
 
         <TextBlock Text="*Enter a Description of What Happened:" Grid.Row="5" Grid.Column="1" TextWrapping="Wrap"></TextBlock>
         <ScrollViewer Grid.Row="5" Grid.Column="2" VerticalScrollBarVisibility="Auto">
-            <TextBox Name="description_text" TextWrapping="Wrap"></TextBox>
+            <TextBox Name="description_text" AcceptsReturn="True" TextWrapping="Wrap"></TextBox>
         </ScrollViewer>
 
         <TextBlock Name="required_text" Text="*Required Field" Grid.Row="6" Grid.Column="1"></TextBlock>

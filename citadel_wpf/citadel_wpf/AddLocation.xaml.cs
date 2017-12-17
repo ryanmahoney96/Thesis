@@ -71,17 +71,17 @@ namespace citadel_wpf
                                                        where c.Element("name").Value.Equals(name_text.Text)
                                                        select c).First();
 
-                        locationReference.Element("type").Value = type_combobox.Text;
-                        locationReference.Element("subtype").Value = subtype_combobox.Text;
-                        locationReference.Element("description").Value = description_text.Text;
+                        locationReference.Element("type").Value = PrepareText(type_combobox.Text);
+                        locationReference.Element("subtype").Value = PrepareText(subtype_combobox.Text);
+                        locationReference.Element("description").Value = PrepareText(description_text.Text);
                     }
                     else
                     {
                         XElement newLocation = new XElement("location",
-                        new XElement("name", name_text.Text),
-                        new XElement("type", type_combobox.Text),
-                        new XElement("subtype", subtype_combobox.Text),
-                        new XElement("description", description_text.Text));
+                        new XElement("name", PrepareText(name_text.Text)),
+                        new XElement("type", PrepareText(type_combobox.Text)),
+                        new XElement("subtype", PrepareText(subtype_combobox.Text)),
+                        new XElement("description", PrepareText(description_text.Text)));
 
                         string temp = newLocation.ToString();
 

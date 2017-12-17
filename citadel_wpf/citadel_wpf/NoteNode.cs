@@ -22,7 +22,7 @@ namespace citadel_wpf
         private Border borderLine;
 
         public static int NameBoxHeight = 24;
-        public static int ContentBoxHeight = 175;
+        public static int ContentBoxHeight = 225;
         public static int ButtonHeight = 24;
         public static int ButtonWidth = 40;
 
@@ -106,16 +106,13 @@ namespace citadel_wpf
 
                 if (EntityType.Name.Equals(XMLParser.CharacterXDocument.Name))
                 {
-                    //XMLParser.RemoveEntityFromRelationships(EntityName, XMLParser.CharacterRelationshipXDocument);
-                    //TODO participants XMLParser.RemoveEntityFromRelationships(EntityName, XMLParser.EventXDocument);
-                }
-                else if (EntityType.Name.Equals(XMLParser.EventXDocument.Name))
-                {
-                    //TODO participant XMLParser.RemoveEntityFromRelationships(EntityName, XMLParser.ParticipantXDocument);
+                    //Remove from parents, children, ismarried, wasmarried, participants 
+                    XMLParser.RemoveCharacterFromRelationships(EntityName);
                 }
                 else if (EntityType.Name.Equals(XMLParser.LocationXDocument.Name))
                 {
-                    XMLParser.RemoveEntityFromEventEntities(EntityName);
+                    //remove from event locations
+                    XMLParser.RemoveLocationFromEvents(EntityName);
                 }
 
             }
@@ -161,7 +158,7 @@ namespace citadel_wpf
                         NameText = fieldName;
                         EntityName = entityNode[key];
                     }
-                    else if (!key.Equals("order_key"))
+                    else if (!key.Equals("order_key") && !key.Equals("children") && !key.Equals("parents") && !key.Equals("marriages") && !key.Equals("participants"))
                     {
                         string keyContent = entityNode[key];
                         string keyTitle = key;
@@ -177,6 +174,7 @@ namespace citadel_wpf
                         titleText.Foreground = (SolidColorBrush)(new BrushConverter().ConvertFrom("#FF600060"));
                         ContentStackPanel.Children.Add(titleText);
 
+                        //TODO if it is one of the list elements, add with tabs
                         TextBlock contentText = new TextBlock();
                         contentText.Text = "\t" + keyContent;
                         contentText.TextWrapping = TextWrapping.Wrap;

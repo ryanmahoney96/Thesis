@@ -7,21 +7,21 @@
         mc:Ignorable="d"
         WindowStartupLocation="CenterScreen"
         ResizeMode="CanMinimize"
-        Title="Add a New Character" Height="305" Width="550">
+        Title="Add a New Character" Height="325" Width="570">
     <Grid>
 
         <Grid.RowDefinitions>
             <RowDefinition Height="5"/>
             <RowDefinition Height="35"/>
             <RowDefinition Height="30"/>
-            <RowDefinition Height="155"/>
+            <RowDefinition Height="175"/>
             <RowDefinition Height="35"/>
         </Grid.RowDefinitions>
 
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="5"/>
             <ColumnDefinition Width="235"/>
-            <ColumnDefinition Width="285"/>
+            <ColumnDefinition Width="305"/>
             <ColumnDefinition Width="5"/>
         </Grid.ColumnDefinitions>
 
@@ -38,7 +38,7 @@
 
         <TextBlock Text="Enter a Physical Description and Notes on the Character:" Grid.Row="3" Grid.Column="1" TextWrapping="Wrap"></TextBlock>
         <ScrollViewer Grid.Row="3" Grid.Column="2" VerticalScrollBarVisibility="Auto">
-            <TextBox Name="description_text"  TextWrapping="Wrap"></TextBox>
+            <TextBox Name="description_text" AcceptsReturn="True" TextWrapping="Wrap"></TextBox>
         </ScrollViewer>
 
         <TextBlock Name="required_text" Text="*Required Field" Grid.Row="4" Grid.Column="1"></TextBlock>

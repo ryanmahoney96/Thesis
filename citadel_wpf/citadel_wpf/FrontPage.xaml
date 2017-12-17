@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         Title="Citadel"
         ResizeMode="CanResize"
-        MinHeight="530"
+        MinHeight="600"
         Width="800">
 
     <Grid>
@@ -26,7 +26,7 @@
                                 </Border>
                                 <ControlTemplate.Triggers>
                                     <Trigger Property="IsSelected" Value="True">
-                                        <Setter TargetName="Border" Property="Background" Value="WhiteSmoke" />
+                                        <Setter TargetName="Border" Property="Background" Value="#dfdfdf" />
                                         <Setter TargetName="Border" Property="BorderThickness" Value="0,0,0,1.5" />
                                     </Trigger>
                                     <Trigger Property="IsSelected" Value="False">
@@ -86,7 +86,7 @@
 
                         <TextBlock Text="Summary:" Grid.Row="5" Grid.Column="1" VerticalAlignment="Top" Height="19"></TextBlock>
                         <ScrollViewer Grid.Row="5" Grid.Column="1" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled" Margin="15,22,0,0">
-                            <TextBox Name="summaryText" TextWrapping="Wrap"></TextBox>
+                            <TextBox Name="summaryText" TextWrapping="Wrap" AcceptsReturn="True"></TextBox>
                         </ScrollViewer>
 
                         <Button Style="{StaticResource StyledButton}" Content="Save Changes" Click="Save" Grid.Row="6" Grid.Column="1" Width="110" Height="30" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,10"/>

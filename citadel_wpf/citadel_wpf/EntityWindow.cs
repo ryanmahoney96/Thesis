@@ -65,6 +65,11 @@ namespace citadel_wpf
             Close();
         }
 
+        protected string PrepareText(string text)
+        {
+            return text.Replace('"', '\'');
+        }
+
         virtual protected void Save(object sender, RoutedEventArgs e)
         {
             //
