@@ -29,8 +29,12 @@ namespace citadel_wpf
         public EntityWindow()
         {
             SetDecorations(this);
-            Uri iconUri = new Uri("../../citadel_logo.png", UriKind.RelativeOrAbsolute);
-            Icon = BitmapFrame.Create(iconUri);
+            if (File.Exists("./citadel_logo.png"))
+            {
+                Uri iconUri = new Uri("./citadel_logo.png", UriKind.RelativeOrAbsolute);
+                Icon = BitmapFrame.Create(iconUri);
+            }
+            
             WindowStartupLocation = WindowStartupLocation.CenterScreen;
         }
 
