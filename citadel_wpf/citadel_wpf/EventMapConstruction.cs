@@ -37,7 +37,7 @@ namespace citadel_wpf
 
             echo.Append("}");
 
-            SaveEcho(echo, "SingleEventMap", focusLocation);
+            SaveEcho(echo, "EventMap", focusLocation);
         }
 
         //Every location and the events that take place at them
@@ -51,7 +51,7 @@ namespace citadel_wpf
 
             echo.Append("}");
 
-            SaveEcho(echo, "FullEventMap");
+            SaveEcho(echo, "EventMapWithParticipants", focusLocation);
         }
 
         private static void AddEventInformation(ref StringBuilder echo, string focusLocation, bool getParticipants = false)
@@ -63,11 +63,11 @@ namespace citadel_wpf
                 echo.Append($"\"{e.Name}\" [{eventStyle}, {fontname}, {fontcolor}, label=\"{e.Name}");
                 if (!string.IsNullOrWhiteSpace(e.Unit_date))
                 {
-                    echo.Append($"\n{e.Unit_date}");
+                    echo.Append($"\nSource: {e.Unit_date}");
                 }
                 if (!string.IsNullOrWhiteSpace(e.Date))
                 {
-                    echo.Append($"\n{e.Date}");
+                    echo.Append($"\nDate: {e.Date}");
                 }
                 echo.AppendLine($"\"]; ");
                 echo.AppendLine($"\"{e.Name}\" -- \"{focusLocation}\"; ");
@@ -105,11 +105,11 @@ namespace citadel_wpf
         {
             return (from c in XMLParser.EventXDocument.Handle.Root.Descendants("event")
                     where c.Element("name").Value.Equals(focusEvent)
-                    select c.Element("participants"));
+                    select c.Element("participants").Elements()).First();
         }
 
         //if focusLocation left null, it is a full event map
-        private static void SaveEcho(StringBuilder echo, string type, string focusLocation = "")
+        private static void SaveEcho(StringBuilder echo, string type, string focusLocation)
         {
             if (!string.IsNullOrWhiteSpace(focusLocation))
             {
@@ -130,7 +130,7 @@ namespace citadel_wpf
             ProcessStartInfo startInfo = new ProcessStartInfo();
             startInfo.WindowStyle = ProcessWindowStyle.Hidden;
             startInfo.FileName = "cmd.exe";
-            startInfo.Arguments = @"/c" + $"twopi -Tsvg {textPath} -o {imagePath} & del {textPath} & {imagePath}";
+            startInfo.Arguments = @"/c" + $"neato -Tsvg \"{textPath}\" -o \"{imagePath}\" & del \"{textPath}\" & \"{imagePath}\"";
             process.StartInfo = startInfo;
             process.Start();
         }

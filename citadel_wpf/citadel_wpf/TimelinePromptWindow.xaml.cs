@@ -18,10 +18,10 @@ namespace citadel_wpf
 
     public partial class TimelinePromptWindow : EntityWindow
     {
-        public class EventItem
+        public class EventItem : CheckBox
         {
-            public string Name { get; set; }
-            public bool IsSelected { get; set; }
+            public string LabelName { get; set; }
+            //public bool IsChecked { get; set; }
         }
 
         public ObservableCollection<EventItem> EventNames = new ObservableCollection<EventItem>();
@@ -31,29 +31,48 @@ namespace citadel_wpf
 
         public TimelinePromptWindow() : base()
         {
+            InitializeComponent();
 
-            foreach(var e in events)
+            foreach (var e in events)
             {
                 EventItem temp = new EventItem();
-                temp.Name = e;
-                temp.IsSelected = false;
+                temp.LabelName = e;
+                temp.IsChecked = false;
                 EventNames.Add(temp);
             }
-
-            InitializeComponent();
 
             eventList.ItemsSource = EventNames;
         }
 
         override protected void Save(object sender, RoutedEventArgs e)
         {
-            var selecteds = (from s in EventNames
-                            where s.IsSelected == true
-                            select s.Name).ToList();
+            List<string> selecteds = (from s in EventNames
+                                      where s.IsChecked == true
+                                      select s.LabelName).ToList();
 
-            TimelineConstruction.CreateTimeline(selecteds);
+            if (!XMLParser.IsTextValid(titleText.Text))
+            {
+                System.Windows.Forms.MessageBox.Show("The Title is Invalid");
+            }
+            else if (selecteds.Count < 2)
+            {
+                System.Windows.Forms.MessageBox.Show("You Must Select at Least Two Events for a Timeline");
+            }
+            else
+            {
+                TimelineConstruction.CreateTimeline(selecteds, PrepareText(titleText.Text));
+            }
 
         }
-        
+
+        private void SelectAll(object sender, RoutedEventArgs e)
+        {
+
+            foreach (CheckBox c in eventList.Items)
+            {
+                c.IsChecked = true;
+            }
+
+        }
     }
 }

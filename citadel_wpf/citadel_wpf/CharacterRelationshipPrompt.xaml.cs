@@ -138,7 +138,7 @@ namespace citadel_wpf
             XMLParser.FillComboboxWithNames(XMLParser.CharacterXDocument.Handle, ref focus_character_combo);
             focus_character_combo.Text = fc;
             XMLParser.FillComboboxWithNames(XMLParser.CharacterXDocument.Handle, ref character_two_combo, fc);
-            relationship_combo.Text = "";
+            //relationship_combo.Text = "";
         }
 
         private void focus_character_SelectionChanged(object sender, SelectionChangedEventArgs e)

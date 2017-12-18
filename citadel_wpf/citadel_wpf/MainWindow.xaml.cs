@@ -85,7 +85,7 @@ namespace citadel_wpf
         {
             if (!string.IsNullOrWhiteSpace(folderName.Text))
             {
-                string mediaNotes = folderName.Text + "\\media_notes.xml";
+                string mediaNotes = folderName.Text + "\\Citadel_XML\\media_notes.xml";
 
                 XMLParser.Instance = new XMLParser(folderName.Text);
 

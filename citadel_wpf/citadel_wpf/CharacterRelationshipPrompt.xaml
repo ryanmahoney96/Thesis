@@ -8,7 +8,7 @@
         WindowStartupLocation="CenterScreen"
         ResizeMode="CanMinimize"
         Title="Character Relationship Prompt" 
-        Height="185" Width="540">
+        Height="185" Width="565">
     <Grid>
 
         <Grid.RowDefinitions>
@@ -23,9 +23,9 @@
 
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="5"/>
-            <ColumnDefinition Width="170"/>
-            <ColumnDefinition Width="175"/>
-            <ColumnDefinition Width="170"/>
+            <ColumnDefinition Width="190"/>
+            <ColumnDefinition Width="160"/>
+            <ColumnDefinition Width="190"/>
             <ColumnDefinition Width="5"/>
         </Grid.ColumnDefinitions>
 

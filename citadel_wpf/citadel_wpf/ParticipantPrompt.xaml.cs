@@ -29,10 +29,10 @@ namespace citadel_wpf
             InitializeComponent();
 
             FocusEvent = fe;
-            focus_event.Text = FocusEvent;
 
             XMLParser.FillComboboxWithNames(XMLParser.CharacterXDocument.Handle, ref character_combo, FocusEvent);
-            relationship.Text = ParticipatedIn;
+            //relationship.Text = ParticipatedIn + " ";
+            relationship.Text += FocusEvent;
 
             AttachToXDocument(ref XMLParser.CharacterXDocument);
         }
@@ -42,7 +42,7 @@ namespace citadel_wpf
 
             if ( !XMLParser.IsTextValid(character_combo.Text))
             {
-                required_text.Foreground = Brushes.Red;
+                System.Windows.Forms.MessageBox.Show("Please select a Character");
             }
 
             else

@@ -18,17 +18,16 @@ namespace citadel_wpf
         private static string eventStyle = $"style=filled, fillcolor=\"#f0fff0\" shape=rect";
         private static string clusterColor = $"color=black";
 
-        public static void CreateTimeline(List<string> selectedEvents)
+        public static void CreateTimeline(List<string> selectedEvents, string title)
         {
 
-            StringBuilder echo = new StringBuilder($"digraph s {{ label=\"Custom Timeline\" {fontname} {overlap} {rankdir} compound=true; ");
+            StringBuilder echo = new StringBuilder($"digraph s {{ label=\"{title}\" {fontname} {overlap} {rankdir} compound=true; ");
 
             GetEventInformation(ref echo, selectedEvents);
 
             echo.Append("}");
 
-            SaveEcho(echo, "Timeline");
-
+            SaveEcho(echo, title);
 
         }
 
@@ -102,11 +101,10 @@ namespace citadel_wpf
 
         }
 
-        private static void SaveEcho(StringBuilder echo, string type)
+        private static void SaveEcho(StringBuilder echo, string title)
         {
-
-            string textPath = XMLParser.FolderPath + $"\\{type}.dot";
-            string imagePath = $"{XMLParser.FolderPath}/{type}.svg";
+            string textPath = XMLParser.FolderPath + $"\\{title}.dot";
+            string imagePath = $"{XMLParser.FolderPath}/{title}.svg";
             StreamWriter streamwriter = File.CreateText(textPath);
             streamwriter.Write(echo);
             streamwriter.Close();
@@ -118,7 +116,7 @@ namespace citadel_wpf
             ProcessStartInfo startInfo = new ProcessStartInfo();
             startInfo.WindowStyle = ProcessWindowStyle.Hidden;
             startInfo.FileName = "cmd.exe";
-            startInfo.Arguments = @"/c" + $"dot -Tsvg {textPath} -o {imagePath} & del {textPath} & {imagePath}";
+            startInfo.Arguments = @"/c" + $"dot -Tsvg \"{textPath}\" -o \"{imagePath}\" & del \"{textPath}\" & \"{imagePath}\"";
             process.StartInfo = startInfo;
             process.Start();
         }

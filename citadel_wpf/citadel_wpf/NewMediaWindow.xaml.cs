@@ -52,13 +52,11 @@ namespace citadel_wpf
                 try
                 {
                     XElement newMedia = new XElement("media_note",
-                            new XElement("name", name_text.Text),
+                            new XElement("name", PrepareText(name_text.Text)),
                             new XElement("year", year_text.Text),
-                            new XElement("type", type_combobox.Text),
-                            new XElement("genre", genre_combobox.Text),
-                            new XElement("summary", summary_text.Text));
-
-                    string temp = newMedia.ToString();
+                            new XElement("type", PrepareText(type_combobox.Text)),
+                            new XElement("genre", PrepareText(genre_combobox.Text)),
+                            new XElement("summary", PrepareText(summary_text.Text)));
 
                     XMLParser.MediaXDocument.Handle.Root.Add(newMedia);
                     XMLParser.MediaXDocument.Save();

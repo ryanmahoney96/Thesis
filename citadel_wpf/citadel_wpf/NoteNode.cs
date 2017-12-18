@@ -12,7 +12,6 @@ namespace citadel_wpf
 {
     class NoteNode : Decorator
     {
-        //TODO show parents, children, and participants with proper spacing?
 
         private string EntityName;
         private XDocumentInformation EntityType;
@@ -97,7 +96,7 @@ namespace citadel_wpf
         {
             if (MessageBox.Show($"Are you sure you want to delete \"{EntityName}?\" (This includes any relationships it has with other entities)", "Delete Entity", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
             {
-                //TODO when deleting a character, event, or location, you must delete relationships it has
+
                 var entity = (from c in EntityType.Handle.Root.Elements()
                              where c.Element("name").Value.Equals(EntityName)
                              select c).First();
@@ -174,7 +173,7 @@ namespace citadel_wpf
                         titleText.Foreground = (SolidColorBrush)(new BrushConverter().ConvertFrom("#FF600060"));
                         ContentStackPanel.Children.Add(titleText);
 
-                        //TODO if it is one of the list elements, add with tabs
+
                         TextBlock contentText = new TextBlock();
                         contentText.Text = "\t" + keyContent;
                         contentText.TextWrapping = TextWrapping.Wrap;

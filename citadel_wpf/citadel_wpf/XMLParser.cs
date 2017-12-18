@@ -22,8 +22,6 @@ namespace citadel_wpf
         public static XDocumentInformation NoteXDocument;
         public static XDocumentInformation MediaXDocument;
 
-        public static XDocumentInformation[] XDocuments = {CharacterXDocument, LocationXDocument, EventXDocument, NoteXDocument, MediaXDocument };
-
         public static string FolderPath;
 
         public static XMLParser Instance;
@@ -40,10 +38,14 @@ namespace citadel_wpf
 
         private void SetXDocumentContent(string documentName, ref XDocumentInformation XDoc)
         {
-            string filePath = FolderPath + $"\\{documentName}.xml";
+            string filePath = FolderPath + $"\\Citadel_XML\\{documentName}.xml";
             XDoc = new XDocumentInformation();
             XDoc.Path = filePath;
             XDoc.Name = documentName;
+
+            if (!Directory.Exists(FolderPath + $"\\Citadel_XML\\")){
+                Directory.CreateDirectory(FolderPath + $"\\Citadel_XML\\");
+            }
 
             if (!File.Exists(filePath))
             {
@@ -136,7 +138,7 @@ namespace citadel_wpf
 
         public static void RemoveCharacterFromRelationships(string entityName)
         {
-            //TODO throw new NotImplementedException();
+
             var characterReferences = from c in CharacterXDocument.Handle.Root.Elements("character")
                                    select c;
 

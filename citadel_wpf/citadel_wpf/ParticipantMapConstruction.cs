@@ -21,6 +21,7 @@ namespace citadel_wpf
             StringBuilder echo = new StringBuilder($"digraph s {{ label=\"Participant Map for {focusEvent}\" {fontname} {overlap}; ");
 
             AddCharacterInformation(ref echo, focusEvent);
+            AppendLegend(ref echo);
 
             echo.Append("}");
 
@@ -34,7 +35,7 @@ namespace citadel_wpf
             foreach (string c in GetCharactersAtEvent(focusEvent))
             {
                 echo.AppendLine($"\"{c}\" [{participantStyle}, {fontname}," +
-                    $" label=\"{c}\"]; \"{c}\" -> \"{focusEvent}\"; ");
+                    $" label=\"{c}\"]; \"{c}\" -> \"{focusEvent}\" [arrowhead=onormal]; ");
             }
         }
 
@@ -70,21 +71,20 @@ namespace citadel_wpf
             ProcessStartInfo startInfo = new ProcessStartInfo();
             startInfo.WindowStyle = ProcessWindowStyle.Hidden;
             startInfo.FileName = "cmd.exe";
-            startInfo.Arguments = @"/c" + $"twopi -Tsvg {textPath} -o {imagePath} & del {textPath} & {imagePath}";
+            startInfo.Arguments = @"/c" + $"twopi -Tsvg \"{textPath}\" -o \"{imagePath}\" & del \"{textPath}\" & \"{imagePath}\"";
             process.StartInfo = startInfo;
             process.Start();
         }
 
-        private static void AppendLegend(ref StringBuilder echo, bool participantsOn = false)
+        private static void AppendLegend(ref StringBuilder echo)
         {
             echo.AppendLine($"\"Event\" [{eventStyle}, {fontname}];");
-                echo.AppendLine($"\"Participant\" [{participantStyle}, {fontname}];");
-            
+            echo.AppendLine($"\"Participant\" [{participantStyle}, {fontname}];");
 
             echo.AppendLine($"subgraph {{ label=\"Legend\"; overlap=false; ");
 
-            echo.AppendLine($"\"Event\" -- \"Participant\" ;");
-            
+            echo.AppendLine($"\"Participant\" -> \"Event\" [arrowhead=onormal];");
+
             echo.AppendLine("}");
         }
     }

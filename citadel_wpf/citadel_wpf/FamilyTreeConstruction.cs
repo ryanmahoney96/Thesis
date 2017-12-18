@@ -69,7 +69,7 @@ namespace citadel_wpf
             {
                 if (character.Value)
                 {
-                    AddParents(ref echo, character.Key.Element("parents"), character.Key);
+                    AddParents(ref echo, characters, character.Key.Element("parents"), character.Key);
                 }
             }
 
@@ -150,7 +150,7 @@ namespace citadel_wpf
             {
                 if (character.Value)
                 {
-                    AddParents(ref echo, character.Key.Element("parents"), character.Key);
+                    AddParents(ref echo, characters, character.Key.Element("parents"), character.Key);
                 }
             }
 
@@ -176,7 +176,7 @@ namespace citadel_wpf
 
             foreach (var character in characters)
             {
-                AddParents(ref echo, character.Key.Element("parents"), character.Key);
+                AddParents(ref echo, characters, character.Key.Element("parents"), character.Key);
             }
 
             AppendLegend(ref echo);
@@ -236,7 +236,7 @@ namespace citadel_wpf
             foreach (var character in characters)
             {
 
-                echo.Append($"\"{character.Key.Element("name").Value}\" [style = filled, fillcolor={GetGenderColor(character.Key.Element("name").Value)}, {color}, {fontname}");
+                echo.Append($"\"{character.Key.Element("name").Value}\" [style=filled, fillcolor={GetGenderColor(character.Key.Element("name").Value)}, {color}, {fontname}");
                 if (character.Key.Element("name").Value.Equals(focusCharacter))
                 {
                     echo.Append($", {focusShape}");
@@ -250,7 +250,7 @@ namespace citadel_wpf
             }
         }
 
-        private static void AddParents(ref StringBuilder echo, XElement parents, XElement focusCharacter)
+        private static void AddParents(ref StringBuilder echo, Dictionary<XElement, bool> characters, XElement parents, XElement focusCharacter)
         {
             List<XElement> parentList = parents.Elements().ToList().OrderBy(p => p.Value).ToList();
 
@@ -259,9 +259,16 @@ namespace citadel_wpf
                 StringBuilder parentNode = new StringBuilder("<>");
                 foreach (var p in parentList)
                 {
+                    var parentRef = (from parent in XMLParser.CharacterXDocument.Handle.Root.Elements("character")
+                                    where parent.Element("name").Value.Equals(p.Value)
+                                    select parent).First();
+                    if (!characters.ContainsKey(parentRef))
+                    {
+                        echo.AppendLine($"\"{p.Value}\" [style=filled, fillcolor={GetGenderColor(p.Value)}, {color}, {fontname}, {shape}]; ");
+                    }
                     parentNode.Append(p.Value);
                 }
-
+                
                 echo.AppendLine($"\"{parentNode.ToString()}\" [shape=circle, label=\"\", style=filled, fillcolor=greenyellow, width=0.1, height=0.1]; ");
 
                 foreach (var p in parentList)
@@ -289,7 +296,7 @@ namespace citadel_wpf
             ProcessStartInfo startInfo = new ProcessStartInfo();
             startInfo.WindowStyle = ProcessWindowStyle.Hidden;
             startInfo.FileName = "cmd.exe";
-            startInfo.Arguments = @"/c" + $"dot -Tsvg {textPath} -o {imagePath} & del {textPath} & {imagePath}";
+            startInfo.Arguments = @"/c" + $"dot -Tsvg \"{textPath}\" -o \"{imagePath}\" & del \"{textPath}\" & \"{imagePath}\"";
             process.StartInfo = startInfo;
             process.Start();
         }
@@ -380,7 +387,7 @@ namespace citadel_wpf
             if (!marriages.Contains(c1 + c2))
             {
                 marriages.Add(c1 + c2);
-//                echo.AppendLine($"{{rank=same; \"{c1}\"; \"{c2}\"}}; ");
+                //TODO this creates organization errors: echo.AppendLine($"{{rank=same; \"{c1}\"; \"{c2}\"}}; ");
                 echo.AppendLine($"\"{c1}\" -- \"{c2}\" [color={color} dir=both arrowhead={arrowhead} arrowtail={arrowhead}]; ");
             }
             
@@ -404,8 +411,8 @@ namespace citadel_wpf
             echo.AppendLine($"\"Male\" [style=filled, {shape}, fillcolor={maleColor}, {fontname}];");
             echo.AppendLine($"\"Female\" [style=filled, {shape}, fillcolor={femaleColor}, {fontname}];");
             echo.AppendLine($"\"Other\" [style=filled, {shape}, fillcolor={otherColor}, {fontname}];");
-            echo.AppendLine($"\"p1\" [shape=point, label=\"\", style=filled, width=0.01, height=0.01]; ");
-            echo.AppendLine($"\"p2\" [shape=point, label=\"\", style=filled, width=0.01, height=0.01]; ");
+            //echo.AppendLine($"\"p1\" [shape=point, label=\"\", style=filled, width=0.01, height=0.01]; ");
+            //echo.AppendLine($"\"p2\" [shape=point, label=\"\", style=filled, width=0.01, height=0.01]; ");
 
             echo.AppendLine($"subgraph cluster_0 {{ label=\"Legend\"; rankdir=LR; ");
             echo.AppendLine($"\"Male\" ;");

@@ -20,13 +20,10 @@ namespace citadel_wpf
 
     public partial class FrontPage : EntityWindow
     {
-
-        //TODO make all add menus slightly bigger
-        //TODO new folder for XML files
-
+        //TODO for styled button, add padding of 3. Then delete all width and height attributes of current buttons
         //TODO fix all name violations
         //TODO Tooltips throughout
-        //TODO: Stylize with https://github.com/MahApps/MahApps.Metro
+        //TODO Stylize with https://github.com/MahApps/MahApps.Metro
 
         public static FrontPage FrontPageReference;
         private string XMLName;

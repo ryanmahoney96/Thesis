@@ -7,13 +7,14 @@
         mc:Ignorable="d"
         Title="Create a Timeline"
         ResizeMode="NoResize"
-        Height="350" 
+        Height="380" 
         Width="330"
         WindowStartupLocation="CenterScreen">
 
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="5"/>
+            <RowDefinition Height="25"/>
             <RowDefinition Height="20"/>
             <RowDefinition Height="250"/>
             <RowDefinition Height="30"/>
@@ -26,23 +27,27 @@
             <ColumnDefinition Width="5"/>
         </Grid.ColumnDefinitions>
 
-        <TextBlock Text="Select which Events to put in the Timeline" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Center"/>
+        <DockPanel Grid.Row="1" Grid.Column="1">
+            <TextBlock Text="*Title: " DockPanel.Dock="Left"/>
+            <TextBox Name="titleText" DockPanel.Dock="Left" Margin="4, 3, 3, 2"/>
+        </DockPanel>
+        
+        <TextBlock Text="Select which Events to put in the Timeline" Grid.Row="2" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center"/>
 
-        <ScrollViewer  Grid.Column="1" Grid.Row="2" VerticalScrollBarVisibility="Auto" Background="White">
-            <ListBox Name="eventList" Margin="2, 2" ItemsSource="{Binding EventNames}">
-                <ListBox.ItemTemplate>
+        <ScrollViewer  Grid.Column="1" Grid.Row="3" VerticalScrollBarVisibility="Auto" Background="White">
+            <ListView Name="eventList" Margin="2, 2" ItemsSource="{Binding EventNames}" SelectionMode="Multiple">
+                <ListView.ItemTemplate>
                     <DataTemplate>
-                        <StackPanel Orientation="Horizontal">
-                            <CheckBox IsChecked="{Binding Path=IsSelected, Mode=TwoWay}" />
-                            <TextBlock Text="{Binding Name}"/>
-                        </StackPanel>
+                            <CheckBox Content="{Binding LabelName}" IsChecked="{Binding Path=IsChecked, Mode=TwoWay}" />
+                            <!--<TextBlock Text="{Binding Name}"/>-->
                     </DataTemplate>
-                </ListBox.ItemTemplate>
-            </ListBox>
+                </ListView.ItemTemplate>
+            </ListView>
         </ScrollViewer>
 
         <!--<Button Content="Cancel" Grid.Row="3" Grid.Column="1" Click="Cancel_and_Close"/>-->
-        <Button Content="Create" Style="{StaticResource StyledButton}" Grid.Row="3" Grid.Column="1" Click="Save" Width="80" Margin="0, 2" HorizontalAlignment="Right"/>
+        <Button Content="Select All" Style="{StaticResource StyledButton}" Grid.Row="4" Grid.Column="1" Click="SelectAll" Width="80" Margin="0, 2" HorizontalAlignment="Left"/>
+        <Button Content="Create" Style="{StaticResource StyledButton}" Grid.Row="4" Grid.Column="1" Click="Save" Width="80" Margin="0, 2" HorizontalAlignment="Right"/>
         <!--<TextBlock Name="requiredText" Text="*Required" Grid.Row="5" Grid.Column="1" Margin="2, 2"/>-->
 
     </Grid>

@@ -30,8 +30,6 @@ namespace citadel_wpf
 
         override protected void Save(object sender, RoutedEventArgs e)
         {
-            //TODO instructional tooltip
-            //TODO double check if it is between two events and notify if it is already ordered there? Did I do that already, below?
             string focusEvent = focusCombo.Text;
             string beforeEvent = event_one_combo.Text;
             string afterEvent = event_two_combo.Text;
@@ -63,7 +61,7 @@ namespace citadel_wpf
             {
                 if (beforeEventValid && !afterEventValid)
                 {
-                    if (int.Parse(focusEventOrderKey.Value) < eventOneOrderKey)
+                    if (int.Parse(focusEventOrderKey.Value) <= eventOneOrderKey)
                     {
                         focusEventOrderKey.Value = EventOrdering.GetKeyAfter(eventOneOrderKey).ToString();
                     }
@@ -74,7 +72,7 @@ namespace citadel_wpf
                 }
                 else if (!beforeEventValid && afterEventValid)
                 {
-                    if (int.Parse(focusEventOrderKey.Value) > eventTwoOrderKey)
+                    if (int.Parse(focusEventOrderKey.Value) >= eventTwoOrderKey)
                     {
                         focusEventOrderKey.Value = EventOrdering.GetKeyBefore(eventTwoOrderKey).ToString();
                     }
