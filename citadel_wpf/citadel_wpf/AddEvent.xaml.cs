@@ -34,6 +34,7 @@ namespace citadel_wpf
 
         private void Initialize_Locations()
         {
+            //Get all location names
             location_combo_box.Items.Clear();
 
             XMLParser.FillComboboxWithNames(XMLParser.LocationXDocument.Handle, ref location_combo_box);

@@ -33,7 +33,7 @@ namespace citadel_wpf
 
         private static void GetEventInformation(ref StringBuilder echo, List<string> selectedEvents)
         {
-            //echo.Append($"\"{focusLocation}\" [{centerShape}, {centerColor}, {fontname}, {fontcolor}]; ");
+
             SortedDictionary<string, List<XElement>> eventDictionary = new SortedDictionary<string, List<XElement>>();
 
             foreach (string sel in selectedEvents)
@@ -72,6 +72,7 @@ namespace citadel_wpf
                     echo.Append($"\"]; ");
                 }
 
+                //if more than one event occurs at the same time, draw them as a cluster
                 if (currentList.Value.Count > 1)
                 {
                     echo.Append($"subgraph cluster_{++clusterIndex} {{ label=\"Same Time\" ");

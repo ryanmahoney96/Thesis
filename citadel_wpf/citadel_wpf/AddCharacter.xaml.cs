@@ -19,7 +19,7 @@ namespace citadel_wpf
 
     public partial class AddCharacter : EntityWindow, INewEntity
     {
-
+        //Whether or not this is an instance of an entity being edited
         private bool Editing = false;
 
         public AddCharacter() : base()
@@ -31,6 +31,7 @@ namespace citadel_wpf
         {
             Editing = true;
 
+            //get a ref to the character
             var character = (from c in XMLParser.CharacterXDocument.Handle.Root.Descendants("character")
                              where c.Element("name").Value.Equals(characterName)
                              select new
@@ -75,6 +76,7 @@ namespace citadel_wpf
                     }
                     else
                     {
+                        //adding a new xelement if it is not present
                         XElement newCharacter = new XElement("character",
                             new XElement("name", PrepareText(name_text.Text)),
                             new XElement("gender", PrepareText(gender_combo_box.Text)),

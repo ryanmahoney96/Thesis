@@ -11,6 +11,7 @@ namespace citadel_wpf
 {
     class EventMapConstruction
     {
+        //The relevant information for a node
         struct EventInfo
         {
             public string Name;
@@ -72,6 +73,7 @@ namespace citadel_wpf
                 echo.AppendLine($"\"]; ");
                 echo.AppendLine($"\"{e.Name}\" -- \"{focusLocation}\"; ");
 
+                //if the user wants participants, append them as nodes off of the event
                 if (getParticipants)
                 {
                     foreach(var p in GetParticipantsAtEvent(e.Name))
@@ -135,6 +137,7 @@ namespace citadel_wpf
             process.Start();
         }
 
+        //appends a legend to the picture to indicate what the colors mean
         private static void AppendLegend(ref StringBuilder echo, bool participantsOn = false)
         {
             echo.AppendLine($"\"Location\" [{locationStyle}, {fontname}];");

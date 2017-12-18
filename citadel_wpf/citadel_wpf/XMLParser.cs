@@ -13,6 +13,7 @@ using System.Xml.XPath;
 
 namespace citadel_wpf
 {
+    //class that leverages XDocumentInformation to query the XML files for information
     public partial class XMLParser
     {
 
@@ -72,6 +73,7 @@ namespace citadel_wpf
             SetXDocumentContent("general_notes", ref NoteXDocument);
         }
 
+        //detach this window from all XDocuments it observes
         public static void DetachFromAll(EntityWindow e, List<XDocumentInformation> attachments)
         {
             foreach (var x in attachments)
@@ -203,6 +205,7 @@ namespace citadel_wpf
             }
         }
 
+        //used to determine if the input text is safe to put in the XML
         public static bool IsTextValid(string text)
         {
             return !(string.IsNullOrWhiteSpace(text) || !validCharacterRegex.IsMatch(text));

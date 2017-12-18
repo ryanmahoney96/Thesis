@@ -29,6 +29,7 @@ namespace citadel_wpf
 
         public static double NoteNodeHeight = NameBoxHeight + ContentBoxHeight + ButtonHeight + 25;
 
+        //The Nodes used to represent all information stored about each entity on the front page
         public NoteNode(ref XDocumentInformation source)
         {
             EntityType = source;
@@ -184,8 +185,7 @@ namespace citadel_wpf
                     }
                 }
             }
-            //return MainPanel.ExtentHeight;
-            //return (NameTextBlock.ActualHeight + ContentTextBlock.ActualHeight + 50) / 2;
+
             return NoteNodeHeight / 2;
         }
 

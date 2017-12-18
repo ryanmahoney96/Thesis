@@ -215,6 +215,7 @@ namespace citadel_wpf
             
         }
 
+        //adds the character to the list if it is not present
         //returns true if the character was successfully added 
         private static bool AddCharacterIfAbsent(string focusCharacter, bool addParents, ref Dictionary<XElement, bool> characters)
         {
@@ -231,6 +232,7 @@ namespace citadel_wpf
             return false;
         }
 
+        //adds the relevant informatin to each character node
         private static void AddCharacterInformation(ref StringBuilder echo, Dictionary<XElement, bool> characters, string focusCharacter)
         {
             foreach (var character in characters)
@@ -250,6 +252,7 @@ namespace citadel_wpf
             }
         }
 
+        //add all the parents of every marked character. Essentially draws the family tree from the bottom up
         private static void AddParents(ref StringBuilder echo, Dictionary<XElement, bool> characters, XElement parents, XElement focusCharacter)
         {
             List<XElement> parentList = parents.Elements().ToList().OrderBy(p => p.Value).ToList();

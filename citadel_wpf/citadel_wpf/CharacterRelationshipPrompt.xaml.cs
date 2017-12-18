@@ -48,6 +48,7 @@ namespace citadel_wpf
 
         override protected void Save(object sender, RoutedEventArgs e)
         {
+            //strings used to determine how the two characters relate in XML terms
             string ancestorTag = "children";
             string descendantTag = "child";
             string relationship = relationship_combo.Text;
@@ -138,7 +139,7 @@ namespace citadel_wpf
             XMLParser.FillComboboxWithNames(XMLParser.CharacterXDocument.Handle, ref focus_character_combo);
             focus_character_combo.Text = fc;
             XMLParser.FillComboboxWithNames(XMLParser.CharacterXDocument.Handle, ref character_two_combo, fc);
-            //relationship_combo.Text = "";
+
         }
 
         private void focus_character_SelectionChanged(object sender, SelectionChangedEventArgs e)

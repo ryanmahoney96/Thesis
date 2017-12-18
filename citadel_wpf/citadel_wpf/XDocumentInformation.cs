@@ -3,6 +3,7 @@ using System.Xml.Linq;
 
 namespace citadel_wpf
 {
+    //The foundation required to edit, delete, read, and save entity information to the XML files
     public partial class XDocumentInformation
     {
         public XDocument Handle;
